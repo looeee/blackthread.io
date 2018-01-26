@@ -1,0 +1,92 @@
+
+
+teaser                   : "/assets/images/default-teaser.jpg"  # path of fallback teaser image, e.g. "/assets/images/500x300.png"
+default_keywords         : "WebGL, three.js, JavaScript, ES6"
+default_teaser           : /assets/images/default-teaser.jpg
+
+# Social Sharing
+twitter:
+  username               : "looeeeb"
+facebook:
+  username               : "lewy.blue"
+  app_id                 : "103246253626280"
+
+# For specifying social profiles
+# - https://developers.google.com/structured-data/customize/social-profiles
+social:
+ name                   : Lewy Blue
+#  links: [ facebook, twitter, linkin, github ]# An array of links to social media profiles
+
+# Site Author
+author:
+  name             : "Lewy Blue"
+  avatar           : "/assets/images/about/portrait-512.jpg"
+  bio              : "WebGL and JavaScript expert from the west coast of Ireland."
+  location         : "South east Asia, currently."
+  email            : "looeee@gmail.com"
+  codepen          : "looeee"
+  facebook         : "lewy.blue"
+  github           : "looeee"
+  instagram        : "lewy.blue"
+  linkedin         : "lewy-blue-30b9b193"
+  stackoverflow    : "1401930/looeee"
+  twitter          : "looeeeb"
+  discourse        : "looeee"
+
+include:
+  - .htaccess
+  - _pages
+  - assets/js/codepen/*
+exclude:
+  - cert
+  - vendor
+  - .bundle
+  - assets/js/src
+  - assets/js/src/*
+  - assets/js/src/**/*
+  - assets/scss
+  - config/*
+  - Capfile
+  - CHANGELOG
+  - config
+  - config.ru
+  - Gemfile
+  - Gruntfile.js
+  - gulpfile.js
+  - LICENSE
+  - log
+  - info
+  - structure
+  - build.js
+  - minify-builds.js
+  - compile_scss.js
+  - "*.BAK"
+  - "*.txt"
+  - "*.scss"
+  - "*.conf"
+  - "*.sh"
+  - "*.bak"
+  - "*.pem"
+  - node_modules
+  - app.json
+  - package.json
+  - jsconfig.json
+  - tsconfig.json
+  - typings.json
+  - typings
+  - Procfile
+  - Rakefile
+  - composer.json
+  - README
+  - tmp
+  - blackthread.code-workspace
+keep_files:
+  - assets/js/build
+  - assets/js/build-min
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+#exclude_from_watch:
+#  - assets/js/src
+#  - assets/scss
+
+

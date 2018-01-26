@@ -1,4 +1,25 @@
-baseURL = "http://example.org/"
+baseURL = "https://www.blackthreaddesign.com"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Black Thread Design"
 theme = "blackthread"
+repository = "looeee/blackthread_hugo"
+
+# enable this to make all relative URLs relative to content root. Note that this does not affect absolute URLs.
+#canonifyURLs = true
+#relativeURLs = false
+
+# emoji-cheat-sheet.com
+enableEmoji = true
+
+googleAnalytics = "UA-92568054-1"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+
+# Enable GitInfo feature
+enableGitInfo = false
+
+[params]
+  author = "Lewy Blue"
