@@ -4,6 +4,20 @@ title = "Black Thread Design"
 theme = "blackthread"
 repository = "looeee/blackthread_hugo"
 
+SectionPagesMenu = "main"
+Paginate = 20 # this is set low for demonstrating with dummy content. Set to a higher number
+
+DefaultContentLanguage = "en"
+
+
+[sitemap]
+  changefreq = "daily"
+  priority = 0.5
+  filename = "sitemap.xml"
+
+
+enableRobotsTXT = true
+
 # enable this to make all relative URLs relative to content root. Note that this does not affect absolute URLs.
 #canonifyURLs = true
 #relativeURLs = false
@@ -12,6 +26,27 @@ repository = "looeee/blackthread_hugo"
 enableEmoji = true
 
 googleAnalytics = "UA-92568054-1"
+
+summaryLength = 140
+
+logFile = "logs.txt"
+
+disableRSS = false
+rssLimit = 15
+
+metaDataFormat = "toml"
+
+# See "content-management/permalinks"
+# permalinks =
+
+# color-codes for highlighting derived from this style
+pygmentsStyle = "monokai"
+
+# true: use pygments-css or false: color-codes directly
+pygmentsUseClasses = false
+
+# see "Section Menu for Lazy Bloggers", /templates/menu-templates for more info
+#SectionPagesMenu =
 
 [taxonomies]
   category = "categories"
@@ -22,4 +57,24 @@ googleAnalytics = "UA-92568054-1"
 enableGitInfo = false
 
 [params]
+  favicon = "favicon.ico"
+  description = "The last theme you'll ever need. Maybe."
+  facebook = ""
+  twitter = "https://twitter.com/looeeeb"
+  instagram = ""
+  youtube = ""
+  github = ""
+  linkedin = ""
+  background_color_class = "bg-black"
+  featured_image = "/images/gohugo-default-sample-hero-image.jpg"
+  recent_posts_number = 2
   author = "Lewy Blue"
+
+ignoreFiles = [
+  "\\.txt$",
+]
+
+# verbose output
+verbose = false
+# verbose logging
+verboseLog =  false
