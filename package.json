@@ -1,0 +1,57 @@
+{
+  "name": "blackthreaddesign",
+  "version": "2.0.0",
+  "description": "Blackthreaddesign.com ported to Hugo",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/looeee/blackthread_hugo.git"
+  },
+  "keywords": [
+    "webgl",
+    "three.js",
+    "javascript",
+    "design",
+    "portfolio",
+    "blog",
+    "tutorials"
+  ],
+  "author": "Lewy Blue",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/looeee/blackthread_hugo/issues"
+  },
+  "homepage": "https://www.blackthreaddesign.com",
+  "dependencies": {
+    "lodash-es": "^4.17.4",
+    "three": "^0.89.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.2.5",
+    "babel-cli": "^7.0.0-beta.3",
+    "babel-core": "^7.0.0-beta.3",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "certbot": "^1.0.0",
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "fbx2gltf": "^0.9.3",
+    "glob": "^7.1.2",
+    "glslify": "^6.1.0",
+    "le-challenge-manual": "^2.1.0",
+    "letsencrypt": "^2.1.8",
+    "node-sass": "^4.7.2",
+    "node-watch": "^0.5.6",
+    "obj2gltf": "^2.2.0",
+    "rollup": "^0.55.3",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-watch": "^4.3.1",
+    "uglify-js": "^3.3.9"
+  },
+  "scripts": {
+    "buildjs": "node .\\scripts\\buildJS.js",
+    "minifyjs": "node .\\scripts\\minifyJS.js",
+    "compilescss": "node .\\scripts\\compileSCSS.js"
+  }
+}

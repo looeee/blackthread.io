@@ -1,0 +1,21 @@
+@import 'default';
+@import "page";
+
+
+#container{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+#canvas {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 90vmin;
+  border: 1px solid #062f4f;
+}
+
+#page-text {
+  padding: 0 1em 0 1em;
+}

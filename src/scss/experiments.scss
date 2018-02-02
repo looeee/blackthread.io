@@ -1,0 +1,85 @@
+@import 'default';
+@import "page";
+
+body {
+
+  height: 100vh;
+  min-height: 0;
+  overflow: hidden;
+
+}
+
+#main {
+
+  overflow-y: auto;
+  min-height: 0;
+  height: 99999px;
+
+  background: #545454;
+  background: radial-gradient(ellipse at center, #545454 1%, #262521 100%, #bf6e4e 100%);
+
+  background-image: url('/assets/images/textures/backgrounds/black.jpg');
+  background-size: 100% 100%;
+
+}
+
+#page-content {
+
+  margin: 0;
+  padding: 0 !important;
+  overflow-x: hidden;
+  position: relative;
+
+}
+
+.experiment-item {
+  position: absolute;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+
+  &:nth-child( 2n ) {
+    .experiment-image {
+      right: 0;
+      left: unset;
+    }
+    .experiment-detail {
+      left: 0;
+      right: unset;
+    }
+  }
+
+  &:nth-child( 2 ) {
+    top: 100%;
+  }
+}
+
+.experiment-image, .experiment-detail {
+  position: absolute;
+
+}
+
+.experiment-image {
+
+  left: 0;
+  top: 0%;
+  width: 200%;
+  height: 200%;
+  border: 5px solid blue;
+
+  transform: translate(-50%, 0%) rotate(45deg);
+
+}
+
+.experiment-detail {
+
+  right: 0;
+  top: 50%;
+  // background-color: red;
+  width: 200%;
+  height: 200%;
+  z-index: 2;
+  border: 5px solid grey;
+  transform: translate(59%, -50%) rotate(-45deg);
+
+}

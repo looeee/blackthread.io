@@ -1,0 +1,50 @@
+.comments {
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 0.5em;
+  padding: 0.5em;
+  border: 1px solid silver;
+  border-radius: 0.5em;
+
+  input, textarea {
+    color: black;
+  }
+
+  h4 {
+    background: rgba(128,128,128,0.5);
+
+    &:first-child {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+  }
+}
+
+.single-comment {
+  margin: 0.5em 0 0 0;
+  padding: 0.5em;
+  border: 1px solid silver;
+  border-radius: $border-radius;
+
+  &:nth-child(2n + 1) {
+    background-color: #062f40;
+  }
+  &:last-child {
+    margin-bottom: 0.5em;
+  }
+}
+
+.comment-author {
+  display: flex;
+  justify-content: space-between;
+  p {
+    margin: 0;
+    text-align: left;
+
+    &:first-child {
+      padding-right: 1em;
+    }
+  }
+}

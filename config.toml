@@ -1,7 +1,7 @@
 baseURL = "https://www.blackthreaddesign.com"
 languageCode = "en-us"
 title = "Black Thread Design"
-theme = "blackthread"
+#theme = "blackthread"
 repository = "looeee/blackthread_hugo"
 
 SectionPagesMenu = "main"

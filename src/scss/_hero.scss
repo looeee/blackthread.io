@@ -1,0 +1,104 @@
+.hero {
+
+  text-align: center;
+  padding: 10em 0;
+
+  background-size: cover;
+  background-position: center;
+
+  color: $text-color;
+  text-shadow: 1px 1px 4px rgba(#000, 0.5);
+
+
+}
+
+.hero-blur {
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
+  filter: blur( 3px );
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  box-shadow: 0px 0px 0px 1px black;
+
+  z-index: 1;
+
+  background-size: cover;
+  background-position: center;
+
+}
+
+.hero-bar {
+
+  position: relative;
+  // min-height: 10em;
+  background-color: rgba( 20, 20, 20, 0.3 );
+
+  h1, h3 {
+
+    position: relative;
+    text-shadow: 4px 2px 2px black;
+    margin: 0;
+    z-index: 2;
+    background: none;
+
+  }
+  h1 {
+
+    padding-top: 1em;
+    font-size: 4em;
+
+
+  }
+
+  h3 {
+
+    font-size: 2em;
+    padding: 0.5em 0 1.5em 0;
+    border-bottom: none;
+
+  }
+
+}
+
+@media (max-width: $breakpoint-1024) {
+
+  .hero-bar {
+
+    h1 {
+
+      font-size: 2.5em;
+      padding-top: 0.5em;
+
+    }
+
+    h3 {
+
+      font-size: 1.5em;
+
+    }
+  }
+}
+
+@media (max-width: $breakpoint-700) {
+
+  .hero-bar {
+
+    h1 {
+
+      font-size: 2em;
+      padding-top: 0.5em;
+
+    }
+
+    h3 {
+
+      font-size: 1.25em;
+
+    }
+  }
+}

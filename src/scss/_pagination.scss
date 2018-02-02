@@ -1,0 +1,34 @@
+.pagination {
+  margin: 2em 1em 1em 1em;
+
+  display: flex;
+
+  /* next/previous buttons */
+  a {
+    padding: 1em 2em;
+    float: left;
+    width: 50%;
+    font-size: 1.125em;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid silver;
+    border-radius: $border-radius;
+
+    &:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:last-child {
+      margin-left: -1px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &.disabled {
+      color: mix(#fff, gray, 75%);
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+  }
+}

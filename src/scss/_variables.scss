@@ -1,0 +1,69 @@
+/*
+Typography
+========================================================================== */
+
+$sans-serif:
+"Raleway",
+"Helvetica Neue",
+"Lucida Grande",
+Arial,
+sans-serif !default;
+
+$monospace: Monaco,
+Consolas,
+"Lucida Console",
+monospace !default;
+
+/*
+   Colors
+   ========================================================================== */
+
+/* Base colors  */
+
+$info-color: #B82601 !default;
+$text-color: mix(#fff, gray, 90%) !default;
+$background-color: #020000 !default;
+$border-color: #062f4f  !default;
+
+$success-color: #0c5c99 !default;
+$warning-color: #7C010F !default;
+
+
+/* links */
+
+$link-color: $info-color !default;
+$link-color-hover: #8b1d01 !default;
+
+$masthead-link-color: #4d4d4d !default;
+$masthead-link-color-hover: $info-color !important;
+$masthead-link-color-active: $border-color;
+$navicon-link-color-hover : mix(#fff, $text-color, 75%) !default;
+
+/*
+   Breakpoints
+   ========================================================================== */
+
+$x-small                    : 320px !default;
+$small                      : 600px !default;
+$medium                     : 768px !default;
+$medium-wide                : 900px !default;
+$large                      : 1024px !default;
+$x-large                    : 1280px !default;
+
+$breakpoint-400: 400px !default;
+$breakpoint-700: 700px !default;
+$breakpoint-1024: 1024px !default;
+$breakpoint-1280: 1280px !default;
+$breakpoint-1600: 1280px !default;
+
+
+/*
+   Other
+   ========================================================================== */
+
+$border-radius              : 4px !default;
+$box-shadow                 : 0 1px 1px rgba(0, 0, 0, 0.125) !default;
+$navicon-width              : 1.5rem !default;
+$navicon-height             : 0.25rem !default;
+$global-transition          : all 0.2s ease-in-out !default;
+$intro-transition           : intro 0.3s both !default;

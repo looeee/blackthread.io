@@ -1,0 +1,27 @@
+@import 'default';
+@import "page";
+
+#details {
+
+  a {
+    white-space: nowrap;
+  }
+
+}
+
+#controls {
+  display: flex;
+
+  div {
+    padding: 1em 1em 1em 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+#canvas{
+  width: 90vmin;
+  height: 90vmin;
+}

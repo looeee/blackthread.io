@@ -1,0 +1,5 @@
+hugo new site siteName
+
+hugo new posts/my-first-post.md
+
+hugo server -D

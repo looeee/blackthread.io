@@ -1,0 +1,106 @@
+.accordion {
+
+  width: 100%;
+  display: inline-block;
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  h2, h4 {
+    margin: 0em;
+    padding: 0.5em;
+    color: black;
+  }
+  div, li i:before, li i:after {
+    transition: all 0.25s ease-in-out;
+  }
+
+  li {
+    position: relative;
+    border-bottom: 1px solid $border-color;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  li:last-of-type {
+    padding-bottom: 0;
+  }
+  li i {
+    position: absolute;
+    transform: translate(-2em, 0);
+    right: 0;
+    margin-top: 1em;
+  }
+  li i:before, ul li i:after {
+    content: "";
+    position: absolute;
+    background-color: black;
+    width: 3px;
+    height: 9px;
+
+  }
+  li i:before {
+    transform: translate(-2px, 0) rotate(45deg);
+  }
+  li i:after {
+    transform: translate(2px, 0) rotate(-45deg);
+  }
+  li input[type=checkbox] {
+    position: absolute;
+    cursor: pointer;
+    width: 95%;
+    height: 2em;
+    opacity: 0;
+    transform: translate(-50%, -10%);
+  }
+  li input[type=checkbox]:checked ~ div {
+    display: none;
+  }
+  li input[type=checkbox]:checked ~ i:before {
+    transform: translate(2px, 0) rotate(45deg);
+  }
+  li input[type=checkbox]:checked ~ i:after {
+    transform: translate(-2px, 0) rotate(-45deg);
+  }
+
+}
+
+.accordion-section {
+  width: 97.5%;
+  margin-left: 1.25%;
+  margin-bottom: 0.5em;
+  color: black;
+  box-shadow: 1px 1px 2px 0px darkgray inset;
+
+  p {
+    padding: 0.25em;
+  }
+
+}
+
+/*
+<div class="accordion">
+  <h1>Accordion</h1>
+  <ul>
+    <li>
+      <input type="checkbox" checked>
+      <i></i>
+      <h2>Heading 1</h2>
+      <div><p>Contents 1.</p></div>
+    </li>
+    <li>
+      <input type="checkbox" checked>
+      <i></i>
+      <h2>Heading 2</h2>
+      <div><p>Contents 2.</p></div>
+    </li>
+    <li>
+      <input type="checkbox" checked>
+      <i></i>
+      <h2>Heading 3</h2>
+      <div><p>Contents 2.</p></div>
+    </li>
+  </ul>
+</div>
+*/

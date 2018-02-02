@@ -1,0 +1,8 @@
+{
+  "line-length": false,
+  "no-inline-html": false,
+  "no-trailing-punctuation": false,
+  "blanks-around-lists": false,
+  "no-bare-urls": false,
+  "first-header-h1": false
+}

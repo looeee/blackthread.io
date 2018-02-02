@@ -1,0 +1,54 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+header,
+footer {
+  flex: none; /* 2 */
+}
+
+#main {
+  display: flex;
+  flex: 1;
+  background-color: #202022;
+  overflow-x: hidden;
+  margin-top: 5em;
+  flex-direction: column;
+}
+
+#article{
+  padding-top: 3em;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media ( min-width: $breakpoint-1280 ) {
+  #article {
+    max-width: 60%;
+  }
+}
+
+#page-content {
+
+  max-width: 100%;
+
+}
+
+#page-content-full-width {
+  flex-direction: column;
+}
+
+#page-content, #page-content-full-width {
+
+  height: 100%;
+  display: flex;
+  flex: 1;
+
+  overflow-x: hidden;
+
+  margin-top: 1em;
+  padding: 1em;
+
+}
