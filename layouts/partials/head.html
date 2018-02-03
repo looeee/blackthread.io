@@ -26,9 +26,7 @@
 
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway"/>
 
-{{ block "favicon" . }}
-  {{ partial "site-favicon.html" . }}
-{{ end }}
+<link rel="shortcut icon" href="/{{ .Site.Params.favicon }}" type="image/x-icon" />
 
 {{ if .RSSLink }}
   <link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />

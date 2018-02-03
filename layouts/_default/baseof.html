@@ -6,7 +6,7 @@
 
   <body>
     {{ block "header" . }}{{ partial "site-masthead.html" .}}{{ end }}
-    <main role="main">{{ block "main" . }}{{ end }}</main>
+    <main role="main" id="main">{{ block "main" . }}{{ end }}</main>
     {{ block "footer" . }}{{ partial "site-footer.html" . }}{{ end }}
     {{ block "scripts" . }}{{ partial "site-scripts.html" . }}{{ end }}
   </body>
