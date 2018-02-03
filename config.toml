@@ -58,17 +58,19 @@ enableGitInfo = false
 
 [params]
   favicon = "favicon.ico"
-  description = "The last theme you'll ever need. Maybe."
-  facebook = ""
-  twitter = "https://twitter.com/looeeeb"
-  instagram = ""
+  twitter = "looeeeb"
   youtube = ""
-  github = ""
-  linkedin = ""
-  background_color_class = "bg-black"
+  github = "looeee"
+  linkedin = "lewy-blue-30b9b193"
   featured_image = "/images/gohugo-default-sample-hero-image.jpg"
   recent_posts_number = 2
   author = "Lewy Blue"
+  email = "looeee@gmail.com"
+  codepen = "looeee"
+  facebook = "lewy.blue"
+  instagram = "lewy.blue"
+  stackoverflow = "1401930/looeee"
+  discourse = "looeee"
 
 ignoreFiles = [
   "\\.txt$",

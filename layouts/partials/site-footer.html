@@ -1,8 +1,27 @@
-<footer class="bg-near-black bottom-0 w-100 pa3" role="contentinfo">
-  <div class="flex justify-between">
-  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="{{ .Site.BaseURL }}" >
-    &copy; {{ now.Format "2006" }} {{ .Site.Title }}
-  </a>
-  {{ partial "social-follow.html" . }}
-  </div>
-</footer>
+{{ if ne .Params.noFooter "true" }}
+  <footer>
+    <div class="footer-social">
+      {{ if .Site.Params.github }}
+        <div class="social-icons">
+          <a href="https://github.com/{{ .Site.Params.github }}/"><span class="fa fa-fw fa-github" aria-hidden="true"></span> GitHub</a>
+        </div>
+      {{ end }}
+      {{ if .Site.Params.twitter }}
+        <div class="social-icons">
+          <a href="https://twitter.com/{{ .Site.Params.twitter }}/"><span class="fa fa-fw fa-twitter" aria-hidden="true"></span> Twitter</a>
+        </div>
+      {{ end }}
+      {{ if .Site.Params.discourse }}
+        <div class="social-icons">
+          <a href="https://discourse.threejs.org/u/{{ .Site.Params.discourse }}/"><span class="fa fa-fw fa-commenting" aria-hidden="true"></span> Discourse</a>
+        </div>
+      {{ end }}
+      {{ if .Site.Params.linkedin }}
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/{{ .Site.Params.linkedin }}/"><span class="fa fa-fw fa-linkedin" aria-hidden="true"></span> LinkedIn</a>
+        </div>
+      {{ end }}
+    </div>
+    <div class="footer-copyright">&copy; {{ .Date.Format "2006" }} {{ .Site.Params.author }}.</div>
+  </footer>
+{{ end }}

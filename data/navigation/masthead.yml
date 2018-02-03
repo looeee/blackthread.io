@@ -1,0 +1,14 @@
+menu:
+  - title: "Blog"
+    url: /blog/
+  - title: "Tutorials"
+    url: /tutorials/
+  - title: "About"
+    url: /about/
+  - title: "Contact"
+    url: /contact/
+  - title: "Experiments"
+    url: /experiments/
+  - title: "Loader"
+    url: /loader/
+
