@@ -1,0 +1,67 @@
+
+<button id="toggle-nav" class="fa fa-bars fa-2x"></button>
+
+<nav id="vert-nav" class="fold">
+  <ul>
+    {{ $paginator := .Paginate (where .Data.Pages "Section" .Section) }}
+      {{ range $paginator.Pages }}
+      <li class="nav-title">
+        <!-- <span class="fa fa-arrow-right" aria-hidden="true"></span><a href="{{ .url }}" class="">{{ .title }}</a> -->
+        <a href="{{ .URL }}">{{ .Title }}</a>
+      </li>
+        {{ if .children }}
+          {{ range .children }}
+              <!-- <li><span class="fa fa-arrow-right" aria-hidden="true"></span><a href="{{ .url }}" class="">{{ .title }}</a></li> -->
+              <li></span><a href="{{ .url }}" class="">{{ .title }}</a></li>
+          {{ end }}
+        {{ end }}
+    {{ end }}
+  </ul>
+</nav>
+
+<script>
+
+  var sidenav = function() {
+
+    var content = document.querySelector( '#main' );
+    var toggleButton = document.querySelector( '#toggle-nav' );
+    var nav = document.querySelector( '#vert-nav' );
+
+    var breakpoint = 1280;
+
+    function updateMenu(){
+
+      if( content.offsetWidth < breakpoint ) {
+
+        if( !toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.remove( 'hide' );
+        nav.classList.add( 'fold' );
+
+      }
+      else {
+
+        if( toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.add( 'hide' );
+        nav.classList.remove( 'fold' );
+
+      }
+
+    }
+
+    updateMenu();
+
+    toggleButton.addEventListener( 'click', function( e ) {
+
+      e.preventDefault();
+
+      nav.classList.toggle( 'fold' );
+
+    } );
+
+    window.addEventListener( 'resize', updateMenu );
+
+  };
+
+  window.addEventListener( 'load', sidenav );
+
+</script>
