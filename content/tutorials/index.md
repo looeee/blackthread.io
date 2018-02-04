@@ -9,6 +9,7 @@ noReadTime: true
 comments: false
 ---
 
+
 Welcome to the Black Thread series of tutorials on [three.js](https://threejs.org/)! Here we'll focus on getting to know three.js in depth - all the amazing features that make this beautiful library so great to work with, but also all how to deal with all the quirks and annoyances that you will undoubtedly come across, so that you can quickly become familiar enough to start building your own projects.
 
 These tutorials are intended to be supplementary to the [official documentation](https://threejs.org/docs/) and you'll be referred there regularly (_disclaimer_: I wrote quite a bit of that documentation, so if you find a mistake there it is probably my fault. Please let me know here or raise an issue on [github](https://github.com/mrdoob/three.js/issues/) and I'll fix it ASAP!).
