@@ -1,6 +1,5 @@
 {{ define "main" }}
 
-
   {{ if .Params.fullWidth }}
     <div id="page-content-full-width">
   {{ else }}
@@ -13,9 +12,16 @@
         <h2>{{ .Title }}</h2>
       </header>
       {{ partial "toc.html" . }}
+      {{ partial "read-time.html" . }}
       <section class="content">
         {{ .Content }}
       </section>
+      <aside>
+        {{ partial "tag-list.html" . }}
+        {{ partial "page-meta.html" . }}
+      </aside>
+      {{ partial "pagination.html" . }}
+      {{ partial "comments/comments.html" . }}
     </article>
   </div>
 {{ end }}

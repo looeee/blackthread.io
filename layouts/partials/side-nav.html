@@ -1,20 +1,16 @@
-
 <button id="toggle-nav" class="fa fa-bars fa-2x"></button>
 
 <nav id="vert-nav" class="fold">
   <ul>
-    {{ $paginator := .Paginate (where .Data.Pages "Section" .Section) }}
-      {{ range $paginator.Pages }}
+    {{ $currentNode := . }}
+    {{ range .Site.Menus.blog }}
       <li class="nav-title">
-        <!-- <span class="fa fa-arrow-right" aria-hidden="true"></span><a href="{{ .url }}" class="">{{ .title }}</a> -->
-        <a href="{{ .URL }}">{{ .Title }}</a>
-      </li>
-        {{ if .children }}
-          {{ range .children }}
-              <!-- <li><span class="fa fa-arrow-right" aria-hidden="true"></span><a href="{{ .url }}" class="">{{ .title }}</a></li> -->
-              <li></span><a href="{{ .url }}" class="">{{ .title }}</a></li>
-          {{ end }}
+        {{if or ($currentNode.IsMenuCurrent "blog" .) ($currentNode.HasMenuCurrent "blog" .) }}
+          <span class="fa fa-arrow-right" aria-hidden="true"></span><a href="{{ .URL }}" class="">{{ .Name }}</a>
+        {{ else }}
+          </span><a href="{{ .URL }}" class="">{{ .Name }}</a>
         {{ end }}
+      </li>
     {{ end }}
   </ul>
 </nav>

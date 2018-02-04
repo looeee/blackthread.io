@@ -1,9 +1,9 @@
 ---
 title: "Ribbons"
-order: 3
 description: "An experiment in creating ribbons - lines of any thickness - which is not possible by default in thee.js"
 teaserImage: /images/experiments/ribbons/teaser.jpg
 js:  ribbons
+menu: experiments
 ---
 
 <p>

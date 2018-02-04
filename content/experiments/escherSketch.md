@@ -1,10 +1,10 @@
 ---
 title:  "EscherSketch"
-order: 1
 description: "MC Escher inspired uniform tilings of the hyperbolic plane"
 teaserImage: /images/experiments/escherSketch/teaser.jpg
 js: escherSketch
 css: escherSketch
+menu: experiments
 ---
 
 <div id="details">

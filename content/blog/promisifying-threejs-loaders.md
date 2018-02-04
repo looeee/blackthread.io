@@ -1,9 +1,10 @@
 ---
-order: 2
 title:  "Promisifying three.js loaders"
 description: "Converting three.js loaders into promises"
 permalink: /blog/promisifying-threejs-loaders/
 tags: ['loading', 'promises', 'modules', 'ES6']
+menu: blog
+weight: 101
 ---
 
 [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) are great! Promises are the future! Well, async/await is probably the future, but lets take things one step at a time here.

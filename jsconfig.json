@@ -1,0 +1,17 @@
+{
+  "typeAcquisition": {
+    "include": [
+      "three"
+    ]
+  },
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "es6"
+  },
+  "exclude": [
+    "**/js/build/*",
+    "**/js/build-min/*",
+    "**/js/vendor/*",
+    "**/node_modules/*"
+  ]
+}

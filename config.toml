@@ -15,11 +15,10 @@ DefaultContentLanguage = "en"
   priority = 0.5
   filename = "sitemap.xml"
 
-
 enableRobotsTXT = true
 
 # enable this to make all relative URLs relative to content root. Note that this does not affect absolute URLs.
-#canonifyURLs = true
+canonifyURLs = true
 #relativeURLs = false
 
 # emoji-cheat-sheet.com
@@ -27,7 +26,7 @@ enableEmoji = true
 
 googleAnalytics = "UA-92568054-1"
 
-summaryLength = 140
+summaryLength = 240
 
 logFile = "logs.txt"
 

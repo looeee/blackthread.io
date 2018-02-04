@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true
+  },
+  "exclude": [
+    "static/js/build",
+    "static/js/build-min",
+    "node_modules"
+  ],
+  "typeAcquisition": {
+    "enable": true
+  }
+}

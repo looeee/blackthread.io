@@ -1,0 +1,8 @@
+<span class="reading-time" title="Read time">
+  <strong>Reading time: </strong> around
+  {{ if lt .WordCount 400}}
+    1 minute
+  {{ else }}
+    {{ (div .WordCount 180) . }} minutes
+  {{ end }}
+</span>
