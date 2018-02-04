@@ -1,14 +1,14 @@
 ---
 title: "Three.js Tutorials"
 description: "Quickly get up and running with three.js"
-header:
-  image: "assets/images/tutorials/tutorial-hero.jpg"
 noPagination: true
 noTOC: true
 noReadTime: true
 comments: false
+heroImage: /images/tutorials/tutorial-hero.jpg
+heroTitle: Three.js Tutorials
+heroDescription: Quickly get up and running with three.js
 ---
-
 
 Welcome to the Black Thread series of tutorials on [three.js](https://threejs.org/)! Here we'll focus on getting to know three.js in depth - all the amazing features that make this beautiful library so great to work with, but also all how to deal with all the quirks and annoyances that you will undoubtedly come across, so that you can quickly become familiar enough to start building your own projects.
 

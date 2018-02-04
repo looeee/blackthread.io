@@ -6,7 +6,8 @@ tags: ['event listener', 'resize', 'browser']
 
 Here's where we left off at the end of the last chapter.
 
-{% include_cached codepen id="GmJPrm" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="GmJPrm" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
 
 It's pretty respectable result for such a small amount of code. However, there is one big problem that will quickly make it look at lot less professional to anyone using your website - that is, the scene does not resize when the browser window changes size.
 
@@ -22,7 +23,7 @@ You can listen for all kinds of events such as `click`, `scroll`, `keypress` and
 You can listen for events on nearly any HTML element rather than the whole window, so you might think that you should be calling this as `canvas.addEventListener`. However the resize event doesn't fire when attached to anything other than the `window` object, so don't do that.
 
 Add the following code after your `animate` function and before the call to `init`:
-{% highlight js %}
+{{< highlight js >}}
 ...
 function animate() {
 
@@ -42,7 +43,7 @@ window.addEventListener( 'resize', onWindowResize );
 // call the init function to set everything up
 init();
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 This will call the `onWindowResize` function every time the window resizes.
 
@@ -51,24 +52,24 @@ Be aware that when you resize the browser window, the function might get called 
 
 Notice that we have added `console.log( ... )` inside the function? This is a very useful way of making sure that something is working correctly. Open up the browser console now and resize the window and you should see this:
 
-{% include_cached figure image_path="/assets/images/tutorials/1.2/console-resize.png" alt="Logging resize event to console" caption="Fig 1: The number on the left notes how many times the function was called" lightbox=false %}
+{{< figure src="/images/tutorials/1.2/console-resize.png" caption="Fig 1: The number on the left notes how many times the function was called" alt="Logging resize event to console" >}}
 
 #### Setting up the `onWindowResize` function
 
 Now that's set up, what should be put inside the `onWindowResize` function? It's fairly straightforward to figure this out actually- go over the code in the init function and take a note of everywhere that `window.innerWidth` or `window.innerHeight` was used. These are the lines we where we used these, and we'll need to figure out a way of updating them:
 
-{% highlight js %}
+{{< highlight js >}}
   renderer.setSize( window.innerWidth, window.innerHeight );
 
   const aspect = window.innerWidth / window.innerHeight;
-{% endhighlight %}
+{{< /highlight >}}
 
 OK, so the renderer's size and the aspect ratio of the camera. Doesn't sound too bad.
 Remember that the `<canvas>` element was automatically created and given a size by the renderer? Well, fortunately when we update the renderer's size it can take care of resizing the canvas again if we want.
 
 Our final `onWindowResize` function will look like this:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
 function onWindowResize() {
 
@@ -85,7 +86,7 @@ function onWindowResize() {
 
 window.addEventListener( 'resize', onWindowResize );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 Now try resizing the window and again and watch as your scene resizes to match. Nice!
 
@@ -98,4 +99,5 @@ In these cases, you can call `renderer.setSize( window.innerWidth, window.innerH
 
 Here's our lovely torus knot with the resize function set up:
 
-{% include_cached codepen id="QaKqzq" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="QaKqzq" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>

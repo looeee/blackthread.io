@@ -8,7 +8,8 @@ So far our scene is not interactive - it is animated, but it doesn't take any us
 
 As usual, we'll continue from where we left off in the last chapter:
 
-{% include_cached codepen id="YYGEJV" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="YYGEJV" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
 
 First of all, remove the lines that make the box rotate - it will be easier to see that the camera is moving without these.
 
@@ -22,7 +23,7 @@ The orbit controls file is located at [/examples/js/controls/OrbitControls.js](h
 
 Turn your attention to the HTML pane in Codepen. Currently, it looks like this:
 
-{% highlight html %}
+{{< highlight html >}}
 <!--
 
 Include the main three.js script.
@@ -31,11 +32,11 @@ This means that the global variable THREE will be available for use to use
 -->
 
 <script src="https://threejs.org/build/three.js"></script>
-{% endhighlight %}
+{{< /highlight >}}
 
 Add the OrbitControls.js file, making sure to put it after the three.js script:
 
-{% highlight html %}
+{{< highlight html >}}
 ...
 <script src="https://threejs.org/build/three.js"></script>
 
@@ -48,7 +49,7 @@ needs to use the global THREE variable
 -->
 
 <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
-{% endhighlight %}
+{{< /highlight >}}
 
 {:.paragraph-notice}
 Friendly reminder: Don't include the scripts from threejs.org this way in a production app. It's not the fastest way to get the files. I'm doing it this way since we are guaranteed to always get the latest version, but again in a production app you probably don't want this since the version might update at any time and your app will break without warning.
@@ -57,16 +58,17 @@ Friendly reminder: Don't include the scripts from threejs.org this way in a prod
 
 Making the controls work is almost ridiculously easy - in fact, all we need to do is add a single line to our app. Add the following line after the camera has been set up:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   camera.position.set( 0, 0, 40 );
 
   const controls = new THREE.OrbitControls( camera );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 And that's it! You can now control the camera using touch or mouse. Experiment with the different mouse buttons and touches to see how it works.
 
 One thing to note about the orbit controls is that they steal your `right click` function - the right mouse button is used to pan the camera whenever you hover over the canvas. It's a bit annoying if you want to use right-click to open the browser console, but just remember that you can still use the shortcut `CTRL + SHIFT + I` instead.
 
-{% include_cached codepen id="eydKyM" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="eydKyM" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>

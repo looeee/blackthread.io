@@ -2,8 +2,7 @@
 title: "CSS Circles Animation"
 order: 2
 description: "An experiment in pure CSS animation, using art created with the EscherSketch hyperbolic art generator."
-header:
-  teaser: /assets/images/experiments/circles/teaser.jpg
+teaserImage: /images/experiments/circles/teaser.jpg
 css: circles
 ---
 

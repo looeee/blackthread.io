@@ -1,9 +1,8 @@
 ---
-title: "Ribbons - 3D lines of varied thickness"
+title: "Ribbons"
 order: 3
 description: "An experiment in creating ribbons - lines of any thickness - which is not possible by default in thee.js"
-header:
-  teaser: /assets/images/experiments/ribbons/teaser.jpg
+teaserImage: /images/experiments/ribbons/teaser.jpg
 js:  ribbons
 ---
 

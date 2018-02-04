@@ -8,7 +8,8 @@ Strap in folks, it's time to push some pixels!
 
 Let's get our first three.js scene up and running. When we are finished with chapters 1 and 2, we'll have this glorious beast shining and rotating before us:
 
-{% include_cached codepen id="GmJPrm" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="GmJPrm" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
 
 #### Follow along on Codepen
 
@@ -28,18 +29,18 @@ I've mentioned this a few times so far, but make sure that you are familiar with
 
 Make sure you have the "console" tab highlighted and type `THREE` (all capital letters), then press return. If three.js loaded correctly, you will see:
 
-{% highlight js %}
+{{< highlight js >}}
 Object { WebGLRenderTargetCube: WebGLRenderTargetCube(), WebGLRenderTarget: WebGLRenderTarget(), WebGLRenderer: WebGLRenderer(), ShaderLib: Object, UniformsLib: Object, UniformsUtils: Object, ShaderChunk: Object, FogExp2: FogExp2(), Fog: Fog(), Scene: Scene(), 367 more… }
-{% endhighlight %}
+{{< /highlight >}}
 
 telling us that the `THREE` global variable has loaded and can be used.
 
 If three.js has _not_ loaded correctly, we will see something like:
 
-{% highlight js %}
+{{< highlight js >}}
 Uncaught ReferenceError: THREE is not defined
     at <anonymous>:1:1
-{% endhighlight %}
+{{< /highlight >}}
 
 {:.paragraph-notice}
 Be warned that the console is a bit tricky when using Codepen - you need to highlight the preview pane before opening the console to get it to work correctly, otherwise, it will reference the main page and tell us that the file has not loaded correctly even when it has. The easiest way to do this is right click in the preview plane and click "inspect" to open the console, or use the built-in console (the button is in the bottom right of the Codepen page).
@@ -56,11 +57,11 @@ If you are writing an HTML file, open an empty `<script>` tag anywhere after the
 
 We'll start by creating a renderer and setting it to the same width and height as the browser window (or the Codepen preview pane in this case). Add the following code to the JS pane in Codepen:
 
-{% highlight js %}
+{{< highlight js >}}
 // create a WebGLRenderer and set its width and height
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
-{% endhighlight %}
+{{< /highlight >}}
 
 Take a quick look at the [WebGLRenderer](https://threejs.org/docs/#api/renderers/WebGLRenderer) docs page to familiarise yourself with some of the settings now. We'll cover them in detail later.
 
@@ -73,33 +74,33 @@ There are other renderers available - the files are contained in the [/examples/
 
 The renderer has kindly created a [canvas](https://www.w3schools.com/html/html5_canvas.asp) element to hold our scene. We could do this manually, which would give us more control over the size and position of the canvas, but since we want this app to be fullscreen the default one will do just fine. We need to add it to the page though, so let's do that now:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
 renderer.setSize( window.innerWidth, window.innerHeight );
 
 // add the automatically created canvas element to the page
 document.body.appendChild( renderer.domElement );
-{% endhighlight %}
+{{< /highlight >}}
 
 (By the way, whenever I ask you to add a line of code I'll also include the line directly above it so you'll know where to put it.)
 
 This appends (i.e. adds just before the closing `</body>` tag) the following to your page, assuming a browser window of 1080 x 600 pixels:
 
-{% highlight html %}
+{{< highlight html >}}
 <canvas width="1080" height="600" style="width: 1080px; height: 600px;"></canvas>
-{% endhighlight %}
+{{< /highlight >}}
 
 #### The scene
 
 There's not much to say about the setup of the Scene as the constructor doesn't take any arguments. Add the following line:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
 document.body.appendChild( renderer.domElement );
 
 // create a Scene
 const scene = new THREE.Scene();
-{% endhighlight %}
+{{< /highlight >}}
 
 We will have more to say about how the actual scene object (technically a [Scene Graph](https://en.wikipedia.org/wiki/Scene_graph) ) works later. For now, just think of the `scene` object as a holder for all the other objects you want to display. Once we have we created an object, if we want to see it we'll need to add it to the scene using `scene.add( object )` and if we later want to remove it from the scene, we can just do `scene.remove( object )`. Simple!
 
@@ -109,13 +110,13 @@ The final object required to render a scene is the camera. Again, there are seve
 
 The PerspectiveCamera takes four options, which together define its [viewing frustum](https://en.wikipedia.org/wiki/Viewing_frustum):
 
-{% include_cached figure image_path="/assets/images/tutorials/ViewingFrustum.jpg" alt="Viewing Frustum" caption="Fig 1: The PerspectiveCamera's viewing frustum" lightbox=false class="figure-small" %}
+{{< figure src="/images/tutorials/ViewingFrustum.jpg" caption="Fig 1: The PerspectiveCamera's viewing frustum" alt="Viewing Frustum" class="figure-small" >}}
 
 A `frustum` is a mathematical term describing a four rectangular pyramid with the top cut off. Everything inside the frustum is visible, everything outside it is not.
 
 Here's the code needed to create the camera:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
 const scene = new THREE.Scene();
 
@@ -130,7 +131,7 @@ const camera = new THREE.PerspectiveCamera( fov, aspect, nearClippingPlane, farC
 // every object is initially created at ( 0, 0, 0 )
 // we'll move the camera back a bit so that we can view the scene
 camera.position.set( 0, 0, 40 );
-{% endhighlight %}
+{{< /highlight >}}
 
 Let's take a quick look at the options we passed to the camera.
 
@@ -152,13 +153,13 @@ We'll start by creating a [TorusKnotBufferGeometry](https://threejs.org/docs/#Re
 
 The two options we passed to it defined the radius (overall size), and radius of the tube, respectively. Most options in three.js have built-in defaults, so even though the docs say that this should take 6 _arguments_ (AKA _parameters_ ), we can get away with ignoring most or all of them and sensible defaults will be chosen.
 
-{% highlight js %}
+{{< highlight js >}}
 ...
 camera.position.set( 0, 0, 40 );
 
 // create a geometry
 const geometry = new THREE.TorusKnotBufferGeometry( 5, 1 );
-{% endhighlight %}
+{{< /highlight >}}
 
 ##### BufferGeometry?
 
@@ -176,13 +177,13 @@ Otherwise, just as if you were staring at a black dog on a dark night, you will 
 
 Enough of that, let's create the material:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
 const geometry = new THREE.TorusKnotBufferGeometry( 5, 1 );
 
 // create a default (white) MeshBasicMaterial
 const material = new THREE.MeshBasicMaterial();
-{% endhighlight %}
+{{< /highlight >}}
 
 Remember what I said about three.js assigning sensible default values if you don't provide them yourself? Well, in this case, it the material will be white since we have not _passed in_ any colour parameter. I would have gone for purple myself. Oh well...
 
@@ -190,7 +191,7 @@ Remember what I said about three.js assigning sensible default values if you don
 
 Next, we'll combine the geometry and material into a [Mesh](https://threejs.org/docs/#api/objects/Mesh) and add it to the scene. The `mesh` object is one of the most important and basic objects in three.js and you will be using it a lot. Thankfully, like the `scene` object, it's fairly simple and it's most important function is to serve as a holder for a `geometry` and `material` and tell us where in the scene they are located.
 
-{% highlight js %}
+{{< highlight js >}}
 ...
 const material = new THREE.MeshBasicMaterial();
 
@@ -199,7 +200,7 @@ const mesh = new THREE.Mesh( geometry, material );
 
 // add the mesh to the scene object
 scene.add( mesh );
-{% endhighlight %}
+{{< /highlight >}}
 
 ### Rendering the scene
 
@@ -207,12 +208,12 @@ Finally, we are ready to push those glorious pixels into our eyeballs!
 
 Add the following and final line to your code:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
 scene.add( mesh );
 
 renderer.render( scene, camera );
-{% endhighlight %}s
+{{< /highlight >}}s
 
 This tells the renderer to `render` ( that is, create a still image ) of the entire `scene` and all the objects it contains from the point of view of the `camera`.
 
@@ -220,6 +221,7 @@ With even this simple setup we can do all kinds of fancy things like quickly swi
 
 After adding the previous line, we will now see this:
 
-{% include_cached codepen id="qpNvdd" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="qpNvdd" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
 
 What's that you say? It looks like an especially boring Celtic Knot? Ungrateful clods! OK, fine, on to the next chapter and we'll see what we can do to make things a bit more interesting.

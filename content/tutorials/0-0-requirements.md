@@ -1,6 +1,6 @@
 ---
 title:  "Requirements for running a three.js scene"
-excerpt: "Here we'll cover the basic requirement for running an three.js app and following the rest of these tutorials"
+description: "Here we'll cover the basic requirement for running an three.js app and following the rest of these tutorials"
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
 ---
 
@@ -31,13 +31,13 @@ The basic pen linked above already includes a basic three.js scene as well as tw
 
 If you choose to work locally instead, you will need to include at least the `three.js` file. You can do this a couple of ways, the simplest is to add the following line somewhere between `<head>` and `</head>` in your HTML:
 
-{% highlight html %}
+{{< highlight html >}}
   <script src="https://threejs.org/build/three.js"></script>
-{% endhighlight %}
+{{< /highlight >}}
 
 A very basic HTML file, ready to create some cool three.js scenes, will look like this:
 
-{% highlight html %}
+{{< highlight html >}}
 <!DOCTYPE html>
 <html>
   <head>
@@ -50,6 +50,6 @@ A very basic HTML file, ready to create some cool three.js scenes, will look lik
     </script>
   </body>
 </html>
-{% endhighlight %}
+{{< /highlight >}}
 
 You will also need to set up a development server to load texture and model files if you are working locally. Fortunately, there is a [page](https://threejs.org/docs/#manual/introduction/How-to-run-thing-locally) in the official docs that should help you out.

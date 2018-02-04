@@ -2,8 +2,7 @@
 title:  "EscherSketch"
 order: 1
 description: "MC Escher inspired uniform tilings of the hyperbolic plane"
-header:
-  teaser: /assets/images/experiments/escherSketch/teaser.jpg
+teaserImage: /images/experiments/escherSketch/teaser.jpg
 js: escherSketch
 css: escherSketch
 ---
@@ -32,7 +31,7 @@ css: escherSketch
     white fish, the other half a black fish.
   </p>
 
-  {% include_cached figure image_path="/assets/images/experiments/escherSketch/fish.png" alt="Fish tiles" caption="Fig 1: Black fish, white fish" class="figure-small" %}
+  {{< figure src="/images/experiments/escherSketch/fish.png" caption="Fig 1: Black fish, white fish" alt="Fish tiles" class="figure-small" >}}
 
   <p>
     I had originally planned to extend this to include irregular tilings of several colours, which would
@@ -91,7 +90,9 @@ css: escherSketch
     Then this central polygon is appropriately rotated and repeated until the entire plane is covered.
   </p>
   <p>The following figure is a {4, 5} tiling - that means 4 sided polygons, with 5 meeting at each vertex.</p>
-  {% include_cached figure image_path="/assets/images/experiments/escherSketch/uniform-hyperbolic-tiling-45.png" alt="Hyperbolic tiling" caption="Fig 2: A {4, 5} tiling" class="figure-medium" %}
+
+  {{< figure src="/images/experiments/escherSketch/uniform-hyperbolic-tiling-45.png" caption="Fig 2: A {4, 5} tiling" alt="Hyperbolic tiling" class="figure-medium" >}}
+
   <p>
     The algorithm used was first described by <a href="https://www.d.umn.edu/~ddunham/">Douglas Dunham</a> and as far
     as I can tell first implemented in software by his PHD student Ajit Datar.

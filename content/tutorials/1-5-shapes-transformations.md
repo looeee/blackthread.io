@@ -17,22 +17,23 @@ These things are seriously cool. They are a different way to rotate objects, rat
 
 Here's where we left off last time.
 
-{% include_cached codepen id="eydKyM" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="eydKyM" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
 
 ### Setting up the scene
 
 Start by moving the camera back a bit so that we can see more of the scene:
 
-{% highlight js %}
+{{< highlight js >}}
   camera.position.set( 0, 0, 150 );
-{% endhighlight %}
+{{< /highlight >}}
 
 Also, remove the texture loader lines and change the material back to
 
-{% highlight js %}
+{{< highlight js >}}
   // create a material
   const material = new THREE.MeshStandardMaterial( { color: 0xffffff} );
-{% endhighlight %}
+{{< /highlight >}}
 
 We now have a plain white cube against a black background. Poetic? Boring? Your choice.
 
@@ -67,7 +68,7 @@ To the specialised:
 
 Let's move our mesh creation out of the `init` function and into a separate function called `initMeshes` to keep things clean. We'll also give the current material, geometry and mesh less generic names since we will soon have more than one of each. Once we have done so, our complete code will look like this:
 
-{% highlight js %}
+{{< highlight js >}}
 // these need to be accessed inside more than one function so we'll declare them first
 let camera, renderer, scene;
 
@@ -155,7 +156,7 @@ initMeshes();
 // then call the animate function to render the scene
 animate();
 
-{% endhighlight %}
+{{< /highlight >}}
 
 Note that we've also removed the `mesh` variable from the very top line since we no longer need to access it outside the initMesh function.
 
@@ -165,7 +166,7 @@ Let's add a flat geometry this time - a [RingBufferGeometry](https://threejs.org
 
 Add the following lines, inside the `initMesh` function and after we have created the box:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   scene.add( boxMesh );
 
@@ -175,13 +176,13 @@ Add the following lines, inside the `initMesh` function and after we have create
 
   scene.add( ringMesh );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 We are adding the `boxMesh` and `ringMesh` to the scene separately. We could also do this in one line:
 
-{% highlight js %}
+{{< highlight js >}}
   scene.add( boxMesh, ringMesh );
-{% endhighlight %}
+{{< /highlight >}}
 
 I prefer to keep this separate so that I can quickly comment out a line if I want to remove an object. It's up to you though.
 
@@ -204,7 +205,7 @@ Up to now, we've been creating objects by making one geometry, one material and 
 
 Create a new geometry and a new material under the ring. I'm going to use an [OctahedronBufferGeometry](https://threejs.org/docs/#api/geometries/OctahedronBufferGeometry), and a blue material:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   scene.add( ringMesh );
 
@@ -212,7 +213,7 @@ Create a new geometry and a new material under the ring. I'm going to use an [Oc
 
   const octaMaterial = new THREE.MeshStandardMaterial( { color: 0x0000ff } );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 No need to set the `material.side` parameter here, the default of `THREE.FrontSide` is fine. We'll also take the time to understand how colours work soon - like, just why is `0x0000ff` blue?
 
@@ -220,7 +221,7 @@ We're passing in a single parameter here, the radius of the octahedron (2). Agai
 
 Next, we'll create our first mesh from the `octaGeometry` and `octaMaterial`:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   const octaMaterial = new THREE.MeshStandardMaterial( { color: 0x0000ff } );
 
@@ -228,7 +229,7 @@ Next, we'll create our first mesh from the `octaGeometry` and `octaMaterial`:
 
   scene.add( octaMesh1 );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 The problem is, we can't see this. It's been created, as all objects are, at the `( 0, 0, 0 )` (the _origin_), and since our cube is already there and is bigger, our poor octahedron is _inside_ the cube, completely hidden. Try zooming the camera slowly in until it is inside the cube, and the octahedron will magically appear.
 
@@ -238,7 +239,7 @@ First, let's quickly introduce the three.js coordinate system so that we can see
 
 #### The three.js coordinate system
 
-{% include_cached figure image_path="/assets/images/tutorials/coords.jpg" alt="three.js coordinate system" caption="Fig 1: The three.js coordinate system" class="figure-small" %}
+{{< figure src="/images/tutorials/coords.jpg" caption="Fig 1: The three.js coordinate system" alt="three.js coordinate system" class="figure-small" >}}
 
 ##### The x-axis
 
@@ -266,7 +267,7 @@ In our app so far, the camera is positioned on the z-axis, right around where th
 Translation is the simplest type of transformation to understand. You just move an object left or right ( along the x-axis ), up or down ( along the y-axis ), or back or forwards (along the z-axis).
 
 Let's move our poor octahedron out of the box:
-{% highlight js %}
+{{< highlight js >}}
 ...
   const octaMesh1 = new THREE.Mesh( octaGeometry, octaMaterial );
 
@@ -274,7 +275,7 @@ Let's move our poor octahedron out of the box:
 
   scene.add( octaMesh1 );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 ##### Transforming meshes vs transforming geometries
 
@@ -294,7 +295,7 @@ Our scene looks a little unbalanced now. Let's add a couple of octahedrons and p
 
 Add `octaMesh2` and `octaMesh3` like so:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
 
   octaMesh1.position.set( -20, 0, 0 ); // move 20 units to the left
@@ -309,7 +310,7 @@ Add `octaMesh2` and `octaMesh3` like so:
 
   scene.add( octaMesh1, octaMesh2, octaMesh3 );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 Notice that they are all using the same geometry and mesh. Efficient!
 
@@ -319,20 +320,20 @@ Before we go ahead though, will this also clone the geometry and material, destr
 
 It's pretty simple actually, and we can see that it doesn't clone the geometry and material, just copies them in:
 
-{% highlight js %}
+{{< highlight js >}}
 // MESH.CLONE from three.js src
 clone: function () {
 
   return new this.constructor( this.geometry, this.material ).copy( this );
 
 }
-{% endhighlight %}
+{{< /highlight >}}
 
 The call to `.copy( this )` at the end just copies in any change we have made to the mesh - in particular, if we have moved or rotated or scaled the mesh, then the cloned mesh will be similarly transformed.
 
 Knowing this, we can confidently go ahead and use clone to create our final octahedron:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   octaMesh3.position.set( 0, 20, 0 ); // move 20 units up
 
@@ -342,7 +343,7 @@ Knowing this, we can confidently go ahead and use clone to create our final octa
 
   scene.add( octaMesh1, octaMesh2, octaMesh3 );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 Great!
 
@@ -352,7 +353,7 @@ If you look closely, you'll see that the points of the octahedrons don't quite m
 
 In this case, a little trial and error in scaling the ring matches them up quite nicely:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   const ringMesh = new THREE.Mesh( ringGeometry, ringMaterials );
 
@@ -360,7 +361,7 @@ In this case, a little trial and error in scaling the ring matches them up quite
 
   scene.add( octaMesh1, octaMesh2, octaMesh3 );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 This scales the `ringMesh` by 1.02 along the x-axis, then the y-axis, then the z-axis. That is, it is now 102% of its original size.
 
@@ -368,4 +369,5 @@ The final transformation we need to cover is rotation. It turns out that rotatin
 
 For now, here's our lovely new logo, which is _definitely_ not a rip off of the London Underground logo.
 
-{% include_cached codepen id="VyKGXx" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="VyKGXx" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>

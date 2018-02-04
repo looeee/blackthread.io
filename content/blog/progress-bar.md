@@ -1,18 +1,19 @@
 ---
 order: 1
 title:  "Faking a progress bar in three.js"
-excerpt: "Setting up a (fake) progress bar for a three.js scene"
+description: "Setting up a (fake) progress bar for a three.js scene"
 tags: ['loading', 'loading overlay', 'progress bar', 'loading manager']
 ---
 
-{% include_cached codepen id="JMrOey" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="JMrOey" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
 
 Setting up a loading overlay to let users know when your page will be ready should be easy, right?
 
 Well, the answer to that is yes, sometimes. And then again, more often, the answer is no.
 We've all seen loading bars like this in various applications - first they say you'll have to wait one hour, then 50 minutes, then 5 minutes... and they end up taking 8 minutes.
 
-{% include_cached figure image_path="/assets/images/blog/loading-overlay/windows-loading.png" alt="alt-test" caption="Fig 1: no wait, 5 minutes... no, 1 minute!" class="figure-small" %}
+{{< figure src="/images/blog/loading-overlay/windows-loading.png" class="figure-small" caption="Fig 1: no wait, 5 minutes... no, 1 minute!" alt="loading..." >}}
 
 Even when these estimates are made while transferring files to a hard drive, they can be way off. Factor in things like uncertain network speeds, texture loading and so on and it's no wonder we will run into problems.
 
@@ -21,10 +22,11 @@ OK, so let's forget an accurate time estimate - what about a simple loading bar 
 In certain situation, this will be fine. For example, take a look at the three.js [FBXLoader example](https://threejs.org/examples/#webgl_loader_fbx). If we open up the console we'll
 see a nice list of percentages showing how much of the model has loaded:
 
-{% include_cached figure image_path="/assets/images/blog/loading-overlay/fbxloader.png" alt="fbxloader-console" caption="Fig 1: Loading percentages" class="figure-medium" lightbox=true %}
+{{< figure src="/images/blog/loading-overlay/fbxloader.png" caption="Fig 1: Loading percentages" alt="fbxloader-console" lightbox=true class="figure-medium" >}}
 
 The code is even quite simple:
-{% highlight js %}
+
+{{< highlight js >}}
 ...
 var onProgress = function( xhr ) {
   if ( xhr.lengthComputable ) {
@@ -40,17 +42,17 @@ var loader = new THREE.FBXLoader( manager );
 
 }, onProgress, onError );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 `xhr` in the `onProgress` method refers to an [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) object, which is an object used to retrieve data from a server. The progress is monitored by three.js using a [progress](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequestEventTarget/onprogress) event.
 
 All are doing here is adding an `eventListener` to a file download request:
 
-{% highlight js %}
+{{< highlight js >}}
 var request = new XMLHttpRequest();
 
 request.addEventListener('progress', onProgress);
-{% endhighlight %}
+{{< /highlight >}}
 
 where `onProgress` is the function from the FBXLoader example.
 
@@ -58,11 +60,11 @@ So far so groovy, right? We just need to hook those percentages up to a nice pro
 
 As long as you are just loading a single model, this is correct. Kind of - actually when I've tested this with different models, I've found that it's unusual to get such a fine-grained progress report. You are much more like to get something like:
 
-{% highlight js %}
+{{< highlight js >}}
 14% downloaded
 66% downloaded
 100% downloaded
-{% endhighlight %}
+{{< /highlight >}}
 
 Which makes for a very "jumpy" progress bar... and when it comes to downloading multiple files, in most cases this process breaks down completely.
 
@@ -72,21 +74,21 @@ Let's examine the FBXLoader example a little deeper.
 
 First of all, if you open up the console again you'll notice a couple of other lines beside the percentages:
 
-{% highlight js %}
+{{< highlight js >}}
 models/fbx/nurbs.fbx 1 2
 models/fbx/xsi_man_skinning.fbx 2 4
 models/fbx/Char_UV_Texture.gif 3 4
 models/fbx/Char_UV_Texture.gif 4 4
-{% endhighlight %}
+{{< /highlight >}}
 
 These are coming from a _second_ `onProgress` function. This on is connected up to the loading manager:
 
-{% highlight js %}
+{{< highlight js >}}
 var manager = new THREE.LoadingManager();
 manager.onProgress = function( item, loaded, total ) {
   console.log( item, loaded, total );
 };
-{% endhighlight %}
+{{< /highlight >}}
 
 This tells us details about _all_ the files loaded in the scene (as long as we pass it into the loaders correctly: `var loader = new THREE.FBXLoader( manager );`).
 
@@ -120,17 +122,17 @@ Let's jump straight in and see how we can set this up.
 
 The HTML:
 
-{% highlight html %}
+{{< highlight html >}}
 <div id="loading-overlay">
   <div id="loading-bar"
       <span id="progress"></span>
   </div>
 </div>
-{% endhighlight %}
+{{< /highlight >}}
 
 ...and the CSS:
 
-{% highlight css %}
+{{< highlight css >}}
 #loading-overlay {
   position: absolute;
   width: 100%;
@@ -163,7 +165,7 @@ The HTML:
 
   width: 5%;
 }
-{% endhighlight %}
+{{< /highlight >}}
 
 #### Make the bar animate while loading.
 
@@ -180,21 +182,21 @@ Start by creating the loading manager and create references to the progress comp
 
 We can then control the width of the bar using `progressBar.style.width`, and we'll hide the whole overlay using `loadingOverlay.classList.add( 'loading-overlay-hidden' )` once loading is complete.
 
-{% highlight js %}
+{{< highlight js >}}
 var manager = new THREE.LoadingManager();
 const progressBar = document.querySelector( '#progress' );
 const loadingOverlay = document.querySelector( '#loading-overlay' );
-{% endhighlight %}
+{{< /highlight >}}
 
 Next, we'll set up a percentage counter and frame id - we will be using `requestAnimationFrame` to control the bar animation here, and we will use the frame id to stop the animation once loading is complete.
-{% highlight js %}
+{{< highlight js >}}
 let percentComplete = 0;
 let frameID = null;
-{% endhighlight %}
+{{< /highlight >}}
 
 We'll create an animation loop to control the bar's animation. This is very similar to the standard animation loop used in most three.js scenes. See the [animation with requestAnimationFrame](/tutorials/1-1-lights-color-action/#animating-with-requestanimationframe) for more details.
 
-{% highlight js %}
+{{< highlight js >}}
 const updateAmount = 5; // in percent of bar width, should divide 100 evenly
 
 const animateBar = () => {
@@ -210,11 +212,11 @@ const animateBar = () => {
   frameID = requestAnimationFrame( updateBar )
 
 }
-{% endhighlight %}
+{{< /highlight >}}
 
 Next, we'll set up this animation loop in the `loadingManager.onStart` method. A little care is needed here since this method may be called more than once and we don't want multiple instances of the animation loop running.
 
-{% highlight js %}
+{{< highlight js >}}
 loadingManager.onStart = () => {
 
   // onStart may be called multiple times
@@ -223,11 +225,11 @@ loadingManager.onStart = () => {
 
   animateBar();
 };
-{% endhighlight %}
+{{< /highlight >}}
 
 Finally, we'll set up the `loadingManager.onLoad` method to cancel the bar animation, reset everything and hide the loading overlay. Remember that this method gets called once _all_ items, including textures, are loaded. If you want to hide the overlay once models have loaded but _before_ textures have loaded you'll have to use a different technique (such as [promises](/blog/promisifying-threejs-loaders/.))
 
-{% highlight js %}
+{{< highlight js >}}
 loadingManager.onLoad = function ( ) {
 
   loadingOverlay.classList.add( 'loading-overlay-hidden' );
@@ -240,7 +242,7 @@ loadingManager.onLoad = function ( ) {
   // do any other on load things
 
 };
-{% endhighlight %}
+{{< /highlight >}}
 
 And that's it! You now have a totally believable fake loading bar. You may need to adjust the speed and rate at which it fills.
 
@@ -265,4 +267,5 @@ I had to reduce the `updateAmount` from 5 to 0.5 - perhaps Codepen is doing some
 
 If you use this in any projects please share them in the comments below!
 
-{% include_cached codepen id="JMrOey" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="JMrOey" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>

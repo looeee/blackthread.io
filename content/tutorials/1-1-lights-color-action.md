@@ -6,7 +6,7 @@ tags: ['three.js', 'scene', 'renderer', 'webgl', 'animation', 'color', 'lights']
 
 We'll pick up here exactly where we left off in the last chapter. Here is the complete code so far:
 
-{% highlight js %}
+{{< highlight js >}}
 // create a WebGLRenderer and set its width and height
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -43,7 +43,7 @@ scene.add( mesh );
 
 renderer.render( scene, camera );
 
-{% endhighlight %}
+{{< /highlight >}}
 
 ## Code organisation
 
@@ -51,7 +51,7 @@ Before we go any further, let's take a moment to organise our code a little. We'
 
 Once we have done this, our code will look like this:
 
-{% highlight js %}
+{{< highlight js >}}
 
 // these need to be accessed inside more than one function so we'll declare them first
 let camera, renderer, scene, mesh;
@@ -106,7 +106,7 @@ init();
 // then call the animate function to render the scene
 animate();
 
-{% endhighlight %}
+{{< /highlight >}}
 
 Code organisation is a `VERY` important thing to stay on top of - it will make any piece of software much easier for both you and other people to understand and maintain, and you should spend a considerable amount of time on any software project making sure that the code is well organised, clear, well named and easy to understand, as well as having just enough comments to guide a reader. It's not the subject of these tutorials so I won't say anything more about it, except that if you are serious about coding, then you need to be serious about code organisation too. Badly organised code is bad code, even if it currently does what it is supposed to.
 
@@ -141,7 +141,7 @@ Base your animations on how much _time_ has passed instead and everything will b
 
 Actually using `requestAnimationFrame` is pretty simple - the trick is to do it recursively. That is, we'll call our `animate` function _within_ our animate function. Update it to look like this:
 
-{% highlight js %}
+{{< highlight js >}}
 
 function animate() {
 
@@ -152,7 +152,7 @@ function animate() {
   renderer.render( scene, camera );
 }
 
-{% endhighlight %}
+{{< /highlight >}}
 
 And that, my friends, is that! Cue round of applause, bow, exeunt our hero stage left.
 
@@ -170,21 +170,21 @@ In JavaScript, a hexadecimal number is denoted with `0x` instead of `#`. The CSS
 
 Update the section:
 
-{% highlight js %}
+{{< highlight js >}}
 
 // create a default (white) MeshBasicMaterial
 const material = new THREE.MeshBasicMaterial();
 
-{% endhighlight %}
+{{< /highlight >}}
 
 So that it looks like:
 
-{% highlight js %}
+{{< highlight js >}}
 
   // create a purple MeshStandardMaterial
   const material = new THREE.MeshStandardMaterial( { color: 0x800080 } );
 
-{% endhighlight %}
+{{< /highlight >}}
 
 And... our scene has gone completely black. Great.
 
@@ -204,7 +204,7 @@ This provides [global illumination](https://en.wikipedia.org/wiki/Global_illumin
 
 And take note that just like meshes, lights need to be added to the scene to be taken into account when rendering
 
-{% highlight js %}
+{{< highlight js >}}
 ....
 scene.add( mesh );
 
@@ -214,7 +214,7 @@ scene.add( mesh );
   // remember to add the light to the scene
   scene.add( ambientLight );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 If you refresh the page again, you will see dimly see the mesh again.
 
@@ -222,7 +222,7 @@ If you refresh the page again, you will see dimly see the mesh again.
 
 Let's add another light - this time a [PointLight](https://threejs.org/docs/#Reference/Lights/PointLight). This light also shines in every direction, but this time from a specific point in space. You can think if this one like a bare light bulb, that illuminates everything around it. In some applications, this is called an 'Omni' (for omnidirectional) light.
 
-{% highlight js %}
+{{< highlight js >}}
 ....
   scene.add( ambientLight );
 
@@ -233,7 +233,7 @@ Let's add another light - this time a [PointLight](https://threejs.org/docs/#Ref
 
   scene.add( pointLight );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 We've also positioned the light halfway between the mesh and the camera (remember, since we didn't move the mesh it's still at the default position of `(0, 0, 0)` ).
 
@@ -249,7 +249,7 @@ Back to the animation. As noted above, our scene should now be animating nicely 
 
 Let's add some rotation to the mesh. Add a couple of lines to the `animate` function:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
 function animate() {
 
@@ -265,10 +265,11 @@ function animate() {
 
 }
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 ### Final result
 
 ...and there you have it, a fine spiny rotaty torus knot in all its glory!
 
-{% include_cached codepen id="GmJPrm" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="GmJPrm" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>

@@ -4,7 +4,7 @@ description: "Working with hexadecimal colors in three.js"
 tags: ['three.js', 'color', 'colour', 'hexadecimal', 'hexadecimal triple', 'CSS']
 ---
 
-{% include_cached figure image_path="/assets/images/tutorials/2.0/hero.png" alt="rainbows" caption="Fig 1: Three.js... with just a little help from Photoshop" class="" %}
+{{< figure src="/images/tutorials/2.0/hero.png" class="figure-small" caption="Fig 1: Three.js... with just a little help from Photoshop" alt="rainbows." >}}
 
 We'll be working closely with the [Color](https://threejs.org/docs/#api/math/Color) docs page here. Open it up now and take a look.
 
@@ -74,15 +74,16 @@ So how much of an advantage does this actually give us compared to other ways of
 
 ### A white box.
 
-{% include_cached codepen id="aEBKYK" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="aEBKYK" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
 
 Now that we have covered all of that, and not even touched a line of code, here is a nice white box for you to play with. Try putting in a few different colours for the material, and see if you can accurately say what they will be before the scene is reloaded.
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   const boxMaterial = new THREE.MeshStandardMaterial( { color: 0xffffff } );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 Try these:
 
@@ -94,11 +95,11 @@ Try these:
 
 Notice that we have been talking about an object called `THREE.Color` throughout this chapter. You can create on like this:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   const redColorObject = new THREE.Color( 0xff0000 );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 However, when we came to actually creating a red object, we did not do this. This is because the material does this automatically for us.
 

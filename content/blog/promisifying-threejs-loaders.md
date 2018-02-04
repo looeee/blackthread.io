@@ -20,7 +20,9 @@ Traditionally in JavaScript, callbacks have been (and are) used to deal with asy
 
 In particular, callbacks are used every time a model is  loaded. Here is how you would load an FBX model, for example:
 
-{% highlight js %}
+{{< highlight js >}}
+{{< /highlight >}}
+{{< highlight js >}}
 const loader = new THREE.FBXLoader( manager );
 
 loader.load( 'duck.fbx', ( loadedObject ) => {
@@ -29,17 +31,17 @@ loader.load( 'duck.fbx', ( loadedObject ) => {
 
 }, onProgress, onError );
 
-{% endhighlight %}
+{{< /highlight >}}
 
 There are actually three callback functions here, but the one we are interested in is the so called `onLoad` callback. This gets called once the model has finished loading:
 
-{% highlight js %}
+{{< highlight js >}}
 ( loadedObject ) => {
 
   scene.add( loadedObject );
 
 }
-{% endhighlight %}
+{{< /highlight >}}
 
 The others are `onProgress`, and `onError` which we'll ignore for now.
 
@@ -50,7 +52,7 @@ There is nothing wrong with the callback approach in many cases. However there a
 Yes, that joke heading probably gets used in every single article on promises. I'd hate to break the trend.
 Anyway, let's take a look at how we would rewrite the above model loading code if the `FBXLoader` returned a Promise instead of waiting for a callback:
 
-{% highlight js %}
+{{< highlight js >}}
 const promiseLoader = new THREE.FBXPromiseLoader();
 
 const promiseOfADuck = promiseLoader.load( 'duck.fbx' );
@@ -62,7 +64,7 @@ promiseOfADuck
 
   } )
   .catch( ( err ) => { console.error( err );  } );
-{% endhighlight %}
+{{< /highlight >}}
 
 Here the `catch` statement has taken over the role of `onError`.
 
@@ -88,7 +90,7 @@ With promises we can wait until a whole batch of them have resolved and _then_ d
 
 Here's how the code will look:
 
-{% highlight js %}
+{{< highlight js >}}
 const promiseLoader = new THREE.FBXPromiseLoader( manager );
 
 const farmYardPromises = [];
@@ -114,7 +116,7 @@ Promise.all( this.loadingPromises ).then( () => {
   scene.add( farmYardAnimals );
 
 } );
-{% endhighlight %}
+{{< /highlight >}}
 
 Here are a couple of examples of things that you can do here that would be hard to do using `LoadingManager.onLoad`, or without promises. All of these are examples from my own projects:
 
@@ -131,7 +133,7 @@ Now that we have the motivation, let's look at how to actually convert a `Loader
 
 We'll take the `FBXLoader` as an example, you could use any loader though, including the ones in three.js core such as the [BufferGeometryLoader](https://threejs.org/docs/#api/loaders/BufferGeometryLoader).
 
-{% highlight js %}
+{{< highlight js >}}
 function promisifyLoader ( loader, onProgress ) {
 
   function promiseLoader ( url ) {
@@ -149,31 +151,31 @@ function promisifyLoader ( loader, onProgress ) {
   };
 
 }
-{% endhighlight %}
+{{< /highlight >}}
 
 Remember that the promise's `.then` has taken the place of `onLoad` and the `.catch` has taken the place of `onError`. This just leaves `onProgress`, which you can pass in to the function, or omit. I don't find this function useful so I usually omit it. See [Faking a progress bar](/blog/progress-bar/) for more details.
 
 With this function set up, we can then turn the `FBXLoader` into an `FBXPromiseLoader`:
 
-{% highlight js %}
+{{< highlight js >}}
 const FBXPromiseLoader = promisifyLoader( new THREE.FBXLoader() );
-{% endhighlight %}
+{{< /highlight >}}
 
 Note that, even though the promises have largely taken over the role of the `LoadingManager`, you can still use it of you want. All the methods like [LoadingManager.onLoad](https://threejs.org/docs/#api/loaders/managers/LoadingManager.onLoad), [LoadingManager.onProgress](https://threejs.org/docs/#api/loaders/managers/LoadingManager.onProgress) and [LoadingManager.onError](https://threejs.org/docs/#api/loaders/managers/LoadingManager.onError) will still work:
 
-{% highlight js %}
+{{< highlight js >}}
 const loadingManager = new THREE.LoadingManager();
 const FBXPromiseLoader = promisifyLoader( new THREE.FBXLoader( loadingManager ) );
-{% endhighlight %}
+{{< /highlight >}}
 
 {:paragraph-notice}
 One reason why you may still need to use the loading manager is the [LoadingManager.setURLModifier](https://threejs.org/docs/#api/loaders/managers/LoadingManager.setURLModifier) method, which enables you create file upload interfaces, such as the one in my [loader](/loader/). We'll cover this in more detail in a forthcoming post: URL-transform in three.js loaders.
 
 Now we can load the duck like this:
 
-{% highlight js %}
+{{< highlight js >}}
 const promiseOfADuck = FBXPromiseLoader.load( 'duck.fbx' ).then( onLoad ).catch( onError );
-{% endhighlight %}
+{{< /highlight >}}
 
 We've also retained a reference to the original loader as `FBXPromiseLoader.originalLoader` which means that you can still access internal methods such as `parse`, `setCrossOrigin` and so on. Whether you need them will largely depend on the loader, although in most cases you won't.
 
@@ -185,4 +187,5 @@ Promises are pretty well supported across [all modern browsers](https://caniuse.
 
 Finally, here is avery simple example of using the above approach to convert the [GLTFLoader](https://threejs.org/docs/#examples/loaders/GLTFLoader) into a `GLTFPromiseLoader`:
 
-{% include_cached codepen id="baaBee" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="baaBee" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>

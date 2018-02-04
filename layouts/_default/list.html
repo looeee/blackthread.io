@@ -1,18 +1,17 @@
 {{ define "main" }}
-  <article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      {{ .Content }}
+
+  {{ partial "hero.html" . }}
+  <div id="page-content-full-width" itemprop="text">
+    <div class="archive">
+      {{ $paginator := .Paginate (where .Data.Pages "Section" .Section) }}
+        {{ range $paginator.Pages }}
+            {{ if .Params.teaserImage }}
+              {{ partial "summary-with-image.html" . }}
+            {{ else }}
+              {{ partial "summary.html" . }}
+            {{ end }}
+        {{ end }}
+      {{ template "_internal/pagination.html" . }}
     </div>
-  </article>
-  <div class="mw8 center">
-    {{ $paginator := .Paginate (where .Data.Pages "Section" .Section) }}
-    <section class="flex-ns flex-wrap justify-around mt5">
-      {{ range  $paginator.Pages }}
-        <div class="relative w-100  mb4 bg-white">
-          {{ partial "summary.html" . }}
-        </div>
-      {{ end }}
-    </section>
-  {{ template "_internal/pagination.html" . }}
   </div>
 {{ end }}

@@ -12,23 +12,24 @@ Put very simply, this means taking an image and stretching it over the surface o
 
 Start by loading up the code from the previous chapter.
 
-{% include_cached codepen id="QaKqzq" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="QaKqzq" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
 
 That... looks like a very curved and knotted surface. Let's switch it out for something a bit plainer. Change the line
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   // create a geometry
   const geometry = new THREE.TorusKnotBufferGeometry( 5, 1 );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   // create a geometry
   const geometry = new THREE.BoxBufferGeometry( 15, 15, 15 );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 This changes our torus knot to a cube 15 units long, wide and high, ready to have a texture applied to each side.
 
@@ -36,13 +37,13 @@ This changes our torus knot to a cube 15 units long, wide and high, ready to hav
 
 We'll turn this purple box into a wooden crate. Fortunately, the three.js repo has lots of free textures that we can use as we like, one of which is just what we are looking for:
 
-{% include_cached figure image_path="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/crate.gif" alt="Wooden box texture" class="figure-small" %}
+{{< figure src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/crate.gif" alt="Wooden box texture" class="figure-small" >}}
 
 We'll use the [Texture Loader](https://threejs.org/docs/#api/loaders/TextureLoader) to load it. Once it has loaded, the loader returns a [Texture](https://threejs.org/docs/#api/textures/Texture) object that we can add to our `material`.
 
 Create a `TextureLoader` under the geometry and then load the texture:
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   const geometry = new THREE.BoxBufferGeometry( 15, 15, 15 );
 
@@ -50,7 +51,7 @@ Create a `TextureLoader` under the geometry and then load the texture:
 
   const texture = textureLoader.load( 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/crate.gif' );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 #### A note on working locally
 
@@ -60,7 +61,7 @@ At this point, if you are working locally instead of via codepen, and especially
 
 Next, well assign the texture to the [material.map](https://threejs.org/docs/#api/materials/MeshStandardMaterial.map) slot.
 
-{% highlight js %}
+{{< highlight js >}}
 ...
   const texture = textureLoader.load( 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/crate.gif' );
 
@@ -70,7 +71,7 @@ Next, well assign the texture to the [material.map](https://threejs.org/docs/#ap
     map: texture,
   } );
 ...
-{% endhighlight %}
+{{< /highlight >}}
 
 Take note that we've also set the material's colour back to white ( we could also remove the colour line completely since white is the default ).
 
@@ -81,4 +82,5 @@ The `material.map` slot is the material's 'colour map' ( AKA 'diffuse map' or ev
 
 Here's our wooden cube, happily spinning away. It looks very flat and shiny at the moment, and there are plenty of settings on the material that we can use to adjust that, which we will get to very soon.
 
-{% include_cached codepen id="YYGEJV" %}
+<p data-height="400" data-theme-id="0" data-slug-hash="YYGEJV" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
