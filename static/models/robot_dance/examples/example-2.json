@@ -1,0 +1,100 @@
+{
+	"metadata": {
+		"type": "Nao Dance File",
+		"generator": "Blackthread design",
+		"version": "1"
+	},
+	"frames": {
+		"0": {
+			"headPitch": "30",
+			"headYaw": "",
+			"leftShoulderPitch": "",
+			"leftShoulderYaw": "",
+			"rightShoulderPitch": "",
+			"rightShoulderYaw": "",
+			"leftElbowPitch": "",
+			"leftElbowYaw": "",
+			"rightElbowPitch": "",
+			"rightElbowYaw": ""
+		},
+		"1": {
+			"headPitch": "",
+			"headYaw": "",
+			"leftShoulderPitch": "",
+			"leftShoulderYaw": "",
+			"rightShoulderPitch": "",
+			"rightShoulderYaw": "",
+			"leftElbowPitch": "",
+			"leftElbowYaw": "",
+			"rightElbowPitch": "",
+			"rightElbowYaw": ""
+		},
+		"2": {
+			"headPitch": "30",
+			"headYaw": "0",
+			"leftShoulderPitch": "25",
+			"leftShoulderYaw": "30",
+			"rightShoulderPitch": "25",
+			"rightShoulderYaw": "30",
+			"leftElbowPitch": "",
+			"leftElbowYaw": "",
+			"rightElbowPitch": "",
+			"rightElbowYaw": ""
+		},
+		"3": {
+			"headPitch": "20",
+			"headYaw": "10",
+			"leftShoulderPitch": "25",
+			"leftShoulderYaw": "30",
+			"rightShoulderPitch": "25",
+			"rightShoulderYaw": "30",
+			"leftElbowPitch": "25",
+			"leftElbowYaw": "26",
+			"rightElbowPitch": "25",
+			"rightElbowYaw": "23"
+		}
+	},
+	"groups": {
+		"0": {
+			"0": {
+				"frameNum": "1"
+			},
+			"1": {
+				"frameNum": "0"
+			}
+		},
+		"1": {
+			"0": {
+				"frameNum": "1"
+			},
+			"1": {
+				"frameNum": "2"
+			}
+		},
+		"2": {
+			"0": {
+				"frameNum": "1"
+			},
+			"1": {
+				"frameNum": "3"
+			}
+		}
+	},
+	"dance": {
+		"0": {
+			"type": "group",
+			"num": "0",
+			"loopAmount": "2"
+		},
+		"1": {
+			"type": "group",
+			"num": "1",
+			"loopAmount": "2"
+		},
+		"2": {
+			"type": "group",
+			"num": "2",
+			"loopAmount": "2"
+		}
+	}
+}

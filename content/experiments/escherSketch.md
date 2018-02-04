@@ -1,0 +1,108 @@
+---
+title:  "EscherSketch"
+order: 1
+description: "MC Escher inspired uniform tilings of the hyperbolic plane"
+header:
+  teaser: /assets/images/experiments/escherSketch/teaser.jpg
+js: escherSketch
+css: escherSketch
+---
+
+<div id="details">
+  <p>
+    This is a prototype of an automatic hyperbolic art generator and educational tool.
+    It creates a regular edge to edge
+    <a href="https://en.wikipedia.org/wiki/Uniform_tilings_in_hyperbolic_plane">tiling of the hyperbolic plane</a>
+    represented as a <a href="https://en.wikipedia.org/wiki/Poincar%C3%A9_disk_model" title="Poincaré disk model of the Hyperbolic Plane">Poincaré disk</a>,
+    also known as a hyperbolic tesselation.
+  </p>
+  <p>
+    These were originally described by
+    <a href="https://en.wikipedia.org/wiki/Harold_Scott_MacDonald_Coxeter">H. S. M. Coxeter</a>, but were made famous by
+    <a href="https://en.wikipedia.org/wiki/M._C._Escher">M.C. Escher</a>
+     in his series of Circle Limit woodcuts, back in the era when people were known only by their initials and surnames.
+  </p>
+  <p>Currently it can create images similar to Escher's
+    <a href="https://www.wikiart.org/en/m-c-escher/circle-limit-i" title="Circle Limit i">Circle Limit I</a>.
+    These are regular two colored tilings, defined by the number of sides of the polygons, and the
+    number of polygons that meet at each vertex.
+  </p>
+  <p>
+    The tiling is created out out of two Euclidean triangular pieces, one representing half a
+    white fish, the other half a black fish.
+  </p>
+
+  {% include_cached figure image_path="/assets/images/experiments/escherSketch/fish.png" alt="Fish tiles" caption="Fig 1: Black fish, white fish" class="figure-small" %}
+
+  <p>
+    I had originally planned to extend this to include irregular tilings of several colours, which would
+    allow the creation of the rest oas a teaching tool where students could create their own tiles.
+  </p>
+
+  <p>
+    Unfortunately, creating the tiles so that they match evenly turned out to be more difficult than I expected.
+    It's quite unintuitive since the Euclidean triangles get stretched to map onto hyperbolic
+    triangles, and the lines of opposing edges don't match up where you would expect.
+    Since the intention was to create a simple educational tool where students could quickly creat
+    their own designs, this was a bit of a showstopper, and I halted development.
+  </p>
+
+  <p>
+    However, here is current app - it creates some fairly nice images so I think it's still worth sharing.
+    Note that once you go over around 8 for either values the polygons will start to get very stretched at the edges.
+  </p>
+</div>
+
+<div id="controls">
+  <div id="p-selection">
+    <span>Central polygon sides: </span>
+    <a href="#" id="p-down">
+      <span class="fa fa-chevron-left" aria-hidden="true"></span>
+    </a>
+    <span id="p-value">6</span>
+    <a href="#" id="p-up">
+      <span class="fa fa-chevron-right" aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="q-selection">
+    <span>Polygons meeting at each vertex: </span>
+    <a href="#" id="q-down">
+      <span class="fa fa-chevron-left" aria-hidden="true"></span>
+    </a>
+    <span id="q-value">6</span>
+    <a href="#" id="q-up">
+      <span class="fa fa-chevron-right" aria-hidden="true"></span>
+    </a>
+  </div>
+</div>
+
+<p id="warn" class="hide"><strong>Invalid tiling!</strong></p>
+<canvas id="canvas"></canvas>
+
+<div id="detail-lower">
+
+  <p>
+    Your current tiling consists of <span id="tiling-length"></span> hyperbolic polygons.
+  </p>
+
+  <p>
+    This way this works by mapping the two triangular images to hyperbolic triangles (a non-affine texture mapping),
+    and then covering the central polygon with them.
+    Then this central polygon is appropriately rotated and repeated until the entire plane is covered.
+  </p>
+  <p>The following figure is a {4, 5} tiling - that means 4 sided polygons, with 5 meeting at each vertex.</p>
+  {% include_cached figure image_path="/assets/images/experiments/escherSketch/uniform-hyperbolic-tiling-45.png" alt="Hyperbolic tiling" caption="Fig 2: A {4, 5} tiling" class="figure-medium" %}
+  <p>
+    The algorithm used was first described by <a href="https://www.d.umn.edu/~ddunham/">Douglas Dunham</a> and as far
+    as I can tell first implemented in software by his PHD student Ajit Datar.
+  </p>
+  <p>
+    However, this is almost certainly the first implementation using JavaScript and WebGL.
+  </p>
+  <p>
+    If you are interested in reading more about hyperbolic tesselation, check out the Dr. Dunham's homepage linked above, or for a slightly gentler introduction, try
+    <a href="https://mathcs.clarku.edu/~djoyce/poincare/poincare.html">this</a>
+    page by Prof. Joyce at Clare university, as well the <a href="https://en.wikipedia.org/wiki/Uniform_tilings_in_hyperbolic_plane">wikpedia</a>
+    page.
+  </p>
+</div>

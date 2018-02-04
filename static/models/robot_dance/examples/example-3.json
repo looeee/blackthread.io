@@ -1,0 +1,67 @@
+{
+	"metadata": {
+		"type": "Nao Dance File",
+		"generator": "Blackthread design",
+		"version": "1"
+	},
+	"frames": {
+		"0": {
+			"headPitch": "",
+			"headYaw": "",
+			"leftShoulderPitch": "",
+			"leftShoulderYaw": "",
+			"rightShoulderPitch": "",
+			"rightShoulderYaw": "",
+			"leftElbowPitch": "",
+			"leftElbowYaw": "",
+			"rightElbowPitch": "",
+			"rightElbowYaw": ""
+		},
+		"1": {
+			"headPitch": "",
+			"headYaw": "",
+			"leftShoulderPitch": "30",
+			"leftShoulderYaw": "",
+			"rightShoulderPitch": "-30",
+			"rightShoulderYaw": "",
+			"leftElbowPitch": "",
+			"leftElbowYaw": "",
+			"rightElbowPitch": "",
+			"rightElbowYaw": ""
+		},
+		"2": {
+			"headPitch": "",
+			"headYaw": "",
+			"leftShoulderPitch": "-30",
+			"leftShoulderYaw": "",
+			"rightShoulderPitch": "30",
+			"rightShoulderYaw": "",
+			"leftElbowPitch": "",
+			"leftElbowYaw": "",
+			"rightElbowPitch": "",
+			"rightElbowYaw": ""
+		}
+	},
+	"groups": {
+		"0": {
+			"0": {
+				"frameNum": "1"
+			},
+			"1": {
+				"frameNum": "2"
+			}
+		}
+	},
+	"dance": {
+		"0": {
+			"type": "frame",
+			"num": "0",
+			"loopAmount": "1"
+		},
+		"1": {
+			"type": "group",
+			"num": "0",
+			"loopAmount": "4"
+		}
+	}
+}
