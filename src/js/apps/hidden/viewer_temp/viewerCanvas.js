@@ -28,7 +28,7 @@ class LoaderCanvas {
     this.app.renderer.setClearColor( 0xf7f7f7, 1.0 );
 
     this.app.camera.far = 10000;
-    
+
 
     // Put any per frame calculation here
     this.app.onUpdate = function () {
@@ -114,21 +114,21 @@ class LoaderCanvas {
   }
 
   loadMaps() {
-    // this.envMap = this.loaders.textureLoader.load( '/assets/images/textures/env_maps/grey_room.jpg' );
-    // this.envMap = this.loaders.textureLoader.load( '/assets/images/textures/env_maps/grey_lights.jpg' );
-    // this.envMap = this.loaders.textureLoader.load( '/assets/images/textures/env_maps/studio_setup.jpg' );
-    this.envMap = this.loaders.textureLoader.load( '/assets/images/textures/env_maps/test_env_map.jpg' );
-    // this.envMap = this.loaders.textureLoader.load( '/assets/images/textures/env_maps/very_grey.jpg' );
+    // this.envMap = this.loaders.textureLoader.load( '/images/textures/env_maps/grey_room.jpg' );
+    // this.envMap = this.loaders.textureLoader.load( '/images/textures/env_maps/grey_lights.jpg' );
+    // this.envMap = this.loaders.textureLoader.load( '/images/textures/env_maps/studio_setup.jpg' );
+    this.envMap = this.loaders.textureLoader.load( '/images/textures/env_maps/test_env_map.jpg' );
+    // this.envMap = this.loaders.textureLoader.load( '/images/textures/env_maps/very_grey.jpg' );
 
     this.envMap.mapping = THREE.EquirectangularReflectionMapping;
 
-    this.floorMap = this.loaders.textureLoader.load( '/assets/images/textures/hidden/floorReflection.png' );
+    this.floorMap = this.loaders.textureLoader.load( '/images/textures/hidden/floorReflection.png' );
   }
 
   initMaterials() {
 
     this.materials = {
-      
+
       // transparent stem
       Glas: new THREE.MeshStandardMaterial( {
 
@@ -214,7 +214,7 @@ class LoaderCanvas {
 
   loadFBXObject() {
 
-    const url = '/assets/models/viewer_temp/product_scaled.fbx';
+    const url = '/models/viewer_temp/product_scaled.fbx';
 
     console.log( 'Starting model load' );
     console.time( 'load' );
@@ -252,7 +252,7 @@ class LoaderCanvas {
 
   loadOBJObject() {
 
-    const objURL = '/assets/models/viewer_temp/product_scaled.obj';
+    const objURL = '/models/viewer_temp/product_scaled.obj';
 
     const objLoader = this.loaders.objLoader2;
 

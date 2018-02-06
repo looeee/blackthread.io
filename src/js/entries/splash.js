@@ -1,1 +1,1 @@
-import 'apps/splash/main.js';
+import '../apps/splash/main.js';

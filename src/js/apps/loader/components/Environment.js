@@ -16,14 +16,14 @@ export default class Environment {
     this.maps = [];
 
     const textureLoader = new THREE.TextureLoader();
-    const mapA = textureLoader.load( '/assets/images/textures/env_maps/test_env_map.jpg' );
+    const mapA = textureLoader.load( '/images/textures/env_maps/test_env_map.jpg' );
     mapA.mapping = THREE.EquirectangularReflectionMapping;
     mapA.magFilter = THREE.LinearFilter;
     mapA.minFilter = THREE.LinearMipMapLinearFilter;
 
     this.maps.push( mapA );
 
-    const r = '/assets/images/textures/cube_maps/Bridge2/';
+    const r = '/images/textures/cube_maps/Bridge2/';
     const urls = [ r + 'posx.jpg', r + 'negx.jpg',
       r + 'posy.jpg', r + 'negy.jpg',
       r + 'posz.jpg', r + 'negz.jpg' ];

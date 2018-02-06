@@ -60,14 +60,14 @@ export default class Main {
   // load the models
   loadModels() {
 
-    const fieldPromise = loaders.fbxLoader( '/assets/models/robot/field.fbx' ).then( ( object ) => {
+    const fieldPromise = loaders.fbxLoader( '/models/robot/field.fbx' ).then( ( object ) => {
 
       // field width width ~140cm, length ~200cm
       canvas.app.scene.add( object );
 
     } );
 
-    const naoPromise = loaders.fbxLoader( '/assets/models/robot/nao.fbx' ).then( ( object ) => {
+    const naoPromise = loaders.fbxLoader( '/models/robot/nao.fbx' ).then( ( object ) => {
 
       // NOTE: Will no longer be needed if https://github.com/mrdoob/three.js/issues/11911 is merged
       invertMirroredFBX( object );
@@ -76,7 +76,7 @@ export default class Main {
 
     } );
 
-    const ballPromise = loaders.fbxLoader( '/assets/models/robot/ball.fbx' ).then( ( object ) => {
+    const ballPromise = loaders.fbxLoader( '/models/robot/ball.fbx' ).then( ( object ) => {
 
       this.ball = new THREE.Group();
 

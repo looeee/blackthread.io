@@ -162,7 +162,7 @@ export default class FileControl {
 
       e.preventDefault();
 
-      const path = '/assets/models/robot_dance/examples/' + examples.options[examples.selectedIndex].value + '.json';
+      const path = '/models/robot_dance/examples/' + examples.options[examples.selectedIndex].value + '.json';
 
       fetch( path )
         .then( response => response.json() )

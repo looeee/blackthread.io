@@ -214,7 +214,7 @@ HTMLControl.controls.exampleDuck.addEventListener( 'click', ( e ) => {
   e.preventDefault();
 
   loadingManager.onStart();
-  OnLoadCallbacks.onGLTFLoad( '/assets/models/loader/Duck.gltf' );
+  OnLoadCallbacks.onGLTFLoad( '/models/loader/Duck.gltf' );
 
 } );
 

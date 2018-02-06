@@ -169,7 +169,7 @@ export default class Grid {
 
     } else {
 
-      loaders.fontLoader( '/assets/fonts/json/droid_sans_mono_regular.typeface.json' ).then( ( font ) => {
+      loaders.fontLoader( '/fonts/json/droid_sans_mono_regular.typeface.json' ).then( ( font ) => {
 
         this.font = font;
 

@@ -11,7 +11,7 @@ export default class Audio {
     this.isPlaying = false;
     this.isPaused = false;
 
-    this.audioDirectory = '/assets/audio/robot_dance/';
+    this.audioDirectory = '/audio/robot_dance/';
 
     this.playButton = HTMLControl.controls.music.play;
     this.stopButton = HTMLControl.controls.music.stop;

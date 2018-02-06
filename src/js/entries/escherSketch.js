@@ -1,3 +1,2 @@
 
-import 'pages/experiments/escherSketch/main.js';
-
+import '../apps/experiments/escherSketch/main.js';

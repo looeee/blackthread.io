@@ -69,7 +69,7 @@ class Main {
 
   loadModels() {
 
-    const playerPromise = loaders.fbxLoader( '/assets/models/nfl/t_pose_rigged.fbx' ).then( ( object ) => {
+    const playerPromise = loaders.fbxLoader( '/models/nfl/t_pose_rigged.fbx' ).then( ( object ) => {
 
       // object.traverse( ( child ) => {
 
@@ -115,7 +115,7 @@ class Main {
 
     animationsNames.forEach( ( name ) => {
 
-      this.loadingPromises.push( loaders.animationLoader( '/assets/models/nfl/anims/' + name + '.json' ).then( ( anim ) => {
+      this.loadingPromises.push( loaders.animationLoader( '/models/nfl/anims/' + name + '.json' ).then( ( anim ) => {
 
         anim.name = name;
         this.animations.push( anim );

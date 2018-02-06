@@ -1,8 +1,5 @@
 import * as THREE from 'three';
-import Time from 'utilities/Time.js';
-
-import OrbitControls from 'modules/OrbitControls.module.js';
-
+import Time from '../utilities/Time.js';
 
 /**
  * @author Lewy Blue / https://github.com/looeee

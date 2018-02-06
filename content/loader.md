@@ -9,9 +9,9 @@ userScaleDisabled: true
 noFooter: true
 js: loader
 css: loader
-vendor-js:
+vendorScripts:
   [
-  "/zip/inflate.min",
+  "/inflate.min",
   "/three/build/three.min",
   '/three/examples/js/loaders/DDSLoader',
   '/three/examples/js/loaders/FBXLoader',
@@ -77,9 +77,7 @@ vendor-js:
       <p>
           Faces: <span id="faces"></span> Vertices: <span id="vertices"></span>
       </p>
-
     </div>
-
     <div>
       <a href="#" id="toggle-grid" title="Toggle Grid">
           <span class="fa fa-lg fa-th" aria-hidden="true"></span>

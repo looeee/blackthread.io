@@ -1,4 +1,4 @@
-import throttle from 'lodash.throttle';
+import throttle from 'lodash-es';
 
 import HTMLControl from '../HTMLControl.js';
 import exportAnimsAsJSON from '../utilities/exportAnimsAsJSON.js';

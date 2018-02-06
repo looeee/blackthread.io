@@ -135,7 +135,7 @@ class Main {
   }
 
   initSpec() {
-    const imagesPath = '/assets/images/experiments/escherSketch/tiles/';
+    const imagesPath = '/images/experiments/escherSketch/tiles/';
 
     this.spec = {
       wireframe: false,

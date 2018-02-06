@@ -48,7 +48,7 @@ export default class Sprites {
 
   loadTexture() {
 
-    this.texture = new THREE.TextureLoader().load( '/assets/images/nfl/power_bar_sheet.png' );
+    this.texture = new THREE.TextureLoader().load( '/images/nfl/power_bar_sheet.png' );
     this.texture.wrapS = this.texture.wrapT = THREE.RepeatWrapping;
     // texture is a sprite sheet 10 frames wide and 1 tall
     this.texture.repeat.set( 0.1, 1 );

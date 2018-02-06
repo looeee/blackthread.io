@@ -55,7 +55,7 @@ $blue1: #062f4f;
 
 
 #circle-1 {
-  background-image: url('/assets/images/experiments/circles/hyper_4_512.jpg');
+  background-image: url('/images/experiments/circles/hyper_4_512.jpg');
   box-shadow: inset 0.2em -0.1em 0 0 $blue1, inset -0.1em 0.1em 0 0 $red1, inset (-$x-offset) (-$y-offset) 0 0 $gray2, inset (-$x-offset) $y-offset 0 0 $gray4, inset $x-offset $y-offset 0 0 $gray5, inset 0 (-$shadow-depth) 0 0 $gray6, ; // animation: spin 120s linear infinite;
   &:hover {
       box-shadow: inset -0.2em 0.1em 0 0 $blue1, inset 0.1em -0.1em 0 0 $red1, inset $x-offset (-$y-offset) 0 0 $gray1, inset 0 ($shadow-depth) 0 0 $gray3, inset $x-offset $y-offset 0 0 $gray5, inset 0 (-$shadow-depth) 0 0 $gray6, ;
@@ -64,7 +64,7 @@ $blue1: #062f4f;
 
 #circle-2 {
 	background-position: top right;
-  background-image: url('/assets/images/experiments/circles/hyper_3_512.jpg');
+  background-image: url('/images/experiments/circles/hyper_3_512.jpg');
   box-shadow: inset 0.1em -0.1em 0 0 $red1, inset -0.2em 0.1em 0 0 $blue1, inset $x-offset (-$y-offset) 0 0 $gray1, inset 0 ($shadow-depth) 0 0 $gray3, inset $x-offset $y-offset 0 0 $gray5, inset 0 (-$shadow-depth) 0 0 $gray6, ; // animation: spin 120s linear infinite;
   &:hover {
       box-shadow: inset -0.1em 0.1em 0 0 $red1, inset 0.2em -0.1em 0 0 $blue1, inset (-$x-offset) (-$y-offset) 0 0 $gray2, inset (-$x-offset) $y-offset 0 0 $gray4, inset $x-offset $y-offset 0 0 $gray5, inset 0 (-$shadow-depth) 0 0 $gray6, ;
@@ -73,7 +73,7 @@ $blue1: #062f4f;
 
 #circle-3 {
 	background-position: center;
-  background-image: url('/assets/images/experiments/circles/hyper_1_512.jpg');
+  background-image: url('/images/experiments/circles/hyper_1_512.jpg');
   box-shadow: inset 0.1em -0.1em 0 0 $blue1, inset -0.2em 0.1em 0 0 $red1, inset $x-offset (-$y-offset) 0 0 $gray1, inset $x-offset $y-offset 0 0 $gray5, inset 0 ($shadow-depth) 0 0 $gray3, inset (-$x-offset) $y-offset 0 0 $gray4, ; // animation: spin 120s linear infinite;
   &:hover {
       box-shadow: inset -0.1em 0.1em 0 0 $blue1, inset 0.2em -0.1em 0 0 $red1, inset (-$x-offset) (-$y-offset) 0 0 $gray2, inset (-$x-offset) $y-offset 0 0 $gray4, inset $x-offset $y-offset 0 0 $gray5, inset 0 (-$shadow-depth) 0 0 $gray6, ;
@@ -82,7 +82,7 @@ $blue1: #062f4f;
 
 #circle-4 {
 	background-position: bottom;
-  background-image: url('/assets/images/experiments/circles/hyper_2_512.jpg');
+  background-image: url('/images/experiments/circles/hyper_2_512.jpg');
   box-shadow: inset 0.1em -0.1em 0 0 $red1, inset -0.2em 0.1em 0 0 $blue1, inset (-$x-offset) (-$y-offset) 0 0 $gray2, inset (-$x-offset) $y-offset 0 0 $gray4, inset $x-offset $y-offset 0 0 $gray5, inset 0 (-$shadow-depth) 0 0 $gray6, ; // animation: spin 120s linear infinite;
   &:hover {
       box-shadow: inset -0.1em 0.1em 0 0 $red1, inset 0.2em -0.1em 0 0 $blue1, inset $x-offset (-$y-offset) 0 0 $gray1, inset $x-offset $y-offset 0 0 $gray5, inset 0 ($shadow-depth) 0 0 $gray3, inset (-$x-offset) $y-offset 0 0 $gray4, ;

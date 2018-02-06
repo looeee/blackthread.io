@@ -7,7 +7,7 @@ import pointerPosToCanvasCentre from './utilities/pointerPosToCanvasCentre.js';
 
 import App from './App/App.js';
 
-import loaders from './loaders.js';
+import loaders from './Loaders.js';
 
 import backgroundVert from './shaders/background.vert';
 import backgroundFrag from './shaders/background.frag';
@@ -63,7 +63,7 @@ class Main {
 
     this.loadingPromises = [];
 
-    const fontPromise = loaders.fontLoader( '/assets/fonts/json/droid_sans_mono_regular.typeface.json' )
+    const fontPromise = loaders.fontLoader( '/fonts/json/droid_sans_mono_regular.typeface.json' )
       .then( ( font ) => { this.font = font; } );
 
     this.loadingPromises.push( fontPromise );
@@ -178,7 +178,7 @@ class Main {
   initMaterials() {
 
     const loader = new TextureLoader();
-    const noiseTexture = loader.load( '/assets/images/textures/noise-256.jpg' );
+    const noiseTexture = loader.load( '/images/textures/noise-256.jpg' );
     noiseTexture.wrapS = noiseTexture.wrapT = RepeatWrapping;
 
     this.offset = new Vector2( 0, 0 );

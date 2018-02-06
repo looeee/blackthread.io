@@ -65,7 +65,7 @@ class Main {
   load() {
 
     console.time( 'Loading time' );
-    const stagePromise = loaders.fbxLoader( '/assets/models/robot_dance/stage_camera_lights.fbx' ).then( ( object ) => {
+    const stagePromise = loaders.fbxLoader( '/models/robot_dance/stage_camera_lights.fbx' ).then( ( object ) => {
 
       this.stage = object.getObjectByName( 'Stage' );
 
@@ -80,7 +80,7 @@ class Main {
 
     } );
 
-    const naoPromise = loaders.fbxLoader( '/assets/models/robot_dance/nao.fbx' ).then( ( object ) => {
+    const naoPromise = loaders.fbxLoader( '/models/robot_dance/nao.fbx' ).then( ( object ) => {
 
       // invertMirroredFBX( object );
 

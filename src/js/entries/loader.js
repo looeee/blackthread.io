@@ -1,1 +1,1 @@
-import 'pages/loader/main.js';
+import '../apps/loader/main.js';

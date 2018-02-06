@@ -6,12 +6,10 @@
   },
   "compilerOptions": {
     "target": "ES6",
-    "module": "es6"
+    "module": "es6",
+    "checkJs": true
   },
-  "exclude": [
-    "**/js/build/*",
-    "**/js/build-min/*",
-    "**/js/vendor/*",
-    "**/node_modules/*"
+  "include": [
+    "src/**/*"
   ]
 }

@@ -29,7 +29,7 @@ export default class Background {
   initMaterials() {
 
     const loader = new THREE.TextureLoader();
-    const noiseTexture = loader.load( '/assets/images/textures/noise-256.jpg' );
+    const noiseTexture = loader.load( '/images/textures/noise-256.jpg' );
     noiseTexture.wrapS = noiseTexture.wrapT = THREE.RepeatWrapping;
 
     this.colA = new THREE.Color( 0xffffff );

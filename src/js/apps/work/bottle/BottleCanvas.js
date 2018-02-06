@@ -132,10 +132,10 @@ export default class BottleCanvas {
   }
 
   initTextures() {
-    this.envMap = textureLoader.load( '/assets/images/textures/env_maps/grey_room.jpg' );
+    this.envMap = textureLoader.load( '/images/textures/env_maps/grey_room.jpg' );
     this.envMap.mapping = THREE.EquirectangularRefractionMapping;
 
-    this.smileyTexture = textureLoader.load( '/assets/images/textures/work/bottle/carlsberg-smiley-dark.png' );
+    this.smileyTexture = textureLoader.load( '/images/textures/work/bottle/carlsberg-smiley-dark.png' );
 
     this.labelMap = this.labelCanvas ? new THREE.CanvasTexture( this.labelCanvas ) : null;
   }
@@ -146,7 +146,7 @@ export default class BottleCanvas {
     this.bottleGroup.scale.set( 20, 20, 20 );
     this.app.scene.add( this.bottleGroup );
 
-    fileLoader.load( '/assets/models/work/bottle/bottle.json', ( json ) => {
+    fileLoader.load( '/models/work/bottle/bottle.json', ( json ) => {
       const geometries = {};
 
       json.geometries.forEach( ( obj ) => {
