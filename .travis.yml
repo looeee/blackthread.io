@@ -1,25 +1,43 @@
-language: ruby
-cache: bundler
-rvm:
-- 2.3.3
-before_script:
-- chmod +x ./config/travis.sh
+language: go
 
-install: bundle install
-script: "./config/travis.sh"
+go:
+  - master # This uses automatically the latest version of go
+
+before_script:
+- chmod +x ./scripts/travis.sh
+
+# Install the apt prerequisites
+addons:
+  apt:
+    packages:
+      - python-pygments
+
+# Clean and don't fail
+install:
+  - go get github.com/spf13/hugo
+  - rm -rf public || exit 0
+
+script:
+  - hugo
+  - "./scripts/travis.sh"
+
 branches:
   only:
   - staging
+
 env:
   global:
-  - JEKYLL_ENV=production
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+  - SOURCE_DIR="public"
+  - HUGO_ENV=production
+
 sudo: false
+
 deploy:
+  local_dir: public
   provider: heroku
   api_key:
     secure: KKlbqm+Bl1vHtcwIFhe+rZDQG+kvESdpMpy7Ne9ymhaWJ5sE1RGthE5uYWRSJlr0RLykeHsuQdJNaWxNtNHR0BUExfJ4va3VYo5By/Ii2ygFxEvHu4428uGXaLuLO5LXhhy6ZERjLZccDrSoYhJ8rNGXgC12arVMB/RyNsXzTzq3G1XwQ2UP5qvB2iykk50np+Stf0UIeNlKthTeaFH+tJ0WT+t3keb93Qq+b/dkI0ZHEc5F/4T64CEdaNytYqgkKfTCjgi5KCa0/zAnk4OT5+FLbmi5Eana+eNmCgfGjIDdyqZJS6jbtOzbglOpxVdE7cXqrXoWUiIaFR5aww3dvjXFmX0/U4J4nKjwCv/3lmfgk2LURDxNMvgZ0wAjw/ckRkPj2zvQmzIuroNof3gPJ9J3RH6ExA785n+Lls3eY6ND+2T8ZciMWIz5m9S6P5BvvGqGP4epLqbhlk5FN3sX35ntLlHSF+4iiUd5I5/Zc2SFrRymPbMRCwLCInk6rBK7ny+wVTHXjrIaXkwtdeGV05C5aPCP2Y52v83nLRmAUytacP/O1QcxkisdAvAJY+Xn4IQidmXz5fQUHGQ+jxml/4UJ0R1Gc0LQotRiQ8LhJ/eDesmFNW+rUWQc+5ndsSCbbJ7sdtDPqZUvd8ofkz+miyDZnH2BRWjDnpbkKHSgVE4=
   app: blackthread-staging
   on:
-    repo: looeee/blackthread-heroku
+    repo: looeee/blackthread-hugo
     branch: staging

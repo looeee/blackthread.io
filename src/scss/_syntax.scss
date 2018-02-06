@@ -1,5 +1,5 @@
-div.highlighter-rouge,
-figure.highlight {
+// div.highlighter-rouge,
+div.highlight {
   position: relative;
   margin-bottom: 1em;
   font-family: $monospace;
@@ -15,7 +15,7 @@ figure.highlight {
   &:before {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 96%;
     padding: 0.5em;
     background-color: $text-color;
     content: "\f121";

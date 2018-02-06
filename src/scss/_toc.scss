@@ -1,11 +1,26 @@
 /* styles for auto-generated markdown table of contents */
 
-.toc {
+#TableOfContents {
 
   border: 1px solid silver;
   padding: 1em 1em 1em 2em;
   background: black;
   box-shadow: 6px 6px 1px 1px grey inset;
+
+  // Hugo created an extra ul and li, hide these
+  >ul {
+
+    list-style: none;
+
+    >li>ul{
+
+      list-style: none;
+
+    }
+
+  }
+
+
 
   li {
 

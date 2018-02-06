@@ -1,1 +1,1 @@
-this.main=this.main||{},function(){"use strict"}();
+undefined
