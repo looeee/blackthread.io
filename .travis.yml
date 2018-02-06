@@ -28,7 +28,7 @@ branches:
 env:
   global:
   - SOURCE_DIR="public"
-  - HUGO_ENV=production
+  - HUGO_ENV="production"
 
 sudo: false
 
