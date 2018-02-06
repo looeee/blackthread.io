@@ -39,5 +39,5 @@ deploy:
     secure: KKlbqm+Bl1vHtcwIFhe+rZDQG+kvESdpMpy7Ne9ymhaWJ5sE1RGthE5uYWRSJlr0RLykeHsuQdJNaWxNtNHR0BUExfJ4va3VYo5By/Ii2ygFxEvHu4428uGXaLuLO5LXhhy6ZERjLZccDrSoYhJ8rNGXgC12arVMB/RyNsXzTzq3G1XwQ2UP5qvB2iykk50np+Stf0UIeNlKthTeaFH+tJ0WT+t3keb93Qq+b/dkI0ZHEc5F/4T64CEdaNytYqgkKfTCjgi5KCa0/zAnk4OT5+FLbmi5Eana+eNmCgfGjIDdyqZJS6jbtOzbglOpxVdE7cXqrXoWUiIaFR5aww3dvjXFmX0/U4J4nKjwCv/3lmfgk2LURDxNMvgZ0wAjw/ckRkPj2zvQmzIuroNof3gPJ9J3RH6ExA785n+Lls3eY6ND+2T8ZciMWIz5m9S6P5BvvGqGP4epLqbhlk5FN3sX35ntLlHSF+4iiUd5I5/Zc2SFrRymPbMRCwLCInk6rBK7ny+wVTHXjrIaXkwtdeGV05C5aPCP2Y52v83nLRmAUytacP/O1QcxkisdAvAJY+Xn4IQidmXz5fQUHGQ+jxml/4UJ0R1Gc0LQotRiQ8LhJ/eDesmFNW+rUWQc+5ndsSCbbJ7sdtDPqZUvd8ofkz+miyDZnH2BRWjDnpbkKHSgVE4=
   app: blackthread-staging
   on:
-    repo: looeee/blackthread-hugo
+    repo: looeee/blackthread_hugo
     branch: staging
