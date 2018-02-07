@@ -1,64 +1,67 @@
-<button id="toggle-nav" class="fa fa-bars fa-2x"></button>
+{{ if .Params.sidenav }}
+  <button id="toggle-nav" class="fa fa-bars fa-2x"></button>
 
-<nav id="vert-nav" class="fold">
-  <ul>
-    <li class="nav-title"></li>
-    {{ $currentNode := . }}
-    {{ range .Site.Menus.blog }}
-      <li>
-        {{if or ($currentNode.IsMenuCurrent "blog" .) ($currentNode.HasMenuCurrent "blog" .) }}
-          <span class="fa fa-arrow-right" aria-hidden="true"></span><a href="{{ .URL }}" class="">{{ .Name }}</a>
-        {{ else }}
-          </span><a href="{{ .URL }}" class="">{{ .Name }}</a>
-        {{ end }}
-      </li>
-    {{ end }}
-  </ul>
-</nav>
+  <nav id="vert-nav" class="fold">
+    <ul>
+      <li class="nav-title"></li>
+      {{ $currentNode := . }}
+      {{ range .Site.Menus.blog }}
+        <li>
+          {{if or ($currentNode.IsMenuCurrent "blog" .) ($currentNode.HasMenuCurrent "blog" .) }}
+            <span class="fa fa-arrow-right" aria-hidden="true"></span><a href="{{ .URL }}" class="">{{ .Name }}</a>
+          {{ else }}
+            </span><a href="{{ .URL }}" class="">{{ .Name }}</a>
+          {{ end }}
+        </li>
+      {{ end }}
+    </ul>
+  </nav>
 
-<script>
+  <script>
 
-  var sidenav = function() {
+    var sidenav = function() {
 
-    var content = document.querySelector( '#main' );
-    var toggleButton = document.querySelector( '#toggle-nav' );
-    var nav = document.querySelector( '#vert-nav' );
+      var content = document.querySelector( '#main' );
+      var toggleButton = document.querySelector( '#toggle-nav' );
+      var nav = document.querySelector( '#vert-nav' );
 
-    var breakpoint = 1280;
+      var breakpoint = 1280;
 
-    function updateMenu(){
+      function updateMenu(){
 
-      if( content.offsetWidth < breakpoint ) {
+        if( content.offsetWidth < breakpoint ) {
 
-        if( !toggleButton.classList.contains( 'hide' ) ) return;
-        toggleButton.classList.remove( 'hide' );
-        nav.classList.add( 'fold' );
+          if( !toggleButton.classList.contains( 'hide' ) ) return;
+          toggleButton.classList.remove( 'hide' );
+          nav.classList.add( 'fold' );
+
+        }
+        else {
+
+          if( toggleButton.classList.contains( 'hide' ) ) return;
+          toggleButton.classList.add( 'hide' );
+          nav.classList.remove( 'fold' );
+
+        }
 
       }
-      else {
 
-        if( toggleButton.classList.contains( 'hide' ) ) return;
-        toggleButton.classList.add( 'hide' );
-        nav.classList.remove( 'fold' );
+      updateMenu();
 
-      }
+      toggleButton.addEventListener( 'click', function( e ) {
 
-    }
+        e.preventDefault();
 
-    updateMenu();
+        nav.classList.toggle( 'fold' );
 
-    toggleButton.addEventListener( 'click', function( e ) {
+      } );
 
-      e.preventDefault();
+      window.addEventListener( 'resize', updateMenu );
 
-      nav.classList.toggle( 'fold' );
+    };
 
-    } );
+    window.addEventListener( 'load', sidenav );
 
-    window.addEventListener( 'resize', updateMenu );
+  </script>
 
-  };
-
-  window.addEventListener( 'load', sidenav );
-
-</script>
+  {{ end }}

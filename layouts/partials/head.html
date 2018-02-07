@@ -4,6 +4,10 @@
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
 
+{{ if .Params.redirect }}
+  <meta http-equiv="refresh" content="0; url={{ .Params.redirect }}" />
+{{ end }}
+
 {{ if .Params.userScaleDisabled }}
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 {{ else }}

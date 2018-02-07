@@ -1,17 +1,14 @@
-<div class="comments">
+{{ if not (eq .Params.comments false) }}
+  <div class="comments">
+    {{ partial "comments/new-comment.html" . }}
+    <h4 class="comments-title">Previous Comments</h4>
+  </div>
 
-  {{ partial "comments/new-comment.html" . }}
+  <script>
+    if( window.location.href.indexOf( 'comment-submitted' ) !== -1 ) {
 
-  <h4 class="comments-title">Previous Comments</h4>
+      document.querySelector( '#comment-submitted-message' ).classList.remove( 'hide' );
 
-</div>
-
-<script>
-
-  if( window.location.href.indexOf( 'comment-submitted' ) !== -1 ) {
-
-    document.querySelector( '#comment-submitted-message' ).classList.remove( 'hide' );
-
-  }
-
-</script>
+    }
+  </script>
+{{ end }}

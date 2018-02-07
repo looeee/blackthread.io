@@ -1,3 +1,5 @@
+
+{{ if not (eq .Params.meta false) }}
 <div id="meta">
   {{ partial "tag-list.html" . }}
   <p class="meta-date">
@@ -14,3 +16,4 @@
     <strong><span class="fa fa-fw fa-user" aria-hidden="true"></span>Author: </strong><a href="/about" itemprop="author" rel="author">{{ .Site.Params.Author }}</a>
   </p>
 </div>
+{{ end }}
