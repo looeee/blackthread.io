@@ -1,17 +1,15 @@
 {{ define "main" }}
-  <article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “{{ .Title }}”</p>
-    </div>
-  </article>
-  <div class="mw8 center">
+<div id="page-content-full-width"  itemprop="text">
+  <h1 class="text-center">Pages tagged  “{{ .Title }}”</h1>
+  <article class="archive">
     {{ $section := .Data.Pages }}
-    <section class="flex-ns flex-wrap justify-around mt5">
       {{ range  $section }}
-        <div class="relative w-100  mb4 bg-white">
+        {{ if .Params.teaserImage }}
+          {{ partial "summary-with-image.html" . }}
+        {{ else }}
           {{ partial "summary.html" . }}
-        </div>
+        {{ end }}
       {{ end }}
-    </section>
-  </div>
+  </article>
+</div>
 {{ end }}

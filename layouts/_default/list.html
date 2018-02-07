@@ -1,8 +1,7 @@
 {{ define "main" }}
-
   {{ partial "hero.html" . }}
   <div id="page-content-full-width" itemprop="text">
-    <div class="archive">
+    <article class="archive">
       {{ $paginator := .Paginate (where .Data.Pages "Section" .Section) }}
         {{ range $paginator.Pages }}
             {{ if .Params.teaserImage }}
@@ -12,6 +11,6 @@
             {{ end }}
         {{ end }}
       {{ template "_internal/pagination.html" . }}
-    </div>
+    </article>
   </div>
 {{ end }}
