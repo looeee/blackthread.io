@@ -35,12 +35,57 @@ form {
     display: none;
   }
 }
+/* Consistent form font size in all browsers, margin changes, misc */
+
+button,
+input,
+select,
+textarea {
+  margin: 0;
+  font-size: 100%;
+  vertical-align: middle;
+}
+
+button,
+input {
+  *overflow: visible; /* inner spacing ie IE6/7*/
+  line-height: normal; /* FF3/4 have !important on line-height in UA stylesheet*/
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner { /* inner padding and border oddities in FF3/4*/
+  padding: 0;
+  border: 0;
+}
+
+button,
+html input[type="button"], // avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio` and `video` controls
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button; /* corrects inability to style clickable `input` types in iOS*/
+    cursor: pointer; /* improves usability and consistency of cursor style between image-type `input` and others*/
+}
+
+label,
+select,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+input[type="radio"],
+input[type="checkbox"] {
+    cursor: pointer; /* improves usability and consistency of cursor style between image-type `input` and others*/
+}
+
+textarea {
+  overflow: auto; /* remove vertical scrollbar in IE6-9*/
+  vertical-align: top; /* readability and alignment cross-browser*/
+}
 
 label,
 input,
 button,
-select,
-textarea {
+select, {
   vertical-align: baseline;
   *vertical-align: middle;
 }
@@ -77,7 +122,7 @@ select {
   width: 100%;
   padding: 0.25em;
   margin-bottom: 0.5em;
-  color: $text-color;
+  // color: $text-color;
   background-color: #fff;
   border: 1px solid mix(#fff, #000, 80%);
   border-radius: $border-radius;
