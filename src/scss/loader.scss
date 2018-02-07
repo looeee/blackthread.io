@@ -267,3 +267,47 @@ input[type=range]::-moz-range-thumb {
     border-radius: 100%;
     box-shadow: 0 0 1px 0 rgba(0,0,0,0.1);
 }
+
+#sideNavToggle {
+  height: 100%;
+  background: red;
+  width: 1em;
+}
+
+#sideNav {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  // justify-items: center;
+  background: white;
+  padding-right: 1em;
+  overflow: hidden;
+
+  z-index: 2;
+  width: 10em;
+  right: 0;
+  height: 100%;
+
+  transition: all 0.25s ease-in-out;
+
+  span {
+    color: black;
+  }
+
+}
+
+.sideNav-row {
+  width: auto;
+  left: 2%;
+  height: 1.5em;
+}
+
+#page-content-full-width {
+  height: 100%;
+}
+
+#light-control {
+  display: flex;
+}

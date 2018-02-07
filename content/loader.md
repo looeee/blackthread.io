@@ -44,66 +44,71 @@ vendorScripts:
 
 </div>
 
-<div id="controls">
+<div id="sideNavToggle">
+  <input type="checkbox" />
+</div>
+<div id="sideNav">
 
-  <div class="controls-section"></div>
-
-  <div class="controls-section">
-    <input id="lighting-slider" type="range" min="0" max="8" step="0.1" value="0"/>
+  <div class="sideNav-row"></div>
+  <div id="light-control" class="sideNav-row">
     <span id="light-symbol" class="fa fa-lg fa-lightbulb-o" aria-hidden="true"></span>
+    <input id="lighting-slider" type="range" min="0" max="8" step="0.1" value="0"/>
   </div>
-
-  <div class="controls-section">
-    <div id="animation-controls" class="hide">
-      <select id="animation-clips">
-          <option value="static">Static Pose</option>
-        </select>
-        <a href="#" id="playback-control">
-          <span id="play-button" class="fa fa-lg fa-play-circle hide" aria-hidden="true"></span>
-          <span id="pause-button" class="fa fa-lg fa-pause-circle" aria-hidden="true"></span>
-        </a>
-        <input id="animation-slider" type="range" min="0" max="100" value="0"/>
-        <a href="#" id="playback-control" title="Save take as JSON">
-          <span id="export-anims" class="fa fa-lg fa-save" aria-hidden="true"></span>
-        </a>
-    </div>
+  <div id="model-info" class="sideNav-row hide">
+    <p>Bounding box - L: <span id="bb-depth">0</span> W: <span id="bb-width">0</span> H: <span id="bb-height">0</span></p>
+    <p>Faces: <span id="faces"></span> Vertices: <span id="vertices"></span></p>
   </div>
-
-  <div class="controls-section">
-    <div id="model-info" class="hide">
-      <p>
-          Bounding box - L: <span id="bb-depth">0</span> W: <span id="bb-width">0</span> H: <span id="bb-height">0</span>
-      </p>
-      <p>
-          Faces: <span id="faces"></span> Vertices: <span id="vertices"></span>
-      </p>
-    </div>
-    <div>
-      <a href="#" id="toggle-grid" title="Toggle Grid">
-          <span class="fa fa-lg fa-th" aria-hidden="true"></span>
-      </a>
-      <a href="#" id="toggle-info" title="Model info">
-        <span class="fa fa-lg fa-info" aria-hidden="true"></span>
-      </a>
-      <a href="#" id="toggle-environment" title="Change Environment Map">
-          <span class="fa fa-lg fa-picture-o" aria-hidden="true"></span>
-        </a>
-      <a href="#" id="toggle-background" title="Toggle background">
-        <span class="fa fa-lg fa-sun-o" aria-hidden="true"></span>
-      </a>
-      <a href="#" id="fullscreen-button" title="Go fullscreen">
-        <span class="fa fa-lg fa-arrows-alt" aria-hidden="true"></span>
-      </a>
-      <a href="#" id="screenshot-button" title="Take a screenshot">
-        <span class="fa fa-lg fa-camera" aria-hidden="true"></span>
-      </a>
-      <a href="#" id="export-gltf" title="Export to GLTF">
-        <span class="fa fa-lg fa-save" aria-hidden="true"></span>
-      </a>
-      <a href="#" id="reset" title="Reset">
-        <span class="fa fa-lg fa-undo" aria-hidden="true"></span>
-      </a>
-    </div>
+  <div class="sideNav-row">
+    <a href="#" id="toggle-grid" title="Toggle Grid">
+      <span class="fa fa-lg fa-th" aria-hidden="true"></span>
+    </a>
   </div>
-
+  <div class="sideNav-row">
+    <a href="#" id="toggle-info" title="Model info">
+      <span class="fa fa-lg fa-info" aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="sideNav-row">
+    <a href="#" id="toggle-environment" title="Change Environment Map">
+      <span class="fa fa-lg fa-picture-o" aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="sideNav-row">
+    <a href="#" id="toggle-background" title="Toggle background">
+      <span class="fa fa-lg fa-sun-o" aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="sideNav-row">
+    <a href="#" id="fullscreen-button" title="Go fullscreen">
+      <span class="fa fa-lg fa-arrows-alt" aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="sideNav-row">
+    <a href="#" id="screenshot-button" title="Take a screenshot">
+      <span class="fa fa-lg fa-camera" aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="sideNav-row">
+    <a href="#" id="export-gltf" title="Export to GLTF">
+      <span class="fa fa-lg fa-save" aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="sideNav-row">
+    <a href="#" id="reset" title="Reset">
+      <span class="fa fa-lg fa-undo" aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="animation-controls" class="sideNav-row">
+    <select id="animation-clips">
+      <option value="static">Static Pose</option>
+    </select>
+    <a href="#" id="playback-control">
+      <span id="play-button" class="fa fa-lg fa-play-circle hide" aria-hidden="true"></span>
+      <span id="pause-button" class="fa fa-lg fa-pause-circle" aria-hidden="true"></span>
+    </a>
+    <input id="animation-slider" type="range" min="0" max="100" value="0"/>
+    <a href="#" id="playback-control" title="Save take as JSON">
+      <span id="export-anims" class="fa fa-lg fa-save" aria-hidden="true"></span>
+    </a>
+  </div>
 </div>

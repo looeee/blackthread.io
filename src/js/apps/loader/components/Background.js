@@ -92,11 +92,11 @@ export default class Background {
 
     HTMLControl.modelInfo.infoBox.style.color = 'white';
 
-    for ( let i = 0; i < HTMLControl.controls.links.length; i++ ) {
+    // for ( let i = 0; i < HTMLControl.controls.links.length; i++ ) {
 
-      HTMLControl.controls.links[ i ].style.color = 'white';
+    //   HTMLControl.controls.links[ i ].style.color = 'white';
 
-    }
+    // }
 
     for ( let i = 0; i < HTMLControl.controls.sliders.length; i++ ) {
 
@@ -110,11 +110,11 @@ export default class Background {
 
     HTMLControl.modelInfo.infoBox.style.color = 'black';
 
-    for ( let i = 0; i < HTMLControl.controls.links.length; i++ ) {
+    // for ( let i = 0; i < HTMLControl.controls.links.length; i++ ) {
 
-      HTMLControl.controls.links[ i ].style.color = 'black';
+    //   HTMLControl.controls.links[ i ].style.color = 'black';
 
-    }
+    // }
 
     for ( let i = 0; i < HTMLControl.controls.sliders.length; i++ ) {
 

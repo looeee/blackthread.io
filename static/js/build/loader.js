@@ -28,7 +28,7 @@ var createClass = function () {
 
 // const loadOverlay =
 var canvas = document.querySelector('#loader-canvas');
-var container = document.querySelector('#page-content');
+var container = document.querySelector('#page-content-full-width');
 var reset = document.querySelector('#reset');
 var exportBtn = document.querySelector('#export');
 var exportAnims = document.querySelector('#export-anims');
@@ -74,7 +74,7 @@ var screenshot = {
 };
 
 var controls = {
-  links: document.querySelector('#controls').querySelectorAll('span'),
+  // links: document.querySelector( '#controls' ).querySelectorAll( 'span' ),
   toggleGrid: document.querySelector('#toggle-grid'),
   toggleInfo: document.querySelector('#toggle-info'),
   toggleBackground: document.querySelector('#toggle-background'),
@@ -12947,15 +12947,16 @@ var Background = function () {
 
       HTMLControl.modelInfo.infoBox.style.color = 'white';
 
-      for (var i = 0; i < HTMLControl.controls.links.length; i++) {
+      // for ( let i = 0; i < HTMLControl.controls.links.length; i++ ) {
 
-        HTMLControl.controls.links[i].style.color = 'white';
-      }
+      //   HTMLControl.controls.links[ i ].style.color = 'white';
 
-      for (var _i = 0; _i < HTMLControl.controls.sliders.length; _i++) {
+      // }
 
-        HTMLControl.controls.sliders[_i].classList.remove('light-slider');
-        HTMLControl.controls.sliders[_i].classList.add('dark-slider');
+      for (var i = 0; i < HTMLControl.controls.sliders.length; i++) {
+
+        HTMLControl.controls.sliders[i].classList.remove('light-slider');
+        HTMLControl.controls.sliders[i].classList.add('dark-slider');
       }
     }
   }, {
@@ -12964,15 +12965,16 @@ var Background = function () {
 
       HTMLControl.modelInfo.infoBox.style.color = 'black';
 
-      for (var i = 0; i < HTMLControl.controls.links.length; i++) {
+      // for ( let i = 0; i < HTMLControl.controls.links.length; i++ ) {
 
-        HTMLControl.controls.links[i].style.color = 'black';
-      }
+      //   HTMLControl.controls.links[ i ].style.color = 'black';
 
-      for (var _i2 = 0; _i2 < HTMLControl.controls.sliders.length; _i2++) {
+      // }
 
-        HTMLControl.controls.sliders[_i2].classList.remove('dark-slider');
-        HTMLControl.controls.sliders[_i2].classList.add('light-slider');
+      for (var i = 0; i < HTMLControl.controls.sliders.length; i++) {
+
+        HTMLControl.controls.sliders[i].classList.remove('dark-slider');
+        HTMLControl.controls.sliders[i].classList.add('light-slider');
       }
     }
   }]);
@@ -14113,7 +14115,6 @@ var OnLoadCallbacks = function () {
   return OnLoadCallbacks;
 }();
 
-// Check support for the File API support
 var checkForFileAPI = function checkForFileAPI() {
 
   if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -14315,7 +14316,7 @@ HTMLControl.controls.exampleDuck.addEventListener('click', function (e) {
   e.preventDefault();
 
   loadingManager.onStart();
-  OnLoadCallbacks.onGLTFLoad('/models/loader/Duck.gltf');
+  OnLoadCallbacks.onGLTFLoad('/models/gltf/Duck.gltf');
 });
 
 // saving function taken from three.js editor

@@ -1,6 +1,6 @@
 // const loadOverlay =
 const canvas = document.querySelector( '#loader-canvas' );
-const container = document.querySelector( '#page-content' );
+const container = document.querySelector( '#page-content-full-width' );
 const reset = document.querySelector( '#reset' );
 const exportBtn = document.querySelector( '#export' );
 const exportAnims = document.querySelector( '#export-anims' );
@@ -47,7 +47,7 @@ const screenshot = {
 };
 
 const controls = {
-  links: document.querySelector( '#controls' ).querySelectorAll( 'span' ),
+  // links: document.querySelector( '#controls' ).querySelectorAll( 'span' ),
   toggleGrid: document.querySelector( '#toggle-grid' ),
   toggleInfo: document.querySelector( '#toggle-info' ),
   toggleBackground: document.querySelector( '#toggle-background' ),
