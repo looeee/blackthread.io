@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Three.js on Black Thread Design</title>
+    <link>https://www.blackthreaddesign.com/tags/three.js/</link>
+    <description>Recent content in Three.js on Black Thread Design</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="https://www.blackthreaddesign.com/tags/three.js/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Adding Camera Controls</title>
+      <link>https://www.blackthreaddesign.com/tutorials/1-4-orbit-controls/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/1-4-orbit-controls/</guid>
+      <description>So far our scene is not interactive - it is animated, but it doesn&amp;rsquo;t take any user input (unless you count responding to the changing size of the browser window).
+As usual, we&amp;rsquo;ll continue from where we left off in the last chapter:
+
+First of all, remove the lines that make the box rotate - it will be easier to see that the camera is moving without these.</description>
+    </item>
+    
+    <item>
+      <title>Components and Helpers</title>
+      <link>https://www.blackthreaddesign.com/tutorials/2-components-helpers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/2-components-helpers/</guid>
+      <description>Congratulations! You made it to Section 2! That means you know have a basic understanding of how to set up a three.js scene, how to make it animate, add textures, camera controls and even automatically resize along with the browser window.
+In this section we&amp;rsquo;ll be taking a closer look at some of the components that make up three.js, as well as some of the helper objects.
+We&amp;rsquo;ll take a look at how the various components fit together (inheritance) and take our first in depth animation of an object - the Object3D which is the base class for nearly everything in three.</description>
+    </item>
+    
+    <item>
+      <title>Creating Rainbows - colors in three.js</title>
+      <link>https://www.blackthreaddesign.com/tutorials/2-0-creating-rainbows/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/2-0-creating-rainbows/</guid>
+      <description>Fig 1: Three.js... with just a little help from Photoshop   We&amp;rsquo;ll be working closely with the Color docs page here. Open it up now and take a look.
+The first thing you&amp;rsquo;ll notice is that there are many ways to specify a colour. For example, you can pass in 2 numbers representing the Red, Green and Blue components of the colour, or you can pass in the string &amp;lsquo;rebeccapurple&amp;rsquo; (or any other CSS color string), or you can pass in a HLS value.</description>
+    </item>
+    
+    <item>
+      <title>First Steps</title>
+      <link>https://www.blackthreaddesign.com/tutorials/1-first-steps/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/1-first-steps/</guid>
+      <description>Welcome to section 1, where we can finally get those creative juices flowing! This section is a gentle introduction to creating scenes with three.js.
+We&amp;rsquo;ll explain how everything works as we go, but the explanations will be as short and simple as possible - we&amp;rsquo;ll add detail in later chapters.
+Staring in chapter 1.0, we&amp;rsquo;ll take a look at the basic components of a three.js and the bare minimum we need to get three.</description>
+    </item>
+    
+    <item>
+      <title>Getting Started</title>
+      <link>https://www.blackthreaddesign.com/tutorials/1-0-getting-started/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/1-0-getting-started/</guid>
+      <description>Strap in folks, it&amp;rsquo;s time to push some pixels!
+Let&amp;rsquo;s get our first three.js scene up and running. When we are finished with chapters 1 and 2, we&amp;rsquo;ll have this glorious beast shining and rotating before us:
+
+Follow along on Codepen I mentioned a few times in the introductory chapters that we&amp;rsquo;ll be using Codepen throughout these tutorials, and that you can either follow along there or create local files on your computer, but since I assume that lots of people are like me and skip introductory chapters, I should probably mention it again.</description>
+    </item>
+    
+    <item>
+      <title>Getting help and reporting bugs</title>
+      <link>https://www.blackthreaddesign.com/tutorials/0-3-getting-help/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/0-3-getting-help/</guid>
+      <description>{:.no_toc}
+So you need help? What&amp;rsquo;s that? You are completely frustrated, about to tear your hair out with frustration? You are cursing this abomination of a library, casting it out, never to darken your hard drive again?
+Well, I have some good news for you!
+First, take a deep breath, go outside and pet some kittens or shout at them or whatever else relieves your tortured soul (seriously, don&amp;rsquo;t shout at kittens).</description>
+    </item>
+    
+    <item>
+      <title>Introduction to textures</title>
+      <link>https://www.blackthreaddesign.com/tutorials/1-3-textures-intro/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/1-3-textures-intro/</guid>
+      <description>So far we have just created a simple coloured material for our mesh. If we want to create something more realistic we&amp;rsquo;ll have to move onto using texture mapping.
+Put very simply, this means taking an image and stretching it over the surface of a 3D object. Of course, this will be very easy to do if the surface of the 3D object is square, and less easy of the surface is curved and knotted.</description>
+    </item>
+    
+    <item>
+      <title>Lights, Color, Action!</title>
+      <link>https://www.blackthreaddesign.com/tutorials/1-1-lights-color-action/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/1-1-lights-color-action/</guid>
+      <description>We&amp;rsquo;ll pick up here exactly where we left off in the last chapter. Here is the complete code so far:
+// create a WebGLRenderer and set its width and height const renderer = new THREE.WebGLRenderer(); renderer.setSize( window.innerWidth, window.innerHeight ); // add the automatically created canvas element to the page document.body.appendChild( renderer.domElement ); // create a Scene const scene = new THREE.Scene(); // set up the options for a perspective camera const fov = 35; // fov = Field Of View const aspect = window.</description>
+    </item>
+    
+    <item>
+      <title>Requirements for running a three.js scene</title>
+      <link>https://www.blackthreaddesign.com/tutorials/0-0-requirements/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/0-0-requirements/</guid>
+      <description>We&amp;rsquo;ll start with a quick overview of what you need to get a basic three.js app working. Please take the time to read over the topics in the introduction (we&amp;rsquo;ll get to the pretty 3D stuff soon, I promise!).
+WebGL In these tutorials, we are going to be focusing on the WebGLRenderer. As the name implies, this requires a WebGL enabled device. Not so long ago, this was something that we had to worry about.</description>
+    </item>
+    
+    <item>
+      <title>Shapes and Transformations</title>
+      <link>https://www.blackthreaddesign.com/tutorials/1-5-shapes-transformations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/1-5-shapes-transformations/</guid>
+      <description>In this chapter, we&amp;rsquo;ll take a lighting quick look at some of the geometric shapes that are built into three.js. We&amp;rsquo;ve already seen two of them, the Torus Knot from chapters 1.1 and 1.2, and the Box from Chapter 1.3.
+We&amp;rsquo;ll also take a look at how to move them around (translate them), scale them up and down and rotate them. Collectively, along with the less common shear, these are known as transformations (technically, they are linear or affine transformations).</description>
+    </item>
+    
+    <item>
+      <title>Three.js on Github</title>
+      <link>https://www.blackthreaddesign.com/tutorials/0-1-github-repo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/0-1-github-repo/</guid>
+      <description>Everything officially related to the three.js project is in one rather monolithic repository on Github. Its maintained by the original creator of three.js, @mrdoob (AKA Ricardo Cabello), along with an army of open-source aficionados.
+It&amp;rsquo;s a huge and very active repo - the 16th most starred Javascript library on Github in fact, and the 8th most forked. Its up there with superstars like React, jQuery and Node.js.
+It&amp;rsquo;s also quite overwhelming at first glance, but luckily we only need to look inside two folders for now.</description>
+    </item>
+    
+    <item>
+      <title>Understanding the three.js revision system</title>
+      <link>https://www.blackthreaddesign.com/tutorials/0-2-three-js-versions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/0-2-three-js-versions/</guid>
+      <description>Semver? No way! The development pace of three.js is fast, and it uses a slightly unusual versioning system. Most software gets released incrementally as V0.5, V0.6, V1.0, V1.1.1 etc. This is known as semver, or Semantic Versioning.
+Well, three.js is far too hipster for that - instead, we use a revision system. There&amp;rsquo;s a new revision out about once month or so, and we are currently up to Revision 88 (R88), as of mid December 2017.</description>
+    </item>
+    
+  </channel>
+</rss>

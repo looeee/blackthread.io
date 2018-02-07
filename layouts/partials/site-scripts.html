@@ -15,7 +15,7 @@
 {{ end }}
 
 {{ if .Params.js }}
-  <script async src='{{ (printf "/js/%s/%s.js" ($.Scratch.Get "buildDir") .Params.js ) | absURL }}'></script>
+  <script async src='{{ (printf "/js/%s/%s.js" ($.Scratch.Get "buildDir") .Params.js ) | relURL }}'></script>
 {{ else }}
-  <script async src='{{ (printf "/js/%s/main.js" ($.Scratch.Get "buildDir") ) | absURL }}'></script>
+  <script async src='{{ (printf "/js/%s/main.js" ($.Scratch.Get "buildDir") ) | relURL }}'></script>
 {{ end }}

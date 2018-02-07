@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Black Thread Design  | About me</title>
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<meta name="generator" content="Hugo 0.32.4" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+  <link href='https://www.blackthreaddesign.com/css/about.css' rel='stylesheet' type="text/css" />
+
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway"/>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+
+
+<meta property="og:title" content="About me" />
+<meta property="og:description" content="Get to know me" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.blackthreaddesign.com/about/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="About me">
+<meta itemprop="description" content="Get to know me">
+
+
+
+<meta itemprop="wordCount" content="114">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="About me"/>
+<meta name="twitter:description" content="Get to know me"/>
+
+  </head>
+
+  <body>
+    
+  <nav class="masthead">
+
+    <ul class="visible-links">
+      <li class="masthead-title"><a href="/">Blackthread Design</a></li>
+      <li id="spacer"></li>
+
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/blog/">Blog</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/tutorials/">Tutorials</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/about/">About</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/contact/">Contact</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/experiments/">Experiments</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/loader/">Loader</a></li>
+      
+
+      <li><button class="fa fa-bars toggle-links hide"></button>
+      </li></ul>
+      <ul class="hidden-links fold"></ul>
+  </nav>
+
+  <script>
+
+
+    ( function() {
+
+      var Greedy = function Greedy( options ) {
+
+        this.masthead = document.querySelector('.masthead');
+        this.visibleLinks = this.masthead.querySelector('.visible-links');
+        this.hiddenLinks = this.masthead.querySelector('.hidden-links');
+        this.toggleButton = this.masthead.querySelector('.toggle-links');
+        this.spacer = this.masthead.querySelector('#spacer');
+
+        this.setupResize();
+        this.setupButton();
+
+        this.decreaseSize();
+        this.decreaseSize();
+
+      };
+
+      Object.assign( Greedy.prototype, {
+
+        visibleLinksWidth() {
+
+          var width = 0;
+
+          for( child in this.visibleLinks.children ){
+
+            if ( this.visibleLinks.children.hasOwnProperty( child ) ) {
+
+              if( this.visibleLinks.children[ child ].id !== spacer ) width += this.visibleLinks.children[ child ].offsetWidth;
+
+            }
+
+          }
+
+          return width;
+        },
+
+        increaseSize() {
+
+          this.spacer.style.width = 0;
+
+          if( this.hiddenLinks.children.length === 0 ) {
+
+            this.hiddenLinks.classList.add( 'fold' );
+            this.setSpacerWidth();
+            return;
+
+          }
+
+          var width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
+
+          while (
+            this.hiddenLinks.children.length > 0 &&
+            width < this.masthead.clientWidth
+          ) {
+
+            width += this.hiddenLinks.firstChild.offsetWidth;
+            this.visibleLinks.insertBefore( this.hiddenLinks.firstChild, this.visibleLinks.lastChild );
+
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        decreaseSize() {
+
+          this.spacer.style.width = 0;
+
+          while ( this.masthead.clientWidth < this.visibleLinks.scrollWidth ) {
+
+            if( this.visibleLinks.children.length === 3 ) {
+
+              this.showButton();
+              this.setSpacerWidth();
+              return;
+
+            }
+
+
+            var secondLastChild = this.visibleLinks.children[ this.visibleLinks.children.length - 2 ];
+            this.hiddenLinks.insertBefore( secondLastChild, this.hiddenLinks.firstChild );
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        setSpacerWidth(){
+
+          this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
+
+        },
+
+        showButton() {
+
+          if( this.hiddenLinks.children.length === 0 ) this.toggleButton.classList.add( 'hide' );
+          else this.toggleButton.classList.remove( 'hide' );
+
+        },
+
+        setupResize: function() {
+
+          var self = this;
+          var lastWidth = window.innerWidth;
+
+          window.addEventListener( 'resize', function() {
+
+            if( window.innerWidth > lastWidth ) self.increaseSize();
+            else if( window.innerWidth < lastWidth ) self.decreaseSize();
+
+            lastWidth = window.innerWidth;
+          } );
+
+        },
+
+        setupButton: function() {
+
+          var self = this;
+
+          this.toggleButton.addEventListener( 'click', function() {
+
+            self.hiddenLinks.classList.toggle( 'fold' );
+
+          } );
+
+
+        },
+
+      } );
+
+      var menu = new Greedy();
+
+      const masthead = document.querySelector( '.masthead' );
+
+      document.addEventListener( 'scroll', () => {
+
+        if (window.scrollY > 50) {
+          masthead.classList.add( 'shrink' );
+        } else {
+          masthead.classList.remove( 'shrink' );
+        }
+
+      } );
+
+    })();
+
+  </script>
+
+    <main role="main" id="main">
+<div id="page-content-full-width">
+  <div itemprop="text">
+  <div id="profile-img" class='flip-container'>
+    <div class='front cont'>
+      <img src="/images/about/portrait-512.jpg" alt="portrait" class="circle">
+    </div>
+    <div class='back cont'>
+      <img src="/images/about/portrait-2-512.jpg" alt="portrait-2" class="circle">
+    </div>
+  </div>
+
+<p><div id="about-me">
+    <p>
+      Hello, and welcome to my website! My name&rsquo;s Lewy, I&rsquo;m a Irish front end JavaScript expert and recovering circus performer,
+      specializing in WebGL with three.js.
+    </p>
+    <p>
+      I&rsquo;m currently living the digital nomad dream in various beautiful places
+      around South East Asia, climbing volcanoes, diving, eating spicy food
+      and even doing a little programming from time to time.
+    </p>
+    <p>
+      Have a look around the site for examples of my recent
+      <a href="/blog/">blog</a> posts,
+      <a href="/experiments/">experiments</a>,
+      and my series of
+      <a href="/tutorials/">tutorials</a>
+      on getting up and running with three.js.
+    </p>
+    <p>
+      You can also find me on
+      <a href="https://www.upwork.com/freelancers/~0138561bc4900bdef8">Upwork</a>,
+      <a href="https://github.com/looeee/">Github</a>,
+      <a href="http://lewyblue.deviantart.com/gallery/">Deviantart</a>,
+      or lurking on the
+      <a href="http://discourse.threejs.org/">three.js forum</a> where I&rsquo;m an admin.
+      I&rsquo;ve also recently discovered the joys of  <a href="https://twitter.com/looeeeb">Twitter</a>. Let&rsquo;s see
+      how that goes.
+    </p>
+  </div>
+</div></p>
+
+</div>
+</main>
+    
+  <footer>
+    <div class="footer-social">
+      
+        <div class="social-icons">
+          <a href="https://github.com/looeee/"><span class="fa fa-fw fa-github" aria-hidden="true"></span> GitHub</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://twitter.com/looeeeb/"><span class="fa fa-fw fa-twitter" aria-hidden="true"></span> Twitter</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://discourse.threejs.org/u/looeee/"><span class="fa fa-fw fa-commenting" aria-hidden="true"></span> Discourse</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/lewy-blue-30b9b193/"><span class="fa fa-fw fa-linkedin" aria-hidden="true"></span> LinkedIn</a>
+        </div>
+      
+    </div>
+    <div class="footer-copyright">&copy; 0001 Lewy Blue.</div>
+  </footer>
+
+    
+
+
+
+
+  
+
+
+
+  <script async src='https://www.blackthreaddesign.com/js/build/main.js'></script>
+
+  </body>
+</html>

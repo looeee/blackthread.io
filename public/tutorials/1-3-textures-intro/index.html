@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Black Thread Design  | Introduction to textures</title>
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<meta name="generator" content="Hugo 0.32.4" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+  <link href='https://www.blackthreaddesign.com/css/standard.css' rel='stylesheet' type="text/css" />
+
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway"/>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+
+
+<meta property="og:title" content="Introduction to textures" />
+<meta property="og:description" content="In this tutorial we go over adding textures to your three.js scene" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.blackthreaddesign.com/tutorials/1-3-textures-intro/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Introduction to textures">
+<meta itemprop="description" content="In this tutorial we go over adding textures to your three.js scene">
+
+
+
+<meta itemprop="wordCount" content="583">
+
+
+
+<meta itemprop="keywords" content="three.js,textures,loaders,security,server,textureLoader,browser," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Introduction to textures"/>
+<meta name="twitter:description" content="In this tutorial we go over adding textures to your three.js scene"/>
+
+  </head>
+
+  <body>
+    
+  <nav class="masthead">
+
+    <ul class="visible-links">
+      <li class="masthead-title"><a href="/">Blackthread Design</a></li>
+      <li id="spacer"></li>
+
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/blog/">Blog</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/tutorials/">Tutorials</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/about/">About</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/contact/">Contact</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/experiments/">Experiments</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/loader/">Loader</a></li>
+      
+
+      <li><button class="fa fa-bars toggle-links hide"></button>
+      </li></ul>
+      <ul class="hidden-links fold"></ul>
+  </nav>
+
+  <script>
+
+
+    ( function() {
+
+      var Greedy = function Greedy( options ) {
+
+        this.masthead = document.querySelector('.masthead');
+        this.visibleLinks = this.masthead.querySelector('.visible-links');
+        this.hiddenLinks = this.masthead.querySelector('.hidden-links');
+        this.toggleButton = this.masthead.querySelector('.toggle-links');
+        this.spacer = this.masthead.querySelector('#spacer');
+
+        this.setupResize();
+        this.setupButton();
+
+        this.decreaseSize();
+        this.decreaseSize();
+
+      };
+
+      Object.assign( Greedy.prototype, {
+
+        visibleLinksWidth() {
+
+          var width = 0;
+
+          for( child in this.visibleLinks.children ){
+
+            if ( this.visibleLinks.children.hasOwnProperty( child ) ) {
+
+              if( this.visibleLinks.children[ child ].id !== spacer ) width += this.visibleLinks.children[ child ].offsetWidth;
+
+            }
+
+          }
+
+          return width;
+        },
+
+        increaseSize() {
+
+          this.spacer.style.width = 0;
+
+          if( this.hiddenLinks.children.length === 0 ) {
+
+            this.hiddenLinks.classList.add( 'fold' );
+            this.setSpacerWidth();
+            return;
+
+          }
+
+          var width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
+
+          while (
+            this.hiddenLinks.children.length > 0 &&
+            width < this.masthead.clientWidth
+          ) {
+
+            width += this.hiddenLinks.firstChild.offsetWidth;
+            this.visibleLinks.insertBefore( this.hiddenLinks.firstChild, this.visibleLinks.lastChild );
+
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        decreaseSize() {
+
+          this.spacer.style.width = 0;
+
+          while ( this.masthead.clientWidth < this.visibleLinks.scrollWidth ) {
+
+            if( this.visibleLinks.children.length === 3 ) {
+
+              this.showButton();
+              this.setSpacerWidth();
+              return;
+
+            }
+
+
+            var secondLastChild = this.visibleLinks.children[ this.visibleLinks.children.length - 2 ];
+            this.hiddenLinks.insertBefore( secondLastChild, this.hiddenLinks.firstChild );
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        setSpacerWidth(){
+
+          this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
+
+        },
+
+        showButton() {
+
+          if( this.hiddenLinks.children.length === 0 ) this.toggleButton.classList.add( 'hide' );
+          else this.toggleButton.classList.remove( 'hide' );
+
+        },
+
+        setupResize: function() {
+
+          var self = this;
+          var lastWidth = window.innerWidth;
+
+          window.addEventListener( 'resize', function() {
+
+            if( window.innerWidth > lastWidth ) self.increaseSize();
+            else if( window.innerWidth < lastWidth ) self.decreaseSize();
+
+            lastWidth = window.innerWidth;
+          } );
+
+        },
+
+        setupButton: function() {
+
+          var self = this;
+
+          this.toggleButton.addEventListener( 'click', function() {
+
+            self.hiddenLinks.classList.toggle( 'fold' );
+
+          } );
+
+
+        },
+
+      } );
+
+      var menu = new Greedy();
+
+      const masthead = document.querySelector( '.masthead' );
+
+      document.addEventListener( 'scroll', () => {
+
+        if (window.scrollY > 50) {
+          masthead.classList.add( 'shrink' );
+        } else {
+          masthead.classList.remove( 'shrink' );
+        }
+
+      } );
+
+    })();
+
+  </script>
+
+    <main role="main" id="main">
+
+  
+    <div id="page-content">
+    <button id="toggle-nav" class="fa fa-bars fa-2x"></button>
+
+<nav id="vert-nav" class="fold">
+  <ul>
+    <li class="nav-title"></li>
+    
+    
+      <li>
+        
+          </span><a href="/blog/progress-bar/" class="">Faking a progress bar in three.js</a>
+        
+      </li>
+    
+      <li>
+        
+          </span><a href="/blog/promisifying-threejs-loaders/" class="">Promisifying three.js loaders</a>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+<script>
+
+  var sidenav = function() {
+
+    var content = document.querySelector( '#main' );
+    var toggleButton = document.querySelector( '#toggle-nav' );
+    var nav = document.querySelector( '#vert-nav' );
+
+    var breakpoint = 1280;
+
+    function updateMenu(){
+
+      if( content.offsetWidth < breakpoint ) {
+
+        if( !toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.remove( 'hide' );
+        nav.classList.add( 'fold' );
+
+      }
+      else {
+
+        if( toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.add( 'hide' );
+        nav.classList.remove( 'fold' );
+
+      }
+
+    }
+
+    updateMenu();
+
+    toggleButton.addEventListener( 'click', function( e ) {
+
+      e.preventDefault();
+
+      nav.classList.toggle( 'fold' );
+
+    } );
+
+    window.addEventListener( 'resize', updateMenu );
+
+  };
+
+  window.addEventListener( 'load', sidenav );
+
+</script>
+  
+
+    <article id="article">
+      <header>
+        <h2>Introduction to textures</h2>
+      </header>
+      
+  <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#setting-up-the-geometry-for-texture-mapping">Setting up the geometry for texture mapping</a></li>
+<li><a href="#loading-a-texture-with-the-textureloader">Loading a texture with the <code>TextureLoader</code></a>
+<ul>
+<li><a href="#a-note-on-working-locally">A note on working locally</a></li>
+<li><a href="#adding-the-texture-to-the-material">Adding the texture to the material</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+
+      
+  <span class="reading-time" title="Read time">
+    <strong>Reading time: </strong> around 3 minutes
+  </span>
+
+      <section class="content">
+        
+
+<p>So far we have just created a simple coloured material for our mesh. If we want to create something more realistic we&rsquo;ll have to move onto using <a href="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/crate.gif">texture mapping</a>.</p>
+
+<p>Put very simply, this means taking an image and stretching it over the surface of a 3D object. Of course, this will be very easy to do if the surface of the 3D object is square, and less easy of the surface is curved and knotted.</p>
+
+<h3 id="setting-up-the-geometry-for-texture-mapping">Setting up the geometry for texture mapping</h3>
+
+<p>Start by loading up the code from the previous chapter.</p>
+
+<p><p data-height="400" data-theme-id="0" data-slug-hash="QaKqzq" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script></p>
+
+<p>That&hellip; looks like a very curved and knotted surface. Let&rsquo;s switch it out for something a bit plainer. Change the line</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">...
+  <span style="color:#75715e">// create a geometry
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">geometry</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">TorusKnotBufferGeometry</span>( <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span> );
+...</code></pre></div>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">...
+  <span style="color:#75715e">// create a geometry
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">geometry</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">BoxBufferGeometry</span>( <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">15</span> );
+...</code></pre></div>
+
+<p>This changes our torus knot to a cube 15 units long, wide and high, ready to have a texture applied to each side.</p>
+
+<h3 id="loading-a-texture-with-the-textureloader">Loading a texture with the <code>TextureLoader</code></h3>
+
+<p>We&rsquo;ll turn this purple box into a wooden crate. Fortunately, the three.js repo has lots of free textures that we can use as we like, one of which is just what we are looking for:</p>
+
+
+<figure class="figure-small">
+    
+        <img src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/crate.gif" alt="Wooden box texture" />
+    
+    
+</figure>
+
+
+<p>We&rsquo;ll use the <a href="https://threejs.org/docs/#api/loaders/TextureLoader">Texture Loader</a> to load it. Once it has loaded, the loader returns a <a href="https://threejs.org/docs/#api/textures/Texture">Texture</a> object that we can add to our <code>material</code>.</p>
+
+<p>Create a <code>TextureLoader</code> under the geometry and then load the texture:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">...
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">geometry</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">BoxBufferGeometry</span>( <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">15</span> );
+
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">textureLoader</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">TextureLoader</span>();
+
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">texture</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">textureLoader</span>.<span style="color:#a6e22e">load</span>( <span style="color:#e6db74">&#39;https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/crate.gif&#39;</span> );
+...</code></pre></div>
+
+<h4 id="a-note-on-working-locally">A note on working locally</h4>
+
+<p>At this point, if you are working locally instead of via codepen, and especially if you try to load this file from your hard drive rather than from Github, you may run into problems due to security restrictions on how JavaScript can read local files. These restrictions are there for a reason and I would not advise you to turn them off, although it is possible. You should take the time to set up a simple HTTP server instead - we&rsquo;ll go over that in  [Appendix A.1: Setting up a development server].</p>
+
+<h4 id="adding-the-texture-to-the-material">Adding the texture to the material</h4>
+
+<p>Next, well assign the texture to the <a href="https://threejs.org/docs/#api/materials/MeshStandardMaterial.map">material.map</a> slot.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">...
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">texture</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">textureLoader</span>.<span style="color:#a6e22e">load</span>( <span style="color:#e6db74">&#39;https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/crate.gif&#39;</span> );
+
+  <span style="color:#75715e">// create a material
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">material</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">MeshStandardMaterial</span>( {
+    <span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0xffffff</span>,
+    <span style="color:#a6e22e">map</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">texture</span>,
+  } );
+...</code></pre></div>
+
+<p>Take note that we&rsquo;ve also set the material&rsquo;s colour back to white ( we could also remove the colour line completely since white is the default ).</p>
+
+<p>This is because the material&rsquo;s colour gets combined with the material&rsquo;s texture, so if we left it as purple, the wooden side of the box would have a purple tint - and I do like purple, but not <em>that</em> much.</p>
+
+<p>{:.paragraph-notice}
+The <code>material.map</code> slot is the material&rsquo;s &lsquo;colour map&rsquo; ( AKA &lsquo;diffuse map&rsquo; or even &lsquo;diffuse colour map&rsquo;). If you look through the documentation you see that there are other map slots, such as the <code>normalMap</code>, <code>bumpMap</code> and <code>envMap</code> (environment map), which control other features of the material&rsquo;s appearance. Also, note that we are looking at the documentation for <code>MeshStandardMaterial</code> - most materials have a colour <code>.map</code> slot, but they may not have all the other maps.</p>
+
+<p>Here&rsquo;s our wooden cube, happily spinning away. It looks very flat and shiny at the moment, and there are plenty of settings on the material that we can use to adjust that, which we will get to very soon.</p>
+
+<p><p data-height="400" data-theme-id="0" data-slug-hash="YYGEJV" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script></p>
+
+      </section>
+      <aside>
+        <div id="meta">
+  <p class="meta-tags">
+  <strong><span class="fa fa-fw fa-tags" aria-hidden="true"></span>Tags: </strong>
+    <span itemprop="keywords">
+      
+        <a href="/tags/three.js">three.js,</a> </li>
+      
+        <a href="/tags/textures">textures,</a> </li>
+      
+        <a href="/tags/loaders">loaders,</a> </li>
+      
+        <a href="/tags/security">security,</a> </li>
+      
+        <a href="/tags/server">server,</a> </li>
+      
+        <a href="/tags/textureloader">textureLoader,</a> </li>
+      
+        <a href="/tags/browser">browser,</a> </li>
+      
+    </span>
+</p>
+
+  <p class="meta-date">
+    <strong>
+      <span class="fa fa-fw fa-calendar" aria-hidden="true"></span>
+      Updated:
+    </strong>
+    <time datetime="">
+      0001-01-01 00:00:00 &#43;0000 UTC
+    </time></p>
+  </p>
+
+  <p class="meta-author">
+    <strong><span class="fa fa-fw fa-user" aria-hidden="true"></span>Author: </strong><a href="/about" itemprop="author" rel="author">Lewy Blue</a>
+  </p>
+</div>
+      </aside>
+      <nav class="pagination">
+  
+    <a href="https://www.blackthreaddesign.com/tutorials/1-1-lights-color-action/" title="Lights, Color, Action!">Previous</a>
+  
+  
+    <a href="https://www.blackthreaddesign.com/tutorials/0-3-getting-help/" title="Getting help and reporting bugs">Next</a>
+  
+</nav>
+      <div class="comments">
+
+  <div class="new-comment">
+  <h4>Leave a Comment</h4>
+
+  <p id="comment-submitted-message" class="hide">Thank you! You comment is being vetted and will appear here in a couple of minutes.</p>
+  <form method="POST" action="https://api.staticman.net/v2/entry/looeee/blackthread-heroku/master/comments">
+
+    <input name="options[slug]" type="hidden" value="page.slug">
+    <input name="options[parent]" type="hidden" value="post_slug">
+    <input type="hidden" name="options[origin]" value="page.url">
+    <input type="hidden" name="options[redirect]" value="page.url?comment-submitted">
+
+    <label><input name="fields[name]" type="text" placeholder="Name" required></label>
+    <label><input name="fields[email]" type="email" placeholder="Email address (will not be made public)" required></label>
+    <label>Message<textarea name="fields[message]" required></textarea></label>
+
+    <button type="submit">Submit comment</button>
+  </form>
+
+</div>
+
+  <h4 class="comments-title">Previous Comments</h4>
+
+</div>
+
+<script>
+
+  if( window.location.href.indexOf( 'comment-submitted' ) !== -1 ) {
+
+    document.querySelector( '#comment-submitted-message' ).classList.remove( 'hide' );
+
+  }
+
+</script>
+    </article>
+  </div>
+</main>
+    
+  <footer>
+    <div class="footer-social">
+      
+        <div class="social-icons">
+          <a href="https://github.com/looeee/"><span class="fa fa-fw fa-github" aria-hidden="true"></span> GitHub</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://twitter.com/looeeeb/"><span class="fa fa-fw fa-twitter" aria-hidden="true"></span> Twitter</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://discourse.threejs.org/u/looeee/"><span class="fa fa-fw fa-commenting" aria-hidden="true"></span> Discourse</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/lewy-blue-30b9b193/"><span class="fa fa-fw fa-linkedin" aria-hidden="true"></span> LinkedIn</a>
+        </div>
+      
+    </div>
+    <div class="footer-copyright">&copy; 0001 Lewy Blue.</div>
+  </footer>
+
+    
+
+
+
+
+  
+
+
+
+  <script async src='https://www.blackthreaddesign.com/js/build/main.js'></script>
+
+  </body>
+</html>

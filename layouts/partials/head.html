@@ -19,9 +19,9 @@
 {{ end }}
 
 {{ if .Params.css }}
-  <link href='{{ (printf "css/%s.css" .Params.css) | absURL }}' rel='stylesheet' type="text/css" />
+  <link href='{{ (printf "css/%s.css" .Params.css) | relURL }}' rel='stylesheet' type="text/css" />
 {{ else }}
-  <link href='{{ "css/standard.css" | absURL }}' rel='stylesheet' type="text/css" />
+  <link href='{{ "css/standard.css" | relURL }}' rel='stylesheet' type="text/css" />
 {{ end }}
 
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway"/>

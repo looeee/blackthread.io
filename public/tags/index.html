@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Black Thread Design </title>
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<meta name="generator" content="Hugo 0.32.4" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+  <link href='https://www.blackthreaddesign.com/css/standard.css' rel='stylesheet' type="text/css" />
+
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway"/>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+
+  <link href="https://www.blackthreaddesign.com/tags/index.xml" rel="alternate" type="application/rss+xml" title="Black Thread Design" />
+  <link href="https://www.blackthreaddesign.com/tags/index.xml" rel="feed" type="application/rss+xml" title="Black Thread Design" />
+
+
+<meta property="og:title" content="Tags" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.blackthreaddesign.com/tags/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Tags">
+<meta itemprop="description" content="">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Tags"/>
+<meta name="twitter:description" content=""/>
+
+  </head>
+
+  <body>
+    
+  <nav class="masthead">
+
+    <ul class="visible-links">
+      <li class="masthead-title"><a href="/">Blackthread Design</a></li>
+      <li id="spacer"></li>
+
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/blog/">Blog</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/tutorials/">Tutorials</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/about/">About</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/contact/">Contact</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/experiments/">Experiments</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/loader/">Loader</a></li>
+      
+
+      <li><button class="fa fa-bars toggle-links hide"></button>
+      </li></ul>
+      <ul class="hidden-links fold"></ul>
+  </nav>
+
+  <script>
+
+
+    ( function() {
+
+      var Greedy = function Greedy( options ) {
+
+        this.masthead = document.querySelector('.masthead');
+        this.visibleLinks = this.masthead.querySelector('.visible-links');
+        this.hiddenLinks = this.masthead.querySelector('.hidden-links');
+        this.toggleButton = this.masthead.querySelector('.toggle-links');
+        this.spacer = this.masthead.querySelector('#spacer');
+
+        this.setupResize();
+        this.setupButton();
+
+        this.decreaseSize();
+        this.decreaseSize();
+
+      };
+
+      Object.assign( Greedy.prototype, {
+
+        visibleLinksWidth() {
+
+          var width = 0;
+
+          for( child in this.visibleLinks.children ){
+
+            if ( this.visibleLinks.children.hasOwnProperty( child ) ) {
+
+              if( this.visibleLinks.children[ child ].id !== spacer ) width += this.visibleLinks.children[ child ].offsetWidth;
+
+            }
+
+          }
+
+          return width;
+        },
+
+        increaseSize() {
+
+          this.spacer.style.width = 0;
+
+          if( this.hiddenLinks.children.length === 0 ) {
+
+            this.hiddenLinks.classList.add( 'fold' );
+            this.setSpacerWidth();
+            return;
+
+          }
+
+          var width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
+
+          while (
+            this.hiddenLinks.children.length > 0 &&
+            width < this.masthead.clientWidth
+          ) {
+
+            width += this.hiddenLinks.firstChild.offsetWidth;
+            this.visibleLinks.insertBefore( this.hiddenLinks.firstChild, this.visibleLinks.lastChild );
+
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        decreaseSize() {
+
+          this.spacer.style.width = 0;
+
+          while ( this.masthead.clientWidth < this.visibleLinks.scrollWidth ) {
+
+            if( this.visibleLinks.children.length === 3 ) {
+
+              this.showButton();
+              this.setSpacerWidth();
+              return;
+
+            }
+
+
+            var secondLastChild = this.visibleLinks.children[ this.visibleLinks.children.length - 2 ];
+            this.hiddenLinks.insertBefore( secondLastChild, this.hiddenLinks.firstChild );
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        setSpacerWidth(){
+
+          this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
+
+        },
+
+        showButton() {
+
+          if( this.hiddenLinks.children.length === 0 ) this.toggleButton.classList.add( 'hide' );
+          else this.toggleButton.classList.remove( 'hide' );
+
+        },
+
+        setupResize: function() {
+
+          var self = this;
+          var lastWidth = window.innerWidth;
+
+          window.addEventListener( 'resize', function() {
+
+            if( window.innerWidth > lastWidth ) self.increaseSize();
+            else if( window.innerWidth < lastWidth ) self.decreaseSize();
+
+            lastWidth = window.innerWidth;
+          } );
+
+        },
+
+        setupButton: function() {
+
+          var self = this;
+
+          this.toggleButton.addEventListener( 'click', function() {
+
+            self.hiddenLinks.classList.toggle( 'fold' );
+
+          } );
+
+
+        },
+
+      } );
+
+      var menu = new Greedy();
+
+      const masthead = document.querySelector( '.masthead' );
+
+      document.addEventListener( 'scroll', () => {
+
+        if (window.scrollY > 50) {
+          masthead.classList.add( 'shrink' );
+        } else {
+          masthead.classList.remove( 'shrink' );
+        }
+
+      } );
+
+    })();
+
+  </script>
+
+    <main role="main" id="main">
+    
+  <article class="cf pa3 pa4-m pa4-l">
+    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
+      
+    </div>
+  </article>
+  <div class="mw8 center">
+    <section class="ph4">
+      
+        <h2 class="f1">
+          <a href="/tags/animation" class="link blue hover-black">
+            Tag: animation
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-1-lights-color-action/" rel="permalink">Lights, Color, Action!</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Building on the last tutorial we&#39;ll add lights, color and animation to our scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/api" class="link blue hover-black">
+            Tag: api
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-2-three-js-versions/" rel="permalink">Understanding the three.js revision system</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to deal with the different version of three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/aspect-ratio" class="link blue hover-black">
+            Tag: aspect-ratio
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/basics" class="link blue hover-black">
+            Tag: basics
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/browser" class="link blue hover-black">
+            Tag: browser
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-3-textures-intro/" rel="permalink">Introduction to textures</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we go over adding textures to your three.js scene</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-2-resize/" rel="permalink">Resizing the canvas</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Dealing with the ever changing browser window size </p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/browser-console" class="link blue hover-black">
+            Tag: browser-console
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-components-helpers/" rel="permalink">Components and Helpers</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description"></p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-0-requirements/" rel="permalink">Requirements for running a three.js scene</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Here we&#39;ll cover the basic requirement for running an three.js app and following the rest of these tutorials</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-5-shapes-transformations/" rel="permalink">Shapes and Transformations</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Taking a quick look at the built in geometries and how to position them</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/buffergeometry" class="link blue hover-black">
+            Tag: buffergeometry
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/build-files" class="link blue hover-black">
+            Tag: build-files
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-1-github-repo/" rel="permalink">Three.js on Github</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Everything you need to know about the official three.js repo on github</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/camera" class="link blue hover-black">
+            Tag: camera
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-4-orbit-controls/" rel="permalink">Adding Camera Controls</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to set up OrbitControls to control the camera in your three.js scene</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/canvas" class="link blue hover-black">
+            Tag: canvas
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/codepen" class="link blue hover-black">
+            Tag: codepen
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-components-helpers/" rel="permalink">Components and Helpers</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description"></p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-0-requirements/" rel="permalink">Requirements for running a three.js scene</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Here we&#39;ll cover the basic requirement for running an three.js app and following the rest of these tutorials</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-5-shapes-transformations/" rel="permalink">Shapes and Transformations</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Taking a quick look at the built in geometries and how to position them</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/color" class="link blue hover-black">
+            Tag: color
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-0-creating-rainbows/" rel="permalink">Creating Rainbows - colors in three.js</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Working with hexadecimal colors in three.js</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-1-lights-color-action/" rel="permalink">Lights, Color, Action!</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Building on the last tutorial we&#39;ll add lights, color and animation to our scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/colour" class="link blue hover-black">
+            Tag: colour
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-0-creating-rainbows/" rel="permalink">Creating Rainbows - colors in three.js</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Working with hexadecimal colors in three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/controls" class="link blue hover-black">
+            Tag: controls
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-4-orbit-controls/" rel="permalink">Adding Camera Controls</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to set up OrbitControls to control the camera in your three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/css" class="link blue hover-black">
+            Tag: css
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-0-creating-rainbows/" rel="permalink">Creating Rainbows - colors in three.js</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Working with hexadecimal colors in three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/discourse" class="link blue hover-black">
+            Tag: discourse
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-3-getting-help/" rel="permalink">Getting help and reporting bugs</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">All the best places to ask for help about three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/es6" class="link blue hover-black">
+            Tag: es6
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/blog/promisifying-threejs-loaders/" rel="permalink">Promisifying three.js loaders</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Converting three.js loaders into promises</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/event-listener" class="link blue hover-black">
+            Tag: event-listener
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-2-resize/" rel="permalink">Resizing the canvas</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Dealing with the ever changing browser window size </p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/examples" class="link blue hover-black">
+            Tag: examples
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-4-orbit-controls/" rel="permalink">Adding Camera Controls</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to set up OrbitControls to control the camera in your three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/forum" class="link blue hover-black">
+            Tag: forum
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-3-getting-help/" rel="permalink">Getting help and reporting bugs</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">All the best places to ask for help about three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/fov" class="link blue hover-black">
+            Tag: fov
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/getting-started" class="link blue hover-black">
+            Tag: getting-started
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-first-steps/" rel="permalink">First Steps</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description"></p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/github" class="link blue hover-black">
+            Tag: github
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-3-getting-help/" rel="permalink">Getting help and reporting bugs</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">All the best places to ask for help about three.js</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-1-github-repo/" rel="permalink">Three.js on Github</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Everything you need to know about the official three.js repo on github</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/help" class="link blue hover-black">
+            Tag: help
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-3-getting-help/" rel="permalink">Getting help and reporting bugs</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">All the best places to ask for help about three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/hexadecimal" class="link blue hover-black">
+            Tag: hexadecimal
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-0-creating-rainbows/" rel="permalink">Creating Rainbows - colors in three.js</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Working with hexadecimal colors in three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/hexadecimal-triple" class="link blue hover-black">
+            Tag: hexadecimal-triple
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-0-creating-rainbows/" rel="permalink">Creating Rainbows - colors in three.js</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Working with hexadecimal colors in three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/html" class="link blue hover-black">
+            Tag: html
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-components-helpers/" rel="permalink">Components and Helpers</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description"></p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-0-requirements/" rel="permalink">Requirements for running a three.js scene</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Here we&#39;ll cover the basic requirement for running an three.js app and following the rest of these tutorials</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-5-shapes-transformations/" rel="permalink">Shapes and Transformations</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Taking a quick look at the built in geometries and how to position them</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/introduction" class="link blue hover-black">
+            Tag: introduction
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-first-steps/" rel="permalink">First Steps</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description"></p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/lights" class="link blue hover-black">
+            Tag: lights
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-1-lights-color-action/" rel="permalink">Lights, Color, Action!</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Building on the last tutorial we&#39;ll add lights, color and animation to our scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/loaders" class="link blue hover-black">
+            Tag: loaders
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-3-textures-intro/" rel="permalink">Introduction to textures</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we go over adding textures to your three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/loading" class="link blue hover-black">
+            Tag: loading
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/blog/progress-bar/" rel="permalink">Faking a progress bar in three.js</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Setting up a (fake) progress bar for a three.js scene</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/blog/promisifying-threejs-loaders/" rel="permalink">Promisifying three.js loaders</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Converting three.js loaders into promises</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/loading-manager" class="link blue hover-black">
+            Tag: loading-manager
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/blog/progress-bar/" rel="permalink">Faking a progress bar in three.js</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Setting up a (fake) progress bar for a three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/loading-overlay" class="link blue hover-black">
+            Tag: loading-overlay
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/blog/progress-bar/" rel="permalink">Faking a progress bar in three.js</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Setting up a (fake) progress bar for a three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/material" class="link blue hover-black">
+            Tag: material
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/mesh" class="link blue hover-black">
+            Tag: mesh
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/migration-guide" class="link blue hover-black">
+            Tag: migration-guide
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-2-three-js-versions/" rel="permalink">Understanding the three.js revision system</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to deal with the different version of three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/modules" class="link blue hover-black">
+            Tag: modules
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/blog/promisifying-threejs-loaders/" rel="permalink">Promisifying three.js loaders</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Converting three.js loaders into promises</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/mrdoob" class="link blue hover-black">
+            Tag: mrdoob
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-1-github-repo/" rel="permalink">Three.js on Github</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Everything you need to know about the official three.js repo on github</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/orbit-controls" class="link blue hover-black">
+            Tag: orbit-controls
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-4-orbit-controls/" rel="permalink">Adding Camera Controls</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to set up OrbitControls to control the camera in your three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/perspective-camera" class="link blue hover-black">
+            Tag: perspective-camera
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/plugins" class="link blue hover-black">
+            Tag: plugins
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-4-orbit-controls/" rel="permalink">Adding Camera Controls</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to set up OrbitControls to control the camera in your three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/progress-bar" class="link blue hover-black">
+            Tag: progress-bar
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/blog/progress-bar/" rel="permalink">Faking a progress bar in three.js</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Setting up a (fake) progress bar for a three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/promises" class="link blue hover-black">
+            Tag: promises
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/blog/promisifying-threejs-loaders/" rel="permalink">Promisifying three.js loaders</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Converting three.js loaders into promises</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/reddit" class="link blue hover-black">
+            Tag: reddit
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-3-getting-help/" rel="permalink">Getting help and reporting bugs</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">All the best places to ask for help about three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/releases" class="link blue hover-black">
+            Tag: releases
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-2-three-js-versions/" rel="permalink">Understanding the three.js revision system</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to deal with the different version of three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/renderer" class="link blue hover-black">
+            Tag: renderer
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-1-lights-color-action/" rel="permalink">Lights, Color, Action!</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Building on the last tutorial we&#39;ll add lights, color and animation to our scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/repository" class="link blue hover-black">
+            Tag: repository
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-1-github-repo/" rel="permalink">Three.js on Github</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Everything you need to know about the official three.js repo on github</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/requirements" class="link blue hover-black">
+            Tag: requirements
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-components-helpers/" rel="permalink">Components and Helpers</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description"></p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-0-requirements/" rel="permalink">Requirements for running a three.js scene</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Here we&#39;ll cover the basic requirement for running an three.js app and following the rest of these tutorials</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-5-shapes-transformations/" rel="permalink">Shapes and Transformations</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Taking a quick look at the built in geometries and how to position them</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/resize" class="link blue hover-black">
+            Tag: resize
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-2-resize/" rel="permalink">Resizing the canvas</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Dealing with the ever changing browser window size </p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/revisions" class="link blue hover-black">
+            Tag: revisions
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-2-three-js-versions/" rel="permalink">Understanding the three.js revision system</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to deal with the different version of three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/scene" class="link blue hover-black">
+            Tag: scene
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-1-lights-color-action/" rel="permalink">Lights, Color, Action!</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Building on the last tutorial we&#39;ll add lights, color and animation to our scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/security" class="link blue hover-black">
+            Tag: security
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-3-textures-intro/" rel="permalink">Introduction to textures</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we go over adding textures to your three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/server" class="link blue hover-black">
+            Tag: server
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-3-textures-intro/" rel="permalink">Introduction to textures</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we go over adding textures to your three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/setup" class="link blue hover-black">
+            Tag: setup
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/stackoverflow" class="link blue hover-black">
+            Tag: stackoverflow
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-3-getting-help/" rel="permalink">Getting help and reporting bugs</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">All the best places to ask for help about three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/subreddit" class="link blue hover-black">
+            Tag: subreddit
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-3-getting-help/" rel="permalink">Getting help and reporting bugs</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">All the best places to ask for help about three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/textureloader" class="link blue hover-black">
+            Tag: textureloader
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-3-textures-intro/" rel="permalink">Introduction to textures</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we go over adding textures to your three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/textures" class="link blue hover-black">
+            Tag: textures
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-3-textures-intro/" rel="permalink">Introduction to textures</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we go over adding textures to your three.js scene</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/three.js" class="link blue hover-black">
+            Tag: three.js
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-4-orbit-controls/" rel="permalink">Adding Camera Controls</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to set up OrbitControls to control the camera in your three.js scene</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-components-helpers/" rel="permalink">Components and Helpers</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description"></p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-0-creating-rainbows/" rel="permalink">Creating Rainbows - colors in three.js</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Working with hexadecimal colors in three.js</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-first-steps/" rel="permalink">First Steps</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description"></p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-3-getting-help/" rel="permalink">Getting help and reporting bugs</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">All the best places to ask for help about three.js</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-3-textures-intro/" rel="permalink">Introduction to textures</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we go over adding textures to your three.js scene</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-1-lights-color-action/" rel="permalink">Lights, Color, Action!</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Building on the last tutorial we&#39;ll add lights, color and animation to our scene</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-0-requirements/" rel="permalink">Requirements for running a three.js scene</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Here we&#39;ll cover the basic requirement for running an three.js app and following the rest of these tutorials</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-5-shapes-transformations/" rel="permalink">Shapes and Transformations</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Taking a quick look at the built in geometries and how to position them</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-1-github-repo/" rel="permalink">Three.js on Github</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Everything you need to know about the official three.js repo on github</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-2-three-js-versions/" rel="permalink">Understanding the three.js revision system</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to deal with the different version of three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/threejs-examples" class="link blue hover-black">
+            Tag: threejs-examples
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-1-github-repo/" rel="permalink">Three.js on Github</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Everything you need to know about the official three.js repo on github</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/versions" class="link blue hover-black">
+            Tag: versions
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-2-three-js-versions/" rel="permalink">Understanding the three.js revision system</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to deal with the different version of three.js</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/webgl" class="link blue hover-black">
+            Tag: webgl
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/2-components-helpers/" rel="permalink">Components and Helpers</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description"></p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-0-getting-started/" rel="permalink">Getting Started</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">In this tutorial we&#39;ll go over everything you need to know to get a simple three.js app running in your browser</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-3-getting-help/" rel="permalink">Getting help and reporting bugs</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">All the best places to ask for help about three.js</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-1-lights-color-action/" rel="permalink">Lights, Color, Action!</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Building on the last tutorial we&#39;ll add lights, color and animation to our scene</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-0-requirements/" rel="permalink">Requirements for running a three.js scene</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Here we&#39;ll cover the basic requirement for running an three.js app and following the rest of these tutorials</p>
+</article>
+
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/1-5-shapes-transformations/" rel="permalink">Shapes and Transformations</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">Taking a quick look at the built in geometries and how to position them</p>
+</article>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/wiki" class="link blue hover-black">
+            Tag: wiki
+          </a>
+        </h2>
+        
+          <article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
+  <h2 class="archive-item-title" itemprop="headline">
+    <a href="/tutorials/0-2-three-js-versions/" rel="permalink">Understanding the three.js revision system</a>
+  </h2>
+  <p class="archive-item-excerpt" itemprop="description">How to deal with the different version of three.js</p>
+</article>
+
+        
+      
+    </section>
+  </div>
+</main>
+    
+  <footer>
+    <div class="footer-social">
+      
+        <div class="social-icons">
+          <a href="https://github.com/looeee/"><span class="fa fa-fw fa-github" aria-hidden="true"></span> GitHub</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://twitter.com/looeeeb/"><span class="fa fa-fw fa-twitter" aria-hidden="true"></span> Twitter</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://discourse.threejs.org/u/looeee/"><span class="fa fa-fw fa-commenting" aria-hidden="true"></span> Discourse</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/lewy-blue-30b9b193/"><span class="fa fa-fw fa-linkedin" aria-hidden="true"></span> LinkedIn</a>
+        </div>
+      
+    </div>
+    <div class="footer-copyright">&copy; 0001 Lewy Blue.</div>
+  </footer>
+
+    
+
+
+
+
+  
+
+
+
+  <script async src='https://www.blackthreaddesign.com/js/build/main.js'></script>
+
+  </body>
+</html>

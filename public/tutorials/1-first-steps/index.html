@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Black Thread Design  | First Steps</title>
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<meta name="generator" content="Hugo 0.32.4" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+  <link href='https://www.blackthreaddesign.com/css/standard.css' rel='stylesheet' type="text/css" />
+
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway"/>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+
+
+<meta property="og:title" content="First Steps" />
+<meta property="og:description" content="Welcome to section 1, where we can finally get those creative juices flowing! This section is a gentle introduction to creating scenes with three.js.
+We&rsquo;ll explain how everything works as we go, but the explanations will be as short and simple as possible - we&rsquo;ll add detail in later chapters.
+Staring in chapter 1.0, we&rsquo;ll take a look at the basic components of a three.js and the bare minimum we need to get three." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.blackthreaddesign.com/tutorials/1-first-steps/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="First Steps">
+<meta itemprop="description" content="Welcome to section 1, where we can finally get those creative juices flowing! This section is a gentle introduction to creating scenes with three.js.
+We&rsquo;ll explain how everything works as we go, but the explanations will be as short and simple as possible - we&rsquo;ll add detail in later chapters.
+Staring in chapter 1.0, we&rsquo;ll take a look at the basic components of a three.js and the bare minimum we need to get three.">
+
+
+
+<meta itemprop="wordCount" content="140">
+
+
+
+<meta itemprop="keywords" content="three.js,getting started,introduction," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="First Steps"/>
+<meta name="twitter:description" content="Welcome to section 1, where we can finally get those creative juices flowing! This section is a gentle introduction to creating scenes with three.js.
+We&rsquo;ll explain how everything works as we go, but the explanations will be as short and simple as possible - we&rsquo;ll add detail in later chapters.
+Staring in chapter 1.0, we&rsquo;ll take a look at the basic components of a three.js and the bare minimum we need to get three."/>
+
+  </head>
+
+  <body>
+    
+  <nav class="masthead">
+
+    <ul class="visible-links">
+      <li class="masthead-title"><a href="/">Blackthread Design</a></li>
+      <li id="spacer"></li>
+
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/blog/">Blog</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/tutorials/">Tutorials</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/about/">About</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/contact/">Contact</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/experiments/">Experiments</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/loader/">Loader</a></li>
+      
+
+      <li><button class="fa fa-bars toggle-links hide"></button>
+      </li></ul>
+      <ul class="hidden-links fold"></ul>
+  </nav>
+
+  <script>
+
+
+    ( function() {
+
+      var Greedy = function Greedy( options ) {
+
+        this.masthead = document.querySelector('.masthead');
+        this.visibleLinks = this.masthead.querySelector('.visible-links');
+        this.hiddenLinks = this.masthead.querySelector('.hidden-links');
+        this.toggleButton = this.masthead.querySelector('.toggle-links');
+        this.spacer = this.masthead.querySelector('#spacer');
+
+        this.setupResize();
+        this.setupButton();
+
+        this.decreaseSize();
+        this.decreaseSize();
+
+      };
+
+      Object.assign( Greedy.prototype, {
+
+        visibleLinksWidth() {
+
+          var width = 0;
+
+          for( child in this.visibleLinks.children ){
+
+            if ( this.visibleLinks.children.hasOwnProperty( child ) ) {
+
+              if( this.visibleLinks.children[ child ].id !== spacer ) width += this.visibleLinks.children[ child ].offsetWidth;
+
+            }
+
+          }
+
+          return width;
+        },
+
+        increaseSize() {
+
+          this.spacer.style.width = 0;
+
+          if( this.hiddenLinks.children.length === 0 ) {
+
+            this.hiddenLinks.classList.add( 'fold' );
+            this.setSpacerWidth();
+            return;
+
+          }
+
+          var width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
+
+          while (
+            this.hiddenLinks.children.length > 0 &&
+            width < this.masthead.clientWidth
+          ) {
+
+            width += this.hiddenLinks.firstChild.offsetWidth;
+            this.visibleLinks.insertBefore( this.hiddenLinks.firstChild, this.visibleLinks.lastChild );
+
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        decreaseSize() {
+
+          this.spacer.style.width = 0;
+
+          while ( this.masthead.clientWidth < this.visibleLinks.scrollWidth ) {
+
+            if( this.visibleLinks.children.length === 3 ) {
+
+              this.showButton();
+              this.setSpacerWidth();
+              return;
+
+            }
+
+
+            var secondLastChild = this.visibleLinks.children[ this.visibleLinks.children.length - 2 ];
+            this.hiddenLinks.insertBefore( secondLastChild, this.hiddenLinks.firstChild );
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        setSpacerWidth(){
+
+          this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
+
+        },
+
+        showButton() {
+
+          if( this.hiddenLinks.children.length === 0 ) this.toggleButton.classList.add( 'hide' );
+          else this.toggleButton.classList.remove( 'hide' );
+
+        },
+
+        setupResize: function() {
+
+          var self = this;
+          var lastWidth = window.innerWidth;
+
+          window.addEventListener( 'resize', function() {
+
+            if( window.innerWidth > lastWidth ) self.increaseSize();
+            else if( window.innerWidth < lastWidth ) self.decreaseSize();
+
+            lastWidth = window.innerWidth;
+          } );
+
+        },
+
+        setupButton: function() {
+
+          var self = this;
+
+          this.toggleButton.addEventListener( 'click', function() {
+
+            self.hiddenLinks.classList.toggle( 'fold' );
+
+          } );
+
+
+        },
+
+      } );
+
+      var menu = new Greedy();
+
+      const masthead = document.querySelector( '.masthead' );
+
+      document.addEventListener( 'scroll', () => {
+
+        if (window.scrollY > 50) {
+          masthead.classList.add( 'shrink' );
+        } else {
+          masthead.classList.remove( 'shrink' );
+        }
+
+      } );
+
+    })();
+
+  </script>
+
+    <main role="main" id="main">
+
+  
+    <div id="page-content">
+    <button id="toggle-nav" class="fa fa-bars fa-2x"></button>
+
+<nav id="vert-nav" class="fold">
+  <ul>
+    <li class="nav-title"></li>
+    
+    
+      <li>
+        
+          </span><a href="/blog/progress-bar/" class="">Faking a progress bar in three.js</a>
+        
+      </li>
+    
+      <li>
+        
+          </span><a href="/blog/promisifying-threejs-loaders/" class="">Promisifying three.js loaders</a>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+<script>
+
+  var sidenav = function() {
+
+    var content = document.querySelector( '#main' );
+    var toggleButton = document.querySelector( '#toggle-nav' );
+    var nav = document.querySelector( '#vert-nav' );
+
+    var breakpoint = 1280;
+
+    function updateMenu(){
+
+      if( content.offsetWidth < breakpoint ) {
+
+        if( !toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.remove( 'hide' );
+        nav.classList.add( 'fold' );
+
+      }
+      else {
+
+        if( toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.add( 'hide' );
+        nav.classList.remove( 'fold' );
+
+      }
+
+    }
+
+    updateMenu();
+
+    toggleButton.addEventListener( 'click', function( e ) {
+
+      e.preventDefault();
+
+      nav.classList.toggle( 'fold' );
+
+    } );
+
+    window.addEventListener( 'resize', updateMenu );
+
+  };
+
+  window.addEventListener( 'load', sidenav );
+
+</script>
+  
+
+    <article id="article">
+      <header>
+        <h2>First Steps</h2>
+      </header>
+      
+      
+      <section class="content">
+        <p>Welcome to section 1, where we can finally get those creative juices flowing! This section is a gentle introduction to creating scenes with three.js.</p>
+
+<p>We&rsquo;ll explain how everything works as we go, but the explanations will be as short and simple as possible - we&rsquo;ll add detail in later chapters.</p>
+
+<p>Staring in chapter 1.0, we&rsquo;ll take a look at the basic components of a three.js and the bare minimum we need to get three.js to display something on screen. It turns out (excluding comments), that this is only 15 lines of code. Not too bad!</p>
+
+<p>In the following chapters, we&rsquo;ll add animation, camera controls and lights and learn how to deal with the browser window resizing.</p>
+
+<p>We&rsquo;ll round out the section with a look at how to move things around in the scene using translation, rotation and scaling (<em>linear transformations</em>).</p>
+
+      </section>
+      <aside>
+        <div id="meta">
+  <p class="meta-tags">
+  <strong><span class="fa fa-fw fa-tags" aria-hidden="true"></span>Tags: </strong>
+    <span itemprop="keywords">
+      
+        <a href="/tags/three.js">three.js,</a> </li>
+      
+        <a href="/tags/getting-started">getting started,</a> </li>
+      
+        <a href="/tags/introduction">introduction,</a> </li>
+      
+    </span>
+</p>
+
+  <p class="meta-date">
+    <strong>
+      <span class="fa fa-fw fa-calendar" aria-hidden="true"></span>
+      Updated:
+    </strong>
+    <time datetime="">
+      0001-01-01 00:00:00 &#43;0000 UTC
+    </time></p>
+  </p>
+
+  <p class="meta-author">
+    <strong><span class="fa fa-fw fa-user" aria-hidden="true"></span>Author: </strong><a href="/about" itemprop="author" rel="author">Lewy Blue</a>
+  </p>
+</div>
+      </aside>
+      <nav class="pagination">
+  
+    <a href="https://www.blackthreaddesign.com/tutorials/1-0-getting-started/" title="Getting Started">Previous</a>
+  
+  
+    <a href="https://www.blackthreaddesign.com/tutorials/2-0-creating-rainbows/" title="Creating Rainbows - colors in three.js">Next</a>
+  
+</nav>
+      <div class="comments">
+
+  <div class="new-comment">
+  <h4>Leave a Comment</h4>
+
+  <p id="comment-submitted-message" class="hide">Thank you! You comment is being vetted and will appear here in a couple of minutes.</p>
+  <form method="POST" action="https://api.staticman.net/v2/entry/looeee/blackthread-heroku/master/comments">
+
+    <input name="options[slug]" type="hidden" value="page.slug">
+    <input name="options[parent]" type="hidden" value="post_slug">
+    <input type="hidden" name="options[origin]" value="page.url">
+    <input type="hidden" name="options[redirect]" value="page.url?comment-submitted">
+
+    <label><input name="fields[name]" type="text" placeholder="Name" required></label>
+    <label><input name="fields[email]" type="email" placeholder="Email address (will not be made public)" required></label>
+    <label>Message<textarea name="fields[message]" required></textarea></label>
+
+    <button type="submit">Submit comment</button>
+  </form>
+
+</div>
+
+  <h4 class="comments-title">Previous Comments</h4>
+
+</div>
+
+<script>
+
+  if( window.location.href.indexOf( 'comment-submitted' ) !== -1 ) {
+
+    document.querySelector( '#comment-submitted-message' ).classList.remove( 'hide' );
+
+  }
+
+</script>
+    </article>
+  </div>
+</main>
+    
+  <footer>
+    <div class="footer-social">
+      
+        <div class="social-icons">
+          <a href="https://github.com/looeee/"><span class="fa fa-fw fa-github" aria-hidden="true"></span> GitHub</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://twitter.com/looeeeb/"><span class="fa fa-fw fa-twitter" aria-hidden="true"></span> Twitter</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://discourse.threejs.org/u/looeee/"><span class="fa fa-fw fa-commenting" aria-hidden="true"></span> Discourse</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/lewy-blue-30b9b193/"><span class="fa fa-fw fa-linkedin" aria-hidden="true"></span> LinkedIn</a>
+        </div>
+      
+    </div>
+    <div class="footer-copyright">&copy; 0001 Lewy Blue.</div>
+  </footer>
+
+    
+
+
+
+
+  
+
+
+
+  <script async src='https://www.blackthreaddesign.com/js/build/main.js'></script>
+
+  </body>
+</html>

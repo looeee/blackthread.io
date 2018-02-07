@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Browser on Black Thread Design</title>
+    <link>https://www.blackthreaddesign.com/tags/browser/</link>
+    <description>Recent content in Browser on Black Thread Design</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="https://www.blackthreaddesign.com/tags/browser/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introduction to textures</title>
+      <link>https://www.blackthreaddesign.com/tutorials/1-3-textures-intro/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/1-3-textures-intro/</guid>
+      <description>So far we have just created a simple coloured material for our mesh. If we want to create something more realistic we&amp;rsquo;ll have to move onto using texture mapping.
+Put very simply, this means taking an image and stretching it over the surface of a 3D object. Of course, this will be very easy to do if the surface of the 3D object is square, and less easy of the surface is curved and knotted.</description>
+    </item>
+    
+    <item>
+      <title>Resizing the canvas</title>
+      <link>https://www.blackthreaddesign.com/tutorials/1-2-resize/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.blackthreaddesign.com/tutorials/1-2-resize/</guid>
+      <description>Here&amp;rsquo;s where we left off at the end of the last chapter.
+
+It&amp;rsquo;s pretty respectable result for such a small amount of code. However, there is one big problem that will quickly make it look at lot less professional to anyone using your website - that is, the scene does not resize when the browser window changes size.
+This will be particularly obvious if you load this page with a small browser window and then increase the size.</description>
+    </item>
+    
+  </channel>
+</rss>

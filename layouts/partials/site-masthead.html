@@ -6,7 +6,7 @@
       <li id="spacer"></li>
 
       {{ range $.Site.Data.navigation.masthead.menu }}
-        <li><a class="" href="{{ .url | absURL }}">{{ .title }}</a></li>
+        <li><a class="" href="{{ .url | relURL }}">{{ .title }}</a></li>
       {{ end }}
 
       <li><button class="fa fa-bars toggle-links hide"></button>

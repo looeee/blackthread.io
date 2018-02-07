@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Black Thread Design  | Robot Dance</title>
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<meta name="generator" content="Hugo 0.32.4" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+  <link href='https://www.blackthreaddesign.com/css/robot_dance.css' rel='stylesheet' type="text/css" />
+
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway"/>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+
+
+<meta property="og:title" content="Robot Dance" />
+<meta property="og:description" content="Start with creating frames   Info Let&#39;s start by creating some frames. Each frame is a static pose that the robot can be in.
+You can control the robot&#39;s head, shoulders and elbows. For each controllable joint, there are two axes of control, labelled pitch and yaw.
+These control up/down and left/right motion.
+Frames can either be grouped together, or added directly to the dance.
+    # Head Left Shoulder Right Shoulder Left Elbow Right Elbow Add Frame         Create groups with multiple frames   Info Now that we&#39;ve created some frames, we can start to make an animation." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.blackthreaddesign.com/hidden/robot_dance/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Robot Dance">
+<meta itemprop="description" content="Start with creating frames   Info Let&#39;s start by creating some frames. Each frame is a static pose that the robot can be in.
+You can control the robot&#39;s head, shoulders and elbows. For each controllable joint, there are two axes of control, labelled pitch and yaw.
+These control up/down and left/right motion.
+Frames can either be grouped together, or added directly to the dance.
+    # Head Left Shoulder Right Shoulder Left Elbow Right Elbow Add Frame         Create groups with multiple frames   Info Now that we&#39;ve created some frames, we can start to make an animation.">
+
+
+
+<meta itemprop="wordCount" content="438">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Robot Dance"/>
+<meta name="twitter:description" content="Start with creating frames   Info Let&#39;s start by creating some frames. Each frame is a static pose that the robot can be in.
+You can control the robot&#39;s head, shoulders and elbows. For each controllable joint, there are two axes of control, labelled pitch and yaw.
+These control up/down and left/right motion.
+Frames can either be grouped together, or added directly to the dance.
+    # Head Left Shoulder Right Shoulder Left Elbow Right Elbow Add Frame         Create groups with multiple frames   Info Now that we&#39;ve created some frames, we can start to make an animation."/>
+
+  </head>
+
+  <body>
+    
+  <nav class="masthead">
+
+    <ul class="visible-links">
+      <li class="masthead-title"><a href="/">Blackthread Design</a></li>
+      <li id="spacer"></li>
+
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/blog/">Blog</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/tutorials/">Tutorials</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/about/">About</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/contact/">Contact</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/experiments/">Experiments</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/loader/">Loader</a></li>
+      
+
+      <li><button class="fa fa-bars toggle-links hide"></button>
+      </li></ul>
+      <ul class="hidden-links fold"></ul>
+  </nav>
+
+  <script>
+
+
+    ( function() {
+
+      var Greedy = function Greedy( options ) {
+
+        this.masthead = document.querySelector('.masthead');
+        this.visibleLinks = this.masthead.querySelector('.visible-links');
+        this.hiddenLinks = this.masthead.querySelector('.hidden-links');
+        this.toggleButton = this.masthead.querySelector('.toggle-links');
+        this.spacer = this.masthead.querySelector('#spacer');
+
+        this.setupResize();
+        this.setupButton();
+
+        this.decreaseSize();
+        this.decreaseSize();
+
+      };
+
+      Object.assign( Greedy.prototype, {
+
+        visibleLinksWidth() {
+
+          var width = 0;
+
+          for( child in this.visibleLinks.children ){
+
+            if ( this.visibleLinks.children.hasOwnProperty( child ) ) {
+
+              if( this.visibleLinks.children[ child ].id !== spacer ) width += this.visibleLinks.children[ child ].offsetWidth;
+
+            }
+
+          }
+
+          return width;
+        },
+
+        increaseSize() {
+
+          this.spacer.style.width = 0;
+
+          if( this.hiddenLinks.children.length === 0 ) {
+
+            this.hiddenLinks.classList.add( 'fold' );
+            this.setSpacerWidth();
+            return;
+
+          }
+
+          var width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
+
+          while (
+            this.hiddenLinks.children.length > 0 &&
+            width < this.masthead.clientWidth
+          ) {
+
+            width += this.hiddenLinks.firstChild.offsetWidth;
+            this.visibleLinks.insertBefore( this.hiddenLinks.firstChild, this.visibleLinks.lastChild );
+
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        decreaseSize() {
+
+          this.spacer.style.width = 0;
+
+          while ( this.masthead.clientWidth < this.visibleLinks.scrollWidth ) {
+
+            if( this.visibleLinks.children.length === 3 ) {
+
+              this.showButton();
+              this.setSpacerWidth();
+              return;
+
+            }
+
+
+            var secondLastChild = this.visibleLinks.children[ this.visibleLinks.children.length - 2 ];
+            this.hiddenLinks.insertBefore( secondLastChild, this.hiddenLinks.firstChild );
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        setSpacerWidth(){
+
+          this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
+
+        },
+
+        showButton() {
+
+          if( this.hiddenLinks.children.length === 0 ) this.toggleButton.classList.add( 'hide' );
+          else this.toggleButton.classList.remove( 'hide' );
+
+        },
+
+        setupResize: function() {
+
+          var self = this;
+          var lastWidth = window.innerWidth;
+
+          window.addEventListener( 'resize', function() {
+
+            if( window.innerWidth > lastWidth ) self.increaseSize();
+            else if( window.innerWidth < lastWidth ) self.decreaseSize();
+
+            lastWidth = window.innerWidth;
+          } );
+
+        },
+
+        setupButton: function() {
+
+          var self = this;
+
+          this.toggleButton.addEventListener( 'click', function() {
+
+            self.hiddenLinks.classList.toggle( 'fold' );
+
+          } );
+
+
+        },
+
+      } );
+
+      var menu = new Greedy();
+
+      const masthead = document.querySelector( '.masthead' );
+
+      document.addEventListener( 'scroll', () => {
+
+        if (window.scrollY > 50) {
+          masthead.classList.add( 'shrink' );
+        } else {
+          masthead.classList.remove( 'shrink' );
+        }
+
+      } );
+
+    })();
+
+  </script>
+
+    <main role="main" id="main">
+
+  
+    <div id="page-content">
+    <button id="toggle-nav" class="fa fa-bars fa-2x"></button>
+
+<nav id="vert-nav" class="fold">
+  <ul>
+    <li class="nav-title"></li>
+    
+    
+      <li>
+        
+          </span><a href="/blog/progress-bar/" class="">Faking a progress bar in three.js</a>
+        
+      </li>
+    
+      <li>
+        
+          </span><a href="/blog/promisifying-threejs-loaders/" class="">Promisifying three.js loaders</a>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+<script>
+
+  var sidenav = function() {
+
+    var content = document.querySelector( '#main' );
+    var toggleButton = document.querySelector( '#toggle-nav' );
+    var nav = document.querySelector( '#vert-nav' );
+
+    var breakpoint = 1280;
+
+    function updateMenu(){
+
+      if( content.offsetWidth < breakpoint ) {
+
+        if( !toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.remove( 'hide' );
+        nav.classList.add( 'fold' );
+
+      }
+      else {
+
+        if( toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.add( 'hide' );
+        nav.classList.remove( 'fold' );
+
+      }
+
+    }
+
+    updateMenu();
+
+    toggleButton.addEventListener( 'click', function( e ) {
+
+      e.preventDefault();
+
+      nav.classList.toggle( 'fold' );
+
+    } );
+
+    window.addEventListener( 'resize', updateMenu );
+
+  };
+
+  window.addEventListener( 'load', sidenav );
+
+</script>
+  
+
+    <article id="article">
+      <header>
+        <h2>Robot Dance</h2>
+      </header>
+      
+  
+
+      
+  <span class="reading-time" title="Read time">
+    <strong>Reading time: </strong> around 2 minutes
+  </span>
+
+      <section class="content">
+        <div id="container">
+
+  <div id="controls" class="accordion">
+
+    <ul>
+
+      <li>
+        <input type="checkbox">
+        <i></i>
+        <h2>Start with creating frames</h2>
+
+        <div id="frame-controls" class="accordion-section">
+
+          <ul class="accordion controls-section">
+
+            <li>
+              <input type="checkbox">
+              <i></i>
+              <h4>Info</h4>
+
+              <div class="accordion-section">
+                <p>Let's start by creating some frames. Each frame is a static <em>pose</em> that the robot can be in.</p>
+                <p>You can control the robot's head, shoulders and elbows. For each controllable joint, there are two <strong>axes of control</strong>, labelled <strong>pitch</strong> and <strong>yaw</strong>.</p>
+                <p>These control <strong>up/down</strong> and <strong>left/right</strong> motion.</p>
+                <p>Frames can either be <strong>grouped</strong> together, or added directly to the dance.</p>
+              </div>
+
+            </li>
+
+          </ul>
+
+          <table class="controls-section">
+            <thead id="frames-thead">
+              <tr>
+                <th>#</th>
+                <th>Head</th>
+                <th>Left Shoulder</th>
+                <th>Right Shoulder</th>
+                <th>Left Elbow</th>
+                <th>Right Elbow</th>
+                <th><button id="create-frame-button">Add Frame</button></th>
+              </tr>
+            </thead>
+            <tbody id="frames"></tbody>
+          </table>
+
+        </div>
+      </li>
+
+      <li>
+        <input type="checkbox" checked>
+        <i></i>
+        <h2>Create groups with multiple frames</h2>
+
+        <div id="group-controls" class="accordion-section">
+
+          <ul class="accordion controls-section">
+            <li>
+              <input type="checkbox">
+              <i></i>
+              <h4>Info</h4>
+
+              <div class="accordion-section">
+                <p>Now that we've created some  frames, we can start to make an animation. Add two or more frames to a group to make the robot groove!</p>
+                <p>It's best combine frames that are only a couple of degrees apart so that the movement is not jerky.</p>
+                <p><strong>Tip:</strong> Try adding a sequence of frames that start and end with the same frame for a looping animation. For example: frame 1, frame 2, then frame 1 again.</p>
+              </div>
+            </li>
+          </ul>
+
+          <table class="controls-section">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th><span class="selected-frame-message">Frame 1 is selected</span></th>
+                <th><button id="create-group-button">New Group</button></th>
+              </tr>
+            </thead>
+            <tbody id="groups"></tbody>
+          </table>
+
+        </div>
+      </li>
+
+      <li>
+        <input type="checkbox" checked>
+        <i></i>
+        <h2>Add music</h2>
+
+        <div id="music-controls" class="accordion-section">
+
+          <ul class="accordion controls-section">
+
+            <li>
+              <input type="checkbox">
+              <i></i>
+              <h4>Info</h4>
+
+              <div class="accordion-section">
+                <p>No dance is complete without music!</p>
+                <p>Choose from one of the tracks below, or upload your own in mp3, ogg, wav, flac, aac or webm format.</p>
+              </div>
+
+            </li>
+
+          </ul>
+
+          <div class="controls-section">
+            <button id="upload-mp3-button">Upload Music</button>
+            <input type="file" id="upload-mp3-input" class="hide" accept="audio/*" >
+            <select id="loaded-tracks"> </select>
+
+            <button id="play-music" disabled>Play</button>
+            <button id="stop-music">Stop</button>
+          </div>
+
+        </div>
+      </li>
+
+      <li>
+        <input type="checkbox" checked>
+        <i></i>
+        <h2>Create a dance with frames and groups</h2>
+
+        <div id="dance-controls" class="accordion-section">
+
+          <ul class="accordion controls-section">
+
+            <li>
+              <input type="checkbox">
+              <i></i>
+              <h4>Info</h4>
+
+              <div class="accordion-section">
+                <p>Frames and groups will play in the order they are added. You can also set how many times you want each group to loop. A dance must consist of at least two frames. Once enough frames/groups have been added the play button will become available.</p>
+                <p>You can also set the <strong>framerate</strong> here - that is, the time that the robot takes to move between frames.</p>
+                <p><strong>Practice Math: </strong> Enable this to practice your math skills! Calculate the total length of the current dance based on the frames and groups it contains (don't forget to factor in how many times each group loops!). Remember that this will depend on the framerate - at 1fps, each frame will take one second.</p>
+              </div>
+
+            </li>
+
+          </ul>
+
+          <div class="controls-section">
+            <div>
+                <span class="selected-frame-message">Frame 1 is selected</span>
+                <span class="selected-group-message">Group 1 is selected</span>
+            </div>
+            <div>
+              <button id="add-frame-to-dance">Add Selected Frame</button>
+              <button id="add-group-to-dance">Add Selected Group</button>
+              <button id="dance-button" disabled>
+                <span id="play-symbol" class="fa fa-lg fa-play" aria-hidden="true" title="Remove all frames and groups from dance"></span>
+              </button>
+            </div>
+
+            <div>
+              <div>
+                <span>Frame rate: </span><input id="framerate" type="number" min="0.1" max="10" step="0.1" value="1" /> fps
+              </div>
+
+              <div>
+                <span>Practice Math</span><input id="advanced-control-toggle" type="checkbox" diasbled>
+              </div>
+
+              <div id="advanced-control" class="hide">
+                Enter the total length of the dance here:
+
+                <input type="text" id="advanced-control-input"
+                placeholder="Not enough frames in dance!"
+                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) ||
+                event.charCode == 46 || event.charCode == 0"
+                style="background-color: #ffaaaa;"
+                >
+              </div>
+            </div>
+
+          </div>
+
+          <div class="controls-section">
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Number</th>
+                  <th>Loop amount</th>
+                  <th><button id="reset-dance" disabled><span class="fa fa-lg fa-trash-o" aria-hidden="true" title="Remove all frames and groups from dance"></button></span></th>
+                </tr>
+              </thead>
+              <tbody id="dance-details"></tbody>
+            </table>
+          </div>
+
+        </div>
+      </li>
+
+      <li>
+        <input type="checkbox" checked>
+        <i></i>
+        <h2>Save and Load</h2>
+
+        <div id="file-controls" class="accordion-section">
+
+          <ul class="accordion controls-section">
+            <li>
+              <input type="checkbox">
+              <i></i>
+              <h4>Info</h4>
+
+              <div class="accordion-section">
+                <p>Save your dance here! Once you are happy with your creation, be sure to save it!
+                  You can reload it later by clicking on <strong>Load Dance</strong> and selecting the file you saved.</p>
+                <p>You can also load one of the example files to see a ready made dance in action.</p>
+                <p><strong>Tip:</strong> Music files are not saved with your dance! You'll have to load your music files again.</p>
+              </div>
+            </li>
+
+          </ul>
+
+          <div class="controls-section">
+            <button id="save-dance">Save Dance</button>
+            <button id="load-dance">Load Dance</button>
+            <input type="file" class="hide" id="file-input" accept=".json">
+
+            <select id="examples">
+              <option value="example-1">Example-1</option>
+              <option value="example-2">Example-2</option>
+              <option value="example-3">Example-3</option>
+            </select>
+
+            <button id="load-example">Load Example</button>
+            <button id="reset-all">Reset Everything!</button>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+
+  </div>
+
+  <div id="canvas-container">
+    <div id="mouse-info"></div>
+    <canvas id="canvas"></canvas>
+  </div>
+
+
+  <div id="loading-overlay">
+
+    <div id="loading-bar" class="hide">
+      <span id="bar">
+        <span id="progress"></span>
+      </span>
+    </div>
+
+  </div>
+
+</div>
+
+      </section>
+      <aside>
+        <div id="meta">
+  <p class="meta-tags">
+  <strong><span class="fa fa-fw fa-tags" aria-hidden="true"></span>Tags: </strong>
+    <span itemprop="keywords">
+      
+    </span>
+</p>
+
+  <p class="meta-date">
+    <strong>
+      <span class="fa fa-fw fa-calendar" aria-hidden="true"></span>
+      Updated:
+    </strong>
+    <time datetime="">
+      0001-01-01 00:00:00 &#43;0000 UTC
+    </time></p>
+  </p>
+
+  <p class="meta-author">
+    <strong><span class="fa fa-fw fa-user" aria-hidden="true"></span>Author: </strong><a href="/about" itemprop="author" rel="author">Lewy Blue</a>
+  </p>
+</div>
+      </aside>
+      <nav class="pagination">
+  
+    <a href="https://www.blackthreaddesign.com/hidden/robot/" title="Robot Simulation">Previous</a>
+  
+  
+    <a href="https://www.blackthreaddesign.com/hidden/nfl/" title="NFL Scouting App Test Page">Next</a>
+  
+</nav>
+      <div class="comments">
+
+  <div class="new-comment">
+  <h4>Leave a Comment</h4>
+
+  <p id="comment-submitted-message" class="hide">Thank you! You comment is being vetted and will appear here in a couple of minutes.</p>
+  <form method="POST" action="https://api.staticman.net/v2/entry/looeee/blackthread-heroku/master/comments">
+
+    <input name="options[slug]" type="hidden" value="page.slug">
+    <input name="options[parent]" type="hidden" value="post_slug">
+    <input type="hidden" name="options[origin]" value="page.url">
+    <input type="hidden" name="options[redirect]" value="page.url?comment-submitted">
+
+    <label><input name="fields[name]" type="text" placeholder="Name" required></label>
+    <label><input name="fields[email]" type="email" placeholder="Email address (will not be made public)" required></label>
+    <label>Message<textarea name="fields[message]" required></textarea></label>
+
+    <button type="submit">Submit comment</button>
+  </form>
+
+</div>
+
+  <h4 class="comments-title">Previous Comments</h4>
+
+</div>
+
+<script>
+
+  if( window.location.href.indexOf( 'comment-submitted' ) !== -1 ) {
+
+    document.querySelector( '#comment-submitted-message' ).classList.remove( 'hide' );
+
+  }
+
+</script>
+    </article>
+  </div>
+</main>
+    
+  <footer>
+    <div class="footer-social">
+      
+        <div class="social-icons">
+          <a href="https://github.com/looeee/"><span class="fa fa-fw fa-github" aria-hidden="true"></span> GitHub</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://twitter.com/looeeeb/"><span class="fa fa-fw fa-twitter" aria-hidden="true"></span> Twitter</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://discourse.threejs.org/u/looeee/"><span class="fa fa-fw fa-commenting" aria-hidden="true"></span> Discourse</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/lewy-blue-30b9b193/"><span class="fa fa-fw fa-linkedin" aria-hidden="true"></span> LinkedIn</a>
+        </div>
+      
+    </div>
+    <div class="footer-copyright">&copy; 0001 Lewy Blue.</div>
+  </footer>
+
+    
+
+
+
+
+  
+
+
+
+  <script async src='https://www.blackthreaddesign.com/js/build/robot_dance.js'></script>
+
+  </body>
+</html>

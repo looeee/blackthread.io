@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Black Thread Design  | Promisifying three.js loaders</title>
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<meta name="generator" content="Hugo 0.32.4" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+  <link href='https://www.blackthreaddesign.com/css/standard.css' rel='stylesheet' type="text/css" />
+
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway"/>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+
+
+<meta property="og:title" content="Promisifying three.js loaders" />
+<meta property="og:description" content="Converting three.js loaders into promises" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.blackthreaddesign.com/blog/promisifying-threejs-loaders/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Promisifying three.js loaders">
+<meta itemprop="description" content="Converting three.js loaders into promises">
+
+
+
+<meta itemprop="wordCount" content="1396">
+
+
+
+<meta itemprop="keywords" content="loading,promises,modules,ES6," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Promisifying three.js loaders"/>
+<meta name="twitter:description" content="Converting three.js loaders into promises"/>
+
+  </head>
+
+  <body>
+    
+  <nav class="masthead">
+
+    <ul class="visible-links">
+      <li class="masthead-title"><a href="/">Blackthread Design</a></li>
+      <li id="spacer"></li>
+
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/blog/">Blog</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/tutorials/">Tutorials</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/about/">About</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/contact/">Contact</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/experiments/">Experiments</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/loader/">Loader</a></li>
+      
+
+      <li><button class="fa fa-bars toggle-links hide"></button>
+      </li></ul>
+      <ul class="hidden-links fold"></ul>
+  </nav>
+
+  <script>
+
+
+    ( function() {
+
+      var Greedy = function Greedy( options ) {
+
+        this.masthead = document.querySelector('.masthead');
+        this.visibleLinks = this.masthead.querySelector('.visible-links');
+        this.hiddenLinks = this.masthead.querySelector('.hidden-links');
+        this.toggleButton = this.masthead.querySelector('.toggle-links');
+        this.spacer = this.masthead.querySelector('#spacer');
+
+        this.setupResize();
+        this.setupButton();
+
+        this.decreaseSize();
+        this.decreaseSize();
+
+      };
+
+      Object.assign( Greedy.prototype, {
+
+        visibleLinksWidth() {
+
+          var width = 0;
+
+          for( child in this.visibleLinks.children ){
+
+            if ( this.visibleLinks.children.hasOwnProperty( child ) ) {
+
+              if( this.visibleLinks.children[ child ].id !== spacer ) width += this.visibleLinks.children[ child ].offsetWidth;
+
+            }
+
+          }
+
+          return width;
+        },
+
+        increaseSize() {
+
+          this.spacer.style.width = 0;
+
+          if( this.hiddenLinks.children.length === 0 ) {
+
+            this.hiddenLinks.classList.add( 'fold' );
+            this.setSpacerWidth();
+            return;
+
+          }
+
+          var width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
+
+          while (
+            this.hiddenLinks.children.length > 0 &&
+            width < this.masthead.clientWidth
+          ) {
+
+            width += this.hiddenLinks.firstChild.offsetWidth;
+            this.visibleLinks.insertBefore( this.hiddenLinks.firstChild, this.visibleLinks.lastChild );
+
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        decreaseSize() {
+
+          this.spacer.style.width = 0;
+
+          while ( this.masthead.clientWidth < this.visibleLinks.scrollWidth ) {
+
+            if( this.visibleLinks.children.length === 3 ) {
+
+              this.showButton();
+              this.setSpacerWidth();
+              return;
+
+            }
+
+
+            var secondLastChild = this.visibleLinks.children[ this.visibleLinks.children.length - 2 ];
+            this.hiddenLinks.insertBefore( secondLastChild, this.hiddenLinks.firstChild );
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        setSpacerWidth(){
+
+          this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
+
+        },
+
+        showButton() {
+
+          if( this.hiddenLinks.children.length === 0 ) this.toggleButton.classList.add( 'hide' );
+          else this.toggleButton.classList.remove( 'hide' );
+
+        },
+
+        setupResize: function() {
+
+          var self = this;
+          var lastWidth = window.innerWidth;
+
+          window.addEventListener( 'resize', function() {
+
+            if( window.innerWidth > lastWidth ) self.increaseSize();
+            else if( window.innerWidth < lastWidth ) self.decreaseSize();
+
+            lastWidth = window.innerWidth;
+          } );
+
+        },
+
+        setupButton: function() {
+
+          var self = this;
+
+          this.toggleButton.addEventListener( 'click', function() {
+
+            self.hiddenLinks.classList.toggle( 'fold' );
+
+          } );
+
+
+        },
+
+      } );
+
+      var menu = new Greedy();
+
+      const masthead = document.querySelector( '.masthead' );
+
+      document.addEventListener( 'scroll', () => {
+
+        if (window.scrollY > 50) {
+          masthead.classList.add( 'shrink' );
+        } else {
+          masthead.classList.remove( 'shrink' );
+        }
+
+      } );
+
+    })();
+
+  </script>
+
+    <main role="main" id="main">
+
+  
+    <div id="page-content">
+    <button id="toggle-nav" class="fa fa-bars fa-2x"></button>
+
+<nav id="vert-nav" class="fold">
+  <ul>
+    <li class="nav-title"></li>
+    
+    
+      <li>
+        
+          </span><a href="/blog/progress-bar/" class="">Faking a progress bar in three.js</a>
+        
+      </li>
+    
+      <li>
+        
+          <span class="fa fa-arrow-right" aria-hidden="true"></span><a href="/blog/promisifying-threejs-loaders/" class="">Promisifying three.js loaders</a>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+<script>
+
+  var sidenav = function() {
+
+    var content = document.querySelector( '#main' );
+    var toggleButton = document.querySelector( '#toggle-nav' );
+    var nav = document.querySelector( '#vert-nav' );
+
+    var breakpoint = 1280;
+
+    function updateMenu(){
+
+      if( content.offsetWidth < breakpoint ) {
+
+        if( !toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.remove( 'hide' );
+        nav.classList.add( 'fold' );
+
+      }
+      else {
+
+        if( toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.add( 'hide' );
+        nav.classList.remove( 'fold' );
+
+      }
+
+    }
+
+    updateMenu();
+
+    toggleButton.addEventListener( 'click', function( e ) {
+
+      e.preventDefault();
+
+      nav.classList.toggle( 'fold' );
+
+    } );
+
+    window.addEventListener( 'resize', updateMenu );
+
+  };
+
+  window.addEventListener( 'load', sidenav );
+
+</script>
+  
+
+    <article id="article">
+      <header>
+        <h2>Promisifying three.js loaders</h2>
+      </header>
+      
+  <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#callbacks">Callbacks</a></li>
+<li><a href="#promises-promises">Promises, promises</a></li>
+<li><a href="#loading-multiple-groups-of-models">Loading multiple groups of models</a>
+<ul>
+<li><a href="#introducing-promise-all">Introducing Promise.all</a></li>
+</ul></li>
+<li><a href="#converting-the-loaders-to-promises">Converting the loaders to promises</a></li>
+<li><a href="#polyfilling-promises">Polyfilling promises</a></li>
+<li><a href="#the-final-result">The final result</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+
+      
+  <span class="reading-time" title="Read time">
+    <strong>Reading time: </strong> around 7 minutes
+  </span>
+
+      <section class="content">
+        
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promises</a> are great! Promises are the future! Well, async/await is probably the future, but lets take things one step at a time here.</p>
+
+<p>In case you don&rsquo;t know, promises simplify the process of dealing with asynchronous operations.</p>
+
+<p>An asynchronous operation is something that might take a while - you don&rsquo;t want to halt the program while you are waiting, so you need some way of waiting until your time taking task has run, and then resuming operation at that point in the program.</p>
+
+<p>In this post we&rsquo;ll go over the motivation for turning three.js loaders into promises, and then look at how to actually do it. It turns out to be fairly simple - in fact we can create a <code>promisifyLoader</code> function that takes any loader and spits out a <code>promiseLoader</code> version. Not even that that, but we can continue to use the <a href="https://threejs.org/docs/#api/loaders/managers/LoadingManager">LoadingManager</a> and all our pretty <code>onLoad</code>, <code>onProgress</code> and <code>onError</code>. Although it will turn out that we may not want to&hellip; read on!</p>
+
+<h3 id="callbacks">Callbacks</h3>
+
+<p>Traditionally in JavaScript, callbacks have been (and are) used to deal with asynchronous operations, and they are used liberally throughout the three.js source code and the <a href="https://threejs.org/examples/">official examples</a>.</p>
+
+<p>In particular, callbacks are used every time a model is  loaded. Here is how you would load an FBX model, for example:</p>
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">loader</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">FBXLoader</span>( <span style="color:#a6e22e">manager</span> );
+
+<span style="color:#a6e22e">loader</span>.<span style="color:#a6e22e">load</span>( <span style="color:#e6db74">&#39;duck.fbx&#39;</span>, ( <span style="color:#a6e22e">loadedObject</span> ) =&gt; {
+
+  <span style="color:#a6e22e">scene</span>.<span style="color:#a6e22e">add</span>( <span style="color:#a6e22e">loadedObject</span> );
+
+}, <span style="color:#a6e22e">onProgress</span>, <span style="color:#a6e22e">onError</span> );</code></pre></div></p>
+
+<p>There are actually three callback functions here, but the one we are interested in is the so called <code>onLoad</code> callback. This gets called once the model has finished loading:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">( <span style="color:#a6e22e">loadedObject</span> ) =&gt; {
+
+  <span style="color:#a6e22e">scene</span>.<span style="color:#a6e22e">add</span>( <span style="color:#a6e22e">loadedObject</span> );
+
+}</code></pre></div>
+
+<p>The others are <code>onProgress</code>, and <code>onError</code> which we&rsquo;ll ignore for now.</p>
+
+<p>There is nothing wrong with the callback approach in many cases. However there are times when they lead to complex and hard to read code, and they have limitations. In these cases, we can turn to a new (to JavaScript) approach, called <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promises</a>.</p>
+
+<h3 id="promises-promises">Promises, promises</h3>
+
+<p>Yes, that joke heading probably gets used in every single article on promises. I&rsquo;d hate to break the trend.
+Anyway, let&rsquo;s take a look at how we would rewrite the above model loading code if the <code>FBXLoader</code> returned a Promise instead of waiting for a callback:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">promiseLoader</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">FBXPromiseLoader</span>();
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">promiseOfADuck</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">promiseLoader</span>.<span style="color:#a6e22e">load</span>( <span style="color:#e6db74">&#39;duck.fbx&#39;</span> );
+
+<span style="color:#a6e22e">promiseOfADuck</span>
+  .<span style="color:#a6e22e">then</span>( ( <span style="color:#a6e22e">loadedObject</span> ) =&gt; {
+
+    <span style="color:#a6e22e">scene</span>.<span style="color:#a6e22e">add</span>( <span style="color:#a6e22e">loadedObject</span> );
+
+  } )
+  .<span style="color:#66d9ef">catch</span>( ( <span style="color:#a6e22e">err</span> ) =&gt; { <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>( <span style="color:#a6e22e">err</span> );  } );</code></pre></div>
+
+<p>Here the <code>catch</code> statement has taken over the role of <code>onError</code>.</p>
+
+<p>In this case it doesn&rsquo;t look like much of an improvement. It&rsquo;s actually a bit longer, and it still has exactly the same callback function inside it.</p>
+
+<p>The advantages of promises don&rsquo;t become apparent until you are dealing with more complex code situations, so let&rsquo;s dive straight in and make things more complicated and see what happens.</p>
+
+<p>Also, once we have converted the loader to a promise we&rsquo;ll be able to use it with <code>async</code>/<code>await</code>, which will make things even cleaner. That&rsquo;s beyond the scope of this post, but we&rsquo;ll come back to it later.</p>
+
+<h3 id="loading-multiple-groups-of-models">Loading multiple groups of models</h3>
+
+<p>You can find lots of other examples if you search the web, but here is the most common case I have found where things are simplified in three.js: waiting for multiple groups of models to load.</p>
+
+<p>In our hypothetical examples, our first group is a set of farm buildings (a farmyard ), and our second set is a group of farm animals.</p>
+
+<p>Let&rsquo;s assume that we have already loaded the farm buildings. This means that <code>loadingManager.onLoad</code> would have already fired, in a traditional setup. We could get around this by having multiple loading managers, but lets use promises instead.</p>
+
+<p>We now want to load models for duck, sheep, pig, cow and chicken. The farmyard is already loaded and displayed, and we want to add them all at once, not have them appear one by one.</p>
+
+<h4 id="introducing-promise-all">Introducing Promise.all</h4>
+
+<p>With promises we can wait until a whole batch of them have resolved and <em>then</em> do something, using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all">Promise.all</a>.</p>
+
+<p>Here&rsquo;s how the code will look:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">promiseLoader</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">FBXPromiseLoader</span>( <span style="color:#a6e22e">manager</span> );
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">farmYardPromises</span> <span style="color:#f92672">=</span> [];
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">farmYardAnimals</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">Group</span>();
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onLoad</span> <span style="color:#f92672">=</span> ( ( <span style="color:#a6e22e">loadedObject</span> ) =&gt; {
+
+  <span style="color:#a6e22e">farmYardAnimals</span>.<span style="color:#a6e22e">add</span>( <span style="color:#a6e22e">loadedObject</span> );
+
+} );
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onError</span> <span style="color:#f92672">=</span> ( ( <span style="color:#a6e22e">err</span> ) =&gt; { <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>( <span style="color:#a6e22e">err</span> ); } );
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">promiseOfADuck</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">promiseLoader</span>.<span style="color:#a6e22e">load</span>( <span style="color:#e6db74">&#39;duck.fbx&#39;</span> ).<span style="color:#a6e22e">then</span>( <span style="color:#a6e22e">onLoad</span> ).<span style="color:#66d9ef">catch</span>( <span style="color:#a6e22e">onError</span> );
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">promiseOfASheep</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">promiseLoader</span>.<span style="color:#a6e22e">load</span>( <span style="color:#e6db74">&#39;duck.fbx&#39;</span> ).<span style="color:#a6e22e">then</span>( <span style="color:#a6e22e">onLoad</span> ).<span style="color:#66d9ef">catch</span>( <span style="color:#a6e22e">onError</span> );
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">promiseOfAPig</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">promiseLoader</span>.<span style="color:#a6e22e">load</span>( <span style="color:#e6db74">&#39;duck.fbx&#39;</span> ).<span style="color:#a6e22e">then</span>( <span style="color:#a6e22e">onLoad</span> ).<span style="color:#66d9ef">catch</span>( <span style="color:#a6e22e">onError</span> );
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">promiseOfACow</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">promiseLoader</span>.<span style="color:#a6e22e">load</span>( <span style="color:#e6db74">&#39;duck.fbx&#39;</span> ).<span style="color:#a6e22e">then</span>( <span style="color:#a6e22e">onLoad</span> ).<span style="color:#66d9ef">catch</span>( <span style="color:#a6e22e">onError</span> );
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">promiseOfAChicken</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">promiseLoader</span>.<span style="color:#a6e22e">load</span>( <span style="color:#e6db74">&#39;duck.fbx&#39;</span> ).<span style="color:#a6e22e">then</span>( <span style="color:#a6e22e">onLoad</span> ).<span style="color:#66d9ef">catch</span>( <span style="color:#a6e22e">onError</span> );
+
+Promise.<span style="color:#a6e22e">all</span>( <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">loadingPromises</span> ).<span style="color:#a6e22e">then</span>( () =&gt; {
+
+  <span style="color:#a6e22e">scene</span>.<span style="color:#a6e22e">add</span>( <span style="color:#a6e22e">farmYardAnimals</span> );
+
+} );</code></pre></div>
+
+<p>Here are a couple of examples of things that you can do here that would be hard to do using <code>LoadingManager.onLoad</code>, or without promises. All of these are examples from my own projects:</p>
+
+<ul>
+<li>remove a loading overlay, <em>before</em> textures have finished loading. <code>LoadingManager.onLoad</code> will wait until <em>everything</em> has finished loading, which may not be what you want (see <a href="/blog/progress-bar">Faking a progress bar in three.js</a>).</li>
+<li>have two separate sets of objects loading, and do something when each set has finished (such as our farmyard).</li>
+</ul>
+
+<p>Another example of the latter from an app I developed: I had a one set of models, and a set of animations for each model. Each model had an initial animation built in, so it could start playing immediately, and then a set of additional animations (run, crouch, jump etc) that were added later.</p>
+
+<p>As you use promises, you will find more and more reasons why they are cleaner and easier to structure code around than callbacks.</p>
+
+<h3 id="converting-the-loaders-to-promises">Converting the loaders to promises</h3>
+
+<p>Now that we have the motivation, let&rsquo;s look at how to actually convert a <code>Loader</code> to a <code>PromiseLoader</code>. It turns out to be pretty simple. In fact, we&rsquo;ll create a function that will take any three.js loader and output a promisified version of that loader.</p>
+
+<p>We&rsquo;ll take the <code>FBXLoader</code> as an example, you could use any loader though, including the ones in three.js core such as the <a href="https://threejs.org/docs/#api/loaders/BufferGeometryLoader">BufferGeometryLoader</a>.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">promisifyLoader</span> ( <span style="color:#a6e22e">loader</span>, <span style="color:#a6e22e">onProgress</span> ) {
+
+  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">promiseLoader</span> ( <span style="color:#a6e22e">url</span> ) {
+
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise( ( <span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span> ) =&gt; {
+
+      <span style="color:#a6e22e">loader</span>.<span style="color:#a6e22e">load</span>( <span style="color:#a6e22e">url</span>, <span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">onProgress</span>, <span style="color:#a6e22e">reject</span> );
+
+    } );
+  }
+
+  <span style="color:#66d9ef">return</span> {
+    <span style="color:#a6e22e">originalLoader</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">loader</span>,
+    <span style="color:#a6e22e">load</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">promiseLoader</span>,
+  };
+
+}</code></pre></div>
+
+<p>Remember that the promise&rsquo;s <code>.then</code> has taken the place of <code>onLoad</code> and the <code>.catch</code> has taken the place of <code>onError</code>. This just leaves <code>onProgress</code>, which you can pass in to the function, or omit. I don&rsquo;t find this function useful so I usually omit it. See <a href="/blog/progress-bar/">Faking a progress bar</a> for more details.</p>
+
+<p>With this function set up, we can then turn the <code>FBXLoader</code> into an <code>FBXPromiseLoader</code>:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">FBXPromiseLoader</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">promisifyLoader</span>( <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">FBXLoader</span>() );</code></pre></div>
+
+<p>Note that, even though the promises have largely taken over the role of the <code>LoadingManager</code>, you can still use it of you want. All the methods like <a href="https://threejs.org/docs/#api/loaders/managers/LoadingManager.onLoad">LoadingManager.onLoad</a>, <a href="https://threejs.org/docs/#api/loaders/managers/LoadingManager.onProgress">LoadingManager.onProgress</a> and <a href="https://threejs.org/docs/#api/loaders/managers/LoadingManager.onError">LoadingManager.onError</a> will still work:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">loadingManager</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">LoadingManager</span>();
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">FBXPromiseLoader</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">promisifyLoader</span>( <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">THREE</span>.<span style="color:#a6e22e">FBXLoader</span>( <span style="color:#a6e22e">loadingManager</span> ) );</code></pre></div>
+
+<p>{:paragraph-notice}
+One reason why you may still need to use the loading manager is the <a href="https://threejs.org/docs/#api/loaders/managers/LoadingManager.setURLModifier">LoadingManager.setURLModifier</a> method, which enables you create file upload interfaces, such as the one in my <a href="/loader/">loader</a>. We&rsquo;ll cover this in more detail in a forthcoming post: URL-transform in three.js loaders.</p>
+
+<p>Now we can load the duck like this:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">promiseOfADuck</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">FBXPromiseLoader</span>.<span style="color:#a6e22e">load</span>( <span style="color:#e6db74">&#39;duck.fbx&#39;</span> ).<span style="color:#a6e22e">then</span>( <span style="color:#a6e22e">onLoad</span> ).<span style="color:#66d9ef">catch</span>( <span style="color:#a6e22e">onError</span> );</code></pre></div>
+
+<p>We&rsquo;ve also retained a reference to the original loader as <code>FBXPromiseLoader.originalLoader</code> which means that you can still access internal methods such as <code>parse</code>, <code>setCrossOrigin</code> and so on. Whether you need them will largely depend on the loader, although in most cases you won&rsquo;t.</p>
+
+<h3 id="polyfilling-promises">Polyfilling promises</h3>
+
+<p>Promises are pretty well supported across <a href="https://caniuse.com/#search=promise">all modern browsers</a>. The outlier here, as usual, is Internet Explorer 11 (although whether this should be called a modern browser is debatable). It currently accounts for about 3% of global browser usage, and if you want to support it you will need to include a promise polyfill. I use <a href="https://www.npmjs.com/package/es6-promise">ES6-promise</a> which only adds about 7kb to a minified build. There are lots of other polyfill out there and they should all work fine so take your pick.</p>
+
+<h3 id="the-final-result">The final result</h3>
+
+<p>Finally, here is avery simple example of using the above approach to convert the <a href="https://threejs.org/docs/#examples/loaders/GLTFLoader">GLTFLoader</a> into a <code>GLTFPromiseLoader</code>:</p>
+
+<p><p data-height="400" data-theme-id="0" data-slug-hash="baaBee" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script></p>
+
+      </section>
+      <aside>
+        <div id="meta">
+  <p class="meta-tags">
+  <strong><span class="fa fa-fw fa-tags" aria-hidden="true"></span>Tags: </strong>
+    <span itemprop="keywords">
+      
+        <a href="/tags/loading">loading,</a> </li>
+      
+        <a href="/tags/promises">promises,</a> </li>
+      
+        <a href="/tags/modules">modules,</a> </li>
+      
+        <a href="/tags/es6">ES6,</a> </li>
+      
+    </span>
+</p>
+
+  <p class="meta-date">
+    <strong>
+      <span class="fa fa-fw fa-calendar" aria-hidden="true"></span>
+      Updated:
+    </strong>
+    <time datetime="">
+      0001-01-01 00:00:00 &#43;0000 UTC
+    </time></p>
+  </p>
+
+  <p class="meta-author">
+    <strong><span class="fa fa-fw fa-user" aria-hidden="true"></span>Author: </strong><a href="/about" itemprop="author" rel="author">Lewy Blue</a>
+  </p>
+</div>
+      </aside>
+      <nav class="pagination">
+  
+    <a href="#" class="disabled">Previous</a>
+  
+  
+    <a href="https://www.blackthreaddesign.com/blog/progress-bar/" title="Faking a progress bar in three.js">Next</a>
+  
+</nav>
+      <div class="comments">
+
+  <div class="new-comment">
+  <h4>Leave a Comment</h4>
+
+  <p id="comment-submitted-message" class="hide">Thank you! You comment is being vetted and will appear here in a couple of minutes.</p>
+  <form method="POST" action="https://api.staticman.net/v2/entry/looeee/blackthread-heroku/master/comments">
+
+    <input name="options[slug]" type="hidden" value="page.slug">
+    <input name="options[parent]" type="hidden" value="post_slug">
+    <input type="hidden" name="options[origin]" value="page.url">
+    <input type="hidden" name="options[redirect]" value="page.url?comment-submitted">
+
+    <label><input name="fields[name]" type="text" placeholder="Name" required></label>
+    <label><input name="fields[email]" type="email" placeholder="Email address (will not be made public)" required></label>
+    <label>Message<textarea name="fields[message]" required></textarea></label>
+
+    <button type="submit">Submit comment</button>
+  </form>
+
+</div>
+
+  <h4 class="comments-title">Previous Comments</h4>
+
+</div>
+
+<script>
+
+  if( window.location.href.indexOf( 'comment-submitted' ) !== -1 ) {
+
+    document.querySelector( '#comment-submitted-message' ).classList.remove( 'hide' );
+
+  }
+
+</script>
+    </article>
+  </div>
+</main>
+    
+  <footer>
+    <div class="footer-social">
+      
+        <div class="social-icons">
+          <a href="https://github.com/looeee/"><span class="fa fa-fw fa-github" aria-hidden="true"></span> GitHub</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://twitter.com/looeeeb/"><span class="fa fa-fw fa-twitter" aria-hidden="true"></span> Twitter</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://discourse.threejs.org/u/looeee/"><span class="fa fa-fw fa-commenting" aria-hidden="true"></span> Discourse</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/lewy-blue-30b9b193/"><span class="fa fa-fw fa-linkedin" aria-hidden="true"></span> LinkedIn</a>
+        </div>
+      
+    </div>
+    <div class="footer-copyright">&copy; 0001 Lewy Blue.</div>
+  </footer>
+
+    
+
+
+
+
+  
+
+
+
+  <script async src='https://www.blackthreaddesign.com/js/build/main.js'></script>
+
+  </body>
+</html>

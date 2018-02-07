@@ -31,9 +31,9 @@ summaryLength = 240
 logFile = "logs.txt"
 
 disableRSS = false
-rssLimit = 15
+#rssLimit = 30
 
-metaDataFormat = "toml"
+#metaDataFormat = "toml"
 
 # See "content-management/permalinks"
 # permalinks =
@@ -48,7 +48,7 @@ metaDataFormat = "toml"
   tag = "tags"
 
 # Enable GitInfo feature
-enableGitInfo = false
+#enableGitInfo = true
 
 [params]
   favicon = "favicon.ico"

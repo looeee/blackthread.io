@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Black Thread Design  | Resizing the canvas</title>
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<meta name="generator" content="Hugo 0.32.4" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+
+  <link href='https://www.blackthreaddesign.com/css/standard.css' rel='stylesheet' type="text/css" />
+
+
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway"/>
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+
+
+<meta property="og:title" content="Resizing the canvas" />
+<meta property="og:description" content="Dealing with the ever changing browser window size " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.blackthreaddesign.com/tutorials/1-2-resize/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Resizing the canvas">
+<meta itemprop="description" content="Dealing with the ever changing browser window size ">
+
+
+
+<meta itemprop="wordCount" content="759">
+
+
+
+<meta itemprop="keywords" content="event listener,resize,browser," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Resizing the canvas"/>
+<meta name="twitter:description" content="Dealing with the ever changing browser window size "/>
+
+  </head>
+
+  <body>
+    
+  <nav class="masthead">
+
+    <ul class="visible-links">
+      <li class="masthead-title"><a href="/">Blackthread Design</a></li>
+      <li id="spacer"></li>
+
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/blog/">Blog</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/tutorials/">Tutorials</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/about/">About</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/contact/">Contact</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/experiments/">Experiments</a></li>
+      
+        <li><a class="" href="https://www.blackthreaddesign.com/loader/">Loader</a></li>
+      
+
+      <li><button class="fa fa-bars toggle-links hide"></button>
+      </li></ul>
+      <ul class="hidden-links fold"></ul>
+  </nav>
+
+  <script>
+
+
+    ( function() {
+
+      var Greedy = function Greedy( options ) {
+
+        this.masthead = document.querySelector('.masthead');
+        this.visibleLinks = this.masthead.querySelector('.visible-links');
+        this.hiddenLinks = this.masthead.querySelector('.hidden-links');
+        this.toggleButton = this.masthead.querySelector('.toggle-links');
+        this.spacer = this.masthead.querySelector('#spacer');
+
+        this.setupResize();
+        this.setupButton();
+
+        this.decreaseSize();
+        this.decreaseSize();
+
+      };
+
+      Object.assign( Greedy.prototype, {
+
+        visibleLinksWidth() {
+
+          var width = 0;
+
+          for( child in this.visibleLinks.children ){
+
+            if ( this.visibleLinks.children.hasOwnProperty( child ) ) {
+
+              if( this.visibleLinks.children[ child ].id !== spacer ) width += this.visibleLinks.children[ child ].offsetWidth;
+
+            }
+
+          }
+
+          return width;
+        },
+
+        increaseSize() {
+
+          this.spacer.style.width = 0;
+
+          if( this.hiddenLinks.children.length === 0 ) {
+
+            this.hiddenLinks.classList.add( 'fold' );
+            this.setSpacerWidth();
+            return;
+
+          }
+
+          var width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
+
+          while (
+            this.hiddenLinks.children.length > 0 &&
+            width < this.masthead.clientWidth
+          ) {
+
+            width += this.hiddenLinks.firstChild.offsetWidth;
+            this.visibleLinks.insertBefore( this.hiddenLinks.firstChild, this.visibleLinks.lastChild );
+
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        decreaseSize() {
+
+          this.spacer.style.width = 0;
+
+          while ( this.masthead.clientWidth < this.visibleLinks.scrollWidth ) {
+
+            if( this.visibleLinks.children.length === 3 ) {
+
+              this.showButton();
+              this.setSpacerWidth();
+              return;
+
+            }
+
+
+            var secondLastChild = this.visibleLinks.children[ this.visibleLinks.children.length - 2 ];
+            this.hiddenLinks.insertBefore( secondLastChild, this.hiddenLinks.firstChild );
+
+          }
+
+          this.showButton();
+          this.setSpacerWidth();
+
+        },
+
+        setSpacerWidth(){
+
+          this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
+
+        },
+
+        showButton() {
+
+          if( this.hiddenLinks.children.length === 0 ) this.toggleButton.classList.add( 'hide' );
+          else this.toggleButton.classList.remove( 'hide' );
+
+        },
+
+        setupResize: function() {
+
+          var self = this;
+          var lastWidth = window.innerWidth;
+
+          window.addEventListener( 'resize', function() {
+
+            if( window.innerWidth > lastWidth ) self.increaseSize();
+            else if( window.innerWidth < lastWidth ) self.decreaseSize();
+
+            lastWidth = window.innerWidth;
+          } );
+
+        },
+
+        setupButton: function() {
+
+          var self = this;
+
+          this.toggleButton.addEventListener( 'click', function() {
+
+            self.hiddenLinks.classList.toggle( 'fold' );
+
+          } );
+
+
+        },
+
+      } );
+
+      var menu = new Greedy();
+
+      const masthead = document.querySelector( '.masthead' );
+
+      document.addEventListener( 'scroll', () => {
+
+        if (window.scrollY > 50) {
+          masthead.classList.add( 'shrink' );
+        } else {
+          masthead.classList.remove( 'shrink' );
+        }
+
+      } );
+
+    })();
+
+  </script>
+
+    <main role="main" id="main">
+
+  
+    <div id="page-content">
+    <button id="toggle-nav" class="fa fa-bars fa-2x"></button>
+
+<nav id="vert-nav" class="fold">
+  <ul>
+    <li class="nav-title"></li>
+    
+    
+      <li>
+        
+          </span><a href="/blog/progress-bar/" class="">Faking a progress bar in three.js</a>
+        
+      </li>
+    
+      <li>
+        
+          </span><a href="/blog/promisifying-threejs-loaders/" class="">Promisifying three.js loaders</a>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+<script>
+
+  var sidenav = function() {
+
+    var content = document.querySelector( '#main' );
+    var toggleButton = document.querySelector( '#toggle-nav' );
+    var nav = document.querySelector( '#vert-nav' );
+
+    var breakpoint = 1280;
+
+    function updateMenu(){
+
+      if( content.offsetWidth < breakpoint ) {
+
+        if( !toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.remove( 'hide' );
+        nav.classList.add( 'fold' );
+
+      }
+      else {
+
+        if( toggleButton.classList.contains( 'hide' ) ) return;
+        toggleButton.classList.add( 'hide' );
+        nav.classList.remove( 'fold' );
+
+      }
+
+    }
+
+    updateMenu();
+
+    toggleButton.addEventListener( 'click', function( e ) {
+
+      e.preventDefault();
+
+      nav.classList.toggle( 'fold' );
+
+    } );
+
+    window.addEventListener( 'resize', updateMenu );
+
+  };
+
+  window.addEventListener( 'load', sidenav );
+
+</script>
+  
+
+    <article id="article">
+      <header>
+        <h2>Resizing the canvas</h2>
+      </header>
+      
+  <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#calling-a-function-whenever-the-browser-window-changes-size">Calling a function whenever the browser window changes size</a></li>
+<li><a href="#setting-up-the-onwindowresize-function">Setting up the <code>onWindowResize</code> function</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+
+      
+  <span class="reading-time" title="Read time">
+    <strong>Reading time: </strong> around 4 minutes
+  </span>
+
+      <section class="content">
+        
+
+<p>Here&rsquo;s where we left off at the end of the last chapter.</p>
+
+<p><p data-height="400" data-theme-id="0" data-slug-hash="GmJPrm" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script></p>
+
+<p>It&rsquo;s pretty respectable result for such a small amount of code. However, there is one big problem that will quickly make it look at lot less professional to anyone using your website - that is, the scene does not resize when the browser window changes size.</p>
+
+<p>This will be particularly obvious if you load this page with a small browser window and then increase the size. Codepen makes this very easy to see since you can just drag to adjust the size of the preview window to see this.</p>
+
+<h4 id="calling-a-function-whenever-the-browser-window-changes-size">Calling a function whenever the browser window changes size</h4>
+
+<p>Fortunately, it&rsquo;s pretty easy to fix, and just as we did when we wanted to add animation, we&rsquo;ll turn to a built-in browser method. This time, we&rsquo;ll use <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener">addEventListener</a>, and we want to listen for an event on the whole window so we&rsquo;ll use <code>window.addEventListener</code>.</p>
+
+<p>You can listen for all kinds of events such as <code>click</code>, <code>scroll</code>, <code>keypress</code> and many more, but the one that we want to listen for here is called <code>resize</code>.</p>
+
+<p>{:.paragraph-notice}
+You can listen for events on nearly any HTML element rather than the whole window, so you might think that you should be calling this as <code>canvas.addEventListener</code>. However the resize event doesn&rsquo;t fire when attached to anything other than the <code>window</code> object, so don&rsquo;t do that.</p>
+
+<p>Add the following code after your <code>animate</code> function and before the call to <code>init</code>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">...
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">animate</span>() {
+
+  ...
+  <span style="color:#a6e22e">renderer</span>.<span style="color:#a6e22e">render</span>( <span style="color:#a6e22e">scene</span>, <span style="color:#a6e22e">camera</span> );
+
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">onWindowResize</span>() {
+
+  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>( <span style="color:#e6db74">&#39;You resized the browser window!&#39;</span> );
+
+}
+
+window.<span style="color:#a6e22e">addEventListener</span>( <span style="color:#e6db74">&#39;resize&#39;</span>, <span style="color:#a6e22e">onWindowResize</span> );
+
+<span style="color:#75715e">// call the init function to set everything up
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">init</span>();
+...</code></pre></div></p>
+
+<p>This will call the <code>onWindowResize</code> function every time the window resizes.</p>
+
+<p>{:.paragraph-notice}
+Be aware that when you resize the browser window, the function might get called <em>many</em> times. Like, 50 times when you resize the window just once. So don&rsquo;t do any heavy calculation in here.</p>
+
+<p>Notice that we have added <code>console.log( ... )</code> inside the function? This is a very useful way of making sure that something is working correctly. Open up the browser console now and resize the window and you should see this:</p>
+
+
+<figure >
+    
+        <img src="/images/tutorials/1.2/console-resize.png" alt="Logging resize event to console" />
+    
+    
+    <figcaption>
+        <p>
+        Fig 1: The number on the left notes how many times the function was called
+        
+            
+        
+        </p> 
+    </figcaption>
+    
+</figure>
+
+
+<h4 id="setting-up-the-onwindowresize-function">Setting up the <code>onWindowResize</code> function</h4>
+
+<p>Now that&rsquo;s set up, what should be put inside the <code>onWindowResize</code> function? It&rsquo;s fairly straightforward to figure this out actually- go over the code in the init function and take a note of everywhere that <code>window.innerWidth</code> or <code>window.innerHeight</code> was used. These are the lines we where we used these, and we&rsquo;ll need to figure out a way of updating them:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">  <span style="color:#a6e22e">renderer</span>.<span style="color:#a6e22e">setSize</span>( window.<span style="color:#a6e22e">innerWidth</span>, window.<span style="color:#a6e22e">innerHeight</span> );
+
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">aspect</span> <span style="color:#f92672">=</span> window.<span style="color:#a6e22e">innerWidth</span> <span style="color:#960050;background-color:#1e0010">/ window.innerHeight;</span></code></pre></div>
+
+<p>OK, so the renderer&rsquo;s size and the aspect ratio of the camera. Doesn&rsquo;t sound too bad.
+Remember that the <code>&lt;canvas&gt;</code> element was automatically created and given a size by the renderer? Well, fortunately when we update the renderer&rsquo;s size it can take care of resizing the canvas again if we want.</p>
+
+<p>Our final <code>onWindowResize</code> function will look like this:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">...
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">onWindowResize</span>() {
+
+  <span style="color:#75715e">// set the aspect ratio to match the new browser window aspect ratio
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">camera</span>.<span style="color:#a6e22e">aspect</span> <span style="color:#f92672">=</span> window.<span style="color:#a6e22e">innerWidth</span> <span style="color:#960050;background-color:#1e0010">/ window.innerHeight;</span>
+
+  <span style="color:#75715e">// update the camera&#39;s frustum
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">camera</span>.<span style="color:#a6e22e">updateProjectionMatrix</span>();
+
+  <span style="color:#75715e">// update the size of the renderer AND the canvas
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">renderer</span>.<span style="color:#a6e22e">setSize</span>( window.<span style="color:#a6e22e">innerWidth</span>, window.<span style="color:#a6e22e">innerHeight</span> );
+
+}
+
+window.<span style="color:#a6e22e">addEventListener</span>( <span style="color:#e6db74">&#39;resize&#39;</span>, <span style="color:#a6e22e">onWindowResize</span> );
+...</code></pre></div>
+
+<p>Now try resizing the window and again and watch as your scene resizes to match. Nice!</p>
+
+<p>There are a couple of things to take note of here. The first is that we had to call <code>camera.updateProjectionMatrix()</code>. You will need to do this any time you make a change to camera parameters that change the shape of the frustum - see the section on the camera in  <a href="/tutorials/1-0-getting-started/#the-camera">Ch 1: Getting Started</a> for details on the camera. Basically, if you change the <code>fov</code>, the <code>aspect</code> the <code>near</code> clipping plane, or the <code>far</code> clipping plane, then you will need to update the frustum, AKA the &lsquo;projection matrix&rsquo;.</p>
+
+<p>I&rsquo;m not sure which sounds cooler, &lsquo;frustum&rsquo;, or &lsquo;projection matrix&rsquo;&hellip;</p>
+
+<p>The other thing to note is that, as I mentioned, <code>renderer.setSize</code> also takes care of setting the <code>&lt;canvas&gt;</code> size for us. There are times when we don&rsquo;t want that, for example, if you are using different canvas sizes when your app is being viewed on a mobile device.
+In these cases, you can call <code>renderer.setSize( window.innerWidth, window.innerHeight, false )</code> and the canvas will be left up to you to adjust.</p>
+
+<p>Here&rsquo;s our lovely torus knot with the resize function set up:</p>
+
+<p><p data-height="400" data-theme-id="0" data-slug-hash="QaKqzq" data-default-tab="result" class='codepen'></p>
+<script async="async" src="//codepen.io/assets/embed/ei.js"></script></p>
+
+      </section>
+      <aside>
+        <div id="meta">
+  <p class="meta-tags">
+  <strong><span class="fa fa-fw fa-tags" aria-hidden="true"></span>Tags: </strong>
+    <span itemprop="keywords">
+      
+        <a href="/tags/event-listener">event listener,</a> </li>
+      
+        <a href="/tags/resize">resize,</a> </li>
+      
+        <a href="/tags/browser">browser,</a> </li>
+      
+    </span>
+</p>
+
+  <p class="meta-date">
+    <strong>
+      <span class="fa fa-fw fa-calendar" aria-hidden="true"></span>
+      Updated:
+    </strong>
+    <time datetime="">
+      0001-01-01 00:00:00 &#43;0000 UTC
+    </time></p>
+  </p>
+
+  <p class="meta-author">
+    <strong><span class="fa fa-fw fa-user" aria-hidden="true"></span>Author: </strong><a href="/about" itemprop="author" rel="author">Lewy Blue</a>
+  </p>
+</div>
+      </aside>
+      <nav class="pagination">
+  
+    <a href="https://www.blackthreaddesign.com/tutorials/1-5-shapes-transformations/" title="Shapes and Transformations">Previous</a>
+  
+  
+    <a href="https://www.blackthreaddesign.com/tutorials/0-0-requirements/" title="Requirements for running a three.js scene">Next</a>
+  
+</nav>
+      <div class="comments">
+
+  <div class="new-comment">
+  <h4>Leave a Comment</h4>
+
+  <p id="comment-submitted-message" class="hide">Thank you! You comment is being vetted and will appear here in a couple of minutes.</p>
+  <form method="POST" action="https://api.staticman.net/v2/entry/looeee/blackthread-heroku/master/comments">
+
+    <input name="options[slug]" type="hidden" value="page.slug">
+    <input name="options[parent]" type="hidden" value="post_slug">
+    <input type="hidden" name="options[origin]" value="page.url">
+    <input type="hidden" name="options[redirect]" value="page.url?comment-submitted">
+
+    <label><input name="fields[name]" type="text" placeholder="Name" required></label>
+    <label><input name="fields[email]" type="email" placeholder="Email address (will not be made public)" required></label>
+    <label>Message<textarea name="fields[message]" required></textarea></label>
+
+    <button type="submit">Submit comment</button>
+  </form>
+
+</div>
+
+  <h4 class="comments-title">Previous Comments</h4>
+
+</div>
+
+<script>
+
+  if( window.location.href.indexOf( 'comment-submitted' ) !== -1 ) {
+
+    document.querySelector( '#comment-submitted-message' ).classList.remove( 'hide' );
+
+  }
+
+</script>
+    </article>
+  </div>
+</main>
+    
+  <footer>
+    <div class="footer-social">
+      
+        <div class="social-icons">
+          <a href="https://github.com/looeee/"><span class="fa fa-fw fa-github" aria-hidden="true"></span> GitHub</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://twitter.com/looeeeb/"><span class="fa fa-fw fa-twitter" aria-hidden="true"></span> Twitter</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://discourse.threejs.org/u/looeee/"><span class="fa fa-fw fa-commenting" aria-hidden="true"></span> Discourse</a>
+        </div>
+      
+      
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/lewy-blue-30b9b193/"><span class="fa fa-fw fa-linkedin" aria-hidden="true"></span> LinkedIn</a>
+        </div>
+      
+    </div>
+    <div class="footer-copyright">&copy; 0001 Lewy Blue.</div>
+  </footer>
+
+    
+
+
+
+
+  
+
+
+
+  <script async src='https://www.blackthreaddesign.com/js/build/main.js'></script>
+
+  </body>
+</html>

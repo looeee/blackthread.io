@@ -1,11 +1,8 @@
-
-div.highlight {
+.highlight {
   position: relative;
   margin-top: 1em;
   border: 1px solid silver;
   border-radius: $border-radius;
-
-
 
   &:before {
     position: absolute;
@@ -28,6 +25,5 @@ div.highlight {
     width: 100%;
     max-height: 30em;
   }
-
 
 }
