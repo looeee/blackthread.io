@@ -76,41 +76,22 @@ h2 {
 
 h3 {
   font-size: 1.75em;
-  background: linear-gradient(90deg, rgba(128, 128, 128, 0.75) 90%, transparent 90%);
+  background: rgba(128, 128, 128, 0.75);
 }
 
 h4 {
   font-size: 1.5em;
-  background: linear-gradient(90deg,  rgba(128, 128, 128, 0.50) 80%, transparent 80%);
+  background: rgba(128, 128, 128, 0.50);
 }
 
 h5 {
   font-size: 1.25em;
-  background: linear-gradient(90deg, rgba(128, 128, 128, 0.25) 70%, transparent 70%);
+  background: rgba(128, 128, 128, 0.25);
 }
 
 h6 {
   font-size: 1.1em;
-  background: linear-gradient(90deg, rgba(128, 128, 128, 0.10) 60%, transparent 60%);
-}
-
-@media ( max-width: $breakpoint-1280 ) {
-
-  h3 {
-    background: rgba(128, 128, 128, 0.75);
-  }
-
-  h4 {
-    background: rgba(128, 128, 128, 0.50);
-  }
-
-  h5 {
-    background: rgba(128, 128, 128, 0.25);
-  }
-
-  h6 {
-    background: rgba(128, 128, 128, 0.15);
-  }
+  background: rgba(128, 128, 128, 0.15);
 }
 
 header {

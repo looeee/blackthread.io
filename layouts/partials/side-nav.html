@@ -2,9 +2,10 @@
 
 <nav id="vert-nav" class="fold">
   <ul>
+    <li class="nav-title"></li>
     {{ $currentNode := . }}
     {{ range .Site.Menus.blog }}
-      <li class="nav-title">
+      <li>
         {{if or ($currentNode.IsMenuCurrent "blog" .) ($currentNode.HasMenuCurrent "blog" .) }}
           <span class="fa fa-arrow-right" aria-hidden="true"></span><a href="{{ .URL }}" class="">{{ .Name }}</a>
         {{ else }}

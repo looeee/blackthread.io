@@ -39,18 +39,13 @@ metaDataFormat = "toml"
 # permalinks =
 
 # color-codes for highlighting derived from this style
-pygmentsStyle = "monokai"
-
-# true: use pygments-css or false: color-codes directly
-pygmentsUseClasses = false
+#pygmentsStyle = "monokai"
 
 # see "Section Menu for Lazy Bloggers", /templates/menu-templates for more info
 #SectionPagesMenu =
 
 [taxonomies]
-  category = "categories"
   tag = "tags"
-
 
 # Enable GitInfo feature
 enableGitInfo = false

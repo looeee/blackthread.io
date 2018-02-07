@@ -2,7 +2,7 @@
   <strong><span class="fa fa-fw fa-tags" aria-hidden="true"></span>Tags: </strong>
     <span itemprop="keywords">
       {{ range .Params.tags }}
-        <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a> </li>
+        <a href="{{ "/tags/" | relURL }}{{ . | urlize }}">{{ . }},</a> </li>
       {{ end }}
     </span>
 </p>
