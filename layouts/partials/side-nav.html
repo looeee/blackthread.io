@@ -1,16 +1,19 @@
-{{ if .Params.sidenav }}
+{{ if and ( not (eq .Params.sideNav false) ) (.Params.menu ) }}
+  {{ $currentPageUrl := .URL }}
+  {{/* Get a list of this section's other pages. "RegularPages" excludes the list page    */}}
+  {{ $currentSection := (where .Site.RegularPages "Section" .Section).ByWeight  }}
   <button id="toggle-nav" class="fa fa-bars fa-2x"></button>
-
   <nav id="vert-nav" class="fold">
     <ul>
-      <li class="nav-title"></li>
-      {{ $currentNode := . }}
-      {{ range .Site.Menus.blog }}
-        <li>
-          {{if or ($currentNode.IsMenuCurrent "blog" .) ($currentNode.HasMenuCurrent "blog" .) }}
-            <span class="fa fa-arrow-right" aria-hidden="true"></span><a href="{{ .URL }}" class="">{{ .Name }}</a>
+      {{ if .Params.menuTitle }}<li class="nav-title">{{ .Params.menuTitle }}</li>{{ end }}
+      {{ range $currentSection }}
+        <li class="{{ if .Params.menuSectionMain }}nav-title{{end}}">
+          {{ if .Params.redirect }}
+          <span class="fa fa-external-link" aria-hidden="true"></span><a href="{{ .Params.redirect }}" class="">{{ if .Params.menuNumber }}{{ .Params.menuNumber }}:{{ end }} {{ .Title }}</a>
+          {{ else if eq $currentPageUrl .URL }}
+            <span class="fa fa-arrow-right" aria-hidden="true"></span><a href="{{ .URL }}" class="">{{ if .Params.menuNumber }}{{ .Params.menuNumber }}:{{ end }} {{ .Title }}</a>
           {{ else }}
-            </span><a href="{{ .URL }}" class="">{{ .Name }}</a>
+            </span><a href="{{ .URL }}" class="">{{ if .Params.menuNumber }}{{ .Params.menuNumber }}:{{ end }} {{ .Title }}</a>
           {{ end }}
         </li>
       {{ end }}

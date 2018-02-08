@@ -5,6 +5,8 @@ teaserImage: /images/experiments/escherSketch/teaser.jpg
 js: escherSketch
 css: escherSketch
 menu: experiments
+menuTitle: Blackthread Experiments
+weight: 1
 ---
 
 <div id="details">

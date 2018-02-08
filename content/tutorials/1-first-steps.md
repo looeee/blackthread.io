@@ -2,6 +2,11 @@
 title:  "First Steps"
 description: ""
 tags: ['three.js', 'getting started', 'introduction']
+menu: tutorials
+menuTitle: Three.js tutorials
+menuSectionMain: true
+menuNumber: "1"
+weight: 5
 ---
 
 Welcome to section 1, where we can finally get those creative juices flowing! This section is a gentle introduction to creating scenes with three.js.

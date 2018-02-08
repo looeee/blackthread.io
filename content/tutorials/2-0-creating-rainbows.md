@@ -1,7 +1,11 @@
 ---
-title:  "Creating Rainbows - colors in three.js"
+title:  "Creating Rainbows"
 description: "Working with hexadecimal colors in three.js"
 tags: ['three.js', 'color', 'colour', 'hexadecimal', 'hexadecimal triple', 'CSS']
+menu: tutorials
+menuTitle: Three.js tutorials
+menuNumber: "2.0"
+weight: 11
 ---
 
 {{< figure src="/images/tutorials/2.0/hero.png" class="figure-small" caption="Fig 1: Three.js... with just a little help from Photoshop" alt="rainbows." >}}

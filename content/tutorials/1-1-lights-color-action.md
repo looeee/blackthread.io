@@ -2,6 +2,10 @@
 title:  "Lights, Color, Action!"
 description: "Building on the last tutorial we'll add lights, color and animation to our scene"
 tags: ['three.js', 'scene', 'renderer', 'webgl', 'animation', 'color', 'lights']
+menu: tutorials
+menuTitle: Three.js tutorials
+menuNumber: "1.1"
+weight: 6
 ---
 
 We'll pick up here exactly where we left off in the last chapter. Here is the complete code so far:

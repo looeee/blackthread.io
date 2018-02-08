@@ -2,6 +2,10 @@
 title:  "Adding Camera Controls"
 description: "How to set up OrbitControls to control the camera in your three.js scene"
 tags: ['three.js', 'camera', 'controls', 'examples', 'plugins', 'orbit controls']
+menu: tutorials
+menuTitle: Three.js tutorials
+menuNumber: "1.4"
+weight: 9
 ---
 
 So far our scene is not interactive - it is animated, but it doesn't take any user input (unless you count responding to the changing size of the browser window).

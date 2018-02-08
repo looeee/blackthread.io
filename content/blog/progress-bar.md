@@ -3,7 +3,8 @@ title:  "Faking a progress bar in three.js"
 description: "Setting up a (fake) progress bar for a three.js scene"
 tags: ['loading', 'loading overlay', 'progress bar', 'loading manager']
 menu: blog
-weight: 100
+menuTitle: The Blackthread Blog
+weight: 1
 ---
 
 <p data-height="400" data-theme-id="0" data-slug-hash="JMrOey" data-default-tab="result" class='codepen'></p>

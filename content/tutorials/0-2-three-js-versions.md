@@ -1,9 +1,12 @@
 ---
-title:  "Understanding the three.js revision system"
+title:  "Understanding the three.js versioning system"
 description: "How to deal with the different version of three.js"
 tags: ['three.js', 'versions', 'revisions', 'wiki', 'migration guide', 'API', 'releases']
+menu: tutorials
+menuTitle: Three.js tutorials
+menuNumber: "0.2"
+weight: 3
 ---
-
 ### Semver? No way!
 
 The development pace of three.js is _fast_, and it uses a slightly unusual versioning system. Most software gets released incrementally as V0.5, V0.6, V1.0, V1.1.1 etc. This is known as [semver](https://semver.org/), or Semantic Versioning.

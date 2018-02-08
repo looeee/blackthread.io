@@ -2,9 +2,11 @@
 title:  "Getting help and reporting bugs"
 description: "All the best places to ask for help about three.js"
 tags: ['three.js', 'WebGL', 'forum', 'discourse', 'help', 'stackoverflow', 'reddit', 'subreddit', 'github' ]
+menu: tutorials
+menuTitle: Three.js tutorials
+menuNumber: "0.3"
+weight: 4
 ---
-
-{:.no_toc}
 ### So you need help?
 
 What's that? You are completely frustrated, about to tear your hair out with frustration? You are cursing this abomination of a library, casting it out, never to darken your hard drive again?

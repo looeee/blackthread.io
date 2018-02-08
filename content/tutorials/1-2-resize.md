@@ -2,6 +2,10 @@
 title:  "Resizing the canvas"
 description: "Dealing with the ever changing browser window size "
 tags: ['event listener', 'resize', 'browser']
+menu: tutorials
+menuTitle: Three.js tutorials
+menuNumber: "1.2"
+weight: 7
 ---
 
 Here's where we left off at the end of the last chapter.

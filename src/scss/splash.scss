@@ -1,7 +1,6 @@
 @import 'variables';
 @import 'base';
 @import 'masthead';
-@import "vendor/font-awesome/font-awesome";
 
 .hide {
   display: none !important
@@ -15,22 +14,22 @@
 #splash-body,
 #splash-canvas-container,
 #splash-canvas {
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
 }
 
 #splash-body {
-    a {
-        text-decoration: none;
-    }
+  a {
+    text-decoration: none;
+  }
 }
 
 .splash-link {
-    position: absolute;
-    z-index: 1;
+  position: absolute;
+  z-index: 1;
 }

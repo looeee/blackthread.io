@@ -2,6 +2,10 @@
 title:  "Requirements for running a three.js scene"
 description: "Here we'll cover the basic requirement for running an three.js app and following the rest of these tutorials"
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
+menu: tutorials
+menuTitle: Three.js tutorials
+menuNumber: "0.0"
+weight: 1
 ---
 
 We'll start with a quick overview of what you need to get a basic three.js app working. Please take the time to read over the topics in the introduction (we'll get to the pretty 3D stuff soon, I promise!).

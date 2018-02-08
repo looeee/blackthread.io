@@ -2,6 +2,10 @@
 title:  "Getting Started"
 description: "In this tutorial we'll go over everything you need to know to get a simple three.js app running in your browser"
 tags: ['three.js', 'setup', 'codepen', 'scene', 'camera', 'renderer', 'webgl', 'browser console', 'HTML', 'basics', 'canvas', 'perspective camera', 'fov', 'aspect ratio', 'mesh', 'material', 'buffergeometry', 'color', 'lights']
+menu: tutorials
+menuTitle: Three.js tutorials
+menuNumber: "1.0"
+weight: 5
 ---
 
 Strap in folks, it's time to push some pixels!

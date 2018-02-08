@@ -1,12 +1,12 @@
 {{ if ne .Params.noMasthead "true" }}
+  {{ $currentPageUrl := .URL }}
   <nav class="masthead">
 
     <ul class="visible-links">
       <li class="masthead-title"><a href="/">Blackthread Design</a></li>
       <li id="spacer"></li>
-
       {{ range $.Site.Data.navigation.masthead.menu }}
-        <li><a class="" href="{{ .url | relURL }}">{{ .title }}</a></li>
+        <li><a class="{{ if eq $currentPageUrl .url }}active{{ end }}" href="{{ .url | relURL }}">{{ .title }}</a></li>
       {{ end }}
 
       <li><button class="fa fa-bars toggle-links hide"></button>

@@ -4,6 +4,8 @@ description: "An experiment in pure CSS animation, using art created with the Es
 teaserImage: /images/experiments/circles/teaser.jpg
 css: circles
 menu: experiments
+menuTitle: Blackthread Experiments
+weight: 2
 ---
 
 <p>

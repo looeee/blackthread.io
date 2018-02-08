@@ -2,6 +2,10 @@
 title:  "Introduction to textures"
 description: "In this tutorial we go over adding textures to your three.js scene"
 tags: ['three.js', 'textures', 'loaders', 'security', 'server', 'textureLoader', 'browser']
+menu: tutorials
+menuTitle: Three.js tutorials
+menuNumber: "1.3"
+weight: 8
 ---
 
 So far we have just created a simple coloured material for our mesh. If we want to create something more realistic we'll have to move onto using [texture mapping](https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/crate.gif).
