@@ -1,0 +1,30 @@
+
+comments:
+
+  allowedFields: ["name", "email", "url", "message"]
+
+  branch: "master"
+
+  commitMessage: "New comment on {options.slug}"
+
+  filename: "entry{@timestamp}"
+
+  format: "yaml"
+
+  generatedFields:
+    date:
+      type: date
+
+  moderation: false
+
+  name: "www.blackthreaddesign.com"
+
+  path: "data/comments/{options.slug}"
+
+  requiredFields: ["name", "email", "message"]
+
+  transforms:
+    email: md5
+
+allowedOrigins: ["localhost", "blackthread-staging.herokuapp.com", "www.blackthreaddesign.com"]
+
