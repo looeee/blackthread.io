@@ -64,7 +64,7 @@
   "scripts": {
     "buildjs": "node .\\scripts\\buildJS.js",
     "minifyjs": "node .\\scripts\\minifyJS.js",
-    "compilescss": "node .\\scripts\\compileSCSS.js",
+    "compilecss": "node .\\scripts\\compileCSS.js",
     "obj2gltf": "node .\\scripts\\obj2gltf.js"
   }
 }

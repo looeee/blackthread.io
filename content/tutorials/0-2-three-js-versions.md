@@ -6,6 +6,7 @@ menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "0.2"
 weight: 3
+comments: false
 ---
 ### Semver? No way!
 

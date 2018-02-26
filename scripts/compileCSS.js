@@ -26,6 +26,23 @@ const minifyCSS = ( file, input ) => {
 
   const output = cleaner.minify( input );
 
+  if ( output.errors.length ) {
+
+    console.log( 'Errors: ' );
+    console.log( output.errors );
+
+  }
+  if ( output.warnings.length ) {
+
+    console.log( 'Warnings: ' );
+    console.log( output.warnings );
+
+  }
+
+  const oldSize = output.stats.originalSize / 1000;
+  const newSize = output.stats.minifiedSize / 1000;
+  console.log( 'Reduced from ' + oldSize + 'kb to ' + newSize + 'kb.' );
+
   writeFile( file, output.styles );
 
 }

@@ -1,13 +1,12 @@
 ---
-layout: tutorial
 title:  "Three.js on Github"
 description: "Everything you need to know about the official three.js repo on github"
 tags: ['three.js', 'github', 'repository', 'mrdoob', 'build files', 'threejs examples', ]
-comments: true
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "0.1"
 weight: 2
+comments: false
 ---
 
 Everything officially related to the three.js project is in one rather [monolithic repository](https://github.com/mrdoob/three.js) on Github. Its maintained by the original creator of three.js, [@mrdoob](https://twitter.com/mrdoob) (AKA Ricardo Cabello), along with an army of open-source aficionados.
@@ -16,7 +15,7 @@ It's a huge and very active repo - the 16th most starred Javascript library on G
 
 It's also quite overwhelming at first glance, but luckily we only need to look inside two folders for now.
 
-## The /build folder
+### The /build folder
 
 Contained in this folder are just three files, each of which contains the core `THREE` object. You only need to include one of these.
 
@@ -24,7 +23,7 @@ Contained in this folder are just three files, each of which contains the core `
 * [three.min.js](https://github.com/mrdoob/three.js/blob/dev/build/three.min.js). This is the same file but in a compressed format, with all the comments removed and names replaced with short versions. Your webpage will load faster if you use this since the file size is smaller.  However any error messages you get in the browser console will likely be garbled. Generally, you want to use `three.js` in development, and then switch to `three.min.js` in production.
 * [three.module.js](https://github.com/mrdoob/three.js/blob/dev/build/three.module.js) was added more recently - it's the same as three.js, but is intended to be used with a build tool such as WebPack or Rollup. That's beyond the scope of these tutorials so we'll just focus on the first two file for now.
 
-## The /examples folder
+### The /examples folder
 
 We'll be looking at this folder in detail later. There are a lot of useful goodies in this folder, such as:
 
@@ -41,7 +40,7 @@ You should definitely make sure that you are familiar with this folder and whene
 
 Everything in this folder is covered by the same license as three.js, which means that you are free to use anything in your own projects.
 
-## Other folders
+### Other folders
 
 Here are the other folders. We won't be covering them further here, but you may find their contents useful:
 

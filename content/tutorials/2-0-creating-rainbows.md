@@ -8,7 +8,7 @@ menuNumber: "2.0"
 weight: 11
 ---
 
-{{< figure src="/images/tutorials/2.0/hero.png" class="figure-small" caption="Fig 1: Three.js... with just a little help from Photoshop" alt="rainbows." >}}
+{{< figure src="/images/tutorials/2.0/hero.png" class="figure-large" caption="Fig 1: Three.js... with just a little help from Photoshop" alt="rainbows." >}}
 
 We'll be working closely with the [Color](https://threejs.org/docs/#api/math/Color) docs page here. Open it up now and take a look.
 

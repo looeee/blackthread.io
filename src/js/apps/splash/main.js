@@ -1,8 +1,6 @@
 // import { Cache, Color, DoubleSide, PlaneBufferGeometry, Mesh, TextureLoader, Vector2, RepeatWrapping, RawShaderMaterial, ShaderMaterial } from 'three';
 import { Cache, Color, DoubleSide, PlaneBufferGeometry, Mesh, TextureLoader, Vector2, RepeatWrapping, RawShaderMaterial, ShaderMaterial } from './Three.custom.js';
 
-import './polyfills.js';
-
 import pointerPosToCanvasCentre from './utilities/pointerPosToCanvasCentre.js';
 
 import App from './App/App.js';
