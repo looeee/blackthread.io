@@ -1,1 +1,1 @@
-import 'pages/experiments/ribbons/main.js';
+import '../apps/experiments/ribbons/main.js';

@@ -48,7 +48,7 @@ disableRSS = false
   tag = "tags"
 
 # Enable GitInfo feature
-#enableGitInfo = true
+# enableGitInfo = true
 
 [params]
   favicon = "favicon.ico"

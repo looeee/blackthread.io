@@ -3,6 +3,7 @@ const fs = require( 'fs' );
 const sass = require( 'node-sass' );
 const autoprefixer = require( 'autoprefixer' );
 const postcss = require( 'postcss' );
+const CleanCSS = require( 'clean-css' );
 
 const inputDir = 'src/scss/';
 const outputDir = 'static/css/';
@@ -17,7 +18,21 @@ const writeFile = ( fileName, data ) => {
 
 };
 
-const prefixCSS = ( css, outputFile ) => {
+const cleaner = new CleanCSS( {
+  level: 2,
+} );
+
+const minifyCSS = ( file, input ) => {
+
+  const output = cleaner.minify( input );
+
+  writeFile( file, output.styles );
+
+}
+
+const prefixCSS = ( css, name ) => {
+
+  var file = name + '.css';
 
   postcss( [ autoprefixer ] ).process( css ).then( ( object ) => {
     object.warnings().forEach( ( warn ) => {
@@ -26,13 +41,17 @@ const prefixCSS = ( css, outputFile ) => {
 
     } );
 
-    console.log( 'Writing file: ' + outputFile );
-    writeFile( outputFile, object.css );
+    console.log( 'Writing file: ' + file );
+    writeFile( file, object.css );
     console.log( 'Done.' );
 
+    console.log( 'Compressing file: ' + file );
+    minifyCSS( name + '.min.css', object.css );
+    console.log( 'Done.' );
   } );
 
 };
+
 
 const compileSCSS = ( file ) => {
 
@@ -41,11 +60,11 @@ const compileSCSS = ( file ) => {
   if ( file.slice( -4 ) !== 'scss' ) return;
 
   const inputFile = inputDir + file;
-  const outputFile = file.slice( 0, -5 ) + '.css';
+  const name = file.slice( 0, -5 );
 
   sass.render( {
     file: inputFile,
-    outputStyle: 'compressed',
+    // outputStyle: 'compressed',
   }, ( err, result ) => {
 
     if ( err ) {
@@ -54,7 +73,7 @@ const compileSCSS = ( file ) => {
 
     } else {
 
-      prefixCSS( result.css, outputFile );
+      prefixCSS( result.css, name );
 
     }
 
