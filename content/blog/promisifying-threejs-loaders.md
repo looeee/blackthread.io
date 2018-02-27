@@ -1,6 +1,6 @@
 ---
 title:  "Promisifying three.js loaders"
-description: "Converting three.js loaders into promises"
+description: "In this post we'll go over a method for turning three.js loaders into promises. It turns out to be fairly simple - we'll create a simple`promisifyLoader` function that takes any loader and spits out a ready to go `promiseLoader` version."
 permalink: /blog/promisifying-threejs-loaders/
 tags: ['loading', 'promises', 'modules', 'ES6']
 menu: blog

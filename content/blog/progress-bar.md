@@ -1,6 +1,6 @@
 ---
 title:  "Faking a progress bar in three.js"
-description: "Setting up a (fake) progress bar for a three.js scene"
+description: "Setting up a progress bar for a WebGL project is a non-trivial progress. Here we'll explore a quick and dirty method of faking one that in many cases will be just as good as the real thing"
 tags: ['loading', 'loading overlay', 'progress bar', 'loading manager']
 menu: blog
 menuTitle: The Blackthread Blog

@@ -1,6 +1,6 @@
 ---
 title:  "Lights, Color, Action!"
-description: "Building on the last tutorial we'll add lights, color and animation to our scene"
+description: "Picking up where we left of in the last tutorial we'll add lights, color and animation to our scene"
 tags: ['three.js', 'scene', 'renderer', 'webgl', 'animation', 'color', 'lights']
 menu: tutorials
 menuTitle: Three.js tutorials

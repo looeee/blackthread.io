@@ -5,6 +5,9 @@
     <h1>Pages tagged  “{{ .Title }}”</h1>
   </header>
   <article class="archive">
+    <p>
+      Here you'll find a list of pages tagged with {{ .Title }}. Pages are included from everywhere on the site, including blog posts, tutorials and experiments.
+    </p>
     {{ $section := .Data.Pages }}
       {{ range  $section }}
         {{ if .Params.teaserImage }}

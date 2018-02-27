@@ -1,6 +1,6 @@
 ---
 title: Three.js loader and converter
-description: Test models for use with three.js, and convert to GLTF format
+description: "Test your models for use with three.js! Currently supports these formats: FBX, GTLF, GLB, OBJ, MTL, Collada, three.js JSON as well as textures in DDS, JPG, PNG, BMP and GIF formats."
 type: page
 layout: fullWidth
 css: loader

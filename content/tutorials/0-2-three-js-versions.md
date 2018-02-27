@@ -1,6 +1,6 @@
 ---
 title:  "The three.js versioning system"
-description: "How to deal with the different version of three.js"
+description: "Understanding and working with different versions of three.js, and dealing with the rapid release cycle"
 tags: ['three.js', 'versions', 'revisions', 'wiki', 'migration guide', 'API', 'releases']
 menu: tutorials
 menuTitle: Three.js tutorials

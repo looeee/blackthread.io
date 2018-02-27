@@ -1,6 +1,6 @@
 ---
 title:  "Components and Helpers"
-description: ""
+description: "In this section we'll be taking a closer look at some of the components that make up three.js, as well as some of the helper objects."
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
 menu: tutorials
 menuTitle: Three.js tutorials

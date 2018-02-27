@@ -1,6 +1,6 @@
 ---
 title:  "Introduction to textures"
-description: "In this tutorial we go over adding textures to your three.js scene"
+description: "In this tutorial we'll cover how textures work for creating realistic looking materials, and add one to our scene"
 tags: ['three.js', 'textures', 'loaders', 'security', 'server', 'textureLoader', 'browser']
 menu: tutorials
 menuTitle: Three.js tutorials

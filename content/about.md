@@ -1,8 +1,7 @@
 ---
 title: About me
-description: Get to know me
+description: "Hello, and welcome to my website! My name's Lewy, I'm a Irish front end JavaScript expert and recovering circus performer, specializing in WebGL with three.js."
 type: page
-# kind: fullWidth
 layout: fullWidth
 css: about
 ---

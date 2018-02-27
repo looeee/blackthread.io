@@ -1,6 +1,6 @@
 ---
 title: Contact
-description: We'd love to hear from you
+description: "Ideas, feedback, suggestions or projects you would like to work on with me? Get in touch at and I'll get back to you ASAP!"
 type: page
 layout: fullWidth
 ---
