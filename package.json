@@ -71,10 +71,10 @@
   "config": {
     "pre-git": {
       "enabled": true,
+      "allow-untracked-files": true,
       "msg-pattern": "^(US|DE)\\d+ - .+",
-      "commit-msg": "simple",
-      "pre-commit": [],
-      "post-commit": "git status",
+      "commit-msg": "conventional",
+      "pre-commit": "git status",
       "pre-push": [
         "node .\\scripts\\minifyJS.js"
       ]
