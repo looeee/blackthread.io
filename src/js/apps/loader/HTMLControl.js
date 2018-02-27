@@ -47,6 +47,7 @@ const screenshot = {
 };
 
 const controls = {
+  main: document.querySelector( '#controls' ),
   // links: document.querySelector( '#controls' ).querySelectorAll( 'span' ),
   toggleGrid: document.querySelector( '#toggle-grid' ),
   toggleInfo: document.querySelector( '#toggle-info' ),

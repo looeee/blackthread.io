@@ -139,6 +139,18 @@ html {
   // disable pointer events for controls overlay
   pointer-events: none;
 
+  * {
+    color: black;
+  }
+
+  &.backgroundToggle {
+
+    * {
+      color: lightgray;
+    }
+
+  }
+
 }
 
 .controls-section {
@@ -150,13 +162,15 @@ html {
 
   padding: 1em 1em 0 1em;
 
+  * {
+    transition: all 2s ease-in-out;
+  }
+
   a, span, input, select, div {
 
-    // renable for control elements
+    // renable pointer events for control elements
     pointer-events: all;
 
-    transition: all 2s ease-in-out;
-    color: rgb(66, 66, 66);
   }
 
   span {

@@ -90,13 +90,9 @@ export default class Background {
 
   darkControls() {
 
-    HTMLControl.modelInfo.infoBox.style.color = 'white';
+    // HTMLControl.modelInfo.infoBox.style.color = 'white';
 
-    // for ( let i = 0; i < HTMLControl.controls.links.length; i++ ) {
-
-    //   HTMLControl.controls.links[ i ].style.color = 'white';
-
-    // }
+    HTMLControl.controls.main.classList.add( 'backgroundToggle' );
 
     for ( let i = 0; i < HTMLControl.controls.sliders.length; i++ ) {
 
@@ -108,13 +104,9 @@ export default class Background {
 
   lightControls() {
 
-    HTMLControl.modelInfo.infoBox.style.color = 'black';
+    // HTMLControl.modelInfo.infoBox.style.color = 'black';
 
-    // for ( let i = 0; i < HTMLControl.controls.links.length; i++ ) {
-
-    //   HTMLControl.controls.links[ i ].style.color = 'black';
-
-    // }
+    HTMLControl.controls.main.classList.remove( 'backgroundToggle' );
 
     for ( let i = 0; i < HTMLControl.controls.sliders.length; i++ ) {
 

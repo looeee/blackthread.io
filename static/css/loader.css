@@ -1635,6 +1635,10 @@ html {
   height: 100%;
   padding-bottom: 1em;
   pointer-events: none; }
+  #controls * {
+    color: black; }
+  #controls.backgroundToggle * {
+    color: white; }
 
 .controls-section {
   display: -webkit-box;
@@ -1649,11 +1653,11 @@ html {
           flex-direction: row;
   max-width: 50%;
   padding: 1em 1em 0 1em; }
-  .controls-section a, .controls-section span, .controls-section input, .controls-section select, .controls-section div {
-    pointer-events: all;
+  .controls-section * {
     -webkit-transition: all 2s ease-in-out;
-    transition: all 2s ease-in-out;
-    color: #424242; }
+    transition: all 2s ease-in-out; }
+  .controls-section a, .controls-section span, .controls-section input, .controls-section select, .controls-section div {
+    pointer-events: all; }
   .controls-section span {
     padding: 0.5em; }
   .controls-section a {
