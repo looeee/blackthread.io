@@ -1,0 +1,6 @@
+{{ if .Params.Title }}
+  <title>{{ .Site.Title }} | {{ .Params.Title }}</title>
+{{ else if in .URL "/tags/" }}
+  <title>{{ .Site.Title }} | Pages tagged "{{ .Page.Title }}"</title>
+{{ end }}
+

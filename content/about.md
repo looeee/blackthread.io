@@ -6,8 +6,7 @@ type: page
 layout: fullWidth
 css: about
 ---
-
-<div itemprop="text">
+<div id="article" itemprop="text">
   <div id="profile-img" class='flip-container'>
     <div class='front cont'>
       <img src="/images/about/portrait-512.jpg" alt="portrait" class="circle">
@@ -16,7 +15,6 @@ css: about
       <img src="/images/about/portrait-2-512.jpg" alt="portrait-2" class="circle">
     </div>
   </div>
-
   <div id="about-me">
     <p>
       Hello, and welcome to my website! My name's Lewy, I'm a Irish front end JavaScript expert and recovering circus performer,

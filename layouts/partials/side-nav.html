@@ -9,11 +9,11 @@
       {{ range $currentSection }}
         <li class="{{ if .Params.menuSectionMain }}nav-title{{end}}">
           {{ if .Params.redirect }}
-          <span class="fa fa-external-link" aria-hidden="true"></span><a href="{{ .Params.redirect }}" class="">{{ if .Params.menuNumber }}{{ .Params.menuNumber }}:{{ end }} {{ .Title }}</a>
+          <span class="fa fa-external-link" aria-hidden="true"></span><a href="{{ .Params.redirect }}">{{ if .Params.menuNumber }}{{ .Params.menuNumber }}:{{ end }} {{ .Title }}</a>
           {{ else if eq $currentPageUrl .URL }}
             <span class="fa fa-arrow-right" aria-hidden="true"></span><a href="{{ .URL }}" class="">{{ if .Params.menuNumber }}{{ .Params.menuNumber }}:{{ end }} {{ .Title }}</a>
           {{ else }}
-            </span><a href="{{ .URL }}" class="">{{ if .Params.menuNumber }}{{ .Params.menuNumber }}:{{ end }} {{ .Title }}</a>
+            <a href="{{ .URL }}" class="">{{ if .Params.menuNumber }}{{ .Params.menuNumber }}:{{ end }} {{ .Title }}</a>
           {{ end }}
         </li>
       {{ end }}

@@ -1,12 +1,10 @@
 {{ define "main" }}
-
   {{ if .Params.fullWidth }}
     <div id="page-content-full-width">
   {{ else }}
     <div id="page-content">
     {{ partial "side-nav.html" . }}
   {{ end }}
-
     <article id="article">
       <header>
         <h2>{{ .Title }}</h2>

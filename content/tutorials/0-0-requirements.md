@@ -1,5 +1,5 @@
 ---
-title:  "Requirements for running a three.js scene"
+title:  "Requirements for a three.js scene"
 description: "Here we'll cover the basic requirement for running an three.js app and following the rest of these tutorials"
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
 menu: tutorials

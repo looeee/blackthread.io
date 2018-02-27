@@ -6,7 +6,6 @@ menu: blog
 menuTitle: The Blackthread Blog
 weight: 1
 ---
-
 <p data-height="400" data-theme-id="0" data-slug-hash="JMrOey" data-default-tab="result" class='codepen'></p>
 <script async="async" src="//codepen.io/assets/embed/ei.js"></script>
 
