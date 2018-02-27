@@ -1483,6 +1483,8 @@ footer {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column; }
+  #page-content-full-width > #article {
+    margin: 0 auto 0 auto; }
 
 #page-content, #page-content-full-width {
   height: 100%;
@@ -1638,7 +1640,7 @@ html {
   #controls * {
     color: black; }
   #controls.backgroundToggle * {
-    color: white; }
+    color: lightgray; }
 
 .controls-section {
   display: -webkit-box;

@@ -1,6 +1,6 @@
 ---
 title:  "Three.js on Github"
-description: "A quick overview of the contents of the official three.js repo on github"
+description: "A quick overview of the contents of the official three.js repo on github. We'll quickly cover the contents of the main folders to help guide your firther explorations"
 tags: ['three.js', 'github', 'repository', 'mrdoob', 'build files', 'threejs examples', ]
 menu: tutorials
 menuTitle: Three.js tutorials

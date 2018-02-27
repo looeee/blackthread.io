@@ -1,6 +1,6 @@
 ---
 title:  "Getting help and reporting bugs"
-description: "All the best places on the web to ask for help about three.js"
+description: "All the best places on the web to ask for help about three.js, including the official forum, reddit and StackOverflow"
 tags: ['three.js', 'WebGL', 'forum', 'discourse', 'help', 'stackoverflow', 'reddit', 'subreddit', 'github' ]
 menu: tutorials
 menuTitle: Three.js tutorials

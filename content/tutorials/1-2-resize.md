@@ -1,6 +1,6 @@
 ---
 title:  "Resizing the canvas"
-description: "How to add an event listener to your scene that watches for browser window size changes"
+description: "How to add an event listener to your scene that watches for when browser window size changes and updates your scene to match the new size"
 tags: ['event listener', 'resize', 'browser']
 menu: tutorials
 menuTitle: Three.js tutorials
