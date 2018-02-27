@@ -1,5 +1,3 @@
-import throttle from 'lodash-es';
-
 import HTMLControl from '../HTMLControl.js';
 
 export default class Screenshot {
@@ -16,13 +14,13 @@ export default class Screenshot {
 
   initButton() {
 
-    HTMLControl.screenshot.button.addEventListener( 'click', throttle( ( e ) => {
+    HTMLControl.screenshot.button.addEventListener( 'click',( e ) => {
 
       e.preventDefault();
 
       this.takeScreenshot();
 
-    }, 1000 ), false );
+    }, false );
   }
 
   // take a screenshot at a given width and height

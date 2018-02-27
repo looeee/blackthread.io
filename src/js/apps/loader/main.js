@@ -5,7 +5,7 @@ import App from './App/App.js';
 import AnimationControls from './components/AnimationControls.js';
 import Background from './components/Background.js';
 import Environment from './components/Environment.js';
-import LightingSetup from './components/Lighting.js';
+import Lighting from './components/Lighting.js';
 import ScreenshotHandler from './components/Screenshot.js';
 import Grid from './components/Grid.js';
 import HTMLControl from './HTMLControl.js';
@@ -52,7 +52,7 @@ class Main {
     this.loadedMaterials = [];
     this.app.scene.add( this.loadedObjects );
 
-    this.lighting = new LightingSetup( this.app );
+    this.lighting = new Lighting( this.app );
     this.grid = new Grid( this.app );
     this.background = new Background( this.app );
     this.environment = new Environment( this.loadedMaterials );

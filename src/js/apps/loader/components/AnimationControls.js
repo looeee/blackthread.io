@@ -1,5 +1,3 @@
-import throttle from 'lodash-es';
-
 import HTMLControl from '../HTMLControl.js';
 import exportAnimsAsJSON from '../utilities/exportAnimsAsJSON.js';
 
@@ -186,16 +184,16 @@ export default class AnimationControls {
 
     HTMLControl.animation.slider.addEventListener( 'mousedown', this.sliderMouseDownEvent, false );
 
-    this.sliderInputEvent = throttle( ( e ) => {
+    this.sliderInputEvent = ( e ) => {
 
       const oldTime = this.currentMixer.time;
       const newTime = HTMLControl.animation.slider.value;
 
       this.currentMixer.update( newTime - oldTime );
 
-    }, 17 );
+    };
 
-    HTMLControl.animation.slider.addEventListener( 'input', this.sliderInputEvent, false ); // throttling at ~17 ms will give approx 60fps while sliding the controls
+    HTMLControl.animation.slider.addEventListener( 'input', this.sliderInputEvent, false );
 
     this.sliderMouseupEvent = ( e ) => {
 

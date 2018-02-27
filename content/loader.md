@@ -59,7 +59,7 @@ vendorScripts:
           <span id="play-button" class="fa fa-lg fa-play-circle hide" aria-hidden="true"></span>
           <span id="pause-button" class="fa fa-lg fa-pause-circle" aria-hidden="true"></span>
         </a>
-        <input id="animation-slider" type="range" min="0" max="100" value="0"/>
+        <input id="animation-slider" type="range" min="0" max="100" value="0" step="0.1" />
         <a href="#" id="playback-control" title="Save take as JSON">
           <span id="export-anims" class="fa fa-lg fa-save" aria-hidden="true"></span>
         </a>
