@@ -40,7 +40,7 @@ class Main {
 
     };
 
-    const content = document.querySelector( '#page-content' );
+    const content = document.querySelector( '#article' );
 
     let side = Math.min( content.clientWidth, window.innerHeight ) - 16;
 
