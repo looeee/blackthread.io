@@ -1,38 +1,13 @@
 {{ if not (eq .Params.comments false) }}
-  {{ $currentPageUrl := .URL }}
-  <div class="comments">
-    {{ partial "comments/new-comment.html" . }}
-    <h4 class="comments-title">Previous Comments</h4>
-    {{ $comments := readDir "data/comments" }}
-    {{ $.Scratch.Add "hasComments" 0 }}
-    {{ $entryId := .UniqueID }}
-
-    {{ range $comments }}
-
-      {{ if in $currentPageUrl .Name }}
-        {{ $.Scratch.Add "hasComments" 1 }}
-        {{ range $index, $comments := (index $.Site.Data.comments .Name ) }}
-          <article class="single-comment">
-            <div class="comment-author">
-              <p><strong>Comment Author: </strong>{{ .name }}</p>
-              <p><strong>Date: </strong>{{ dateFormat "02/01/2006" .date }}</p>
-            </div>
-            {{ .message | markdownify }}
-          </article>
-        {{ end }}
-      {{ end }}
-    {{ end }}
-
-    {{ if eq ($.Scratch.Get "hasComments") 0 }}
-      <p>Nothing yet. Add your voice!</p>
-    {{ end }}
-  </div>
-
-  <script>
-    if( window.location.href.indexOf( 'comment-submitted' ) !== -1 ) {
-
-      document.querySelector( '#comment-submitted-message' ).classList.remove( 'hide' );
-
-    }
+  <div id="graphcomment" class="comments"></div>
+  <script type="text/javascript">
+    /* - - - CONFIGURATION VARIABLES: MAKE SURE THE ID IS YOURS - - - */
+    window.graphcomment_id = 'blackthread';
+    /* - - - DON'T EDIT BELOW THIS LINE - - - */
+    (function() {
+      var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
+      gc.src = 'https://graphcomment.com/js/integration.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+    })();
   </script>
 {{ end }}
