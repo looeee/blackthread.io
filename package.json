@@ -52,7 +52,7 @@
     "node-watch": "^0.5.5",
     "obj2gltf": "^2.1.0",
     "postcss": "^6.0.14",
-    "pre-push": "^0.1.1",
+    "pre-git": "^3.17.0",
     "rollup": "^0.52.2",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
@@ -68,7 +68,19 @@
     "compilecss": "node .\\scripts\\compileCSS.js",
     "obj2gltf": "node .\\scripts\\obj2gltf.js"
   },
-  "pre-push": [
-    "minifyjs"
-   ]
+  "config": {
+    "pre-git": {
+      "enabled": true,
+      "msg-pattern": "^(US|DE)\\d+ - .+",
+      "commit-msg": "simple",
+      "pre-commit": [],
+      "post-commit": "git status",
+      "pre-push": [
+        "node .\\scripts\\minifyJS.js"
+      ]
+    }
+  },
+  "release": {
+    "analyzeCommits": "simple-commit-message"
+  }
 }
