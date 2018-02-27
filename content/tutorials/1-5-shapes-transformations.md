@@ -7,6 +7,7 @@ menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "1.5"
 weight: 10
+readTime: true
 ---
 
 In this chapter, we'll take a lighting quick look at some of the geometric shapes that are built into three.js. We've already seen two of them, the Torus Knot from chapters 1.1 and 1.2, and the Box from Chapter 1.3.

@@ -7,6 +7,7 @@ menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "2.0"
 weight: 11
+readTime: true
 ---
 
 {{< figure src="/images/tutorials/2.0/hero.png" class="figure-large" caption="Fig 1: Three.js... with just a little help from Photoshop" alt="rainbows." >}}

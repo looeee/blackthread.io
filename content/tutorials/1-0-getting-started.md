@@ -7,6 +7,7 @@ menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "1.0"
 weight: 5
+readTime: true
 ---
 
 Strap in folks, it's time to push some pixels!

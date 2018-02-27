@@ -9,6 +9,7 @@ menuSectionMain: true
 menuNumber: "2"
 weight: 11
 comments: false
+readTime: true
 ---
 
 Congratulations! You made it to Section 2! That means you know have a basic understanding of how to set up a three.js scene, how to make it animate, add textures, camera controls and even automatically resize along with the browser window.

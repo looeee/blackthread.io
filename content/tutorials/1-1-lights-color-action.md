@@ -7,6 +7,7 @@ menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "1.1"
 weight: 6
+readTime: true
 ---
 
 We'll pick up here exactly where we left off in the last chapter. Here is the complete code so far:

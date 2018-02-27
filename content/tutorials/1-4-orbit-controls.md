@@ -7,6 +7,7 @@ menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "1.4"
 weight: 9
+readTime: true
 ---
 
 So far our scene is not interactive - it is animated, but it doesn't take any user input (unless you count responding to the changing size of the browser window).

@@ -7,6 +7,7 @@ menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "0.0"
 weight: 1
+readTime: true
 ---
 
 We'll start with a quick overview of what you need to get a basic three.js app working. Please take the time to read over the topics in the introduction (we'll get to the pretty 3D stuff soon, I promise!).

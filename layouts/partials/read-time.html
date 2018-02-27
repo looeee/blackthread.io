@@ -1,5 +1,7 @@
-{{ if gt .WordCount 400  }}
-  <span class="reading-time" title="Read time">
-    <strong>Reading time: </strong> around {{ (div .WordCount 180) . }} minutes
-  </span>
+{{ if eq .Params.readTime true }}
+  {{ if gt .WordCount 400  }}
+    <span class="reading-time" title="Read time">
+      <strong>Reading time: </strong> around {{ (div .WordCount 180) . }} minutes
+    </span>
+  {{ end }}
 {{ end }}

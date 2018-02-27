@@ -7,6 +7,7 @@ tags: ['loading', 'promises', 'modules', 'ES6']
 menu: blog
 menuTitle: The Blackthread Blog
 weight: 2
+readTime: true
 ---
 
 [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) are great! Promises are the future! Well, async/await is probably the future, but lets take things one step at a time here.
