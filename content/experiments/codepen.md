@@ -1,7 +1,7 @@
 ---
 # layout: redirection
 title: "Codepen"
-description: "A collection of older experiments, mainly using SVG and GSAP"
+description: "A collection of older experiments, mainly using SVG and GSAP, hosted on Codepen"
 teaserImage: /images/experiments/codepen/teaser.jpg
 comments: false
 redirect: 'https://codepen.io/looeee/collections/'

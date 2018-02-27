@@ -1,6 +1,6 @@
 ---
 title: "Three.js Tutorials"
-description: "Quickly get up and running with three.js"
+description: "Welcome to the Black Thread series of tutorials on three.js! In this tutorial series we'll focus on getting to know three.js in depth, fast"
 noPagination: true
 noTOC: true
 noReadTime: true
