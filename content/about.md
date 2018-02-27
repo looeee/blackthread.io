@@ -1,5 +1,6 @@
 ---
 title: About me
+date: 2018-02-02T00:00:00-00:00
 description: "Hello, and welcome to my website! My name's Lewy, I'm a Irish front end JavaScript expert and recovering circus performer, specializing in WebGL with three.js."
 type: page
 layout: fullWidth

@@ -1,5 +1,6 @@
 ---
 title:  "EscherSketch"
+date: 2017-02-02T00:00:00-00:00
 description: "MC Escher inspired uniform tilings of the hyperbolic plane"
 teaserImage: /images/experiments/escherSketch/teaser.jpg
 js: escherSketch

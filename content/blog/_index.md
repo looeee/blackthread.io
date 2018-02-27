@@ -1,6 +1,6 @@
 ---
 title: "Blog posts"
-date: 2017-03-02T12:00:00-05:00
+date: 2017-02-02T00:00:00-00:00
 description: "A collections of thoughts / experiments / discoveries relating to three.js, WebGL and web development"
 heroImage: /images/blog/blog-hero.jpg
 heroTitle: The Black Thread Blog

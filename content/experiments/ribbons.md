@@ -1,5 +1,6 @@
 ---
 title: "Ribbons"
+date: 2017-05-12T00:00:00-00:00
 description: "An experiment in creating ribbons - lines of any thickness - which is not possible by default in thee.js"
 teaserImage: /images/experiments/ribbons/teaser.jpg
 js: ribbons

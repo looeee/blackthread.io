@@ -1,5 +1,6 @@
 ---
 title:  "Adding Camera Controls"
+date: 2018-01-09T00:00:00-00:00
 description: "How to control the camera in a three.js scene - in this tutorial we'll use a ready made plugin called OrbitControls to rotate our camera around the scene"
 tags: ['three.js', 'camera', 'controls', 'examples', 'plugins', 'orbit controls']
 menu: tutorials
