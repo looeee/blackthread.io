@@ -2,6 +2,7 @@
 title: "CSS Circles Animation"
 date: 2017-09-01T00:00:00-00:00
 description: "An experiment in pure CSS animation, using art created with the EscherSketch hyperbolic art generator."
+tags: ['css', 'scss', 'animation']
 teaserImage: /images/experiments/circles/teaser.jpg
 css: circles
 menu: experiments
