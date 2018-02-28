@@ -1,6 +1,0 @@
-{{ if in .URL "/tags/" }}
-  <meta name="description" content="Here you'll find a list of pages tagged with {{ .Page.Title }}. Pages are included from everywhere on the site, including blog posts, tutorials and experiments">
-{{ else }}
-  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
-{{ end }}
-
