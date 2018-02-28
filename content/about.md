@@ -40,6 +40,13 @@ css: about
       <a href="http://lewyblue.deviantart.com/gallery/">Deviantart</a>,
       or lurking on the
       <a href="http://discourse.threejs.org/">three.js forum</a> where I'm an admin.
+    </p>
+    <p>
+      I'm a collaborator on the <a href="https://github.com/mrdoob/three.js">three.js opensource project</a> which recently, probably
+      the top library for displaying 3D in the browser, which recently gained some extra claim to fame since Facebook now use it for
+      displaying 3D posts in the news feed.
+    </p>
+    <p>
       I've also recently discovered the joys of  <a href="https://twitter.com/looeeeb">Twitter</a>. Let's see
       how that goes.
     </p>

@@ -9,6 +9,7 @@ Paginate = 20 # this is set low for demonstrating with dummy content. Set to a h
 
 DefaultContentLanguage = "en"
 
+disableKinds = "taxonomy"
 
 [sitemap]
   changefreq = "daily"
@@ -44,8 +45,8 @@ disableRSS = false
 # see "Section Menu for Lazy Bloggers", /templates/menu-templates for more info
 #SectionPagesMenu =
 
-[taxonomies]
-  tag = "tags"
+# [taxonomies]
+  # tag = "tags"
 
 # Enable GitInfo feature
 # enableGitInfo = true

@@ -9,6 +9,16 @@ layout: fullWidth
   <h1>Get in touch!</h1>
 </header>
 <div id="article" itemprop="text">
-  <h3>Ideas, feedback, suggestions or projects you would like to work on with me? Get in touch at `looeee@gmail.com` and I'll get back to you ASAP!
-  </h3>
+  <p>
+    So you want to get in touch with me? Well, I have a whole range of options for you :)
+  </p>
+  <p>
+    Send me a message on the <a href="https://discourse.threejs.org/">forum</a>
+  </p>
+  <p>
+    Or <a href="https://twitter.com/looeeeb">twitter</a>
+  </p>
+  <p>
+    Or if you're feeling old fashioned you can use good old email: looeee@gmail.com
+  </p>
 </div>

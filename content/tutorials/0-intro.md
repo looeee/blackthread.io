@@ -19,7 +19,7 @@ You are expected to have a basic grasp of JavaScript and know how to get your co
 
 If you need some inspiration to get you started, have a look at the [threejs.org](https://threejs.org/) frontpage which features a regularly updated collection of some cutting edge work from around the web.
 
-These tutorials are work in progress - see the menu on the left for currently available tutorials. I'll be adding more as soon as possible! And if you want a specific tutorial please [let me know]({{ site.url }}/contact/).
+These tutorials are work in progress - see the menu on the left for currently available tutorials. I'll be adding more as soon as possible! And if you want a specific tutorial please [let me know](/contact/).
 
 ### Section 0 (Introduction)
 We'll start with a quick overview of WebGL and what you need to get it running on a computer, tablet or phone. Then we'll take a quick overview of the [three.js repo](https://github.com/mrdoob/three.js) on github, which is where all the magic happens, and we'll finish up the introduction with some tips on getting help and reporting bugs and how to set up a development server.
