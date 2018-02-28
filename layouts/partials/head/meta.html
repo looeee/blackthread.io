@@ -7,7 +7,12 @@
 {{ end }}
 
 <meta property="og:site_name" content="Black Thread Design"/>
-<meta property="og:image" content="https://www.blackthreaddesign.com/images/og.jpg" />
+{{ if .Params.teaserImage }}
+  <meta property="og:image" content="{{ .Params.teaserImage | absURL }}" />
+{{ else }}
+  <meta property="og:image" content="https://www.blackthreaddesign.com/images/og.jpg" />
+{{ end }}
+
 {{- template "_internal/opengraph.html" . -}}
 {{- template "_internal/google_news.html" . -}}
 {{- template "_internal/schema.html" . -}}
