@@ -9,8 +9,10 @@
 <meta property="og:site_name" content="Black Thread Design"/>
 {{ if .Params.teaserImage }}
   <meta property="og:image" content="{{ .Params.teaserImage | absURL }}" />
+  <meta property="twitter:image" content="{{ .Params.teaserImage | absURL }}" />
 {{ else }}
   <meta property="og:image" content="https://www.blackthreaddesign.com/images/og.jpg" />
+  <meta property="twitter:image" content="{{ .Params.teaserImage | absURL }}" />
 {{ end }}
 
 {{- template "_internal/opengraph.html" . -}}
