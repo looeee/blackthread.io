@@ -31,7 +31,7 @@ vendorScripts:
 <div id="loading-overlay" class="fill">
 
   <div id="file-upload-form">
-    <p>Viewer for fbx, gltf, glb or dae files and associated textures in jpg, png, gif, bmp or dds format using loaders from three.js r88.</p>
+    <p>Viewer for fbx, gltf, glb or dae files and associated textures in jpg, png, gif, bmp or dds format using loaders from three.js.</p>
     <input id="file-upload-input" type="file" name="files[]" multiple="" class="hide">
     <input type="submit" value="Upload or Drop Files Here" id="file-upload-button"/>
     <p>Or load the <a id="example-duck" href="#">Example Duck</a></p>

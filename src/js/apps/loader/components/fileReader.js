@@ -19,7 +19,6 @@ const checkForFileAPI = () => {
 
 checkForFileAPI();
 
-
 const isAsset = type => new RegExp( '(png|jpg|jpeg|gif|bmp|dds|tga|bin|vert|frag|txt|mtl)$' ).test( type );
 
 const isModel = type => new RegExp( '(json|js|fbx|gltf|glb|dae|obj)$' ).test( type );
