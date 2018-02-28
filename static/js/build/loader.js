@@ -289,6 +289,11 @@ function Time() {
   };
 }
 
+/**
+ * @author Lewy Blue / https://github.com/looeee
+ *
+ */
+
 var _canvas = void 0;
 var _scene = void 0;
 var _camera = void 0;
@@ -2038,6 +2043,7 @@ var OnLoadCallbacks = function () {
   return OnLoadCallbacks;
 }();
 
+// Check support for the File API support
 var checkForFileAPI = function checkForFileAPI() {
 
   if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -2288,6 +2294,9 @@ function exportGLTF(input) {
   }, options);
 }
 
+/* ******************************************************** */
+
+// Set up THREE caching
 THREE.Cache.enabled = true;
 
 var Main = function () {

@@ -8,14 +8,8 @@
   {{ end }}
 {{ end }}
 
-{{ if eq (getenv "HUGO_ENV") "production" | or (eq .Site.Params.env "production")  }}
-  {{ $.Scratch.Add "buildDir" "build-min" }}
-{{ else }}
-  {{ $.Scratch.Add "buildDir" "build" }}
-{{ end }}
-
 {{ if .Params.js }}
-  <script async src='{{ (printf "/js/%s/%s.js" ($.Scratch.Get "buildDir") .Params.js ) | relURL }}'></script>
+  <script async src='/js/build/{{ .Params.js }}.{{ if eq (getenv "HUGO_ENV") "production" }}min.{{ end }}js'></script>
 {{ else }}
-  <script async src='{{ (printf "/js/%s/main.js" ($.Scratch.Get "buildDir") ) | relURL }}'></script>
+  <script async src='/js/build/main.{{ if eq (getenv "HUGO_ENV") "production" }}min.{{ end }}js'></script>
 {{ end }}
