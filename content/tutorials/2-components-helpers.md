@@ -3,14 +3,20 @@ title:  "Components and Helpers"
 date: 2018-01-12T00:00:00-00:00
 description: "In this section we'll be taking a closer look at some of the components that make up three.js, as well as some of the helper objects."
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
+heroImage: /images/tutorials/section2-hero.jpg
+heroTitle: Components and Helpers
+heroDescription: A closer look at the components that make up three.js
 menu: tutorials
 menuTitle: Three.js tutorials
 menuSectionMain: true
 menuNumber: "2"
-weight: 11
+weight: 13
 comments: false
 readTime: true
+draft: true
 ---
+
+# DRAFT COPY
 
 Congratulations! You made it to Section 2! That means you know have a basic understanding of how to set up a three.js scene, how to make it animate, add textures, camera controls and even automatically resize along with the browser window.
 

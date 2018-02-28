@@ -6,7 +6,7 @@ tags: ['three.js', 'WebGL', 'forum', 'discourse', 'help', 'stackoverflow', 'redd
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "0.3"
-weight: 4
+weight: 5
 readTime: true
 ---
 ### So you need help?

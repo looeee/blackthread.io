@@ -2,7 +2,7 @@ import pointerPos from './utilities/pointerPos.js';
 
 import App from './App/App.js';
 
-import { createGroup1, createGroup2, createGroup3, createGroup4 } from './components/lineGroups.js';
+import { createGroup1, createGroup2, createGroup3, createGroup4, createLineGroup } from './components/lineGroups.js';
 
 class Main {
 
@@ -15,6 +15,8 @@ class Main {
     this.app.renderer.setClearColor( 0xffffff );
     this.app.camera.position.set( 0, 0, 1 );
     this.app.camera.fov = 75;
+    this.app.camera.near = 0.1;
+    this.app.camera.far = 50;
     this.app.camera.updateProjectionMatrix();
 
     self.mixers = [];
@@ -33,13 +35,30 @@ class Main {
   }
 
   initLines() {
+    const spec = {
+      camera: this.app.camera,
+      z: 10,
+      color: 0xff00ff,
+      numLines: 18,
+      initialGapSize: 0.1,
+      finalGapSize: 0.5,
+      initialThickness: 0.1,
+      finalThickness: 0.1,
+      seed: 0.1,
+      animLength: 5,
+    };
+
+    const g1 = createLineGroup( spec );
+
+    // this.app.scene.add( g1.group );
+    // this.mixers.push( g1.mixer );
+
     const groups = [
       createGroup1( this.app.camera ),
       createGroup2( this.app.camera ),
       createGroup3( this.app.camera ),
       createGroup4( this.app.camera ),
     ];
-
     groups.forEach( ( group ) => {
       this.app.scene.add( group.group );
       this.mixers.push( group.mixer );

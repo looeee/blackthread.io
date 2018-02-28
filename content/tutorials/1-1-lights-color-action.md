@@ -6,7 +6,7 @@ tags: ['three.js', 'scene', 'renderer', 'webgl', 'animation', 'color', 'lights']
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "1.1"
-weight: 6
+weight: 8
 readTime: true
 ---
 

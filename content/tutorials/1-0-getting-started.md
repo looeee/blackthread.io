@@ -6,7 +6,7 @@ tags: ['three.js', 'setup', 'codepen', 'scene', 'camera', 'renderer', 'webgl', '
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "1.0"
-weight: 5
+weight: 7
 readTime: true
 ---
 

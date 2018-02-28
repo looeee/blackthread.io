@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "declaration": true,
+    "target": "esnext",
+    "module": "es6",
+    "noImplicitAny": false,
+    "noResolve": true,
+    "checkJs": true,
+    "noLib": false,
+    "lib": [ "es7", "dom", "three" ]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "files": [
+    "typings.d.ts"
+  ]
+}

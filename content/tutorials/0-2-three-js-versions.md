@@ -6,7 +6,7 @@ tags: ['three.js', 'versions', 'revisions', 'wiki', 'migration guide', 'API', 'r
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "0.2"
-weight: 3
+weight: 4
 comments: false
 readTime: true
 ---

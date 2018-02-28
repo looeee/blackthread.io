@@ -6,7 +6,7 @@ try {
 
   const h3 = document.createElement( 'h3' );
 
-  h3.innerHTML = 'Find the complete tutorial at ';
+  h3.innerHTML = 'More tutorials and posts at ';
   h3.style.position = 'absolute';
   h3.style.textAlign = 'center';
   h3.style.width = '100%';
@@ -17,7 +17,7 @@ try {
   h3.appendChild( a );
 
   a.innerHTML = 'www.blackthreaddesign.com';
-  a.href = 'https://www.blackthreaddesign.com/tutorials/';
+  a.href = 'https://www.blackthreaddesign.com/';
 
   a.style.color = 'white';
 

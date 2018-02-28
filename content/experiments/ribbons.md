@@ -4,12 +4,12 @@ date: 2017-05-12T00:00:00-00:00
 description: "An experiment in creating ribbons - lines of any thickness - which is not possible by default in thee.js"
 tags: ['lines', 'three.js']
 teaserImage: /images/experiments/ribbons/teaser.jpg
+draft: true
 js: ribbons
 menu: experiments
 menuTitle: Blackthread Experiments
 weight: 3
 ---
-
 <p>
   Most browsers are unable to display thick lines with WebGL - the lines will always be
   rendered at 1px, no matter what the thickness is set to.

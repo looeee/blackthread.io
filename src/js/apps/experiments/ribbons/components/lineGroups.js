@@ -10,6 +10,8 @@ import morphLineFrag from '../shaders/morphLine.frag';
 
 function initMaterial( color, opacity ) {
 
+  if ( !( color instanceof THREE.Color ) ) color = new THREE.Color( color );
+
   return new THREE.ShaderMaterial( {
     uniforms: {
       opacity: {
@@ -31,6 +33,7 @@ function initMaterial( color, opacity ) {
 }
 
 function initAnimation( length, group ) {
+
   const keyFrame = new THREE.NumberKeyframeTrack( 'geometry.morphTargetInfluences', [0.0, length], [0.0, 1.0], THREE.InterpolateSmooth );
   const clip = new THREE.AnimationClip( 'wavelineMorphTargetsClip', length, [keyFrame] );
 
@@ -42,9 +45,80 @@ function initAnimation( length, group ) {
   animationAction.play();
 
   return mixer;
+
+}
+
+/* ************************************************
+* spec = {
+*    camera: ,
+*    z: 10
+*    color:  0xffffff,
+*    numLines: 12,
+*    initialGapSize: 1,
+*    finalGapSize: 1,
+*    initialThickness: 2,
+*    finalThickness: 2,
+*    seed: 0.1,
+*    animLength: 15,
+* }
+*/
+export function createLineGroup( spec ) {
+
+  const group = new THREE.Group();
+  const animationGroup = new THREE.AnimationObjectGroup();
+  const mixer = initAnimation( spec.animLength, animationGroup );
+
+  const material = initMaterial( spec.color, 1.0 );
+
+  const lineSpec = {
+    z: spec.depth,
+    material,
+    canvasWidth: visibleWidthAtZDepth( spec.z, spec.camera ),
+    canvasHeight: visibleHeightAtZDepth( spec.z, spec.camera ),
+    initialParams: {
+      yOffset: spec.initialGapSize,
+      thickness: spec.initialThickness,
+    },
+    finalParams: {
+      yOffset: spec.finalGapSize,
+      thickness: spec.finalThickness,
+    },
+
+  };
+
+  for ( let i = 0; i < spec.numLines; i++ ) {
+
+    lineSpec.initialParams.points = [
+      new THREE.Vector2( 0, 2.0 ),
+      new THREE.Vector2( 0.3, -2.4 + spec.seed ),
+      new THREE.Vector2( 0.8, 0.0 + ( 2 * spec.seed ) ),
+      new THREE.Vector2( 1.0, -1.0 - ( 2 * spec.seed ) ),
+    ];
+
+    lineSpec.finalParams.points = [
+      new THREE.Vector2( 0, -spec.seed * 3 ),
+      new THREE.Vector2( 0.4, 0.0 + spec.seed ),
+      new THREE.Vector2( 0.8, 1.0 - ( 2 * spec.seed ) ),
+      new THREE.Vector2( 1.0, -2.4 - ( 2 * spec.seed ) ),
+    ];
+
+    const wave = new WaveLine( lineSpec );
+
+    animationGroup.add( wave );
+
+    group.add( wave );
+
+  }
+
+  return {
+    group,
+    mixer,
+  };
+
 }
 
 export function createGroup1( camera ) {
+
   const group = new THREE.Group();
 
   const animationGroup = new THREE.AnimationObjectGroup();
@@ -91,6 +165,7 @@ export function createGroup1( camera ) {
 }
 
 export function createGroup2( camera ) {
+
   const group = new THREE.Group();
 
   const animationGroup = new THREE.AnimationObjectGroup();
@@ -136,6 +211,7 @@ export function createGroup2( camera ) {
     group,
     mixer,
   };
+
 }
 
 export function createGroup3( camera ) {

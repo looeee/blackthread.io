@@ -5,8 +5,9 @@ const visibleHeightAtZDepth = ( depth, camera ) => {
   else depth += cameraOffset;
 
   // vertical fov in radians
-  const vFOV = camera.fov * Math.PI / 180; 
+  const vFOV = camera.fov * Math.PI / 180;
+
+  // Math.abs to ensure the result is always positive
   return 2 * Math.tan( vFOV / 2 ) * Math.abs( depth );
 };
-
 export default visibleHeightAtZDepth;

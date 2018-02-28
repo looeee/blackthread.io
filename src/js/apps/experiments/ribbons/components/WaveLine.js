@@ -5,7 +5,6 @@ import * as THREE from 'three';
 // *  WAVE LINE CLASS
 // *
 // *************************************************************************
-
 export default class WaveLine {
   constructor( spec ) {
     this.spec = spec || {};
@@ -98,10 +97,11 @@ export default class WaveLine {
   }
 
   createMesh() {
-    const geometry = this.createWave();
 
+    const geometry = this.createWave();
     const mesh = new THREE.Mesh( geometry, this.spec.material );
 
     return mesh;
+
   }
 }

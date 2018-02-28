@@ -6,7 +6,7 @@ tags: ['three.js', 'github', 'repository', 'mrdoob', 'build files', 'threejs exa
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "0.1"
-weight: 2
+weight: 3
 comments: false
 readTime: true
 ---

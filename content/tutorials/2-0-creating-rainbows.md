@@ -6,9 +6,12 @@ tags: ['three.js', 'color', 'colour', 'hexadecimal', 'hexadecimal triple', 'CSS'
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "2.0"
-weight: 11
+weight: 14
 readTime: true
+draft: true
 ---
+
+# DRAFT COPY
 
 {{< figure src="/images/tutorials/2.0/hero.png" class="figure-large" caption="Fig 1: Three.js... with just a little help from Photoshop" alt="rainbows." >}}
 

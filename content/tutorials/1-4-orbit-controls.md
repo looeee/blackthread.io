@@ -6,7 +6,7 @@ tags: ['three.js', 'camera', 'controls', 'examples', 'plugins', 'orbit controls'
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "1.4"
-weight: 9
+weight: 11
 readTime: true
 ---
 

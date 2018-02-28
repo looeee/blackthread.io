@@ -37588,9 +37588,8 @@ var TEXTURE_FILTER = {
 };
 
 /**
- * @author zz85 / http://www.lab4games.net/zz85/blog
- * minimal class for proxing functions to Path. Replaces old "extractSubpaths()"
- **/
+ * @author thespite / http://clicktorelease.com/
+ */
 
 function ShapePath() {
 
@@ -43817,7 +43816,9 @@ function AxesHelper( size ) {
 AxesHelper.prototype = Object.create( LineSegments.prototype );
 AxesHelper.prototype.constructor = AxesHelper;
 
-//
+/**
+ * @author alteredq / http://alteredqualia.com/
+ */
 
 Curve.create = function ( construct, getPoint ) {
 
@@ -43922,6 +43923,8 @@ Object.assign( Spline.prototype, {
 
 } );
 
+//
+
 GridHelper.prototype.setColors = function () {
 
 	console.error( 'THREE.GridHelper: setColors() has been deprecated, pass them in the constructor instead.' );
@@ -43934,8 +43937,6 @@ SkeletonHelper.prototype.update = function () {
 
 };
 
-//
-
 Object.assign( Loader.prototype, {
 
 	extractUrlBase: function ( url ) {
@@ -43946,8 +43947,6 @@ Object.assign( Loader.prototype, {
 	}
 
 } );
-
-//
 
 Object.assign( Box2.prototype, {
 
@@ -45117,6 +45116,8 @@ CubeCamera.prototype.updateCubeMap = function ( renderer, scene ) {
 
 };
 
+//
+
 /**
  * @author Lewy Blue / https://github.com/looeee
  */
@@ -45238,11 +45239,6 @@ function Time() {
     this.paused = true;
   };
 }
-
-/**
- * @author Lewy Blue / https://github.com/looeee
- *
- */
 
 var _canvas = void 0;
 var _scene = void 0;
@@ -45539,10 +45535,13 @@ var visibleHeightAtZDepth = function visibleHeightAtZDepth(depth, camera) {
 
   // vertical fov in radians
   var vFOV = camera.fov * Math.PI / 180;
+
+  // Math.abs to ensure the result is always positive
   return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
 };
 
 var visibleWidthAtZDepth = function visibleWidthAtZDepth(depth, camera) {
+
   var height = visibleHeightAtZDepth(depth, camera);
   return height * camera.aspect;
 };
@@ -45570,12 +45569,6 @@ var createClass = function () {
     return Constructor;
   };
 }();
-
-// * ***********************************************************************
-// *
-// *  WAVE LINE CLASS
-// *
-// *************************************************************************
 
 var WaveLine = function () {
   function WaveLine(spec) {
@@ -45673,8 +45666,8 @@ var WaveLine = function () {
   }, {
     key: 'createMesh',
     value: function createMesh() {
-      var geometry = this.createWave();
 
+      var geometry = this.createWave();
       var mesh = new Mesh(geometry, this.spec.material);
 
       return mesh;
@@ -45688,6 +45681,8 @@ var morphLineVert = "#define GLSLIFY 1\nuniform float morphTargetInfluences[ 4 ]
 var morphLineFrag = "precision lowp float;\n#define GLSLIFY 1\nuniform float opacity;\nuniform vec3 color;\nvoid main() {\n\tgl_FragColor = vec4( color, opacity );\n}";
 
 function initMaterial(color, opacity) {
+
+  if (!(color instanceof Color)) color = new Color(color);
 
   return new ShaderMaterial({
     uniforms: {
@@ -45710,6 +45705,7 @@ function initMaterial(color, opacity) {
 }
 
 function initAnimation(length, group) {
+
   var keyFrame = new NumberKeyframeTrack('geometry.morphTargetInfluences', [0.0, length], [0.0, 1.0], InterpolateSmooth);
   var clip = new AnimationClip('wavelineMorphTargetsClip', length, [keyFrame]);
 
@@ -45723,7 +45719,65 @@ function initAnimation(length, group) {
   return mixer;
 }
 
+/* ************************************************
+* spec = {
+*    camera: ,
+*    z: 10
+*    color:  0xffffff,
+*    numLines: 12,
+*    initialGapSize: 1,
+*    finalGapSize: 1,
+*    initialThickness: 2,
+*    finalThickness: 2,
+*    seed: 0.1,
+*    animLength: 15,
+* }
+*/
+function createLineGroup(spec) {
+
+  var group = new Group();
+  var animationGroup = new AnimationObjectGroup();
+  var mixer = initAnimation(spec.animLength, animationGroup);
+
+  var material = initMaterial(spec.color, 1.0);
+
+  var lineSpec = {
+    z: spec.depth,
+    material: material,
+    canvasWidth: visibleWidthAtZDepth(spec.z, spec.camera),
+    canvasHeight: visibleHeightAtZDepth(spec.z, spec.camera),
+    initialParams: {
+      yOffset: spec.initialGapSize,
+      thickness: spec.initialThickness
+    },
+    finalParams: {
+      yOffset: spec.finalGapSize,
+      thickness: spec.finalThickness
+    }
+
+  };
+
+  for (var i = 0; i < spec.numLines; i++) {
+
+    lineSpec.initialParams.points = [new Vector2(0, 2.0), new Vector2(0.3, -2.4 + spec.seed), new Vector2(0.8, 0.0 + 2 * spec.seed), new Vector2(1.0, -1.0 - 2 * spec.seed)];
+
+    lineSpec.finalParams.points = [new Vector2(0, -spec.seed * 3), new Vector2(0.4, 0.0 + spec.seed), new Vector2(0.8, 1.0 - 2 * spec.seed), new Vector2(1.0, -2.4 - 2 * spec.seed)];
+
+    var wave = new WaveLine(lineSpec);
+
+    animationGroup.add(wave);
+
+    group.add(wave);
+  }
+
+  return {
+    group: group,
+    mixer: mixer
+  };
+}
+
 function createGroup1(camera) {
+
   var group = new Group();
 
   var animationGroup = new AnimationObjectGroup();
@@ -45760,6 +45814,7 @@ function createGroup1(camera) {
 }
 
 function createGroup2(camera) {
+
   var group = new Group();
 
   var animationGroup = new AnimationObjectGroup();
@@ -45890,6 +45945,8 @@ var Main = function () {
     this.app.renderer.setClearColor(0xffffff);
     this.app.camera.position.set(0, 0, 1);
     this.app.camera.fov = 75;
+    this.app.camera.near = 0.1;
+    this.app.camera.far = 50;
     this.app.camera.updateProjectionMatrix();
 
     self.mixers = [];
@@ -45913,8 +45970,25 @@ var Main = function () {
     value: function initLines() {
       var _this = this;
 
-      var groups = [createGroup1(this.app.camera), createGroup2(this.app.camera), createGroup3(this.app.camera), createGroup4(this.app.camera)];
+      var spec = {
+        camera: this.app.camera,
+        z: 10,
+        color: 0xff00ff,
+        numLines: 18,
+        initialGapSize: 0.1,
+        finalGapSize: 0.5,
+        initialThickness: 0.1,
+        finalThickness: 0.1,
+        seed: 0.1,
+        animLength: 5
+      };
 
+      var g1 = createLineGroup(spec);
+
+      // this.app.scene.add( g1.group );
+      // this.mixers.push( g1.mixer );
+
+      var groups = [createGroup1(this.app.camera), createGroup2(this.app.camera), createGroup3(this.app.camera), createGroup4(this.app.camera)];
       groups.forEach(function (group) {
         _this.app.scene.add(group.group);
         _this.mixers.push(group.mixer);

@@ -6,7 +6,7 @@ tags: ['three.js', 'textures', 'loaders', 'security', 'server', 'textureLoader',
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "1.3"
-weight: 8
+weight: 10
 readTime: true
 ---
 

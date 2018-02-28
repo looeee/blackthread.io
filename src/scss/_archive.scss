@@ -14,6 +14,12 @@
 
 }
 
+.archive-header {
+  flex-basis: 100%;
+  h2 {
+    background: rgba(128, 128, 128, 0.95) !important;
+  }
+}
 .archive-item {
 
   flex-basis: 30%;
@@ -25,7 +31,7 @@
 .archive-item-title {
   width: 100%;
   margin: 0;
-  background: rgba(128, 128, 128, 0.95);
+  background: rgba(128, 128, 128, 0.15);
 }
 
 .archive-item-excerpt {

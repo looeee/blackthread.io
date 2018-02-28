@@ -1003,7 +1003,9 @@ footer {
   background-size: cover;
   background-position: center;
   color: #f2f2f2;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); }
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 0px 1px 2px silver;
+          box-shadow: 0px 0px 1px 2px silver; }
 
 .hero-blur {
   position: absolute;
@@ -1111,6 +1113,12 @@ footer {
     -webkit-transition: all 1s ease-in-out;
     transition: all 1s ease-in-out; }
 
+.archive-header {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%; }
+  .archive-header h2 {
+    background: rgba(128, 128, 128, 0.95) !important; }
+
 .archive-item {
   -ms-flex-preferred-size: 30%;
       flex-basis: 30%;
@@ -1122,7 +1130,7 @@ footer {
 .archive-item-title {
   width: 100%;
   margin: 0;
-  background: rgba(128, 128, 128, 0.95); }
+  background: rgba(128, 128, 128, 0.15); }
 
 .archive-item-excerpt {
   padding: 1em;
