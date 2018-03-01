@@ -16,6 +16,11 @@
     transition: all 0.25s ease-in-out;
   }
 
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
   li {
     position: relative;
     border-bottom: 1px solid $border-color;
@@ -50,7 +55,7 @@
     position: absolute;
     cursor: pointer;
     width: 95%;
-    height: 2em;
+    height: 4em;
     opacity: 0;
     transform: translate(-50%, -10%);
   }

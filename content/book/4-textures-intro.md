@@ -5,7 +5,7 @@ description: "In this tutorial we'll cover how textures work for creating realis
 tags: ['three.js', 'textures', 'loaders', 'security', 'server', 'textureLoader', 'browser']
 menu: tutorials
 menuTitle: Three.js tutorials
-menuNumber: "1.3"
+menuNumber: "4"
 weight: 10
 readTime: true
 ---

@@ -15,11 +15,11 @@
       <section class="content">
         {{ .Content }}
       </section>
+      {{ partial "pagination.html" . }}
+      {{ partial "comments/comments.html" . }}
       <aside>
         {{ partial "meta.html" . }}
       </aside>
-      {{ partial "pagination.html" . }}
-      {{ partial "comments/comments.html" . }}
     </article>
   </div>
 {{ end }}

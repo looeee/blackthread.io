@@ -9,6 +9,7 @@ menuNumber: "0.2"
 weight: 4
 comments: false
 readTime: true
+draft: true
 ---
 ### Semver? No way!
 

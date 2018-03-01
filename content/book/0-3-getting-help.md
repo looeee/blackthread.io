@@ -8,6 +8,7 @@ menuTitle: Three.js tutorials
 menuNumber: "0.3"
 weight: 5
 readTime: true
+draft: true
 ---
 ### So you need help?
 

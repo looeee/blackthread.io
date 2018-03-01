@@ -5,7 +5,7 @@ description: "Picking up where we left of in the last tutorial we'll add lights,
 tags: ['three.js', 'scene', 'renderer', 'webgl', 'animation', 'color', 'lights']
 menu: tutorials
 menuTitle: Three.js tutorials
-menuNumber: "1.1"
+menuNumber: "2"
 weight: 8
 readTime: true
 ---

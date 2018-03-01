@@ -5,19 +5,19 @@ description: "In this tutorial we'll go over everything you need to know to get 
 tags: ['three.js', 'setup', 'codepen', 'scene', 'camera', 'renderer', 'webgl', 'browser console', 'HTML', 'basics', 'canvas', 'perspective camera', 'fov', 'aspect ratio', 'mesh', 'material', 'buffergeometry', 'color', 'lights']
 menu: tutorials
 menuTitle: Three.js tutorials
-menuNumber: "1.0"
+menuNumber: "1"
 weight: 7
 readTime: true
 ---
 
 Strap in folks, it's time to push some pixels!
 
-Let's get our first three.js scene up and running. When we are finished with chapters 1 and 2, we'll have this glorious beast shining and rotating before us:
+Let's get our first three.js scene up and running. When we are finished with chapters 1 and 2, we'll have this glorious beast shining and rotating before our eyes:
 
 <p data-height="400" data-theme-id="0" data-slug-hash="GmJPrm" data-default-tab="result" class='codepen'></p>
 <script async="async" src="//codepen.io/assets/embed/ei.js"></script>
 
-#### Follow along on Codepen
+### Follow along on Codepen
 
 I mentioned a few times in the introductory chapters that we'll be using Codepen throughout these tutorials, and that you can either follow along there or create local files on your computer, but since I assume that lots of people are like me and skip introductory chapters, I should probably mention it again. Which I just did.
 
@@ -25,11 +25,11 @@ Click "edit on Codepen" above to open the example in a new window and see how it
 
 Next, open [this pen](https://codepen.io/looeee/pen/QaNyjy), which is identical but with all the JavaScript removed. You can use it to follow along with the rest of the tutorial.
 
-#### Initial HTML file setup
+### Initial HTML file setup
 
 For those of you who are not using Codepen, review the last section of [0.0 Requirements](/tutorials/0-0-requirements/#working-locally) for instructions on setting up a basic HTML file that you can use. From here on I'll be assuming that you are using Codepen, _unless_ there is an important difference. Most things will be the same though, so whichever way you choose is fine.
 
-#### The browser console
+### The browser console
 
 I've mentioned this a few times so far, but make sure that you are familiar with the browser console. Press `CTRL + SHIFT + I` now with the codepen window highlighted and a new window will pop up. This is the browser's Development Console. There will be a few differences depending on which browsers you are using, but all the important things will be there.
 
