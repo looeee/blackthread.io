@@ -3,8 +3,8 @@ title:  "Creating Rainbows"
 date: 2018-01-12T00:00:00-00:00
 description: "Working with colors in three.js, including an introduction the hexadecimal triple color notation used by three.js and CSS"
 tags: ['three.js', 'color', 'colour', 'hexadecimal', 'hexadecimal triple', 'CSS']
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuNumber: "2.0"
 weight: 14
 readTime: true

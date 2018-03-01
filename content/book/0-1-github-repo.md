@@ -3,8 +3,8 @@ title:  "Three.js on Github"
 date: 2018-01-04T00:00:00-00:00
 description: "A quick overview of the contents of the official three.js repo on github. We'll quickly cover the contents of the main folders to help guide your further explorations"
 tags: ['three.js', 'github', 'repository', 'mrdoob', 'build files', 'threejs examples', ]
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuNumber: "0.1"
 weight: 3
 comments: false

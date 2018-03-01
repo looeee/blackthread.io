@@ -6,8 +6,8 @@ tags: ['three.js', 'getting started', 'introduction']
 heroImage: /images/tutorials/section1-hero.jpg
 heroTitle: First Steps
 heroDescription: A gentle introduction to creating scenes with three.js
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuSectionMain: true
 menuNumber: "1"
 weight: 6

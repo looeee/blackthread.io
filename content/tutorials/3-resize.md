@@ -6,7 +6,7 @@ tags: ['event listener', 'resize', 'browser']
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "3"
-weight: 9
+weight: 4
 readTime: true
 ---
 

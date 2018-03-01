@@ -6,13 +6,14 @@ tags: ['three.js', 'getting started', 'introduction', 'tutorials']
 heroImage: /images/tutorials/section1-hero.jpg
 heroTitle: Introduction
 heroDescription: Get up and running with three.js, fast!
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuSectionMain: true
 menuNumber: 0
 weight: 1
 toc: false
 comments: false
+draft: true
 ---
 
 Welcome to the Black Thread series of tutorials on [three.js](https://threejs.org/)! These tutorials are intended to get you up to speed and creating your own three.js apps, fast. We'll cover the basics of understanding the library and then incrementally create a basic scene, starting with the absolute bare minimum required to get something to display (render) and then working up from there to add camera controls, animation, automatic resizing, textures, lights and so on.

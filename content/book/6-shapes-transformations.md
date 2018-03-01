@@ -3,11 +3,12 @@ title: "Shapes and Transformations"
 date: 2018-01-12T00:00:00-00:00
 description: "We'll finish up the tutorials by taking a quick look at the built in geometries and how to position them in 3D space within our scene"
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuNumber: "6"
 weight: 12
 readTime: true
+draft: true
 ---
 
 In this chapter, we'll take a lighting quick look at some of the geometric shapes that are built into three.js. We've already seen two of them, the Torus Knot from chapters 1.1 and 1.2, and the Box from Chapter 1.3.

@@ -3,11 +3,12 @@ title:  "Adding Camera Controls"
 date: 2018-01-09T00:00:00-00:00
 description: "The simplest was to add interactivity to our scene is to add a camera controller. In this tutorial we'll use a ready made plugin called OrbitControls to rotate our camera around the scene"
 tags: ['three.js', 'camera', 'controls', 'examples', 'plugins', 'orbit controls']
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuNumber: "5"
 weight: 11
 readTime: true
+draft: true
 ---
 
 So far our scene is not interactive - it is animated, but it doesn't take any user input (unless you count responding to the changing size of the browser window).

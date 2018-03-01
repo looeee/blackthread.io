@@ -1,8 +1,8 @@
 ---
 title:  "The Object3D base class"
 excerpt: "Everything you need to know about the Object3D base class in three.js"
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuNumber: "2.1"
 weight: 15
 readTime: true

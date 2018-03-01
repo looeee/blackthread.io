@@ -3,8 +3,8 @@ title:  "CHAPTERS"
 date: 2018-01-02T00:00:00-00:00
 description: "Keeping track of chapter ideas"
 tags: ['three.js', 'getting started', 'introduction']
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuSectionMain: true
 menuNumber: 1000
 weight: 1000

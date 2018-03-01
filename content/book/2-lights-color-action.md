@@ -3,11 +3,12 @@ title:  "Lights, Color, Action!"
 date: 2018-01-06T00:00:00-00:00
 description: "Picking up where we left of in the last tutorial we'll add lights, color and animation to our scene."
 tags: ['three.js', 'scene', 'renderer', 'webgl', 'animation', 'color', 'lights']
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuNumber: "2"
 weight: 8
 readTime: true
+draft: true
 ---
 
 We'll pick up here exactly where we left off in the last chapter. Here is the complete code so far:

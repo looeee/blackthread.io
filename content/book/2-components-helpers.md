@@ -6,8 +6,8 @@ tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML'
 heroImage: /images/tutorials/section2-hero.jpg
 heroTitle: Components and Helpers
 heroDescription: A closer look at the components that make up three.js
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuSectionMain: true
 menuNumber: "2"
 weight: 13

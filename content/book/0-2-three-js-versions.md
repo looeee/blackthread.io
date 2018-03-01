@@ -3,8 +3,8 @@ title:  "The three.js versioning system"
 date: 2018-01-04T00:00:00-00:00
 description: "Understanding and working with different versions of three.js, and dealing with the rapid release cycle"
 tags: ['three.js', 'versions', 'revisions', 'wiki', 'migration guide', 'API', 'releases']
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuNumber: "0.2"
 weight: 4
 comments: false

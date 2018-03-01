@@ -3,8 +3,8 @@ title:  "Getting help and reporting bugs"
 date: 2018-01-05T00:00:00-00:00
 description: "All the best places on the web to ask for help about three.js, including the official forum, reddit and StackOverflow"
 tags: ['three.js', 'WebGL', 'forum', 'discourse', 'help', 'stackoverflow', 'reddit', 'subreddit', 'github' ]
-menu: tutorials
-menuTitle: Three.js tutorials
+menu: book
+menuTitle: Three.js book first draft
 menuNumber: "0.3"
 weight: 5
 readTime: true

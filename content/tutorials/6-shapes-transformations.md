@@ -6,7 +6,7 @@ tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML'
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "6"
-weight: 12
+weight: 7
 readTime: true
 ---
 
