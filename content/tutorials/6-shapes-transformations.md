@@ -1,6 +1,6 @@
 ---
 title: "Shapes and Transformations"
-date: 2018-01-12T00:00:00-00:00
+date: 2018-03-01T00:00:00-00:00
 description: "We'll finish up the tutorials by taking a quick look at the built in geometries and how to position them in 3D space within our scene"
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
 menu: tutorials
@@ -200,7 +200,7 @@ The final thing that we've done here is add a second parameter to the material: 
 
 For the material's side, there are three constants available: `THREE.FrontSide` (the default), `THREE.BackSide`, and `THREE.DoubleSide`, which we are using here. Try setting the value of side for the ring to each of these in turn and see what happens.
 
-{:.paragraph-notice}
+
 The reason we need to set this here is that the ring is _flat_ - that is, it's made up of just a single plane of polygons, and polygons by default can only be seen from one side, which makes rendering them faster. For most 3D objects this is fine since you can't see inside them. But if you were to place the camera inside the cube right now, it would be invisible unless you set it's `material.side` to `THREE.BackSide` or `THREE.DoubleSide`.
 
 Hmm... this scene is reminding me of being on the London Underground a bit too much, time to add some more shapes!
@@ -255,7 +255,7 @@ The negative x-axis stretches to the left of our screen, and the positive x stre
 
 The positive y-axis stretches towards the top of your screen, and the negative y-axis goes towards the bottom, and here we web developers hit a point of confusion:
 
-{:.paragraph-notice}
+
 The y-axis in three.js is _reversed_ compared to the y-axis in CSS. That is, the top of the screen it would be labelled `+Y` in three.js, but `-Y` in CSS.
 This is unfortunate, but three.js had to follow the convention of other 3D applications rather than the convention of web development. The only time it really becomes an issue though is if you are trying to match HTML elements with three.js objects.
 

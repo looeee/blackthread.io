@@ -197,7 +197,7 @@ let percentComplete = 0;
 let frameID = null;
 {{< /highlight >}}
 
-We'll create an animation loop to control the bar's animation. This is very similar to the standard animation loop used in most three.js scenes. See the [animation with requestAnimationFrame](/tutorials/1-1-lights-color-action/#animating-with-requestanimationframe) for more details.
+We'll create an animation loop to control the bar's animation. This is very similar to the standard animation loop used in most three.js scenes. See the [animation with requestAnimationFrame](/tutorials/2-lights-color-action/#animating-with-requestanimationframe) for more details.
 
 {{< highlight js >}}
 const updateAmount = 5; // in percent of bar width, should divide 100 evenly

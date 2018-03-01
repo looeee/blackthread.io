@@ -49,12 +49,12 @@ These make all all be numeral systems commonly used in computer science, and wit
 
 Colors in screens are generally represented using patterns of red, green and blue lights. In fact, one pixel is 3 tiny lights. And each of these lights can be set to 256 different levels of brightness (with a range of 0 -> 255), which means that each pixel can have 256x256x256 = 16,777,216 different colours.
 
-{:.paragraph-notice}
+
 Yes, this is a simplification - there are many different display technologies out there and most don't use tiny lights. But the theory works out to be roughly the same and this is an easy way to explain it.
 
 This means that to write down a color in decimal we would need to be able to write down the number 16777216 - and actually, it gets more complicated than that because we want to keep the red, green and blue components separate. So a white pixel would be represented by the value 255,255,255, which we will call a 'triple' of numbers. That's 9 digits per pixel.
 
-{:.paragraph-notice}
+
 Remember that we are not counting past 255 here. Each value separated by a comma in 255,255,255
 is distinct and goes only from 0 to 255, where 0 means black (the tiny light is switched off), and 255 which means maximum red, green or blue.
 
@@ -78,7 +78,7 @@ Remember that in FF,FF,FF the first two digits represent the amount of red, the 
 * `0x0000FF` : Pure blue
 * `0x800080` : Purple
 
-{:.paragraph-notice}
+
 So how much of an advantage does this actually give us compared to other ways of writing colors? Well... perhaps not that much. But since we are working on the web, and the standard way of specifying colors is to use hex triples, it makes sense to continue this tradition. Also, there are some other advantages that I haven't touched on, for example since FF is the maximum 2 digit number you can write in hex, it's not possible to accidentally specify a color such as 275,255,255...
 
 ### A white box.

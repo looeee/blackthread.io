@@ -26,7 +26,7 @@ Fortunately, it's pretty easy to fix, and just as we did when we wanted to add a
 
 You can listen for all kinds of events such as `click`, `scroll`, `keypress` and many more, but the one that we want to listen for here is called `resize`.
 
-{:.paragraph-notice}
+
 You can listen for events on nearly any HTML element rather than the whole window, so you might think that you should be calling this as `canvas.addEventListener`. However the resize event doesn't fire when attached to anything other than the `window` object, so don't do that.
 
 Add the following code after your `animate` function and before the call to `init`:
@@ -54,7 +54,7 @@ init();
 
 This will call the `onWindowResize` function every time the window resizes.
 
-{:.paragraph-notice}
+
 Be aware that when you resize the browser window, the function might get called _many_ times. Like, 50 times when you resize the window just once. So don't do any heavy calculation in here.
 
 Notice that we have added `console.log( ... )` inside the function? This is a very useful way of making sure that something is working correctly. Open up the browser console now and resize the window and you should see this:

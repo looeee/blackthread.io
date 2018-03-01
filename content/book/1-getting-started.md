@@ -49,7 +49,6 @@ Uncaught ReferenceError: THREE is not defined
     at <anonymous>:1:1
 {{< /highlight >}}
 
-{:.paragraph-notice}
 Be warned that the console is a bit tricky when using Codepen - you need to highlight the preview pane before opening the console to get it to work correctly, otherwise, it will reference the main page and tell us that the file has not loaded correctly even when it has. The easiest way to do this is right click in the preview plane and click "inspect" to open the console, or use the built-in console (the button is in the bottom right of the Codepen page).
 
 ### The basic components of a three.js app
@@ -72,7 +71,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 
 Take a quick look at the [WebGLRenderer](https://threejs.org/docs/#api/renderers/WebGLRenderer) docs page to familiarise yourself with some of the settings now. We'll cover them in detail later.
 
-{:.paragraph-notice}
+
 We've set the renderers size to the window's width and height _as it is now_. If we resize the browser window, the window's width and height will change, but the renderer's will not. Don't worry, we'll come back to fix this later.
 
 There are other renderers available - the files are contained in the [/examples/js/renderers/](https://github.com/mrdoob/three.js/tree/master/examples/js/renderers) directory on Github, and will have to be loaded separately to the main `three.js` file if you wish to use them. We won't be covering them at all in these tutorials since they were created in the days when WebGL was poorly supported and are generally slower and harder to work with than the WebGLRenderer.
@@ -178,7 +177,7 @@ Well, we'll be devoting an entire chapter to this topic, very soon. But for now 
 
 We'll go over materials in much more detail in future, but here we'll just create a  [MeshBasicMaterial](https://threejs.org/docs/#Reference/Materials/MeshBasicMaterial) which is the simplest (and fastest) material available in three.js. It completely ignores any lights in the scene and just shades a mesh based on its colour or any texture maps, which is useful here since we have not yet added any lights.
 
-{:.paragraph-notice}
+
 Be aware that if we used other materials which *do* use lights, we would not see anything at all as our scene is completely dark! This is a common point of confusion when you are just getting started, so if you can't see anything make sure you have added some lights to your scene and they are pointing at the object you want to see.
 Otherwise, just as if you were staring at a black dog on a dark night, you will not see anything at all.
 

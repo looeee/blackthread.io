@@ -19,19 +19,17 @@ Let's get our first three.js scene up and running. When we are finished with cha
 
 ### Follow along on Codepen
 
-I mentioned a few times in the introductory chapters that we'll be using Codepen throughout these tutorials, and that you can either follow along there or create local files on your computer, but since I assume that lots of people are like me and skip introductory chapters, I should probably mention it again. Which I just did.
+We'll be using Codepen throughout these tutorials, and you can either follow along there or create local files on your computer.
 
 Click "edit on Codepen" above to open the example in a new window and see how it works. Take a few minutes now to familiarise yourself with the UI.
 
 Next, open [this pen](https://codepen.io/looeee/pen/QaNyjy), which is identical but with all the JavaScript removed. You can use it to follow along with the rest of the tutorial.
 
-### Initial HTML file setup
-
-For those of you who are not using Codepen, review the last section of [0.0 Requirements](/tutorials/0-0-requirements/#working-locally) for instructions on setting up a basic HTML file that you can use. From here on I'll be assuming that you are using Codepen, _unless_ there is an important difference. Most things will be the same though, so whichever way you choose is fine.
+Each chapter after this one will start where we left off in the previous chapter, so you can use that pen to follow all the way through, or click the "fork" button to create a clone at the start of each chapter.
 
 ### The browser console
 
-I've mentioned this a few times so far, but make sure that you are familiar with the browser console. Press `CTRL + SHIFT + I` now with the codepen window highlighted and a new window will pop up. This is the browser's Development Console. There will be a few differences depending on which browsers you are using, but all the important things will be there.
+Make sure that you are familiar with the browser console. Press `CTRL + SHIFT + I` now with the codepen window highlighted and a new window will pop up. This is the browser's Development Console. There will be a few differences depending on which browsers you are using, but all the important things will be there.
 
 Make sure you have the "console" tab highlighted and type `THREE` (all capital letters), then press return. If three.js loaded correctly, you will see:
 
@@ -48,16 +46,16 @@ Uncaught ReferenceError: THREE is not defined
     at <anonymous>:1:1
 {{< /highlight >}}
 
-{:.paragraph-notice}
+
 Be warned that the console is a bit tricky when using Codepen - you need to highlight the preview pane before opening the console to get it to work correctly, otherwise, it will reference the main page and tell us that the file has not loaded correctly even when it has. The easiest way to do this is right click in the preview plane and click "inspect" to open the console, or use the built-in console (the button is in the bottom right of the Codepen page).
 
 ### The basic components of a three.js app
 
-Every three.js app (in fact, nearly every 3D app of any kind) will have the following basic components - a `renderer`, a `canvas`, a `scene` and a `camera`. For now, we'll just add these to our page with minimal explanation. We'll come back to them later to add detail.
+Every three.js app (in fact, nearly every 3D app of any kind) will have the following basic components - a `renderer`, a `canvas`, a `scene` and a `camera`. We'll now go through and add each in turn to our app.
 
 Turn your attention the `JS` pane in Codepen. It should currently be empty. Let's fix that.
 
-If you are writing an HTML file, open an empty `<script>` tag anywhere after the main three.js file was loaded, and put your code in there instead.
+If you are writing an HTML file, open an empty `<script>` tag anywhere after the main three.js file was loaded, and put your code in there instead. From here on I'll be assuming that you are following in Codepen, but everything will be basically the same either way.
 
 #### The renderer
 
@@ -71,7 +69,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 
 Take a quick look at the [WebGLRenderer](https://threejs.org/docs/#api/renderers/WebGLRenderer) docs page to familiarise yourself with some of the settings now. We'll cover them in detail later.
 
-{:.paragraph-notice}
+
 We've set the renderers size to the window's width and height _as it is now_. If we resize the browser window, the window's width and height will change, but the renderer's will not. Don't worry, we'll come back to fix this later.
 
 There are other renderers available - the files are contained in the [/examples/js/renderers/](https://github.com/mrdoob/three.js/tree/master/examples/js/renderers) directory on Github, and will have to be loaded separately to the main `three.js` file if you wish to use them. We won't be covering them at all in these tutorials since they were created in the days when WebGL was poorly supported and are generally slower and harder to work with than the WebGLRenderer.
@@ -177,7 +175,7 @@ Well, we'll be devoting an entire chapter to this topic, very soon. But for now 
 
 We'll go over materials in much more detail in future, but here we'll just create a  [MeshBasicMaterial](https://threejs.org/docs/#Reference/Materials/MeshBasicMaterial) which is the simplest (and fastest) material available in three.js. It completely ignores any lights in the scene and just shades a mesh based on its colour or any texture maps, which is useful here since we have not yet added any lights.
 
-{:.paragraph-notice}
+
 Be aware that if we used other materials which *do* use lights, we would not see anything at all as our scene is completely dark! This is a common point of confusion when you are just getting started, so if you can't see anything make sure you have added some lights to your scene and they are pointing at the object you want to see.
 Otherwise, just as if you were staring at a black dog on a dark night, you will not see anything at all.
 

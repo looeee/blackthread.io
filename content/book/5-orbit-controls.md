@@ -58,7 +58,7 @@ needs to use the global THREE variable
 <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 {{< /highlight >}}
 
-{:.paragraph-notice}
+
 Friendly reminder: Don't include the scripts from threejs.org this way in a production app. It's not the fastest way to get the files. I'm doing it this way since we are guaranteed to always get the latest version, but again in a production app you probably don't want this since the version might update at any time and your app will break without warning.
 
 ### Setting up the controls

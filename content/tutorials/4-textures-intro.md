@@ -1,6 +1,6 @@
 ---
 title:  "Introduction to textures"
-date: 2018-01-08T00:00:00-00:00
+date: 2018-03-01T00:00:00-00:00
 description: "In this tutorial we'll cover how textures work for creating realistic looking materials, and add one to our scene"
 tags: ['three.js', 'textures', 'loaders', 'security', 'server', 'textureLoader', 'browser']
 menu: tutorials
@@ -83,7 +83,7 @@ Take note that we've also set the material's colour back to white ( we could als
 
 This is because the material's colour gets combined with the material's texture, so if we left it as purple, the wooden side of the box would have a purple tint - and I do like purple, but not _that_ much.
 
-{:.paragraph-notice}
+
 The `material.map` slot is the material's 'colour map' ( AKA 'diffuse map' or even 'diffuse colour map'). If you look through the documentation you see that there are other map slots, such as the `normalMap`, `bumpMap` and `envMap` (environment map), which control other features of the material's appearance. Also, note that we are looking at the documentation for `MeshStandardMaterial` - most materials have a colour `.map` slot, but they may not have all the other maps.
 
 Here's our wooden cube, happily spinning away. It looks very flat and shiny at the moment, and there are plenty of settings on the material that we can use to adjust that, which we will get to very soon.

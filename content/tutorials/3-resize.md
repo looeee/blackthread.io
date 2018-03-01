@@ -1,11 +1,12 @@
 ---
 title:  "Resizing the canvas"
-date: 2018-01-07T00:00:00-00:00
+date: 2018-03-01T00:00:00-00:00
 description: "Here we'll add an event listener  that watches for browser window size changes and smoothly updates your scene to match the new size"
 tags: ['event listener', 'resize', 'browser']
 menu: tutorials
 menuTitle: Three.js tutorials
 menuNumber: "3"
+toc: false
 weight: 4
 readTime: true
 ---
@@ -53,9 +54,7 @@ init();
 
 This will call the `onWindowResize` function every time the window resizes.
 
-<p class="paragraph-notice">
 You can listen for events on nearly any HTML element rather than the whole window, so you might think that you should be calling this as `canvas.addEventListener`. For most events, you can do just that. However the resize event doesn't fire when attached to anything other than the `window` object, so it won't work here.
-</p>
 
 Be aware that when you resize the browser window, the function might get called _many_ times. Like, 50 times when you resize the window just once. So don't do any heavy calculation in here.
 
