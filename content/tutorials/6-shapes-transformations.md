@@ -10,16 +10,19 @@ weight: 7
 readTime: true
 ---
 
-In this chapter, we'll take a lighting quick look at some of the geometric shapes that are built into three.js. We've already seen two of them, the Torus Knot from chapters 1.1 and 1.2, and the Box from Chapter 1.3.
+In this chapter, we'll take a lighting quick look at some of the geometric shapes that are built into three.js. We've already seen two of them, the Torus Knot from chapters 1 and 2, and the Box from Chapter 3.
 
 We'll also take a look at how to move them around (`translate` them), `scale` them up and down and `rotate` them. Collectively, along with the less common `shear`, these are known as transformations (technically, they are _linear_ or _affine_ transformations).
 
 We'll introduce a new word now, just so that you are not too surprised when you come across it later. And that word is... (drumroll):
 
-{:.notice}
+{{< notice >}}
 Quaternion
+{{< /notice >}}
 
-These things are seriously cool. They are a different way to rotate objects, rather than the standard rotation around the `x`, `y` and `z` axes, and have several benefits. We'll go over them in detail later, for now just take a note of the word and remember that these are not really any more complicated than normal rotations, they just take a little while to get used to.
+These things are seriously cool. They are a different way to rotate objects, rather than the standard rotation around the `x`, `y` and `z` axes, and have several benefits. You'll come across these many time, often spoken of in hushed scared tones by newcomers. Old hands on the other hand, throw them around without a care - because they are not actually that complicated. They just take a little be of time to understand and a little bit of practice to get used to.
+
+We're not going to go into any more detail here, but when you come across these again, don't buy into the hype. Just be prepared to spend a couple of hours studying them and you'll understand them for ever after.
 
 Here's where we left off last time.
 
@@ -45,14 +48,9 @@ We now have a plain white cube against a black background. Poetic? Boring? Your 
 
 ### The built-in geometries
 
-All the built-in geometries (20 in total as of R89) are listed in the docs and come in two flavours, `Geometry`, and `BufferGeometry`. We will cover the difference between the two soon, but for now just remember this rule:
+All the built-in geometries (20 in total as of r90) are listed in the docs and come in two flavours, `Geometry`, and `BufferGeometry`. Remember again from Ch 1 that you will always be choosing the BufferGeometry version.
 
-{:.notice}
-Always use BufferGeometry
-
-The Geometry types are older and less efficient. They are kept around to prevent old applications and tutorials from breaking too badly. BufferGeometry is newer, cooler, faster and smell better, at the expense of being just a little bit harder to work with.
-
-These geometries range from the mundane:
+These built in geometries range from the mundane:
 
 * [BoxBufferGeometry](https://threejs.org/docs/#api/geometries/BoxBufferGeometry)
 * [PlaneBufferGeometry](https://threejs.org/docs/#api/geometries/PlaneBufferGeometry)
@@ -93,10 +91,10 @@ function init() {
   // set up the options for a perspective camera
   const fov = 35; // fov = Field Of View
   const aspect = window.innerWidth / window.innerHeight;
-  const nearClippingPlane = 0.1;
-  const farClippingPlane = 1000;
+  const near = 0.1;
+  const far = 1000;
 
-  camera = new THREE.PerspectiveCamera( fov, aspect, nearClippingPlane, farClippingPlane );
+  camera = new THREE.PerspectiveCamera( fov, aspect, near, far );
 
   // every object is initially created at ( 0, 0, 0 )
   // we'll move the camera back a bit so that we can view the scene

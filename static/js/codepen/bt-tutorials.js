@@ -6,7 +6,7 @@ try {
 
   const h3 = document.createElement( 'h3' );
 
-  h3.innerHTML = 'More tutorials and posts at ';
+  h3.innerHTML = 'More tutorials and articles at ';
   h3.style.position = 'absolute';
   h3.style.textAlign = 'center';
   h3.style.width = '100%';

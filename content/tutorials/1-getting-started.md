@@ -9,7 +9,6 @@ menuNumber: "1"
 weight: 2
 readTime: true
 ---
-
 Strap in folks, it's time to push some pixels!
 
 Let's get our first three.js scene up and running. When we are finished with chapters 1 and 2, we'll have this glorious beast shining and rotating before our eyes:
@@ -29,7 +28,7 @@ Each chapter after this one will start where we left off in the previous chapter
 
 ### The browser console
 
-Make sure that you are familiar with the browser console. Press `CTRL + SHIFT + I` now with the codepen window highlighted and a new window will pop up. This is the browser's Development Console. There will be a few differences depending on which browsers you are using, but all the important things will be there.
+Make sure that you are familiar with the browser console. Press `CTRL + SHIFT + I` (`CMD + SHIFT + I` on Mac) now with the codepen window highlighted and a new window will pop up. This is the browser's Development Console. There will be a few differences depending on which browser you are using, but all the important things will be there.
 
 Make sure you have the "console" tab highlighted and type `THREE` (all capital letters), then press return. If three.js loaded correctly, you will see:
 
@@ -46,14 +45,15 @@ Uncaught ReferenceError: THREE is not defined
     at <anonymous>:1:1
 {{< /highlight >}}
 
+`Uncaught ReferenceError: SomeObject is not defined` is a very common error and means that you have not included a script correctly, or it has not loaded for some reason.
 
-Be warned that the console is a bit tricky when using Codepen - you need to highlight the preview pane before opening the console to get it to work correctly, otherwise, it will reference the main page and tell us that the file has not loaded correctly even when it has. The easiest way to do this is right click in the preview plane and click "inspect" to open the console, or use the built-in console (the button is in the bottom right of the Codepen page).
+Codepen also has a built in console, so you can use that if you prefer.
 
 ### The basic components of a three.js app
 
-Every three.js app (in fact, nearly every 3D app of any kind) will have the following basic components - a `renderer`, a `canvas`, a `scene` and a `camera`. We'll now go through and add each in turn to our app.
+Every three.js app (in fact, nearly every realtime 3D app) will have the following basic components - a `renderer`, a `canvas`, a `scene` and a `camera`. We'll go over each of these now and add them to our app.
 
-Turn your attention the `JS` pane in Codepen. It should currently be empty. Let's fix that.
+Turn your attention the `JS` pane in Codepen. It should currently be empty. If its not then delete everything for now. Leave the CSS and HTML panes are they are
 
 If you are writing an HTML file, open an empty `<script>` tag anywhere after the main three.js file was loaded, and put your code in there instead. From here on I'll be assuming that you are following in Codepen, but everything will be basically the same either way.
 
@@ -67,12 +67,11 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 {{< /highlight >}}
 
-Take a quick look at the [WebGLRenderer](https://threejs.org/docs/#api/renderers/WebGLRenderer) docs page to familiarise yourself with some of the settings now. We'll cover them in detail later.
+Take a quick look at the [WebGLRenderer](https://threejs.org/docs/#api/renderers/WebGLRenderer) docs page to familiarise yourself with some of the settings now. Don't worry if you don't understand, all of the settings have default values that you won't need to change for now (or perhaps ever).
 
+We've set the renderer's size to the window's width and height _as it is now_. If we resize the browser window, the window's width and height will change, but the renderer's will not. We'll fix this in Chapter 3.
 
-We've set the renderers size to the window's width and height _as it is now_. If we resize the browser window, the window's width and height will change, but the renderer's will not. Don't worry, we'll come back to fix this later.
-
-There are other renderers available - the files are contained in the [/examples/js/renderers/](https://github.com/mrdoob/three.js/tree/master/examples/js/renderers) directory on Github, and will have to be loaded separately to the main `three.js` file if you wish to use them. We won't be covering them at all in these tutorials since they were created in the days when WebGL was poorly supported and are generally slower and harder to work with than the WebGLRenderer.
+There are other renderers available - the files are contained in the [/examples/js/renderers/](https://github.com/mrdoob/three.js/tree/master/examples/js/renderers) directory on Github, and will have to be loaded separately to the main `three.js` script if you wish to use them. We won't be covering them at all in these tutorials since they were created in the days when WebGL was poorly supported and are generally slower and harder to work with than the WebGLRenderer.
 
 #### The canvas
 
@@ -94,9 +93,14 @@ This appends (i.e. adds just before the closing `</body>` tag) the following to 
 <canvas width="1080" height="600" style="width: 1080px; height: 600px;"></canvas>
 {{< /highlight >}}
 
+Go ahead and right click on the preview pane in Codepen and select inspect. You should see this:
+
+{{< figure src="/images/tutorials/Ch 1/console_canvas.png" caption="Fig 1: The canvas element that we just added to the page" alt="console with canvas highlighted" lightbox=true class="figure-medium" >}}
+
+If you are following along using a file on your own computer, that's basically all you'll see. On codepen there will be a whole lot of junk and above and below it. That's because codepen is creating your app as an `iframe` - that is, a webpage within a webpage. Don't worry about that for now though.
 #### The scene
 
-There's not much to say about the setup of the Scene as the constructor doesn't take any arguments. Add the following line:
+There's not much to say about the setup of the Scene as the constructor doesn't take any arguments. Add the following line to your app:
 
 {{< highlight js >}}
 ...
@@ -106,17 +110,19 @@ document.body.appendChild( renderer.domElement );
 const scene = new THREE.Scene();
 {{< /highlight >}}
 
-We will have more to say about how the actual scene object (technically a [Scene Graph](https://en.wikipedia.org/wiki/Scene_graph) ) works later. For now, just think of the `scene` object as a holder for all the other objects you want to display. Once we have we created an object, if we want to see it we'll need to add it to the scene using `scene.add( object )` and if we later want to remove it from the scene, we can just do `scene.remove( object )`. Simple!
+Technically, the scene object is a [Scene Graph](https://en.wikipedia.org/wiki/Scene_graph). You can figure out the technicalities of how that works later. For now, just think of the `scene` object as a holder for all the other objects you want to display. Once we have we created an object, if we want to see it we'll need to add it to the scene using `scene.add( object )` and if we later want to remove it from the scene, we can just do `scene.remove( object )`. Simple!
 
 #### The camera
 
-The final object required to render a scene is the camera. Again, there are several types of camera available, but we'll generally stick with the [PerspectiveCamera](https://threejs.org/docs/#api/cameras/PerspectiveCamera) which uses `perspective projection` set up a view of the scene. Without going into any great detail here, this renders the scene the way you expect a 3D scene to look - in other words, it mimics the way the human eye perceives depth, with objects getting smaller the further away they are from the camera.
+The final object required to render a scene is the camera. Again, there are several types of camera available, but we'll generally stick with the [PerspectiveCamera](https://threejs.org/docs/#api/cameras/PerspectiveCamera) which uses [perspective projection](https://en.wikipedia.org/wiki/3D_projection#Perspective_projection) to set up a view of the scene (_fair warning: that link is pretty heavy on the mathematics_).
 
-The PerspectiveCamera takes four options, which together define its [viewing frustum](https://en.wikipedia.org/wiki/Viewing_frustum):
+Without going into any great detail here, this renders the scene in the way you expect a 3D scene to look - in other words, it mimics the way the human eye perceives depth, with objects getting smaller the further away they are from the camera. Nearly all 3D games and special effects in films use a perspective camera.
 
-{{< figure src="/images/tutorials/ViewingFrustum.jpg" caption="Fig 1: The PerspectiveCamera's viewing frustum" alt="Viewing Frustum" class="figure-small" >}}
+The `PerspectiveCamera` takes four options, which together define its [viewing frustum](https://en.wikipedia.org/wiki/Viewing_frustum):
 
-A `frustum` is a mathematical term describing a four rectangular pyramid with the top cut off. Everything inside the frustum is visible, everything outside it is not.
+{{< figure src="/images/tutorials/Ch 1/ViewingFrustum.jpg" caption="Fig 2: The PerspectiveCamera's viewing frustum (thanks Wikipedia!)" alt="Viewing Frustum" class="figure-small" >}}
+
+A `frustum` is a mathematical term describing a four sided rectangular pyramid with the top cut off. When we view the scene with our camera, everything inside the frustum is visible, everything outside it is not.
 
 Here's the code needed to create the camera:
 
@@ -124,13 +130,13 @@ Here's the code needed to create the camera:
 ...
 const scene = new THREE.Scene();
 
-// set up the options for a perspective camera
+// The four options needed to create a perspective camera
 const fov = 35; // fov = Field Of View
 const aspect = window.innerWidth / window.innerHeight;
-const nearClippingPlane = 0.1;
-const farClippingPlane = 1000;
+const near = 0.1; // the near clipping plane
+const far = 1000; // the far clipping plane
 
-const camera = new THREE.PerspectiveCamera( fov, aspect, nearClippingPlane, farClippingPlane );
+const camera = new THREE.PerspectiveCamera( fov, aspect, near, far );
 
 // every object is initially created at ( 0, 0, 0 )
 // we'll move the camera back a bit so that we can view the scene
@@ -139,23 +145,55 @@ camera.position.set( 0, 0, 40 );
 
 Let's take a quick look at the options we passed to the camera.
 
-* `fov` or Field of View: Along with `aspect` this is straight out of a photography manual. This the angle of the viewing frustum, that is, how much of the world can be seen through the camera. As a human with eyes on the front of your head, you have a smaller FOV than an antelope with eyes on the side of its head - in fact, a human's FOV is about 120 degrees, so for a realistic FOV in your app, you will need to consider how much of this field of vision the screen will be likely to take up. Console games designed to be shown on screens far away from the viewer are usually between 40 - 60 degrees, while a PC game might use a higher FOV of around 90 since the screen is likely to be right in front of the player.
+* `fov` or Field of View: Along with `aspect` this is straight out of a photography manual. This the angle of the viewing frustum, that is, how much of the world can be seen through the camera. It's specified in degrees. As a human with eyes on the front of your head, you have a smaller FOV than an antelope with eyes on the side of its head - in fact, a human's FOV is about 120 degrees, so for a realistic FOV in your app, you will need to consider how much of this field of vision the screen will be likely to take up. Console games designed to be shown on screens far away from the viewer are usually between 40 - 60 degrees, while a PC game might use a higher FOV of around 90 since the screen is likely to be right in front of the player.
 
 * `aspect` ratio: this is pretty simple - it's the width divided by the height of the viewing rectangle. So an aspect ratio of 1 will be a square, while `window.innerWidth / window.innerHeight` will be a rectangle with the same proportions as your browser window. The thing to keep in mind here is that this needs to match the actual canvas and renderer size - so if we update these (for example if the browser window changes size), then this needs to be updated too.
 
-* `nearClippingPlane`: Objects closer than the `nearClippingPlane` will not be visible (technically, they will not be `rendered`).
+* `near`: Objects closer than the `near` will not be visible (technically, they will not be `rendered`).
 
-* `farClippingPlane`: Similarly, objects further away from the camera than this will not be visible. There are other important factors that we need to consider when choosing the near and far clipping planes, but we'll go over those in a later chapter since they are quite technical. For now, you can safely use the values above in most apps.
+* `far`: Similarly, objects further away from the camera than this will not be visible.
+
+Note that for a Perspective camera, the near plane must be greater than 0. The far plane, technically, can be anything that is bigger than the near plane and less than infinity.
+
+In practice you want the area contained within the viewing frustum to be as small as possible. So you'll set near as big as possible and far as small as possible. For now let's just stick with the default values which we set above.
+
+#### Positioning an object in 3D space
+
+Since this is the first time that we've had to take into account the position of an object, let's examine what we did with the line `camera.position.set( 0, 0, 40 )`.
+
+Here's what the coordinate system in three.js looks like:
+
+{{< figure src="/images/tutorials/Ch 1/coords.jpg" caption="Fig 3: The three.js coordinate system" alt="Coordinate system" class="figure-small" >}}
+
+ * +X points to the right of the screen
+ * -X points to the left of the screen
+ * +Y points to the top of the screen
+ * -Y points to the bottom of the screen
+ * +Z points _out_ of the screen (towards you)
+ * -Z points _into_ the screen (away from you)
+
+The direction of the Z axis is the most important thing to take note of here.
+`camera.position.set( 0, 0, 40 )` is equivalent to:
+
+{{< highlight js >}}
+camera.position.x = 0;
+camera.position.y = 0;
+camera.position.z = 40;
+{{< /highlight >}}
+
+That is, we've left the camera in the middle of the screen, but moved it 40 units _towards_ us.
+
+Note also that by convention, one unit on three.js is one meter. Since we set our `camera.far` value to 1000, we now have a scene sized at a scale of about 1 kilometre. This is bigger than we need, but it's an OK size for a scene. Avoid making very big scenes, or very tiny scenes and you will be fine. The only time that this will be a problem is if you decide to make a physically accurate space simulation.
 
 ### Adding a visible object to our scene
 
-Most visible objects in three.js consists of three components - a [Geometry](https://threejs.org/docs/#Reference/Core/Geometry) (or preferably a [BufferGeometry](https://threejs.org/docs/#Reference/Core/BufferGeometry), but more on that later), a `Material` and a `Mesh` which combines the geometry and material and is used to set the position of the object inside the scene.
+Visible objects in three.js consist of three components - a [Geometry](https://threejs.org/docs/#Reference/Core/Geometry) (or preferably a [BufferGeometry](https://threejs.org/docs/#Reference/Core/BufferGeometry), but more on that below), a `Material`, and a `Mesh` which combines the geometry and material and is used to set the position of the object inside the scene.
 
 #### Creating a geometry
 
 We'll start by creating a [TorusKnotBufferGeometry](https://threejs.org/docs/#Reference/Geometries/TorusKnotBufferGeometry).
 
-The two options we passed to it defined the radius (overall size), and radius of the tube, respectively. Most options in three.js have built-in defaults, so even though the docs say that this should take 6 _arguments_ (AKA _parameters_ ), we can get away with ignoring most or all of them and sensible defaults will be chosen.
+The two options we passed to it define the radius (overall size), and radius of the tube, respectively. Most options in three.js have built-in defaults, so even though the docs say that this should take 6 _arguments_ (AKA _parameters_ ), we can get away with ignoring most or all of them and sensible defaults will be chosen.
 
 {{< highlight js >}}
 ...
@@ -169,17 +207,17 @@ const geometry = new THREE.TorusKnotBufferGeometry( 5, 1 );
 
 Wait, why did we just create a [TorusKnotBufferGeometry](https://threejs.org/docs/#Reference/Geometries/TorusKnotBufferGeometry) instead of just a [TorusKnotGeometry](https://threejs.org/docs/#Reference/Geometries/TorusKnotGeometry)?
 
-Well, we'll be devoting an entire chapter to this topic, very soon. But for now suffice to say that [BufferGeometry](https://threejs.org/docs/#api/core/BufferGeometry) is a newer and faster (although slightly more complex) version of [Geometry](https://threejs.org/docs/#api/core/Geometry), and you should be preferring BufferGeometry in almost every conceivable case.
+Well, that's beyond the scope of these tutorials. For now suffice to say that [BufferGeometry](https://threejs.org/docs/#api/core/BufferGeometry) is a newer and faster (although a little harder to work) version of [Geometry](https://threejs.org/docs/#api/core/Geometry), and you should always use a BufferGeometry rather than a Geometry. In fact, it's likely that at some point the old Geometry code will be removed entirely. For the time being though it's still there to maintain backwards compatibility.
 
 #### Creating a material
 
-We'll go over materials in much more detail in future, but here we'll just create a  [MeshBasicMaterial](https://threejs.org/docs/#Reference/Materials/MeshBasicMaterial) which is the simplest (and fastest) material available in three.js. It completely ignores any lights in the scene and just shades a mesh based on its colour or any texture maps, which is useful here since we have not yet added any lights.
+To start with, we'll create a [MeshBasicMaterial](https://threejs.org/docs/#Reference/Materials/MeshBasicMaterial) which is the simplest (and fastest) material available in three.js. It completely ignores any lights in the scene and just shades a mesh based on its colour or any texture maps, which is useful here since we have not yet added any lights.
 
+In fact, if we used most of the other material types right now we wouldn't be able to see anything at all since the scene is in total darkness. Just like the real world!
 
-Be aware that if we used other materials which *do* use lights, we would not see anything at all as our scene is completely dark! This is a common point of confusion when you are just getting started, so if you can't see anything make sure you have added some lights to your scene and they are pointing at the object you want to see.
-Otherwise, just as if you were staring at a black dog on a dark night, you will not see anything at all.
+This is a common point of confusion when you are just getting started, so if you can't see anything make sure you have added some lights to your scene and they are shining on the object that you expect to see.
 
-Enough of that, let's create the material:
+Add the following line to your code to create the material:
 
 {{< highlight js >}}
 ...
@@ -189,11 +227,11 @@ const geometry = new THREE.TorusKnotBufferGeometry( 5, 1 );
 const material = new THREE.MeshBasicMaterial();
 {{< /highlight >}}
 
-Remember what I said about three.js assigning sensible default values if you don't provide them yourself? Well, in this case, it the material will be white since we have not _passed in_ any colour parameter. I would have gone for purple myself. Oh well...
+Remember what I said about three.js assigning sensible default values if you don't provide them yourself? Well, in this case, it the material will be white since we have not _passed in_ any colour parameter. We'll see how to change the material's colour in the next chapter.
 
 #### Creating a mesh and adding it to the scene
 
-Next, we'll combine the geometry and material into a [Mesh](https://threejs.org/docs/#api/objects/Mesh) and add it to the scene. The `mesh` object is one of the most important and basic objects in three.js and you will be using it a lot. Thankfully, like the `scene` object, it's fairly simple and it's most important function is to serve as a holder for a `geometry` and `material` and tell us where in the scene they are located.
+Next, we'll combine the geometry and material into a [Mesh](https://threejs.org/docs/#api/objects/Mesh) and add it to the scene. The `mesh` object is one of the most important and basic objects in three.js and you will be using it a lot. Thankfully, just like the `scene` object, it's fairly simple and it's most important function is to serve as a holder for a `geometry` and `material` and tell us where in the scene they are located.
 
 {{< highlight js >}}
 ...
@@ -208,7 +246,7 @@ scene.add( mesh );
 
 ### Rendering the scene
 
-Finally, we are ready to push those glorious pixels into our eyeballs!
+Finally, we are ready to push some glorious, hand-crafted pixels into our eyeballs!
 
 Add the following and final line to your code:
 
@@ -217,15 +255,16 @@ Add the following and final line to your code:
 scene.add( mesh );
 
 renderer.render( scene, camera );
-{{< /highlight >}}s
+{{< /highlight >}}
 
-This tells the renderer to `render` ( that is, create a still image ) of the entire `scene` and all the objects it contains from the point of view of the `camera`.
+This tells the renderer to `render` ( that is, create a still image ) of the portion of the  scene contained within the camera viewing frustum.
 
-With even this simple setup we can do all kinds of fancy things like quickly switch between multiple cameras, or multiple scenes, within the same app, or even render one camera view or scene on top of another for some interesting effects.
-
-After adding the previous line, we will now see this:
+After adding the previous line, you will now see this:
 
 <p data-height="400" data-theme-id="0" data-slug-hash="qpNvdd" data-default-tab="result" class='codepen'></p>
 <script async="async" src="//codepen.io/assets/embed/ei.js"></script>
 
-What's that you say? It looks like an especially boring Celtic Knot? Ungrateful clods! OK, fine, on to the next chapter and we'll see what we can do to make things a bit more interesting.
+It's very basic so far. Without lighting illuminate the contours of the object, it's not possible to even know that it's 3D, and without movement or colour it looking a bit dull.
+But still, it's quite impressive that we were able to do this with so fast.
+
+We'll quickly fix all of these problems in the next chapter, as well as taking a look at how best to organise our code to keep track of everything as our app grows.

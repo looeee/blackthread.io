@@ -3,7 +3,7 @@ title:  "Next steps"
 date: 2018-01-05T00:00:00-00:00
 description: "All the best places on the web to ask for help about three.js, including the official forum, reddit and StackOverflow"
 tags: ['three.js', 'WebGL', 'forum', 'discourse', 'help', 'stackoverflow', 'reddit', 'subreddit', 'github' ]
-heroImage: /images/tutorials/section2-hero.jpg
+heroImage: /images/tutorials/next-steps-hero.jpg
 heroTitle: Where to next?
 heroDescription: It's a big, 3D world out there and your journey is just beginning
 menu: tutorials

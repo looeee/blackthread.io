@@ -10,7 +10,7 @@ weight: 5
 readTime: true
 ---
 
-So far we have just created a simple coloured material for our mesh. If we want to create something more realistic we'll have to move onto using [texture mapping](https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/crate.gif).
+So far we have just created a simple coloured material for our mesh. If we want to create something more realistic we'll have to move onto using [texture mapping](https://en.wikipedia.org/wiki/Texture_mapping).
 
 Put very simply, this means taking an image and stretching it over the surface of a 3D object. Of course, this will be very easy to do if the surface of the 3D object is square, and less easy of the surface is curved and knotted.
 
@@ -39,6 +39,8 @@ That... looks like a very curved and knotted surface. Let's switch it out for so
 
 This changes our torus knot to a cube 15 units long, wide and high, ready to have a texture applied to each side.
 
+Remember from Chapter 1 that we will always be using a [BufferGeometry](https://threejs.org/docs/#api/core/BufferGeometry) and not a [Geometry](https://threejs.org/docs/#api/core/Geometry).
+
 ### Loading a texture with the `TextureLoader`
 
 We'll turn this purple box into a wooden crate. Fortunately, the three.js repo has lots of free textures that we can use as we like, one of which is just what we are looking for:
@@ -59,13 +61,13 @@ Create a `TextureLoader` under the geometry and then load the texture:
 ...
 {{< /highlight >}}
 
-#### A note on working locally
+### A note on working locally
 
-At this point, if you are working locally instead of via codepen, and especially if you try to load this file from your hard drive rather than from Github, you may run into problems due to security restrictions on how JavaScript can read local files. These restrictions are there for a reason and I would not advise you to turn them off, although it is possible. You should take the time to set up a simple HTTP server instead - we'll go over that in  [Appendix A.1: Setting up a development server].
+At this point, if you are working locally instead of via codepen, and especially if you try to load this file from your hard drive rather than from Github, you may run into problems due to security restrictions on how JavaScript can read local files. If you do run into this problem, take a look at the [How to run things locally](https://threejs.org/docs/#manual/introduction/How-to-run-things-locally) page in the docs.
 
-#### Adding the texture to the material
+### Adding the texture to the material
 
-Next, well assign the texture to the [material.map](https://threejs.org/docs/#api/materials/MeshStandardMaterial.map) slot.
+Next, we'll assign the texture to the [material.map](https://threejs.org/docs/#api/materials/MeshStandardMaterial.map) slot. Technically this is the `Diffuse Color` map slot, but since it's the most important texture map slot on a material this is shortened to just `map`. Take a look through the [MeshStandardMaterial](https://threejs.org/docs/?q=loader#api/materials/MeshStandardMaterial) docs to see other available map types such as the `normalMap`, `bumpMap` and `envMap` (environment map), which control other features of the material's appearance. Note that different material types may have different maps available.
 
 {{< highlight js >}}
 ...
@@ -81,12 +83,9 @@ Next, well assign the texture to the [material.map](https://threejs.org/docs/#ap
 
 Take note that we've also set the material's colour back to white ( we could also remove the colour line completely since white is the default ).
 
-This is because the material's colour gets combined with the material's texture, so if we left it as purple, the wooden side of the box would have a purple tint - and I do like purple, but not _that_ much.
+This is because the material's colour gets combined (multiplied, technically) with the material's texture, so if we left it as purple, the wooden side of the box would have a purple tint - and I do like purple, but not _that_ much.
 
-
-The `material.map` slot is the material's 'colour map' ( AKA 'diffuse map' or even 'diffuse colour map'). If you look through the documentation you see that there are other map slots, such as the `normalMap`, `bumpMap` and `envMap` (environment map), which control other features of the material's appearance. Also, note that we are looking at the documentation for `MeshStandardMaterial` - most materials have a colour `.map` slot, but they may not have all the other maps.
-
-Here's our wooden cube, happily spinning away. It looks very flat and shiny at the moment, and there are plenty of settings on the material that we can use to adjust that, which we will get to very soon.
+Here's our wooden cube, happily spinning away. It looks very flat and shiny at the moment, and there are plenty of settings on the material that we can use to adjust that, but again, its a pretty good result for such as small amount of time.
 
 <p data-height="400" data-theme-id="0" data-slug-hash="YYGEJV" data-default-tab="result" class='codepen'></p>
 <script async="async" src="//codepen.io/assets/embed/ei.js"></script>

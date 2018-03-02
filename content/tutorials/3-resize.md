@@ -1,6 +1,6 @@
 ---
 title:  "Resizing the canvas"
-date: 2018-03-01T00:00:00-00:00
+date: 2018-03-02T00:00:00-00:00
 description: "Here we'll add an event listener  that watches for browser window size changes and smoothly updates your scene to match the new size"
 tags: ['event listener', 'resize', 'browser']
 menu: tutorials
@@ -60,7 +60,7 @@ Be aware that when you resize the browser window, the function might get called 
 
 Notice that we have added `console.log( ... )` inside the function? This is a very useful way of making sure that something is working correctly. Open up the browser console now and resize the window and you should see this:
 
-{{< figure src="/images/tutorials/1.2/console-resize.png" caption="Fig 1: The number on the left notes how many times the function was called" alt="Logging resize event to console" >}}
+{{< figure src="/images/tutorials/Ch 3/console-resize.png" caption="Fig 1: The number on the left notes how many times the function was called" alt="Logging resize event to console" >}}
 
 #### Setting up the `onWindowResize` function
 

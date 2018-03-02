@@ -162,37 +162,6 @@ a {
   }
 }
 
-
-/* code */
-
-tt, code, kbd, samp, pre {
-  font-family: $monospace;
-}
-
-pre {
-  overflow-x: auto; /* add scrollbars to wide code blocks*/
-}
-
-p > code,
-a > code,
-li > code,
-figcaption > code,
-td > code {
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
-  font-size: 1em;
-  background: black;
-  border: 1px solid $text-color;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  white-space: nowrap;
-
-  &:before, &:after {
-    letter-spacing: -0.2em;
-    content: "\00a0"; /* non-breaking space*/
-  }
-}
-
 /* horizontal rule */
 
 hr {
