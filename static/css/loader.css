@@ -1198,6 +1198,10 @@ td > code {
       flex-basis: 100%; }
   .archive-header h2 {
     background: rgba(128, 128, 128, 0.95) !important; }
+  .archive-header h2, .archive-header p {
+    text-align: center; }
+  .archive-header p {
+    max-width: unset; }
 
 .archive-item {
   -ms-flex-preferred-size: 30%;
