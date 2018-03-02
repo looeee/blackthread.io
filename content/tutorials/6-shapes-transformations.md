@@ -1,6 +1,6 @@
 ---
 title: "Shapes and Transformations"
-date: 2018-03-01T00:00:00-00:00
+date: 2018-03-02T00:00:00-00:00
 description: "We'll finish up the tutorials by taking a quick look at the built in geometries and how to position them in 3D space within our scene"
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
 menu: tutorials
@@ -13,16 +13,6 @@ readTime: true
 In this chapter, we'll take a lighting quick look at some of the geometric shapes that are built into three.js. We've already seen two of them, the Torus Knot from chapters 1 and 2, and the Box from Chapter 3.
 
 We'll also take a look at how to move them around (`translate` them), `scale` them up and down and `rotate` them. Collectively, along with the less common `shear`, these are known as transformations (technically, they are _linear_ or _affine_ transformations).
-
-We'll introduce a new word now, just so that you are not too surprised when you come across it later. And that word is... (drumroll):
-
-{{< notice >}}
-Quaternion
-{{< /notice >}}
-
-These things are seriously cool. They are a different way to rotate objects, rather than the standard rotation around the `x`, `y` and `z` axes, and have several benefits. You'll come across these many time, often spoken of in hushed scared tones by newcomers. Old hands on the other hand, throw them around without a care - because they are not actually that complicated. They just take a little be of time to understand and a little bit of practice to get used to.
-
-We're not going to go into any more detail here, but when you come across these again, don't buy into the hype. Just be prepared to spend a couple of hours studying them and you'll understand them for ever after.
 
 Here's where we left off last time.
 
@@ -198,14 +188,13 @@ The final thing that we've done here is add a second parameter to the material: 
 
 For the material's side, there are three constants available: `THREE.FrontSide` (the default), `THREE.BackSide`, and `THREE.DoubleSide`, which we are using here. Try setting the value of side for the ring to each of these in turn and see what happens.
 
-
 The reason we need to set this here is that the ring is _flat_ - that is, it's made up of just a single plane of polygons, and polygons by default can only be seen from one side, which makes rendering them faster. For most 3D objects this is fine since you can't see inside them. But if you were to place the camera inside the cube right now, it would be invisible unless you set it's `material.side` to `THREE.BackSide` or `THREE.DoubleSide`.
 
-Hmm... this scene is reminding me of being on the London Underground a bit too much, time to add some more shapes!
+### Adding more meshes
 
-### Adding more meshes and moving them around
+Let's add some more shapes!
 
-Up to now, we've been creating objects by making one geometry, one material and one mesh for each. But what if we want to create several shiny spheres? Our current approach seems kind of inefficient, and as we'll see, we can reuse geometries and materials in multiple meshes.
+Up to now, we've been creating objects by making one geometry, one material and one mesh for each. But what if we want to create several shiny blue spheres? Our current approach seems kind of inefficient, and as we'll see, we can reuse geometries and materials in multiple meshes, and indeed there are lots of ways we can reuse or clone geometries, materials and meshes.
 
 Create a new geometry and a new material under the ring. I'm going to use an [OctahedronBufferGeometry](https://threejs.org/docs/#api/geometries/OctahedronBufferGeometry), and a blue material:
 
@@ -219,9 +208,9 @@ Create a new geometry and a new material under the ring. I'm going to use an [Oc
 ...
 {{< /highlight >}}
 
-No need to set the `material.side` parameter here, the default of `THREE.FrontSide` is fine. We'll also take the time to understand how colours work soon - like, just why is `0x0000ff` blue?
+No need to set the `material.side` parameter here, the default of `THREE.FrontSide` is fine.
 
-We're passing in a single parameter here, the radius of the octahedron (2). Again, this geometry can take other parameters, and you can explore them in the live example on the docs page.
+We're passing in a single parameter here, the radius of the octahedron, which we have set to `2`. Again, this geometry can take other parameters, and you can explore them in the live example on the docs page.
 
 Next, we'll create our first mesh from the `octaGeometry` and `octaMaterial`:
 
@@ -235,38 +224,13 @@ Next, we'll create our first mesh from the `octaGeometry` and `octaMaterial`:
 ...
 {{< /highlight >}}
 
-The problem is, we can't see this. It's been created, as all objects are, at the `( 0, 0, 0 )` (the _origin_), and since our cube is already there and is bigger, our poor octahedron is _inside_ the cube, completely hidden. Try zooming the camera slowly in until it is inside the cube, and the octahedron will magically appear.
+The problem is, we can't see this. It's been created, as all objects are, at the point `( 0, 0, 0 )` (the _origin_), and since our cube is already there and is bigger, our poor octahedron is _inside_ the cube, completely hidden. Try zooming the camera slowly in until it is inside the cube, and the octahedron will magically appear.
 
-We need to move our octahedron into its own region of space since it turns out that octahedrons have a bit of an issue with personal space and don't like being put inside cubes against there will. Who knew?
+We need to move our octahedron into its own region of space so that we can see it clearly.
 
-First, let's quickly introduce the three.js coordinate system so that we can see where we standard.
+### Our first transformation: Translation
 
-#### The three.js coordinate system
-
-{{< figure src="/images/tutorials/coords.jpg" caption="Fig 1: The three.js coordinate system" alt="three.js coordinate system" class="figure-small" >}}
-
-##### The x-axis
-
-The negative x-axis stretches to the left of our screen, and the positive x stretches to the right, which so far is as you would expect
-
-##### The y-axis
-
-The positive y-axis stretches towards the top of your screen, and the negative y-axis goes towards the bottom, and here we web developers hit a point of confusion:
-
-
-The y-axis in three.js is _reversed_ compared to the y-axis in CSS. That is, the top of the screen it would be labelled `+Y` in three.js, but `-Y` in CSS.
-This is unfortunate, but three.js had to follow the convention of other 3D applications rather than the convention of web development. The only time it really becomes an issue though is if you are trying to match HTML elements with three.js objects.
-
-##### The z-axis
-
-Positive z points out of the screen towards you, and negative z points into the screen. That's why, to move our camera _backwards_, we set its z position to 60. Intuitively, you might have thought that to move the camera back you would give it a _negative_ z value. Not so. Remember:
-
-* `+Z` -> move out of the screen
-* `-Z` -> move into the screen
-
-In our app so far, the camera is positioned on the z-axis, right around where the `+ Z` label is, and the white box is positioned at the origin, where the three axes meet at (0, 0, 0).
-
-#### Our first transformation: Translation
+Take a look at [Chapter 1](/tutorials/1-getting-started/#positioning-an-object-in-3d-space) again for a reminder of how the three.js coordinate system works.
 
 Translation is the simplest type of transformation to understand. You just move an object left or right ( along the x-axis ), up or down ( along the y-axis ), or back or forwards (along the z-axis).
 
@@ -281,19 +245,22 @@ Let's move our poor octahedron out of the box:
 ...
 {{< /highlight >}}
 
-##### Transforming meshes vs transforming geometries
+### Transforming meshes vs transforming geometries
 
 If you have looked through the [BufferGeometry](https://threejs.org/docs/#api/core/BufferGeometry) docs, you might have noticed that there is a [BufferGeometry.translate](https://threejs.org/docs/#api/core/BufferGeometry.translate) method. Why are we translating the mesh instead of translating the geometry directly?
 
 Well, to put it simply, because it is **MUCH** more efficient.
-When you transform a geometry, you are applying a transformation to the `vertices` and `normals` that make it up, resulting in possibly thousands or even millions of operations, while if you transform a mesh, then you are just updating its position within the scene which is a very quick operation.
+When you transform a geometry, you are applying a transformation to the `vertices` and `normals` that make it up, resulting in possibly thousands or even millions of operations, while if you transform a mesh, then you are just updating its position within the scene which is a very quick operation. There are times when you would want to do this, but you would typically do it just once when you are creating the mesh.
 
-We'll cover what all means in more detail in the chapter on geometry, but for now just remember this rule:
+Remember this rule:
 
-{:.notice}
+{{< notice >}}
 Apply transformations to meshes, not geometries
+{{< /notice >}}
 
-#### Adding the final octahedrons
+Another reason is that we are about to reuse the geometry in more meshes. If we translated the geometries and then translated the meshes as well, things would quickly get confusing
+
+### Adding the final octahedrons
 
 Our scene looks a little unbalanced now. Let's add a couple of octahedrons and position them at the other quadrants of the ring.
 
@@ -345,15 +312,15 @@ Knowing this, we can confidently go ahead and use clone to create our final octa
 
   octaMesh4.position.set( 0, -20, 0 ); // move 20 units down
 
-  scene.add( octaMesh1, octaMesh2, octaMesh3 );
+  scene.add( octaMesh1, octaMesh2, octaMesh3, octaMesh4 );
 ...
 {{< /highlight >}}
 
 Great!
 
-#### Transformation number 2: Scale
+### Transformation number 2: Scale
 
-If you look closely, you'll see that the points of the octahedrons don't quite match the outer edge of the ring. Scale is a useful tool for making minor adjustments like this - it's very common that when you are using models from different modelling programs or different artists, they won't quite match up, and will need to be scaled to fit.
+If you look closely, you'll see that the points of the octahedrons don't quite match the outer edge of the ring. Scale is a useful tool for making minor adjustments like this - it's very common that when you are using models from different modelling programs or different artists, they won't quite match up, and will need to be scaled them a tiny bit to fit.
 
 In this case, a little trial and error in scaling the ring matches them up quite nicely:
 
@@ -369,9 +336,13 @@ In this case, a little trial and error in scaling the ring matches them up quite
 
 This scales the `ringMesh` by 1.02 along the x-axis, then the y-axis, then the z-axis. That is, it is now 102% of its original size.
 
-The final transformation we need to cover is rotation. It turns out that rotating things in 3D is a bit trickier than scaling or translating them, even though in most cases you won't run into any problems. But since we need to introduce a bit of theory and a couple of new terms, we'll save this for the next chapter.
+### The final transformation: Rotation
 
-For now, here's our lovely new logo, which is _definitely_ not a rip off of the London Underground logo.
+The final transformation we need to cover is rotation. But in fact, we already did that in [Chapter 2](/tutorials/2-lights-color-action/#adding-movement).
+
+Try to repeat that here. Can you make the four blue jewels rotate slowly around their centres?
+
+Here's the final result. This concludes these introductory tutorials. Well done for making it this far!
 
 <p data-height="400" data-theme-id="0" data-slug-hash="VyKGXx" data-default-tab="result" class='codepen'></p>
 <script async="async" src="//codepen.io/assets/embed/ei.js"></script>
