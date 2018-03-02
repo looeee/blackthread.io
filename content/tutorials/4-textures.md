@@ -9,7 +9,6 @@ menuNumber: "4"
 weight: 5
 readTime: true
 ---
-
 So far we have just created a simple coloured material for our mesh. If we want to create something more realistic we'll have to move onto using [texture mapping](https://en.wikipedia.org/wiki/Texture_mapping).
 
 Put very simply, this means taking an image and stretching it over the surface of a 3D object. Of course, this will be very easy to do if the surface of the 3D object is square, and less easy of the surface is curved and knotted.

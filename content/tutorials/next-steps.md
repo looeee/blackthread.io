@@ -16,9 +16,9 @@ comments: true
 ---
 Congratulations! You've made it through these introductory tutorials and you now have a basic understanding of what makes up a 3D scene - and not only that, but you now have a basic idea of how a 3D scene works in nearly any graphics engine! Take this knowledge and apply it to Unity, Unreal, Blender, Maya, 3DS Max, and literally hundred of other 3D engines and creation tools and the same concepts apply.
 
-Of course, your journey has just begun. Now you need to strike out on your own and put these ideas into practice. Do it soon, or they'll quickly fade.
+Of course, your journey has only just begun. Now you need to strike out on your own and put these ideas into practice. Do it soon, or they'll quickly fade.
 
-Fortunately, there are lots of places where you can get help as you go along. I'll quickly go over a few here.
+Fortunately, there are lots of places where you can get help as you go along. I'll go over a few here.
 
 #### [The official three.js forum](https://discourse.threejs.org/)
 
@@ -46,4 +46,3 @@ It's not particularly active, but you can also try your luck with the [three.js 
 
 Thanks for sticking with me this far! I hope these tutorials have been helpful.
 If they have, get in touch or leave a comment below. I'd love to hear from you.
-
