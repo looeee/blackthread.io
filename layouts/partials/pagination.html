@@ -1,12 +1,12 @@
 {{ if not (eq .Params.pagination false) }}
 <nav class="pagination">
   {{ if .NextInSection }}
-    <a href="{{ .NextInSection.Permalink }}" title="{{ .NextInSection.Title }}">Previous</a>
+    <a href="{{ .NextInSection.Permalink | relURL }}" title="{{ .NextInSection.Title }}">Previous</a>
   {{ else }}
     <a href="#" class="disabled">Previous</a>
   {{ end }}
   {{ if .PrevInSection }}
-    <a href="{{ .PrevInSection.Permalink }}" title="{{ .PrevInSection.Title }}">Next</a>
+    <a href="{{ .PrevInSection.Permalink | relURL }}" title="{{ .PrevInSection.Title }}">Next</a>
   {{ else }}
     <a href="#" class="disabled">Next</a>
   {{ end }}
