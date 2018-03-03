@@ -27,54 +27,45 @@ vendorScripts:
    ]
 draft: true
 ---
-<div class="accordion">
-  <h1 class="text-center">Convert to GLTF</h1>
-  <p>
-    GLTF is the up and coming superstar of 3D model formats - you can even display it on the Facebook news feed! Below are a couple of options for converting files in other formats to GLTF format.
-  </p>
-  <ul>
-    <li>
-      <input type="checkbox">
-      <i></i>
-      <h2>The three.js exporter</h2>
-      <div class="border-section">
-        <p>
-          Convert from a variety of formats to GLTF format using the three.js <a href="https://threejs.org/examples/#misc_exporter_gltf">GLTFExporter</a>. Currently this supports FBX, OBJ, GLTF and GLB  (because why not?) and Collada ( DAE ).
-          Upload textures in JPG, PNG, GIF, BMP or DDS format.
-        </p>
-        <div id="file-upload-form">
-          <input id="file-upload-input" type="file" name="files[]" multiple="" class="hide">
-          <input type="submit" value="Upload or Drop Files Here" id="file-upload-button"/>
-        </div>
-        <div>
-        <div id="loading-overlay" class="fill">
-          <div id="loading-bar" class="hide">
-            <span id="bar">
-              <span id="progress"></span>
-            </span>
-          </div>
-        </div>
-          <canvas id="export-preview"></canvas>
-        </div>
-      </div>
-    </li>
-    <!-- <li>
-      <input type="checkbox" checked>
-      <i></i>
-      <h2>obj2gltf</h2>
-      <div class="border-section">
-        <p>
-          Convert from OBJ to GLTF format. The homepage for this tool is <a href="https://github.com/AnalyticalGraphicsInc/obj2gltf">here</a>.
-          You can upload an OBJ file, its associated MTL file, and any textures in JPG, PNG, GIF or BMP format.
-        </p>
-        <div id="obj-file-upload-form">
-          <input id="obj-file-upload-input" type="file" name="files[]" multiple="" class="hide">
-          <input type="submit" value="Upload or Drop Files Here" id="file-upload-button"/>
-        </div>
-        <div id="obj-option">
-          <h5>obj2gltf options</h5>
+<h1 class="text-center">Convert to GLTF using the three.js exporter</h1><br>
+<p>
+  GLTF is the up and coming superstar of 3D model formats - you can even display it on the Facebook news feed!
+</p>
+<p>
+  Convert from a variety of formats to GLTF format using the three.js <a href="https://threejs.org/examples/#misc_exporter_gltf">GLTFExporter</a>. Currently this supports FBX, OBJ, GLTF and GLB  (because why not?) and Collada ( DAE ).
+  Upload textures in JPG, PNG, GIF, BMP or DDS format.
+</p>
+<p>
+  See the [docs](https://threejs.org/docs/#examples/exporters/GLTFExporter) page for details of the options below.
+</p><br>
+<div class="border-section">
+  <br>
+  <div id="file-upload-form">
+    <input id="file-upload-input" type="file" name="files[]" multiple="" class="hide">
+    <input type="submit" value="Upload or Drop Files Here" id="file-upload-button"/>
+    <div id="errors" class="hide">
+    <p>You model uses multiple materials on a single mesh. That is currently not supported by the three.js supporter, although it will be soon!</p>
+    </div>
+  </div>
+  <div id="preview-options">
+    <div id="option">
+      <input id="option_trs" name="trs" type="checkbox"/><span>TRS</span><br>
+      <input id="option_visible" name="visible" type="checkbox" checked/><span>Only Visible</span><br>
+      <input id="option_drawrange" name="visible" type="checkbox" checked="checked"/><span>Truncate drawRange</span><br>
+      <input id="option_binary" name="visible" type="checkbox" checked><span>Binary (.glb)</span><br>
+      <input id="option_forceindices" name="visible" type="checkbox"><span>Force indices</span><br>
+      <input id="option_forcepot" name="visible" type="checkbox"><span>Force POT textures</span><br><br>
+      <button id="export" disabled>Export Now</button>
+    </div>
+    <div id="preview">
+      <div id="loading-overlay" class="fill">
+        <div id="loading-bar" class="hide">
+          <span id="bar">
+            <span id="progress"></span>
+          </span>
         </div>
       </div>
-    </li> -->
-  </ul>
+      <canvas id="export-preview"></canvas>
+    </div>
+  </div>
 </div>

@@ -12,6 +12,18 @@ const loading = {
   progress: document.querySelector( '#progress' ),
 };
 
+const controls = {
+  trs: document.querySelector( '#option_trs' ),
+  onlyVisible: document.querySelector( '#option_visible' ),
+  truncateDrawRange: document.querySelector( '#option_drawrange' ),
+  binary: document.querySelector( '#option_binary' ),
+  forceIndices: document.querySelector( '#option_forceindices' ),
+  forcePowerOfTwoTextures: document.querySelector( '#option_forcepot' ),
+  exportGLTF: document.querySelector( '#export' ),
+};
+
+const errors = document.querySelector( '#errors' )
+
 export default class HTMLControl {
 
   static setInitialState() {
@@ -24,13 +36,16 @@ export default class HTMLControl {
   }
 
   static setOnLoadStartState() {
-    fileUpload.form.classList.add( 'hide' );
+
+    errors.classList.add( 'hide' );
+    controls.exportGLTF.disabled = true;
     loading.bar.classList.remove( 'hide' );
   }
 
   static setOnLoadEndState() {
 
     loading.overlay.classList.add( 'hide' );
+    controls.exportGLTF.disabled = false;
 
   }
 
@@ -39,3 +54,5 @@ export default class HTMLControl {
 HTMLControl.canvas = canvas;
 HTMLControl.fileUpload = fileUpload;
 HTMLControl.loading = loading;
+HTMLControl.controls = controls;
+HTMLControl.errors = errors;

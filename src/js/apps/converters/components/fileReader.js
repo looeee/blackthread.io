@@ -187,18 +187,17 @@ HTMLControl.fileUpload.input.addEventListener( 'change', ( e ) => {
 
 ['dragover', 'dragenter'].forEach( event => form.addEventListener( event, () => {
 
-  form.classList.add( 'border' );
-  button.classList.add( 'highlight' );
+  // form.classList.add( 'border' );
+  button.style.background = '#B82601';
 
 } ) );
 
 ['dragend', 'dragleave', 'drop'].forEach( event => form.addEventListener( event, () => {
 
-  form.classList.remove( 'border' );
-  button.classList.remove( 'highlight' );
+  // form.classList.remove( 'border' );
+  button.style.background = '#062f4f';
 
 } ) );
-
 
 HTMLControl.fileUpload.form.addEventListener( 'drop', ( e ) => {
 

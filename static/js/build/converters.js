@@ -152,12 +152,15 @@ function App(canvas) {
 
   var setRendererSize = function setRendererSize() {
 
-    _renderer.setSize(_canvas.clientWidth, _canvas.clientHeight, false);
+    if (_renderer) _renderer.setSize(_canvas.clientWidth, _canvas.clientHeight, false);
   };
 
   var setCameraAspect = function setCameraAspect() {
-    _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
-    _camera.updateProjectionMatrix();
+
+    if (_camera) {
+      _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
+      _camera.updateProjectionMatrix();
+    }
   };
 
   // note: gets called last when autoResize is on
@@ -412,6 +415,18 @@ var loading = {
   progress: document.querySelector('#progress')
 };
 
+var controls = {
+  trs: document.querySelector('#option_trs'),
+  onlyVisible: document.querySelector('#option_visible'),
+  truncateDrawRange: document.querySelector('#option_drawrange'),
+  binary: document.querySelector('#option_binary'),
+  forceIndices: document.querySelector('#option_forceindices'),
+  forcePowerOfTwoTextures: document.querySelector('#option_forcepot'),
+  exportGLTF: document.querySelector('#export')
+};
+
+var errors = document.querySelector('#errors');
+
 var HTMLControl = function () {
   function HTMLControl() {
     classCallCheck(this, HTMLControl);
@@ -429,7 +444,9 @@ var HTMLControl = function () {
   }, {
     key: 'setOnLoadStartState',
     value: function setOnLoadStartState() {
-      fileUpload.form.classList.add('hide');
+
+      errors.classList.add('hide');
+      controls.exportGLTF.disabled = true;
       loading.bar.classList.remove('hide');
     }
   }, {
@@ -437,6 +454,7 @@ var HTMLControl = function () {
     value: function setOnLoadEndState() {
 
       loading.overlay.classList.add('hide');
+      controls.exportGLTF.disabled = false;
     }
   }]);
   return HTMLControl;
@@ -445,6 +463,8 @@ var HTMLControl = function () {
 HTMLControl.canvas = canvas;
 HTMLControl.fileUpload = fileUpload;
 HTMLControl.loading = loading;
+HTMLControl.controls = controls;
+HTMLControl.errors = errors;
 
 var AnimationControls = function () {
   function AnimationControls() {
@@ -734,55 +754,6 @@ var Lighting = function () {
     }
   }]);
   return Lighting;
-}();
-
-var Grid = function () {
-  function Grid(app) {
-    classCallCheck(this, Grid);
-
-
-    this.app = app;
-
-    this.size = 0;
-
-    this.gridHelper = new THREE.GridHelper();
-    this.axesHelper = new THREE.AxesHelper();
-
-    this.helpers = new THREE.Group();
-
-    this.helpers.add(this.gridHelper, this.axesHelper);
-    this.helpers.visible = true;
-  }
-
-  createClass(Grid, [{
-    key: 'setSize',
-    value: function setSize() {
-
-      this.size = Math.floor(this.app.camera.far * 0.5);
-      if (this.size % 2 !== 0) this.size++;
-      this.updateGrid();
-      this.updateAxes();
-    }
-  }, {
-    key: 'updateGrid',
-    value: function updateGrid() {
-
-      var gridHelper = new THREE.GridHelper(this.size, 10);
-      this.helpers.remove(this.gridHelper);
-      this.gridHelper = gridHelper;
-      this.helpers.add(this.gridHelper);
-    }
-  }, {
-    key: 'updateAxes',
-    value: function updateAxes() {
-
-      var axesHelper = new THREE.AxesHelper(this.size / 2);
-      this.helpers.remove(this.axesHelper);
-      this.axesHelper = axesHelper;
-      this.helpers.add(this.axesHelper);
-    }
-  }]);
-  return Grid;
 }();
 
 (function(self) {
@@ -1446,8 +1417,6 @@ var OnLoadCallbacks = function () {
       var promise = loaders.bufferGeometryLoader(file);
       promise.then(function (geometry) {
 
-        console.log(geometry);
-
         var object = new THREE.Mesh(geometry, defaultMat);
         main.addObjectToScene(object);
       }).catch(function (err) {
@@ -1465,8 +1434,6 @@ var OnLoadCallbacks = function () {
 
       var promise = loaders.jsonLoader(file);
       promise.then(function (geometry) {
-
-        console.log(geometry);
 
         var object = new THREE.Mesh(geometry, defaultMat);
         main.addObjectToScene(object);
@@ -1486,8 +1453,6 @@ var OnLoadCallbacks = function () {
       var promise = loaders.objectLoader(file);
       promise.then(function (object) {
 
-        console.log(object);
-
         main.addObjectToScene(object);
       }).catch(function (err) {
 
@@ -1505,8 +1470,6 @@ var OnLoadCallbacks = function () {
       var promise = loaders.fbxLoader(file);
 
       promise.then(function (object) {
-
-        console.log(object);
 
         main.addObjectToScene(object);
       }).catch(function (err) {
@@ -1527,8 +1490,6 @@ var OnLoadCallbacks = function () {
       promise = loaders.gltfLoader(file);
 
       promise.then(function (gltf) {
-
-        console.log(gltf);
 
         if (gltf.scenes.length > 1) {
 
@@ -1574,8 +1535,6 @@ var OnLoadCallbacks = function () {
 
       promise.then(function (object) {
 
-        console.log(object);
-
         main.addObjectToScene(object);
       }).catch(function (err) {
 
@@ -1596,8 +1555,6 @@ var OnLoadCallbacks = function () {
       promise = loaders.colladaLoader(file);
 
       promise.then(function (object) {
-
-        console.log(object);
 
         var scene = object.scene;
 
@@ -1791,16 +1748,16 @@ HTMLControl.fileUpload.input.addEventListener('change', function (e) {
 ['dragover', 'dragenter'].forEach(function (event) {
   return form.addEventListener(event, function () {
 
-    form.classList.add('border');
-    button.classList.add('highlight');
+    // form.classList.add( 'border' );
+    button.style.background = '#B82601';
   });
 });
 
 ['dragend', 'dragleave', 'drop'].forEach(function (event) {
   return form.addEventListener(event, function () {
 
-    form.classList.remove('border');
-    button.classList.remove('highlight');
+    // form.classList.remove( 'border' );
+    button.style.background = '#062f4f';
   });
 });
 
@@ -1811,7 +1768,6 @@ HTMLControl.fileUpload.form.addEventListener('drop', function (e) {
   processFiles(files);
 });
 
-// saving function taken from three.js editor
 var link = document.createElement('a');
 link.style.display = 'none';
 document.body.appendChild(link); // Firefox workaround, see #6594
@@ -1828,32 +1784,58 @@ var saveString = function saveString(text, filename) {
   save(new Blob([text], { type: 'text/plain' }), filename);
 };
 
+var saveArrayBuffer = function saveArrayBuffer(buffer, filename) {
+
+  save(new Blob([buffer], { type: 'application/octet-stream' }), filename);
+};
+
+var stringByteLength = function stringByteLength(str) {
+  // returns the byte length of an utf8 string
+  var s = str.length;
+  for (var i = str.length - 1; i >= 0; i--) {
+    var code = str.charCodeAt(i);
+    if (code > 0x7f && code <= 0x7ff) s++;else if (code > 0x7ff && code <= 0xffff) s += 2;
+    if (code >= 0xDC00 && code <= 0xDFFF) i--; // trail surrogate
+  }
+
+  return s;
+};
+
 function exportGLTF(input) {
 
   var gltfExporter = new THREE.GLTFExporter();
 
   var options = {
-    trs: false,
-    onlyVisible: true,
-    truncateDrawRange: true,
-    binary: false,
-    embedImages: true
+    trs: HTMLControl.controls.trs.checked,
+    onlyVisible: HTMLControl.controls.onlyVisible.checked,
+    truncateDrawRange: HTMLControl.controls.truncateDrawRange.checked,
+    binary: HTMLControl.controls.binary.checked,
+    forceIndices: HTMLControl.controls.forceIndices.checked,
+    forcePowerOfTwoTextures: HTMLControl.controls.forcePowerOfTwoTextures.checked
   };
 
-  console.log(input);
+  gltfExporter.parse(input, function (result) {
 
-  gltfExporter.parse(input.children[0].children[0], function (result) {
+    var byteLength = void 0;
 
-    // if ( result instanceof ArrayBuffer ) {
+    if (result instanceof ArrayBuffer) {
 
-    //   saveArrayBuffer( result, 'scene.glb' );
+      byteLength = result.byteLength;
 
-    // } else {
+      saveArrayBuffer(result, 'scene.glb');
+    } else {
 
-    var output = JSON.stringify(result, null, 2);
-    saveString(output, 'blackThreadGLTF.gltf');
+      var output = JSON.stringify(result, null, 2);
+      byteLength = stringByteLength(output);
+      console.log('byteLength', byteLength);
+      saveString(output, 'scene.gltf');
+    }
 
-    // }
+    if (byteLength < 1000000) {
+      console.log('File size: ' + byteLength * 0.001 + 'kb');
+    } else {
+      console.log('File size: ' + byteLength * 1e-6 + 'mb');
+    }
   }, options);
 }
 
@@ -1893,21 +1875,19 @@ var Main = function () {
     this.app.scene.add(this.loadedObjects);
 
     this.lighting = new Lighting(this.app);
-    this.grid = new Grid(this.app);
-    this.background = new Background(this.app);
 
-    this.app.scene.add(this.grid.helpers);
+    this.background = new Background(this.app);
 
     this.app.initControls();
 
-    // this.initReset();
-    // this.initExport();
+    this.initExport();
   }
 
   createClass(Main, [{
     key: 'addObjectToScene',
     value: function addObjectToScene(object) {
-      var _this = this;
+
+      this.reset();
 
       if (object === undefined) {
 
@@ -1924,46 +1904,43 @@ var Main = function () {
 
       this.app.play();
 
-      this.loadedObjects.traverse(function (child) {
+      // this.loadedObjects.traverse( ( child ) => {
 
-        if (child.material !== undefined) {
+      //   if ( child.material !== undefined && Array.isArray( child.material ) ) {
 
-          _this.loadedMaterials.push(child.material);
-        }
-      });
+      //     HTMLControl.errors.classList.remove( 'hide' );
+      //     HTMLControl.controls.exportGLTF.disabled = true;
+
+      //   }
+
+      // } );
+    }
+  }, {
+    key: 'reset',
+    value: function reset() {
+
+      while (this.loadedObjects.children.length > 0) {
+
+        var child = this.loadedObjects.children[0];
+
+        this.loadedObjects.remove(child);
+        child = null;
+      }
+
+      this.loadedMaterials = [];
+
+      this.animationControls.reset();
     }
   }, {
     key: 'initExport',
     value: function initExport() {
-      var _this2 = this;
+      var _this = this;
 
       HTMLControl.controls.exportGLTF.addEventListener('click', function (e) {
 
         e.preventDefault();
 
-        exportGLTF(_this2.loadedObjects);
-      });
-    }
-  }, {
-    key: 'initReset',
-    value: function initReset() {
-      var _this3 = this;
-
-      HTMLControl.reset.addEventListener('click', function () {
-
-        while (_this3.loadedObjects.children.length > 0) {
-
-          var child = _this3.loadedObjects.children[0];
-
-          _this3.loadedObjects.remove(child);
-          child = null;
-        }
-
-        _this3.loadedMaterials = [];
-
-        _this3.animationControls.reset();
-        _this3.lighting.reset();
-        HTMLControl.setInitialState();
+        exportGLTF(_this.loadedObjects);
       });
     }
   }]);

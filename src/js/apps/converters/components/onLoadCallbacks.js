@@ -18,7 +18,7 @@ export default class OnLoadCallbacks {
 
       readFileAs( originalFile, 'DataURL' ).then( ( data ) => {
 
-        if( type === 'buffergeometry' ) this.onJSONBufferGeometryLoad( data );
+        if ( type === 'buffergeometry' ) this.onJSONBufferGeometryLoad( data );
         else if ( type === 'geometry' ) this.onJSONGeometryLoad( data );
         else if ( type === 'object' ) this.onJSONObjectLoad( data );
 
@@ -38,8 +38,6 @@ export default class OnLoadCallbacks {
 
     const promise = loaders.bufferGeometryLoader( file );
     promise.then( ( geometry ) => {
-
-      console.log( geometry );
 
       const object = new THREE.Mesh( geometry, defaultMat );
       loaderCanvas.addObjectToScene( object );
@@ -61,8 +59,6 @@ export default class OnLoadCallbacks {
     const promise = loaders.jsonLoader( file );
     promise.then( ( geometry ) => {
 
-      console.log( geometry );
-
       const object = new THREE.Mesh( geometry, defaultMat );
       loaderCanvas.addObjectToScene( object );
 
@@ -83,8 +79,6 @@ export default class OnLoadCallbacks {
     const promise = loaders.objectLoader( file );
     promise.then( ( object ) => {
 
-      console.log( object );
-
       loaderCanvas.addObjectToScene( object );
 
     } ).catch( ( err ) => {
@@ -104,8 +98,6 @@ export default class OnLoadCallbacks {
     const promise = loaders.fbxLoader( file );
 
     promise.then( ( object ) => {
-
-      console.log( object );
 
       loaderCanvas.addObjectToScene( object );
 
@@ -128,8 +120,6 @@ export default class OnLoadCallbacks {
     promise = loaders.gltfLoader( file );
 
     promise.then( ( gltf ) => {
-
-      console.log( gltf );
 
       if ( gltf.scenes.length > 1 ) {
 
@@ -180,8 +170,6 @@ export default class OnLoadCallbacks {
 
     promise.then( ( object ) => {
 
-      console.log( object );
-
       loaderCanvas.addObjectToScene( object );
 
     } ).catch( ( err ) => {
@@ -206,8 +194,6 @@ export default class OnLoadCallbacks {
 
     promise.then( ( object ) => {
 
-      console.log( object );
-
       const scene = object.scene;
 
       if ( object.animations && object.animations.length > 0 ) scene.animations = object.animations;
@@ -216,11 +202,11 @@ export default class OnLoadCallbacks {
 
 
     } )
-    .catch( ( err ) => {
+      .catch( ( err ) => {
 
-      console.log( err );
+        console.log( err );
 
-    } );
+      } );
 
     return promise;
 

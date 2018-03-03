@@ -3,7 +3,7 @@ import App from './App/App.js';
 import AnimationControls from './components/AnimationControls.js';
 import Background from './components/Background.js';
 import Lighting from './components/Lighting.js';
-import Grid from './components/Grid.js';
+// import Grid from './components/Grid.js';
 import HTMLControl from './HTMLControl.js';
 
 import './components/fileReader.js';
@@ -48,19 +48,18 @@ class Main {
     this.app.scene.add( this.loadedObjects );
 
     this.lighting = new Lighting( this.app );
-    this.grid = new Grid( this.app );
-    this.background = new Background( this.app );
 
-    this.app.scene.add( this.grid.helpers );
+    this.background = new Background( this.app );
 
     this.app.initControls();
 
-    // this.initReset();
-    // this.initExport();
+    this.initExport();
 
   }
 
   addObjectToScene( object ) {
+
+    this.reset();
 
     if ( object === undefined ) {
 
@@ -78,15 +77,33 @@ class Main {
 
     this.app.play();
 
-    this.loadedObjects.traverse( ( child ) => {
+    // this.loadedObjects.traverse( ( child ) => {
 
-      if ( child.material !== undefined ) {
+    //   if ( child.material !== undefined && Array.isArray( child.material ) ) {
 
-        this.loadedMaterials.push( child.material );
+    //     HTMLControl.errors.classList.remove( 'hide' );
+    //     HTMLControl.controls.exportGLTF.disabled = true;
 
-      }
+    //   }
 
-    } );
+    // } );
+
+  }
+
+  reset() {
+
+    while ( this.loadedObjects.children.length > 0 ) {
+
+      let child = this.loadedObjects.children[ 0 ];
+
+      this.loadedObjects.remove( child );
+      child = null;
+
+    }
+
+    this.loadedMaterials = [];
+
+    this.animationControls.reset();
 
   }
 
@@ -99,29 +116,6 @@ class Main {
       exportGLTF( this.loadedObjects );
 
     } );
-  }
-
-  initReset() {
-
-    HTMLControl.reset.addEventListener( 'click', () => {
-
-      while ( this.loadedObjects.children.length > 0 ) {
-
-        let child = this.loadedObjects.children[ 0 ];
-
-        this.loadedObjects.remove( child );
-        child = null;
-
-      }
-
-      this.loadedMaterials = [];
-
-      this.animationControls.reset();
-      this.lighting.reset();
-      HTMLControl.setInitialState();
-
-    } );
-
   }
 
 }

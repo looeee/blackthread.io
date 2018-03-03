@@ -1,3 +1,5 @@
+import HTMLControl from '../HTMLControl.js';
+
 // saving function taken from three.js editor
 const link = document.createElement( 'a' );
 link.style.display = 'none';
@@ -17,32 +19,63 @@ const saveString = ( text, filename ) => {
 
 };
 
+const saveArrayBuffer = ( buffer, filename ) => {
+
+  save( new Blob( [ buffer ], { type: 'application/octet-stream' } ), filename );
+
+};
+
+const stringByteLength = ( str ) => {
+  // returns the byte length of an utf8 string
+  let s = str.length;
+  for ( let i = str.length - 1; i >= 0; i-- ) {
+    const code = str.charCodeAt( i );
+    if ( code > 0x7f && code <= 0x7ff ) s++;
+    else if ( code > 0x7ff && code <= 0xffff ) s += 2;
+    if ( code >= 0xDC00 && code <= 0xDFFF ) i--; // trail surrogate
+  }
+
+  return s;
+
+}
+
 function exportGLTF( input ) {
 
   const gltfExporter = new THREE.GLTFExporter();
 
   const options = {
-    trs: false,
-    onlyVisible: true,
-    truncateDrawRange: true,
-    binary: false,
-    embedImages: true,
+    trs: HTMLControl.controls.trs.checked,
+    onlyVisible: HTMLControl.controls.onlyVisible.checked,
+    truncateDrawRange: HTMLControl.controls.truncateDrawRange.checked,
+    binary: HTMLControl.controls.binary.checked,
+    forceIndices: HTMLControl.controls.forceIndices.checked,
+    forcePowerOfTwoTextures: HTMLControl.controls.forcePowerOfTwoTextures.checked,
   };
 
-  console.log( input )
+  gltfExporter.parse( input, ( result ) => {
 
-  gltfExporter.parse( input.children[ 0 ].children[ 0 ], ( result ) => {
+    let byteLength;
 
-    // if ( result instanceof ArrayBuffer ) {
+    if ( result instanceof ArrayBuffer ) {
 
-    //   saveArrayBuffer( result, 'scene.glb' );
+      byteLength = result.byteLength;
 
-    // } else {
+      saveArrayBuffer( result, 'scene.glb' );
 
-    const output = JSON.stringify( result, null, 2 );
-    saveString( output, 'blackThreadGLTF.gltf' );
+    } else {
 
-    // }
+      const output = JSON.stringify( result, null, 2 );
+      byteLength = stringByteLength( output );
+      console.log( 'byteLength',byteLength );
+      saveString( output, 'scene.gltf' );
+
+    }
+
+    if ( byteLength < 1000000 ) {
+      console.log( 'File size: ' + byteLength * 0.001 + 'kb' );
+    } else {
+      console.log( 'File size: ' + byteLength * 1e-6 + 'mb' );
+    }
 
   }, options );
 
