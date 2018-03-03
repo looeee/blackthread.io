@@ -14,15 +14,15 @@ vendorScripts:
   [
   "/inflate.min",
   "/three/build/three.min",
-  '/three/examples/js/loaders/DDSLoader',
-  '/three/examples/js/loaders/FBXLoader',
-  '/three/examples/js/loaders/GLTFLoader',
-  '/three/examples/js/loaders/LoaderSupport',
-  '/three/examples/js/loaders/OBJLoader',
-  '/three/examples/js/loaders/MTLLoader',
-  '/three/examples/js/loaders/ColladaLoader',
-  '/three/examples/js/controls/OrbitControls',
-  '/three/examples/js/exporters/GLTFExporter'
+  '/three/examples/js/loaders/DDSLoader.min',
+  '/three/examples/js/loaders/FBXLoader.min',
+  '/three/examples/js/loaders/GLTFLoader.min',
+  '/three/examples/js/loaders/LoaderSupport.min',
+  '/three/examples/js/loaders/OBJLoader.min',
+  '/three/examples/js/loaders/MTLLoader.min',
+  '/three/examples/js/loaders/ColladaLoader.min',
+  '/three/examples/js/controls/OrbitControls.min',
+  '/three/examples/js/exporters/GLTFExporter.min'
    ]
 ---
 

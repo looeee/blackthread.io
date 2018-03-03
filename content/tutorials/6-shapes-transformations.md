@@ -1,7 +1,7 @@
 ---
 title: "Shapes and Transformations"
 date: 2018-03-02T00:00:00-00:00
-description: "We'll finish up the tutorials by taking a quick look at the built in geometries and how to position them in 3D space within our scene"
+description: "We'll finish up the tutorials by taking a quick look at the built in geometries and how to position them in 3D space within our scene using translation, scaling, and rotation"
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
 menu: tutorials
 menuTitle: Three.js tutorials

@@ -1,7 +1,7 @@
 ---
 title: "Introduction"
 date: 2018-03-01T00:00:00-00:00
-description: "Welcome to the Black Thread series of tutorials on three.js! Here we'll focus on getting to know all the amazing features that make this beautiful library so great to work with."
+description: "Welcome to the Black Thread series of tutorials on three.js! Here we'll focus on getting to know all the amazing features that make this beautiful library so great to work with, while creating a minimal app that uses best practices and is ready for you to reuse in your own projects"
 tags: ['three.js', 'getting started', 'introduction', 'tutorials']
 heroImage: /images/tutorials/intro-hero.jpg
 heroTitle: Introduction
@@ -14,7 +14,7 @@ weight: 1
 toc: false
 comments: false
 ---
-Welcome to the Black Thread series of tutorials on [three.js](https://threejs.org/)! These tutorials are intended to get you up to speed and creating your own three.js apps, fast. We'll cover the basics the library while incrementally creating a basic app, starting with the absolute bare minimum required to get something to display (render) and then working up from there to add camera controls, animation, automatic resizing, textures, lights and more.
+Welcome to the Black Thread series of tutorials on [three.js](https://threejs.org/)! These tutorials are intended to get you up to speed and creating your own three.js apps, fast. We'll cover the basics the of the library while incrementally creating a basic app, starting with the absolute bare minimum required to get something to display (render) and then working up from there to add camera controls, animation, automatic resizing, textures, lights and more.
 
 Once you have followed through to the end of Chapter 6, you will have a solid understanding of the components of a three.js app and will be able to proceed with building your own apps that will run in any modern browser, on phones, tablets and laptops.
 

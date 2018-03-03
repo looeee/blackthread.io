@@ -10,15 +10,15 @@ layout: fullWidth
 </header>
 <div id="article" itemprop="text">
   <p>
-    So you want to get in touch with me? Well, I have a whole range of options for you :)
+    So you want to get in touch with me? Well, I have a couple of options for you :)
   </p>
   <p>
     Send me a message on the <a href="https://discourse.threejs.org/">forum</a>
   </p>
   <p>
-    Or <a href="https://twitter.com/looeeeb">twitter</a>
+    Or send me a message on <a href="https://twitter.com/looeeeb">twitter</a>
   </p>
   <p>
-    Or if you're feeling old fashioned you can use good old email: looeee@gmail.com
+    Or if you're feeling old fashioned you can even use good old email: looeee@gmail.com
   </p>
 </div>

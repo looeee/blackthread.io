@@ -1,7 +1,6 @@
 {{ if ne .Params.noMasthead "true" }}
   {{ $currentPageUrl := .URL }}
   <nav class="masthead">
-
     <ul class="visible-links">
       <li class="masthead-title"><a href="/">Blackthread Design</a></li>
       <li id="spacer"></li>
@@ -11,12 +10,9 @@
 
       <li><button class="fa fa-bars toggle-links hide"></button>
       </li></ul>
-      <ul class="hidden-links fold"></ul>
+    <ul class="hidden-links fold"></ul>
   </nav>
-
   <script>
-
-
     ( function() {
 
       var Greedy = function Greedy( options ) {

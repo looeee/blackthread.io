@@ -1,9 +1,9 @@
 ---
 title: "Convert various file formats to GLTF"
-date: 2017-05-12T00:00:00-00:00
+date: 2018-03-03T00:00:00-00:00
 description: "GLTF is the up and coming superstar of 3D model formats - you can even display it on the Facebook news feed."
 tags: ['gltf', 'three.js', 'obj2gltf', 'converter']
-# teaserImage: /images/experiments/converters/teaser.jpg
+# teaserImage: /images/converters/teaser.jpg
 js: converters
 type: page
 layout: fullWidth
@@ -15,15 +15,15 @@ vendorScripts:
   [
   "/inflate.min",
   "/three/build/three.min",
-  '/three/examples/js/loaders/DDSLoader',
-  '/three/examples/js/loaders/FBXLoader',
-  '/three/examples/js/loaders/GLTFLoader',
-  '/three/examples/js/loaders/LoaderSupport',
-  '/three/examples/js/loaders/OBJLoader',
-  '/three/examples/js/loaders/MTLLoader',
-  '/three/examples/js/loaders/ColladaLoader',
-  # '/three/examples/js/controls/OrbitControls',
-  '/three/examples/js/exporters/GLTFExporter'
+  '/three/examples/js/loaders/DDSLoader.min',
+  '/three/examples/js/loaders/FBXLoader.min',
+  '/three/examples/js/loaders/GLTFLoader.min',
+  '/three/examples/js/loaders/LoaderSupport.min',
+  '/three/examples/js/loaders/OBJLoader.min',
+  '/three/examples/js/loaders/MTLLoader.min',
+  '/three/examples/js/loaders/ColladaLoader.min',
+  '/three/examples/js/controls/OrbitControls.min',
+  '/three/examples/js/exporters/GLTFExporter.min'
    ]
 draft: true
 ---
@@ -34,7 +34,7 @@ draft: true
   </p>
   <ul>
     <li>
-      <input type="checkbox" checked>
+      <input type="checkbox">
       <i></i>
       <h2>The three.js exporter</h2>
       <div class="border-section">
@@ -42,13 +42,23 @@ draft: true
           Convert from a variety of formats to GLTF format using the three.js <a href="https://threejs.org/examples/#misc_exporter_gltf">GLTFExporter</a>. Currently this supports FBX, OBJ, GLTF and GLB  (because why not?) and Collada ( DAE ).
           Upload textures in JPG, PNG, GIF, BMP or DDS format.
         </p>
-        <div id="obj-file-upload-form">
-          <input id="obj-file-upload-input" type="file" name="files[]" multiple="" class="hide">
+        <div id="file-upload-form">
+          <input id="file-upload-input" type="file" name="files[]" multiple="" class="hide">
           <input type="submit" value="Upload or Drop Files Here" id="file-upload-button"/>
+        </div>
+        <div>
+        <div id="loading-overlay" class="fill">
+          <div id="loading-bar" class="hide">
+            <span id="bar">
+              <span id="progress"></span>
+            </span>
+          </div>
+        </div>
+          <canvas id="export-preview"></canvas>
         </div>
       </div>
     </li>
-    <li>
+    <!-- <li>
       <input type="checkbox" checked>
       <i></i>
       <h2>obj2gltf</h2>
@@ -65,6 +75,6 @@ draft: true
           <h5>obj2gltf options</h5>
         </div>
       </div>
-    </li>
+    </li> -->
   </ul>
 </div>

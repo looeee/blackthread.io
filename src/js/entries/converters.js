@@ -1,1 +1,1 @@
-import '../apps/experiments/converters/main.js';
+import '../apps/converters/main.js';

@@ -1,7 +1,7 @@
 ---
 title:  "Introduction to textures"
 date: 2018-03-01T00:00:00-00:00
-description: "In this tutorial we'll cover how textures work for creating realistic looking materials, and add one to our scene"
+description: "In this tutorial we'll explain how texture maps (images) are used to make realistic looking materials. Then we'll load one up and show how it can be used in our scene"
 tags: ['three.js', 'textures', 'loaders', 'security', 'server', 'textureLoader', 'browser']
 menu: tutorials
 menuTitle: Three.js tutorials

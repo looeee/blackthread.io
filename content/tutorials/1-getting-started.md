@@ -1,7 +1,7 @@
 ---
 title:  "Getting Started"
 date: 2018-03-01T00:00:00-00:00
-description: "In this tutorial we'll go over everything you need to know to get a simple three.js app running in your browser"
+description: "In this tutorial we'll go over everything you need to know to get a very simple three.js app running in your browser."
 tags: ['three.js', 'setup', 'codepen', 'scene', 'camera', 'renderer', 'webgl', 'browser console', 'HTML', 'basics', 'canvas', 'perspective camera', 'fov', 'aspect ratio', 'mesh', 'material', 'buffergeometry', 'color', 'lights']
 menu: tutorials
 menuTitle: Three.js tutorials

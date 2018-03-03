@@ -52,6 +52,7 @@
     "node-watch": "^0.5.5",
     "obj2gltf": "^2.1.0",
     "postcss": "^6.0.14",
+    "recursive-readdir": "^2.2.2",
     "rollup": "^0.52.2",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
@@ -65,6 +66,7 @@
   "scripts": {
     "buildjs": "node .\\scripts\\buildJS.js",
     "buildcss": "node .\\scripts\\compileCSS.js",
-    "obj2gltf": "node .\\scripts\\obj2gltf.js"
+    "obj2gltf": "node .\\scripts\\obj2gltf.js",
+    "minifyTHREE": "node .\\scripts\\minify_three_examples.js"
   }
 }
