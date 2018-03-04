@@ -6,10 +6,7 @@
   // flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-  canvas {
-
-  }
+  flex-wrap: wrap;
 }
 
 #previews:fullscreen {
@@ -32,6 +29,7 @@
 #original-preview, #result-preview {
   position: relative;
   flex: 1;
+  min-width: 20em;
 }
 
 #original-preview-canvas, #result-preview-canvas {

@@ -5,19 +5,18 @@ import Time from './Time.js';
  *
  */
 
-let _canvas;
-let _scene;
-let _camera;
-let _renderer;
-
-let _currentAnimationFrameID;
-
-
 function App( canvas ) {
+
+  let _scene;
+  let _camera;
+  let _renderer;
+
+  let _currentAnimationFrameID;
 
   const self = this;
 
-  if ( canvas !== undefined ) _canvas = canvas;
+  if ( canvas !== undefined ) this.canvas = canvas;
+  else console.warn( 'Canvas is undefined! ' );
 
   this.autoRender = true;
 
@@ -34,14 +33,14 @@ function App( canvas ) {
 
   const setRendererSize = function () {
 
-    if ( _renderer ) _renderer.setSize( _canvas.clientWidth, _canvas.clientHeight, false );
+    if ( _renderer ) _renderer.setSize( self.canvas.clientWidth, self.canvas.clientHeight, false );
 
   };
 
   const setCameraAspect = function () {
 
     if ( _camera ) {
-      _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
+      _camera.aspect = self.canvas.clientWidth / self.canvas.clientHeight;
       _camera.updateProjectionMatrix();
     }
 
@@ -82,31 +81,7 @@ function App( canvas ) {
 
   Object.defineProperties( this, {
 
-    canvas: {
-
-      get() {
-
-        if ( _canvas === undefined ) {
-
-          _canvas = document.body.appendChild( document.createElement( 'canvas' ) );
-          _canvas.style.position = 'absolute';
-          _canvas.style.width = _canvas.style.height = '100%';
-
-        }
-
-        return _canvas;
-
-      },
-
-      set( newCanvas ) {
-
-        _canvas = newCanvas;
-
-      },
-    },
-
     camera: {
-
       get() {
 
         if ( _camera === undefined ) {

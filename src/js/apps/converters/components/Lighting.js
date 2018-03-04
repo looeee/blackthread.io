@@ -1,5 +1,3 @@
-import HTMLControl from '../HTMLControl.js';
-
 export default class Lighting {
 
   constructor( app ) {

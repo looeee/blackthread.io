@@ -1,4 +1,4 @@
-import loadingManager from './loadingManager.js';
+import originalLoadingManager from './originalLoadingManager.js';
 
 THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 
@@ -16,7 +16,7 @@ let objLoaderInternal = null;
 const promisifyLoader = loader =>
   url => new Promise( ( resolve, reject ) => {
 
-    loader.load( url, resolve, loadingManager.onProgress, reject );
+    loader.load( url, resolve, originalLoadingManager.onProgress, reject );
 
   } );
 
@@ -28,35 +28,35 @@ export default class Loaders {
 
       get objectLoader() {
         if ( objectLoader === null ) {
-          objectLoader = promisifyLoader( new THREE.ObjectLoader( loadingManager ) );
+          objectLoader = promisifyLoader( new THREE.ObjectLoader( originalLoadingManager ) );
         }
         return objectLoader;
       },
 
       get bufferGeometryLoader() {
         if ( bufferGeometryLoader === null ) {
-          bufferGeometryLoader = promisifyLoader( new THREE.BufferGeometryLoader( loadingManager ) );
+          bufferGeometryLoader = promisifyLoader( new THREE.BufferGeometryLoader( originalLoadingManager ) );
         }
         return bufferGeometryLoader;
       },
 
       get jsonLoader() {
         if ( jsonLoader === null ) {
-          jsonLoader = promisifyLoader( new THREE.JSONLoader( loadingManager ) );
+          jsonLoader = promisifyLoader( new THREE.JSONLoader( originalLoadingManager ) );
         }
         return jsonLoader;
       },
 
       get fbxLoader() {
         if ( fbxLoader === null ) {
-          fbxLoader = promisifyLoader( new THREE.FBXLoader( loadingManager ) );
+          fbxLoader = promisifyLoader( new THREE.FBXLoader( originalLoadingManager ) );
         }
         return fbxLoader;
       },
 
       get gltfLoader() {
         if ( gltfLoader === null ) {
-          gltfLoader = promisifyLoader( new THREE.GLTFLoader( loadingManager ) );
+          gltfLoader = promisifyLoader( new THREE.GLTFLoader( originalLoadingManager ) );
         }
         return gltfLoader;
       },
@@ -65,7 +65,7 @@ export default class Loaders {
 
         if ( objLoaderInternal === null ) {
 
-          objLoaderInternal = new THREE.OBJLoader( loadingManager );
+          objLoaderInternal = new THREE.OBJLoader( originalLoadingManager );
 
           objLoader = promisifyLoader( objLoaderInternal );
 
@@ -82,14 +82,17 @@ export default class Loaders {
       get mtlLoader() {
         if ( mtlLoader === null ) {
 
-          mtlLoader = promisifyLoader( new THREE.MTLLoader( loadingManager ) );
+          mtlLoader = promisifyLoader( new THREE.MTLLoader( originalLoadingManager ) );
+
         }
         return mtlLoader;
       },
 
       get colladaLoader() {
         if ( colladaLoader === null ) {
-          colladaLoader = promisifyLoader( new THREE.ColladaLoader( loadingManager ) );
+
+          colladaLoader = promisifyLoader( new THREE.ColladaLoader( originalLoadingManager ) );
+
         }
         return colladaLoader;
       },

@@ -1618,7 +1618,9 @@ footer {
           justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
-          align-items: center; }
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
 
 #previews:-webkit-full-screen {
   width: 100%;
@@ -1663,7 +1665,8 @@ footer {
   position: relative;
   -webkit-box-flex: 1;
       -ms-flex: 1;
-          flex: 1; }
+          flex: 1;
+  min-width: 20em; }
 
 #original-preview-canvas, #result-preview-canvas {
   width: 100%;

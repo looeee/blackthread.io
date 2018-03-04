@@ -1,4 +1,5 @@
 const originalCanvas = document.querySelector( '#original-preview-canvas' );
+const resultCanvas = document.querySelector( '#result-preview-canvas' );
 const previews = document.querySelector( '#previews' );
 
 const fullscreenButton = document.querySelector( '#fullscreen-button' );
@@ -38,6 +39,7 @@ export default class HTMLControl {
 
   static setInitialState() {
 
+    HTMLControl.controls.exportGLTF.disabled = true;
     loading.original.overlay.classList.remove( 'hide' );
     loading.result.overlay.classList.remove( 'hide' );
     loading.original.bar.classList.add( 'hide' );
@@ -64,6 +66,7 @@ export default class HTMLControl {
 }
 
 HTMLControl.originalCanvas = originalCanvas;
+HTMLControl.resultCanvas = resultCanvas;
 HTMLControl.fileUpload = fileUpload;
 HTMLControl.loading = loading;
 HTMLControl.controls = controls;

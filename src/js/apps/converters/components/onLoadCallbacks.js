@@ -1,6 +1,7 @@
 import readFileAs from '../utilities/promiseFileReader.js';
 
-import loaderCanvas from '../main.js';
+import main from '../main.js';
+import exportGLTF from './exportGLTF.js';
 import Loaders from './Loaders.js';
 
 const loaders = new Loaders();
@@ -40,7 +41,7 @@ export default class OnLoadCallbacks {
     promise.then( ( geometry ) => {
 
       const object = new THREE.Mesh( geometry, defaultMat );
-      loaderCanvas.addObjectToScene( object );
+      main.originalPreview.addObjectToScene( object );
 
     } ).catch( ( err ) => {
 
@@ -60,7 +61,7 @@ export default class OnLoadCallbacks {
     promise.then( ( geometry ) => {
 
       const object = new THREE.Mesh( geometry, defaultMat );
-      loaderCanvas.addObjectToScene( object );
+      main.originalPreview.addObjectToScene( object );
 
     } ).catch( ( err ) => {
 
@@ -79,7 +80,7 @@ export default class OnLoadCallbacks {
     const promise = loaders.objectLoader( file );
     promise.then( ( object ) => {
 
-      loaderCanvas.addObjectToScene( object );
+      main.originalPreview.addObjectToScene( object );
 
     } ).catch( ( err ) => {
 
@@ -99,7 +100,8 @@ export default class OnLoadCallbacks {
 
     promise.then( ( object ) => {
 
-      loaderCanvas.addObjectToScene( object );
+      main.originalPreview.addObjectToScene( object );
+      exportGLTF.setInput( object );
 
     } ).catch( ( err ) => {
 
@@ -111,7 +113,7 @@ export default class OnLoadCallbacks {
 
   }
 
-  static onGLTFLoad( file ) {
+  static onGLTFLoad( file, resultPreview = false ) {
 
     let promise = new Promise( ( resolve, reject ) => {} );
 
@@ -126,14 +128,15 @@ export default class OnLoadCallbacks {
         gltf.scenes.forEach( ( scene ) => {
 
           if ( gltf.animations ) scene.animations = gltf.animations;
-          loaderCanvas.addObjectToScene( scene );
-
+          if ( !resultPreview ) main.originalPreview.addObjectToScene( scene );
+          else main.resultPreview.addObjectToScene( scene );
         } );
 
       } else if ( gltf.scene ) {
 
         if ( gltf.animations ) gltf.scene.animations = gltf.animations;
-        loaderCanvas.addObjectToScene( gltf.scene );
+        if ( !resultPreview ) main.originalPreview.addObjectToScene( gltf.scene );
+        else main.resultPreview.addObjectToScene( gltf.scene );
 
       } else {
 
@@ -170,7 +173,7 @@ export default class OnLoadCallbacks {
 
     promise.then( ( object ) => {
 
-      loaderCanvas.addObjectToScene( object );
+      main.originalPreview.addObjectToScene( object );
 
     } ).catch( ( err ) => {
 
@@ -198,7 +201,7 @@ export default class OnLoadCallbacks {
 
       if ( object.animations && object.animations.length > 0 ) scene.animations = object.animations;
 
-      loaderCanvas.addObjectToScene( scene );
+      main.originalPreview.addObjectToScene( scene );
 
 
     } )

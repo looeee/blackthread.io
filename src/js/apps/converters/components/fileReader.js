@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 
-import loadingManager from './loadingManager.js';
+import originalLoadingManager from './originalLoadingManager.js';
 import OnLoadCallbacks from './OnLoadCallbacks.js';
 import HTMLControl from '../HTMLControl.js';
 
@@ -38,16 +38,16 @@ const loadFile = ( details ) => {
   switch ( type ) {
 
     case 'fbx':
-      loadingManager.onStart();
+      originalLoadingManager.onStart();
       OnLoadCallbacks.onFBXLoad( file );
       break;
     case 'gltf':
     case 'glb':
-      loadingManager.onStart();
+      originalLoadingManager.onStart();
       OnLoadCallbacks.onGLTFLoad( file );
       break;
     case 'obj':
-      loadingManager.onStart();
+      originalLoadingManager.onStart();
       OnLoadCallbacks.onMTLLoad( assets[originalFile.name.replace( '.obj', '.mtl' ) ] )
         .then( ( materials ) => {
 
@@ -56,12 +56,12 @@ const loadFile = ( details ) => {
         } ).catch( err => console.error( err ) );
       break;
     case 'dae':
-      loadingManager.onStart();
+      originalLoadingManager.onStart();
       OnLoadCallbacks.onDAELoad( file );
       break;
     case 'json':
     case 'js':
-      loadingManager.onStart();
+    originalLoadingManager.onStart();
       OnLoadCallbacks.onJSONLoad( file, originalFile );
       break;
     default:
@@ -70,7 +70,7 @@ const loadFile = ( details ) => {
 
 };
 
-loadingManager.setURLModifier( ( url ) => {
+originalLoadingManager.setURLModifier( ( url ) => {
 
   if ( url[ url.length - 3 ] === '.' || url[ url.length - 4 ] === '.' ) {
 
