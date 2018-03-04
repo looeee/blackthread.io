@@ -7,7 +7,7 @@ teaserImage: /images/experiments/circles/teaser.jpg
 css: circles
 menu: experiments
 menuTitle: Blackthread Experiments
-weight: 2
+weight: 3
 ---
 
 <p>

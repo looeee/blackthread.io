@@ -2,6 +2,137 @@ this.converters = this.converters || {};
 (function () {
 'use strict';
 
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+var originalCanvas = document.querySelector('#original-preview-canvas');
+var previews = document.querySelector('#previews');
+
+var fullscreenButton = document.querySelector('#fullscreen-button');
+
+var fileUpload = {
+  input: document.querySelector('#file-upload-input'),
+  button: document.querySelector('#file-upload-button'),
+  form: document.querySelector('#file-upload-form')
+};
+
+var loading = {
+  original: {
+    bar: document.querySelector('#original-loading-bar'),
+    overlay: document.querySelector('#original-loading-overlay'),
+    progress: document.querySelector('#original-progress')
+  },
+  result: {
+    bar: document.querySelector('#result-loading-bar'),
+    overlay: document.querySelector('#result-loading-overlay'),
+    progress: document.querySelector('#result-progress')
+  }
+};
+
+var controls = {
+  trs: document.querySelector('#option_trs'),
+  onlyVisible: document.querySelector('#option_visible'),
+  truncateDrawRange: document.querySelector('#option_drawrange'),
+  binary: document.querySelector('#option_binary'),
+  forceIndices: document.querySelector('#option_forceindices'),
+  forcePowerOfTwoTextures: document.querySelector('#option_forcepot'),
+  exportGLTF: document.querySelector('#export')
+};
+
+// const errors = document.querySelector( '#errors' );
+
+var HTMLControl = function () {
+  function HTMLControl() {
+    classCallCheck(this, HTMLControl);
+  }
+
+  createClass(HTMLControl, null, [{
+    key: 'setInitialState',
+    value: function setInitialState() {
+
+      loading.original.overlay.classList.remove('hide');
+      loading.result.overlay.classList.remove('hide');
+      loading.original.bar.classList.add('hide');
+      loading.original.progress.style.width = 0;
+      loading.result.bar.classList.add('hide');
+      loading.result.progress.style.width = 0;
+    }
+  }, {
+    key: 'setOnLoadStartState',
+    value: function setOnLoadStartState() {
+
+      controls.exportGLTF.disabled = true;
+      loading.original.bar.classList.remove('hide');
+    }
+  }, {
+    key: 'setOnLoadEndState',
+    value: function setOnLoadEndState() {
+
+      loading.original.overlay.classList.add('hide');
+      controls.exportGLTF.disabled = false;
+    }
+  }]);
+  return HTMLControl;
+}();
+
+HTMLControl.originalCanvas = originalCanvas;
+HTMLControl.fileUpload = fileUpload;
+HTMLControl.loading = loading;
+HTMLControl.controls = controls;
+// HTMLControl.errors = errors;
+HTMLControl.previews = previews;
+HTMLControl.fullscreenButton = fullscreenButton;
+
+var goFullscreen = function goFullscreen(elem) {
+
+  if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    }
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+};
+
+HTMLControl.fullscreenButton.addEventListener('click', function (e) {
+
+  e.preventDefault();
+  goFullscreen(HTMLControl.previews);
+}, false);
+
 /**
  * @author Lewy Blue / https://github.com/looeee
  */
@@ -376,95 +507,6 @@ function App(canvas) {
     return boundingBox;
   };
 }
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-var canvas = document.querySelector('#export-preview');
-
-var fileUpload = {
-  input: document.querySelector('#file-upload-input'),
-  button: document.querySelector('#file-upload-button'),
-  form: document.querySelector('#file-upload-form')
-};
-
-var loading = {
-  bar: document.querySelector('#loading-bar'),
-  overlay: document.querySelector('#loading-overlay'),
-  progress: document.querySelector('#progress')
-};
-
-var controls = {
-  trs: document.querySelector('#option_trs'),
-  onlyVisible: document.querySelector('#option_visible'),
-  truncateDrawRange: document.querySelector('#option_drawrange'),
-  binary: document.querySelector('#option_binary'),
-  forceIndices: document.querySelector('#option_forceindices'),
-  forcePowerOfTwoTextures: document.querySelector('#option_forcepot'),
-  exportGLTF: document.querySelector('#export')
-};
-
-var errors = document.querySelector('#errors');
-
-var HTMLControl = function () {
-  function HTMLControl() {
-    classCallCheck(this, HTMLControl);
-  }
-
-  createClass(HTMLControl, null, [{
-    key: 'setInitialState',
-    value: function setInitialState() {
-
-      loading.overlay.classList.remove('hide');
-      fileUpload.form.classList.remove('hide');
-      loading.bar.classList.add('hide');
-      loading.progress.style.width = 0;
-    }
-  }, {
-    key: 'setOnLoadStartState',
-    value: function setOnLoadStartState() {
-
-      errors.classList.add('hide');
-      controls.exportGLTF.disabled = true;
-      loading.bar.classList.remove('hide');
-    }
-  }, {
-    key: 'setOnLoadEndState',
-    value: function setOnLoadEndState() {
-
-      loading.overlay.classList.add('hide');
-      controls.exportGLTF.disabled = false;
-    }
-  }]);
-  return HTMLControl;
-}();
-
-HTMLControl.canvas = canvas;
-HTMLControl.fileUpload = fileUpload;
-HTMLControl.loading = loading;
-HTMLControl.controls = controls;
-HTMLControl.errors = errors;
 
 var AnimationControls = function () {
   function AnimationControls() {
@@ -1239,7 +1281,7 @@ loadingManager.onStart = function () {
       clearInterval(timerID);
     } else {
 
-      HTMLControl.loading.progress.style.width = percentComplete + '%';
+      HTMLControl.loading.original.progress.style.width = percentComplete + '%';
     }
   }, 100);
 };
@@ -1256,7 +1298,7 @@ loadingManager.onProgress = function () {
 
   percentComplete += 1;
 
-  HTMLControl.loading.progress.style.width = percentComplete + '%';
+  HTMLControl.loading.original.progress.style.width = percentComplete + '%';
 };
 
 loadingManager.onError = function (msg) {
@@ -1947,6 +1989,6 @@ var Main = function () {
   return Main;
 }();
 
-var main = new Main(HTMLControl.canvas);
+var main = new Main(HTMLControl.originalCanvas);
 
 }());

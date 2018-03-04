@@ -24,7 +24,7 @@ loadingManager.onStart = () => {
 
     } else {
 
-      HTMLControl.loading.progress.style.width = percentComplete + '%';
+      HTMLControl.loading.original.progress.style.width = percentComplete + '%';
 
     }
 
@@ -45,7 +45,7 @@ loadingManager.onProgress = () => {
 
   percentComplete += 1;
 
-  HTMLControl.loading.progress.style.width = percentComplete + '%';
+  HTMLControl.loading.original.progress.style.width = percentComplete + '%';
 
 };
 

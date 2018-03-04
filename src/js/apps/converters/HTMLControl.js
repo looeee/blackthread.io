@@ -1,4 +1,7 @@
-const canvas = document.querySelector( '#export-preview' );
+const originalCanvas = document.querySelector( '#original-preview-canvas' );
+const previews = document.querySelector( '#previews' );
+
+const fullscreenButton = document.querySelector( '#fullscreen-button' );
 
 const fileUpload = {
   input: document.querySelector( '#file-upload-input' ),
@@ -7,9 +10,16 @@ const fileUpload = {
 };
 
 const loading = {
-  bar: document.querySelector( '#loading-bar' ),
-  overlay: document.querySelector( '#loading-overlay' ),
-  progress: document.querySelector( '#progress' ),
+  original: {
+    bar: document.querySelector( '#original-loading-bar' ),
+    overlay: document.querySelector( '#original-loading-overlay' ),
+    progress: document.querySelector( '#original-progress' ),
+  },
+  result: {
+    bar: document.querySelector( '#result-loading-bar' ),
+    overlay: document.querySelector( '#result-loading-overlay' ),
+    progress: document.querySelector( '#result-progress' ),
+  },
 };
 
 const controls = {
@@ -22,37 +32,41 @@ const controls = {
   exportGLTF: document.querySelector( '#export' ),
 };
 
-const errors = document.querySelector( '#errors' )
+// const errors = document.querySelector( '#errors' );
 
 export default class HTMLControl {
 
   static setInitialState() {
 
-    loading.overlay.classList.remove( 'hide' );
-    fileUpload.form.classList.remove( 'hide' );
-    loading.bar.classList.add( 'hide' );
-    loading.progress.style.width = 0;
+    loading.original.overlay.classList.remove( 'hide' );
+    loading.result.overlay.classList.remove( 'hide' );
+    loading.original.bar.classList.add( 'hide' );
+    loading.original.progress.style.width = 0;
+    loading.result.bar.classList.add( 'hide' );
+    loading.result.progress.style.width = 0;
 
   }
 
   static setOnLoadStartState() {
 
-    errors.classList.add( 'hide' );
     controls.exportGLTF.disabled = true;
-    loading.bar.classList.remove( 'hide' );
+    loading.original.bar.classList.remove( 'hide' );
+
   }
 
   static setOnLoadEndState() {
 
-    loading.overlay.classList.add( 'hide' );
+    loading.original.overlay.classList.add( 'hide' );
     controls.exportGLTF.disabled = false;
 
   }
 
 }
 
-HTMLControl.canvas = canvas;
+HTMLControl.originalCanvas = originalCanvas;
 HTMLControl.fileUpload = fileUpload;
 HTMLControl.loading = loading;
 HTMLControl.controls = controls;
-HTMLControl.errors = errors;
+// HTMLControl.errors = errors;
+HTMLControl.previews = previews;
+HTMLControl.fullscreenButton = fullscreenButton;

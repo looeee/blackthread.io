@@ -8,7 +8,7 @@ js: escherSketch
 css: escherSketch
 menu: experiments
 menuTitle: Blackthread Experiments
-weight: 1
+weight: 2
 ---
 
 <div id="details">

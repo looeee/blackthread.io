@@ -9,7 +9,7 @@ redirect: 'https://codepen.io/looeee/collections/'
 comments: false
 meta: false
 pagination: false
-weight: 4
+weight: 5
 ---
 
 <p>Redirecting you to <a href="https://codepen.io/looeee/collections/">Codepen</a>, hold tight!</p>

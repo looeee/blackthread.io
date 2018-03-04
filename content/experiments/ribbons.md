@@ -8,7 +8,7 @@ draft: true
 js: ribbons
 menu: experiments
 menuTitle: Blackthread Experiments
-weight: 3
+weight: 4
 ---
 <p>
   Most browsers are unable to display thick lines with WebGL - the lines will always be

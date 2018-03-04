@@ -1,3 +1,5 @@
+import './components/fullscreen.js';
+
 import App from './App/App.js';
 
 import AnimationControls from './components/AnimationControls.js';
@@ -120,6 +122,6 @@ class Main {
 
 }
 
-const main = new Main( HTMLControl.canvas );
+const main = new Main( HTMLControl.originalCanvas );
 
 export default main;
