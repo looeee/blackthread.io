@@ -10,8 +10,7 @@ let timerID = null;
 loadingManager.onStart = () => {
 
   // prevent onStart being called multiple times
-  if ( timerID !== null ) return;
-
+  // if ( timerID !== null ) return;
   HTMLControl.setOnLoadStartState();
 
   timerID = setInterval( () => {

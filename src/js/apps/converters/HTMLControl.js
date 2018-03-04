@@ -4,6 +4,14 @@ const previews = document.querySelector( '#previews' );
 
 const fullscreenButton = document.querySelector( '#fullscreen-button' );
 
+const messages = document.querySelector( '#messages' );
+const errors = document.querySelector( '#errors' );
+const errorsContainer = document.querySelector( '#errors-container' );
+const warnings = document.querySelector( '#warnings' );
+const warningsContainer = document.querySelector( '#warnings-container' );
+const logs = document.querySelector( '#logs' );
+const logsContainer = document.querySelector( '#logs-container' );
+
 const fileUpload = {
   input: document.querySelector( '#file-upload-input' ),
   button: document.querySelector( '#file-upload-button' ),
@@ -28,15 +36,12 @@ const controls = {
   onlyVisible: document.querySelector( '#option_visible' ),
   truncateDrawRange: document.querySelector( '#option_drawrange' ),
   binary: document.querySelector( '#option_binary' ),
-  forceIndices: document.querySelector( '#option_forceindices' ),
-  forcePowerOfTwoTextures: document.querySelector( '#option_forcepot' ),
+  embedImages: document.querySelector( '#option_embedImages' ),
+  animations: document.querySelector( '#option_animations' ),
   exportGLTF: document.querySelector( '#export' ),
 };
 
-// const errors = document.querySelector( '#errors' );
-
 export default class HTMLControl {
-
   static setInitialState() {
 
     HTMLControl.controls.exportGLTF.disabled = true;
@@ -53,13 +58,20 @@ export default class HTMLControl {
 
     controls.exportGLTF.disabled = true;
     loading.original.bar.classList.remove( 'hide' );
+    messages.classList.add( 'hide' );
+    errorsContainer.classList.add( 'hide' );
+    warningsContainer.classList.add( 'hide' );
+    logsContainer.classList.add( 'hide' );
+    errors.innerHTML = '';
+    warnings.innerHTML = '';
+    logs.innerHTML = '';
 
   }
+
 
   static setOnLoadEndState() {
 
     loading.original.overlay.classList.add( 'hide' );
-    controls.exportGLTF.disabled = false;
 
   }
 
@@ -70,6 +82,12 @@ HTMLControl.resultCanvas = resultCanvas;
 HTMLControl.fileUpload = fileUpload;
 HTMLControl.loading = loading;
 HTMLControl.controls = controls;
-// HTMLControl.errors = errors;
 HTMLControl.previews = previews;
 HTMLControl.fullscreenButton = fullscreenButton;
+HTMLControl.messages = messages;
+HTMLControl.errorsContainer = errorsContainer;
+HTMLControl.errors = errors;
+HTMLControl.warningsContainer = warningsContainer;
+HTMLControl.warnings = warnings;
+HTMLControl.logsContainer = logsContainer;
+HTMLControl.logs = logs;

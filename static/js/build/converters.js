@@ -32,6 +32,14 @@ var previews = document.querySelector('#previews');
 
 var fullscreenButton = document.querySelector('#fullscreen-button');
 
+var messages = document.querySelector('#messages');
+var errors = document.querySelector('#errors');
+var errorsContainer = document.querySelector('#errors-container');
+var warnings = document.querySelector('#warnings');
+var warningsContainer = document.querySelector('#warnings-container');
+var logs = document.querySelector('#logs');
+var logsContainer = document.querySelector('#logs-container');
+
 var fileUpload = {
   input: document.querySelector('#file-upload-input'),
   button: document.querySelector('#file-upload-button'),
@@ -56,12 +64,10 @@ var controls = {
   onlyVisible: document.querySelector('#option_visible'),
   truncateDrawRange: document.querySelector('#option_drawrange'),
   binary: document.querySelector('#option_binary'),
-  forceIndices: document.querySelector('#option_forceindices'),
-  forcePowerOfTwoTextures: document.querySelector('#option_forcepot'),
+  embedImages: document.querySelector('#option_embedImages'),
+  animations: document.querySelector('#option_animations'),
   exportGLTF: document.querySelector('#export')
 };
-
-// const errors = document.querySelector( '#errors' );
 
 var HTMLControl = function () {
   function HTMLControl() {
@@ -86,13 +92,19 @@ var HTMLControl = function () {
 
       controls.exportGLTF.disabled = true;
       loading.original.bar.classList.remove('hide');
+      messages.classList.add('hide');
+      errorsContainer.classList.add('hide');
+      warningsContainer.classList.add('hide');
+      logsContainer.classList.add('hide');
+      errors.innerHTML = '';
+      warnings.innerHTML = '';
+      logs.innerHTML = '';
     }
   }, {
     key: 'setOnLoadEndState',
     value: function setOnLoadEndState() {
 
       loading.original.overlay.classList.add('hide');
-      controls.exportGLTF.disabled = false;
     }
   }]);
   return HTMLControl;
@@ -103,9 +115,54 @@ HTMLControl.resultCanvas = resultCanvas;
 HTMLControl.fileUpload = fileUpload;
 HTMLControl.loading = loading;
 HTMLControl.controls = controls;
-// HTMLControl.errors = errors;
 HTMLControl.previews = previews;
 HTMLControl.fullscreenButton = fullscreenButton;
+HTMLControl.messages = messages;
+HTMLControl.errorsContainer = errorsContainer;
+HTMLControl.errors = errors;
+HTMLControl.warningsContainer = warningsContainer;
+HTMLControl.warnings = warnings;
+HTMLControl.logsContainer = logsContainer;
+HTMLControl.logs = logs;
+
+var originalError = console.warn.bind(console);
+
+console.error = function (msg) {
+
+  HTMLControl.messages.classList.remove('hide');
+  HTMLControl.errorsContainer.classList.remove('hide');
+  var p = document.createElement('p');
+  p.innerHTML = msg;
+  HTMLControl.warnings.append(p);
+
+  originalError(msg);
+};
+
+var originalWarn = console.warn.bind(console);
+
+console.warn = function (msg) {
+
+  HTMLControl.messages.classList.remove('hide');
+  HTMLControl.warningsContainer.classList.remove('hide');
+  var p = document.createElement('p');
+  p.innerHTML = msg;
+  HTMLControl.warnings.append(p);
+
+  originalWarn(msg);
+};
+
+var originalLog = console.log.bind(console);
+
+console.log = function (msg) {
+
+  HTMLControl.messages.classList.remove('hide');
+  HTMLControl.logsContainer.classList.remove('hide');
+  var p = document.createElement('p');
+  p.innerHTML = msg;
+  HTMLControl.logs.append(p);
+
+  originalLog(msg);
+};
 
 var goFullscreen = function goFullscreen(elem) {
 
@@ -606,8 +663,7 @@ var timerID = null;
 loadingManager.onStart = function () {
 
   // prevent onStart being called multiple times
-  if (timerID !== null) return;
-
+  // if ( timerID !== null ) return;
   HTMLControl.setOnLoadStartState();
 
   timerID = setInterval(function () {
@@ -660,7 +716,6 @@ function readFileAs(file, as) {
   });
 }
 
-// saving function taken from three.js editor
 var link = document.createElement('a');
 link.style.display = 'none';
 document.body.appendChild(link); // Firefox workaround, see #6594
@@ -702,26 +757,32 @@ var ExportGLTF = function () {
     this.loader = new THREE.GLTFLoader();
     this.exporter = new THREE.GLTFExporter();
     this.initExportButton();
+    this.initOptionListeners();
   }
 
   createClass(ExportGLTF, [{
     key: 'getOptions',
     value: function getOptions() {
 
-      return {
+      var options = {
         trs: HTMLControl.controls.trs.checked,
         onlyVisible: HTMLControl.controls.onlyVisible.checked,
         truncateDrawRange: HTMLControl.controls.truncateDrawRange.checked,
         binary: HTMLControl.controls.binary.checked,
-        forceIndices: HTMLControl.controls.forceIndices.checked,
-        forcePowerOfTwoTextures: HTMLControl.controls.forcePowerOfTwoTextures.checked
+        embedImages: HTMLControl.controls.embedImages.checked,
+        animations: HTMLControl.controls.animations.checked
       };
+
+      if (options.animations && this.animations.length > 0) options.animations = this.animations;
+
+      return options;
     }
   }, {
     key: 'setInput',
-    value: function setInput(input) {
+    value: function setInput(input, animations) {
 
       this.input = input;
+      this.animations = animations;
       this.parse();
     }
   }, {
@@ -732,6 +793,7 @@ var ExportGLTF = function () {
       this.exporter.parse(this.input, function (result) {
 
         _this.result = result;
+        // console.log( typeof result )
         _this.processResult(result);
       }, this.getOptions());
     }
@@ -740,9 +802,11 @@ var ExportGLTF = function () {
     value: function loadPreview() {
 
       main.resultPreview.reset();
-      this.loader.parse(this.result, '', function (gltf) {
+      this.loader.parse(this.output, '', function (gltf) {
 
         HTMLControl.loading.result.overlay.classList.add('hide');
+
+        HTMLControl.controls.exportGLTF.disabled = false;
 
         if (gltf.scenes.length > 1) {
 
@@ -762,8 +826,8 @@ var ExportGLTF = function () {
     key: 'processResult',
     value: function processResult() {
 
-      this.loadPreview();
       this.setOutput();
+      this.loadPreview();
     }
   }, {
     key: 'setSizeInfo',
@@ -771,10 +835,10 @@ var ExportGLTF = function () {
 
       if (byteLength < 1000000) {
 
-        HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + byteLength * 0.001 + 'kb)';
+        HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + Math.ceil(byteLength * 0.001) + 'kb)';
       } else {
 
-        HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + byteLength * 1e-6 + 'mb)';
+        HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + (byteLength * 1e-6).toFixed(3) + 'mb)';
       }
     }
   }, {
@@ -814,6 +878,27 @@ var ExportGLTF = function () {
 
         if (_this2.output) _this2.save(_this2.output);
       });
+    }
+  }, {
+    key: 'initOptionListeners',
+    value: function initOptionListeners() {
+      var _this3 = this;
+
+      var onOptionChange = function onOptionChange(e) {
+
+        e.preventDefault();
+
+        if (_this3.input === undefined) return;
+
+        _this3.parse();
+      };
+
+      HTMLControl.controls.trs.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.onlyVisible.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.truncateDrawRange.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.binary.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.embedImages.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.animations.addEventListener('change', onOptionChange, false);
     }
   }]);
   return ExportGLTF;
@@ -923,6 +1008,24 @@ var Loaders = function Loaders() {
 var loaders = new Loaders();
 var defaultMat = new THREE.MeshBasicMaterial({ wireframe: true, color: 0x000000 });
 
+var onLoad = function onLoad(object) {
+
+  object.traverse(function (child) {
+
+    if (child.material && Array.isArray(child.material)) {
+
+      console.error('Multimaterials are currently not supported.');
+    }
+  });
+
+  var animations = [];
+  if (object.animations) animations = object.animations;
+
+  main.originalPreview.addObjectToScene(object);
+  main.resultPreview.reset();
+  exportGLTF.setInput(object, animations);
+};
+
 var OnLoadCallbacks = function () {
   function OnLoadCallbacks() {
     classCallCheck(this, OnLoadCallbacks);
@@ -960,7 +1063,7 @@ var OnLoadCallbacks = function () {
       promise.then(function (geometry) {
 
         var object = new THREE.Mesh(geometry, defaultMat);
-        main.originalPreview.addObjectToScene(object);
+        onLoad(object);
       }).catch(function (err) {
 
         console.log(err);
@@ -978,7 +1081,7 @@ var OnLoadCallbacks = function () {
       promise.then(function (geometry) {
 
         var object = new THREE.Mesh(geometry, defaultMat);
-        main.originalPreview.addObjectToScene(object);
+        onLoad(object);
       }).catch(function (err) {
 
         console.log(err);
@@ -995,7 +1098,7 @@ var OnLoadCallbacks = function () {
       var promise = loaders.objectLoader(file);
       promise.then(function (object) {
 
-        main.originalPreview.addObjectToScene(object);
+        onLoad(object);
       }).catch(function (err) {
 
         console.log(err);
@@ -1013,8 +1116,7 @@ var OnLoadCallbacks = function () {
 
       promise.then(function (object) {
 
-        main.originalPreview.addObjectToScene(object);
-        exportGLTF.setInput(object);
+        onLoad(object);
       }).catch(function (err) {
 
         console.log(err);
@@ -1025,9 +1127,6 @@ var OnLoadCallbacks = function () {
   }, {
     key: 'onGLTFLoad',
     value: function onGLTFLoad(file) {
-      var resultPreview = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-
       var promise = new Promise(function (resolve, reject) {});
 
       console.log('Using THREE.GLTFLoader');
@@ -1041,12 +1140,12 @@ var OnLoadCallbacks = function () {
           gltf.scenes.forEach(function (scene) {
 
             if (gltf.animations) scene.animations = gltf.animations;
-            if (!resultPreview) main.originalPreview.addObjectToScene(scene);else main.resultPreview.addObjectToScene(scene);
+            onLoad(scene);
           });
         } else if (gltf.scene) {
 
           if (gltf.animations) gltf.scene.animations = gltf.animations;
-          if (!resultPreview) main.originalPreview.addObjectToScene(gltf.scene);else main.resultPreview.addObjectToScene(gltf.scene);
+          onLoad(gltf.scene);
         } else {
 
           console.error('No scene found in GLTF file.');
@@ -1080,7 +1179,7 @@ var OnLoadCallbacks = function () {
 
       promise.then(function (object) {
 
-        main.originalPreview.addObjectToScene(object);
+        onLoad(object);
       }).catch(function (err) {
 
         console.log(err);
@@ -1105,7 +1204,7 @@ var OnLoadCallbacks = function () {
 
         if (object.animations && object.animations.length > 0) scene.animations = object.animations;
 
-        main.originalPreview.addObjectToScene(scene);
+        onLoad(scene);
       }).catch(function (err) {
 
         console.log(err);

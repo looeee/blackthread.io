@@ -16,14 +16,14 @@ vendorScripts:
   '/three/examples/js/loaders/DDSLoader.min',
   '/three/examples/js/loaders/FBXLoader.min',
   '/three/examples/js/loaders/GLTFLoader',
+  '/three/examples/js/exporters/GLTFExporter',
   '/three/examples/js/loaders/LoaderSupport.min',
   '/three/examples/js/loaders/OBJLoader.min',
   '/three/examples/js/loaders/MTLLoader.min',
   '/three/examples/js/loaders/ColladaLoader.min',
-  '/three/examples/js/controls/OrbitControls.min',
-  '/three/examples/js/exporters/GLTFExporter.min'
+  '/three/examples/js/controls/OrbitControls.min'
    ]
-draft: true
+# draft: true
 ---
 
 GLTF is the up and coming superstar of 3D model formats - as of March 2018 you can even display it on the Facebook news feed!
@@ -38,12 +38,13 @@ See the [docs](https://threejs.org/docs/#examples/exporters/GLTFExporter) page f
     <input id="file-upload-input" type="file" name="files[]" multiple="" class="hide">
     <input type="submit" value="Upload or Drop Files Here" id="file-upload-button"/>
     <div id="options">
-      <input id="option_trs" name="trs" type="checkbox"/><span>TRS</span><br>
-      <input id="option_visible" name="visible" type="checkbox" checked/><span>Only Visible</span><br>
-      <input id="option_drawrange" name="visible" type="checkbox" checked="checked"/><span>Truncate drawRange</span><br>
+      <input id="option_animations" name="visible" type="checkbox" checked><span>Include Animations</span><br>
       <input id="option_binary" name="visible" type="checkbox" checked><span>Binary (.glb)</span><br>
-      <input id="option_forceindices" name="visible" type="checkbox"><span>Force indices</span><br>
-      <input id="option_forcepot" name="visible" type="checkbox"><span>Force POT textures</span>
+      <input id="option_visible" name="visible" type="checkbox" checked/><span>Export only visible objects</span><br>
+      <input id="option_embedImages" name="visible" type="checkbox" checked><span>Embed Images</span><br>
+      <!-- <input id="option_forceindices" name="visible" type="checkbox"><span>Force indices</span><br> -->
+      <input id="option_trs" name="trs" type="checkbox"/><span>Export position, rotation and scale instead of matrix per node</span><br>
+      <input id="option_drawrange" name="visible" type="checkbox" checked="checked"/><span>Export just the attributes within the drawRange, if defined, instead of exporting the whole array.</span><br>
     </div>
     <input type="submit" value="Export as GLTF" id="export" disabled/>
     <div id="errors" class="hide"></div>
@@ -71,6 +72,21 @@ See the [docs](https://threejs.org/docs/#examples/exporters/GLTFExporter) page f
       <a href="#" id="fullscreen-button" title="Go fullscreen">
         <span class="fa fa-lg fa-arrows-alt" aria-hidden="true"></span>
       </a>
+    </div>
+  </div>
+  <div id="messages" class="hide">
+    <h3>Messages received</h3>
+    <div id="errors-container" class="hide">
+      <h5>Errors</h5>
+      <div id="errors"></div>
+    </div>
+    <div id="warnings-container" class="hide">
+      <h5>Warnings</h5>
+      <div id="warnings"></div>
+    </div>
+    <div id="logs-container" class="hide">
+      <h5>Logs</h5>
+      <div id="logs"></div>
     </div>
   </div>
 </div>

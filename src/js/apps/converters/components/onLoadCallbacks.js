@@ -7,6 +7,26 @@ import Loaders from './Loaders.js';
 const loaders = new Loaders();
 const defaultMat = new THREE.MeshBasicMaterial( { wireframe: true, color: 0x000000 } );
 
+const onLoad = ( object ) => {
+
+  object.traverse( ( child ) => {
+
+    if ( child.material && Array.isArray( child.material ) ) {
+
+      console.error( 'Multimaterials are currently not supported.' );
+
+    }
+
+  } );
+
+  let animations = [];
+  if ( object.animations ) animations = object.animations;
+
+  main.originalPreview.addObjectToScene( object );
+  main.resultPreview.reset();
+  exportGLTF.setInput( object, animations );
+
+}
 export default class OnLoadCallbacks {
 
   static onJSONLoad( file, originalFile ) {
@@ -41,7 +61,8 @@ export default class OnLoadCallbacks {
     promise.then( ( geometry ) => {
 
       const object = new THREE.Mesh( geometry, defaultMat );
-      main.originalPreview.addObjectToScene( object );
+      onLoad( object );
+
 
     } ).catch( ( err ) => {
 
@@ -61,7 +82,7 @@ export default class OnLoadCallbacks {
     promise.then( ( geometry ) => {
 
       const object = new THREE.Mesh( geometry, defaultMat );
-      main.originalPreview.addObjectToScene( object );
+      onLoad( object );
 
     } ).catch( ( err ) => {
 
@@ -80,7 +101,7 @@ export default class OnLoadCallbacks {
     const promise = loaders.objectLoader( file );
     promise.then( ( object ) => {
 
-      main.originalPreview.addObjectToScene( object );
+      onLoad( object );
 
     } ).catch( ( err ) => {
 
@@ -100,8 +121,7 @@ export default class OnLoadCallbacks {
 
     promise.then( ( object ) => {
 
-      main.originalPreview.addObjectToScene( object );
-      exportGLTF.setInput( object );
+      onLoad( object );
 
     } ).catch( ( err ) => {
 
@@ -128,15 +148,14 @@ export default class OnLoadCallbacks {
         gltf.scenes.forEach( ( scene ) => {
 
           if ( gltf.animations ) scene.animations = gltf.animations;
-          if ( !resultPreview ) main.originalPreview.addObjectToScene( scene );
-          else main.resultPreview.addObjectToScene( scene );
+          onLoad( scene );
+
         } );
 
       } else if ( gltf.scene ) {
 
         if ( gltf.animations ) gltf.scene.animations = gltf.animations;
-        if ( !resultPreview ) main.originalPreview.addObjectToScene( gltf.scene );
-        else main.resultPreview.addObjectToScene( gltf.scene );
+        onLoad( gltf.scene );
 
       } else {
 
@@ -173,7 +192,7 @@ export default class OnLoadCallbacks {
 
     promise.then( ( object ) => {
 
-      main.originalPreview.addObjectToScene( object );
+      onLoad( object );
 
     } ).catch( ( err ) => {
 
@@ -201,8 +220,7 @@ export default class OnLoadCallbacks {
 
       if ( object.animations && object.animations.length > 0 ) scene.animations = object.animations;
 
-      main.originalPreview.addObjectToScene( scene );
-
+      onLoad( scene );
 
     } )
       .catch( ( err ) => {

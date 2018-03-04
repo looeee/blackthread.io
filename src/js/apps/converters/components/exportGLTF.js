@@ -48,25 +48,31 @@ class ExportGLTF {
     this.loader = new THREE.GLTFLoader()
     this.exporter = new THREE.GLTFExporter();
     this.initExportButton();
+    this.initOptionListeners();
 
   }
 
   getOptions() {
 
-    return {
+    const options = {
       trs: HTMLControl.controls.trs.checked,
       onlyVisible: HTMLControl.controls.onlyVisible.checked,
       truncateDrawRange: HTMLControl.controls.truncateDrawRange.checked,
       binary: HTMLControl.controls.binary.checked,
-      forceIndices: HTMLControl.controls.forceIndices.checked,
-      forcePowerOfTwoTextures: HTMLControl.controls.forcePowerOfTwoTextures.checked,
+      embedImages: HTMLControl.controls.embedImages.checked,
+      animations: HTMLControl.controls.animations.checked,
     };
+
+    if ( options.animations && this.animations.length > 0 ) options.animations = this.animations;
+
+    return options;
 
   }
 
-  setInput( input ) {
+  setInput( input, animations ) {
 
     this.input = input;
+    this.animations = animations;
     this.parse();
 
   }
@@ -76,6 +82,7 @@ class ExportGLTF {
     this.exporter.parse( this.input, ( result ) => {
 
       this.result = result;
+      // console.log( typeof result )
       this.processResult( result );
 
     }, this.getOptions() );
@@ -85,9 +92,11 @@ class ExportGLTF {
   loadPreview() {
 
     main.resultPreview.reset();
-    this.loader.parse( this.result, '', ( gltf ) => {
+    this.loader.parse( this.output, '', ( gltf ) => {
 
       HTMLControl.loading.result.overlay.classList.add( 'hide' );
+
+      HTMLControl.controls.exportGLTF.disabled = false;
 
       if ( gltf.scenes.length > 1 ) {
 
@@ -107,11 +116,10 @@ class ExportGLTF {
 
     } );
   }
-
   processResult() {
 
-    this.loadPreview();
     this.setOutput();
+    this.loadPreview();
 
   }
 
@@ -119,11 +127,11 @@ class ExportGLTF {
 
     if ( byteLength < 1000000 ) {
 
-      HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + byteLength * 0.001 + 'kb)';
+      HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + Math.ceil( byteLength * 0.001 ) + 'kb)';
 
     } else {
 
-      HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + byteLength * 1e-6 + 'mb)';
+      HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + ( byteLength * 1e-6 ).toFixed( 3 ) + 'mb)';
 
     }
 
@@ -157,7 +165,6 @@ class ExportGLTF {
     }
 
   }
-
   initExportButton() {
 
     HTMLControl.controls.exportGLTF.addEventListener( 'click', ( e ) => {
@@ -167,6 +174,28 @@ class ExportGLTF {
       if ( this.output ) this.save( this.output );
 
     } );
+
+  }
+
+  initOptionListeners() {
+
+    const onOptionChange = ( e ) => {
+
+      e.preventDefault();
+
+      if ( this.input === undefined ) return;
+
+      this.parse();
+
+    };
+
+    HTMLControl.controls.trs.addEventListener( 'change', onOptionChange, false );
+    HTMLControl.controls.onlyVisible.addEventListener( 'change', onOptionChange, false );
+    HTMLControl.controls.truncateDrawRange.addEventListener( 'change', onOptionChange, false );
+    HTMLControl.controls.binary.addEventListener( 'change', onOptionChange, false );
+    HTMLControl.controls.embedImages.addEventListener( 'change', onOptionChange, false );
+    HTMLControl.controls.animations.addEventListener( 'change', onOptionChange, false );
+
   }
 
 }

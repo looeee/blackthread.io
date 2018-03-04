@@ -1,7 +1,9 @@
+import './utilities/logging.js';
 import './components/fullscreen.js';
 import HTMLControl from './HTMLControl.js';
 import './components/fileReader.js';
 import Viewer from './components/Viewer.js';
+
 
 THREE.Cache.enabled = true;
 
