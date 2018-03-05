@@ -27,147 +27,147 @@ var createClass = function () {
 }();
 
 var Masthead = function () {
-    function Masthead() {
-        classCallCheck(this, Masthead);
+  function Masthead() {
+    classCallCheck(this, Masthead);
 
 
-        this.masthead = document.querySelector('.masthead');
+    this.masthead = document.querySelector('.masthead');
 
-        if (this.masthead === null) return;
+    if (this.masthead === null) return;
 
-        this.visibleLinks = this.masthead.querySelector('.visible-links');
-        this.hiddenLinks = this.masthead.querySelector('.hidden-links');
-        this.toggleButton = this.masthead.querySelector('.toggle-links');
-        this.spacer = this.masthead.querySelector('#spacer');
+    this.visibleLinks = this.masthead.querySelector('.visible-links');
+    this.hiddenLinks = this.masthead.querySelector('.hidden-links');
+    this.toggleButton = this.masthead.querySelector('.toggle-links');
+    this.spacer = this.masthead.querySelector('#spacer');
 
-        this.setupResize();
-        this.setupButton();
+    this.setupResize();
+    this.setupButton();
 
-        this.decreaseSize();
-        this.decreaseSize();
+    this.decreaseSize();
+    this.decreaseSize();
 
-        this.initScroll();
+    this.initScroll();
+  }
+
+  createClass(Masthead, [{
+    key: 'initScroll',
+    value: function initScroll() {
+
+      var self = this;
+      document.addEventListener('scroll', function () {
+
+        if (window.scrollY > 50) {
+          self.masthead.classList.add('shrink');
+        } else {
+          self.masthead.classList.remove('shrink');
+        }
+      });
     }
+  }, {
+    key: 'visibleLinksWidth',
+    value: function visibleLinksWidth() {
 
-    createClass(Masthead, [{
-        key: 'initScroll',
-        value: function initScroll() {
+      var width = 0;
 
-            var self = this;
-            document.addEventListener('scroll', function () {
+      for (var child in this.visibleLinks.children) {
 
-                if (window.scrollY > 50) {
-                    self.masthead.classList.add('shrink');
-                } else {
-                    self.masthead.classList.remove('shrink');
-                }
-            });
+        if (Object.prototype.hasOwnProperty.call(this.visibleLinks.children, child)) {
+
+          if (this.visibleLinks.children[child].id !== this.spacer) width += this.visibleLinks.children[child].offsetWidth;
         }
-    }, {
-        key: 'visibleLinksWidth',
-        value: function visibleLinksWidth() {
+      }
 
-            var width = 0;
+      return width;
+    }
+  }, {
+    key: 'increaseSize',
+    value: function increaseSize() {
 
-            for (var child in this.visibleLinks.children) {
+      this.spacer.style.width = 0;
 
-                if (Object.prototype.hasOwnProperty.call(this.visibleLinks.children, child)) {
+      if (this.hiddenLinks.children.length === 0) {
 
-                    if (this.visibleLinks.children[child].id !== this.spacer) width += this.visibleLinks.children[child].offsetWidth;
-                }
-            }
+        this.hiddenLinks.classList.add('fold');
+        this.setSpacerWidth();
+        return;
+      }
 
-            return width;
+      var width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
+
+      while (this.hiddenLinks.children.length > 0 && width < this.masthead.clientWidth) {
+
+        width += this.hiddenLinks.firstChild.offsetWidth;
+        this.visibleLinks.insertBefore(this.hiddenLinks.firstChild, this.visibleLinks.lastChild);
+      }
+
+      this.showButton();
+      this.setSpacerWidth();
+    }
+  }, {
+    key: 'decreaseSize',
+    value: function decreaseSize() {
+
+      this.spacer.style.width = 0;
+
+      while (this.masthead.clientWidth < this.visibleLinks.scrollWidth) {
+
+        if (this.visibleLinks.children.length === 3) {
+
+          this.showButton();
+          this.setSpacerWidth();
+          return;
         }
-    }, {
-        key: 'increaseSize',
-        value: function increaseSize() {
 
-            this.spacer.style.width = 0;
+        var secondLastChild = this.visibleLinks.children[this.visibleLinks.children.length - 2];
+        this.hiddenLinks.insertBefore(secondLastChild, this.hiddenLinks.firstChild);
+      }
 
-            if (this.hiddenLinks.children.length === 0) {
+      this.showButton();
+      this.setSpacerWidth();
+    }
+  }, {
+    key: 'setSpacerWidth',
+    value: function setSpacerWidth() {
 
-                this.hiddenLinks.classList.add('fold');
-                this.setSpacerWidth();
-                return;
-            }
+      this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
+    }
+  }, {
+    key: 'showButton',
+    value: function showButton() {
 
-            var width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
+      if (this.hiddenLinks.children.length === 0) this.toggleButton.classList.add('hide');else this.toggleButton.classList.remove('hide');
+    }
+  }, {
+    key: 'setupResize',
+    value: function setupResize() {
 
-            while (this.hiddenLinks.children.length > 0 && width < this.masthead.clientWidth) {
+      var self = this;
+      var lastWidth = window.innerWidth;
 
-                width += this.hiddenLinks.firstChild.offsetWidth;
-                this.visibleLinks.insertBefore(this.hiddenLinks.firstChild, this.visibleLinks.lastChild);
-            }
+      window.addEventListener('resize', function () {
 
-            this.showButton();
-            this.setSpacerWidth();
-        }
-    }, {
-        key: 'decreaseSize',
-        value: function decreaseSize() {
+        if (window.innerWidth > lastWidth) self.increaseSize();else if (window.innerWidth < lastWidth) self.decreaseSize();
 
-            this.spacer.style.width = 0;
+        lastWidth = window.innerWidth;
+      });
+    }
+  }, {
+    key: 'setupButton',
+    value: function setupButton() {
 
-            while (this.masthead.clientWidth < this.visibleLinks.scrollWidth) {
+      var self = this;
 
-                if (this.visibleLinks.children.length === 3) {
+      var folded = true;
 
-                    this.showButton();
-                    this.setSpacerWidth();
-                    return;
-                }
+      this.toggleButton.addEventListener('click', function () {
 
-                var secondLastChild = this.visibleLinks.children[this.visibleLinks.children.length - 2];
-                this.hiddenLinks.insertBefore(secondLastChild, this.hiddenLinks.firstChild);
-            }
+        if (folded) self.hiddenLinks.classList.remove('fold');else self.hiddenLinks.classList.add('fold');
 
-            this.showButton();
-            this.setSpacerWidth();
-        }
-    }, {
-        key: 'setSpacerWidth',
-        value: function setSpacerWidth() {
-
-            this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
-        }
-    }, {
-        key: 'showButton',
-        value: function showButton() {
-
-            if (this.hiddenLinks.children.length === 0) this.toggleButton.classList.add('hide');else this.toggleButton.classList.remove('hide');
-        }
-    }, {
-        key: 'setupResize',
-        value: function setupResize() {
-
-            var self = this;
-            var lastWidth = window.innerWidth;
-
-            window.addEventListener('resize', function () {
-
-                if (window.innerWidth > lastWidth) self.increaseSize();else if (window.innerWidth < lastWidth) self.decreaseSize();
-
-                lastWidth = window.innerWidth;
-            });
-        }
-    }, {
-        key: 'setupButton',
-        value: function setupButton() {
-
-            var self = this;
-
-            var folded = true;
-
-            this.toggleButton.addEventListener('click', function () {
-
-                if (folded) self.hiddenLinks.classList.remove('fold');else self.hiddenLinks.classList.add('fold');
-
-                folded = !folded;
-            });
-        }
-    }]);
-    return Masthead;
+        folded = !folded;
+      });
+    }
+  }]);
+  return Masthead;
 }();
 
 new Masthead();
