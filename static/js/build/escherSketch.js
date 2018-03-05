@@ -37561,9 +37561,8 @@ var TEXTURE_FILTER = {
 };
 
 /**
- * @author zz85 / http://www.lab4games.net/zz85/blog
- * minimal class for proxing functions to Path. Replaces old "extractSubpaths()"
- **/
+ * @author thespite / http://clicktorelease.com/
+ */
 
 function ShapePath() {
 
@@ -43790,7 +43789,9 @@ function AxesHelper( size ) {
 AxesHelper.prototype = Object.create( LineSegments.prototype );
 AxesHelper.prototype.constructor = AxesHelper;
 
-//
+/**
+ * @author alteredq / http://alteredqualia.com/
+ */
 
 Curve.create = function ( construct, getPoint ) {
 
@@ -43895,6 +43896,8 @@ Object.assign( Spline.prototype, {
 
 } );
 
+//
+
 GridHelper.prototype.setColors = function () {
 
 	console.error( 'THREE.GridHelper: setColors() has been deprecated, pass them in the constructor instead.' );
@@ -43907,8 +43910,6 @@ SkeletonHelper.prototype.update = function () {
 
 };
 
-//
-
 Object.assign( Loader.prototype, {
 
 	extractUrlBase: function ( url ) {
@@ -43919,8 +43920,6 @@ Object.assign( Loader.prototype, {
 	}
 
 } );
-
-//
 
 Object.assign( Box2.prototype, {
 
@@ -45090,6 +45089,8 @@ CubeCamera.prototype.updateCubeMap = function ( renderer, scene ) {
 
 };
 
+//
+
 /**
  * @author Lewy Blue / https://github.com/looeee
  */
@@ -45212,11 +45213,6 @@ function Time() {
   };
 }
 
-/**
- * @author Lewy Blue / https://github.com/looeee
- *
- */
-
 var _canvas = void 0;
 var _scene = void 0;
 var _camera = void 0;
@@ -45245,12 +45241,15 @@ function App(canvas) {
 
   var setRendererSize = function setRendererSize() {
 
-    _renderer.setSize(_canvas.clientWidth, _canvas.clientHeight, false);
+    if (_renderer) _renderer.setSize(self.canvas.clientWidth, self.canvas.clientHeight, false);
   };
 
   var setCameraAspect = function setCameraAspect() {
-    _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
-    _camera.updateProjectionMatrix();
+
+    if (_camera) {
+      _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
+      _camera.updateProjectionMatrix();
+    }
   };
 
   // note: gets called last when autoResize is on
@@ -45799,8 +45798,6 @@ var transformPoint = function transformPoint(transform, x, y) {
 
 // export const randomInt = ( min, max ) => Math.floor( Math.random() * ( max - min + 1 ) + min );
 
-// The longest edge with radius > 0 should be used to calculate how finely
-// the polygon gets subdivided
 function findSubdivisionEdge(polygon) {
   // curvature === 0 means this edge goes through origin
   // in which case subdivide based on next longest edge
@@ -46107,14 +46104,6 @@ var basicVert = "#define GLSLIFY 1\nattribute vec3 position;\nattribute vec2 uv;
 
 var basicFrag = "precision mediump float;\n#define GLSLIFY 1\nuniform sampler2D tileTexture;\nvarying vec2 vUv;\nvoid main() {\n\tgl_FragColor = texture2D(tileTexture, vUv);\n}";
 
-// * ***********************************************************************
-// *
-// *  HYPERBOLIC ARC CLASS
-// *  Represents a hyperbolic arc on the Poincare disk, which is a
-// *  Euclidean straight line if it goes through the origin
-// *
-// *************************************************************************
-
 var HyperbolicArc = function () {
   function HyperbolicArc(startPoint, endPoint) {
     classCallCheck(this, HyperbolicArc);
@@ -46203,13 +46192,6 @@ var HyperbolicPolygon = function () {
   return HyperbolicPolygon;
 }();
 
-// TODO Document these classes
-// * ***********************************************************************
-// *
-// *  TRANSFORM CLASS
-// *  Represents a transformation of a point in hyperbolic space
-// *
-// *************************************************************************
 var HyperbolicTransform = function () {
   function HyperbolicTransform(matrix, orientation, position) {
     classCallCheck(this, HyperbolicTransform);
@@ -46486,31 +46468,6 @@ var HyperbolicParameters = function () {
   }]);
   return HyperbolicParameters;
 }();
-
-// * ***********************************************************************
-// *    REGULAR HYPERBOLIC TESSELATION CLASS
-// *    Creates a regular Tesselation of the Poincare Disk using the techniques
-// *    created by Coxeter and Dunham
-// *
-// *    spec = {
-// *      wireframe: true/false
-// *      p: number of sides of p-gon
-// *      q: number of p-gons meeting at each vertex
-// *      textures: array
-// *      edgeAdjacency: [ (multiDim array)
-// *                      [
-// *                        edge_0 orientation (-1 = reflection, 1 = rotation)],
-// *                        edge_0 adjacency (range p - 1)],
-// *                      ],
-// *                    ...
-// *                      [edge_p orientation, edge_p adjacency]
-// *                    ],
-// *      minPolygonSize: stop at polygons below this size,
-// *    }
-// *
-// *
-// *
-// *************************************************************************
 
 var RegularHyperbolicTesselation = function () {
   function RegularHyperbolicTesselation(spec) {

@@ -2059,95 +2059,95 @@ var Lighting = function () {
 }();
 
 var Viewer = function () {
-    function Viewer(canvas) {
-        classCallCheck(this, Viewer);
+  function Viewer(canvas) {
+    classCallCheck(this, Viewer);
 
 
-        var self = this;
+    var self = this;
 
-        this.canvas = canvas;
+    this.canvas = canvas;
 
-        this.app = new App(this.canvas);
+    this.app = new App(this.canvas);
 
-        // this.app.renderer.setClearColor( 0xf7f7f7, 1.0 );
+    // this.app.renderer.setClearColor( 0xf7f7f7, 1.0 );
 
-        this.animationControls = new AnimationControls();
+    this.animationControls = new AnimationControls();
 
-        // Put any per frame calculation here
-        this.app.onUpdate = function () {
-            // NB: use self inside this function
+    // Put any per frame calculation here
+    this.app.onUpdate = function () {
+      // NB: use self inside this function
 
-            self.animationControls.update(self.app.delta);
-        };
+      self.animationControls.update(self.app.delta);
+    };
 
-        // put any per resize calculations here (throttled to once per 250ms)
-        this.app.onWindowResize = function () {
+    // put any per resize calculations here (throttled to once per 250ms)
+    this.app.onWindowResize = function () {
 
-            // NB: use self inside this function
+      // NB: use self inside this function
 
-        };
+    };
 
-        this.loadedObjects = new THREE.Group();
-        this.loadedMaterials = [];
-        this.app.scene.add(this.loadedObjects);
+    this.loadedObjects = new THREE.Group();
+    this.loadedMaterials = [];
+    this.app.scene.add(this.loadedObjects);
 
-        this.lighting = new Lighting(this.app);
+    this.lighting = new Lighting(this.app);
 
-        this.background = new Background(this.app);
+    this.background = new Background(this.app);
 
-        this.app.initControls();
+    this.app.initControls();
+  }
+
+  createClass(Viewer, [{
+    key: 'addObjectToScene',
+    value: function addObjectToScene(object) {
+
+      this.reset();
+
+      if (object === undefined) {
+
+        console.error('Oops! An unspecified error occurred :(');
+        return;
+      }
+
+      this.animationControls.initAnimation(object);
+
+      this.loadedObjects.add(object);
+
+      // fit camera to all loaded objects
+      this.app.fitCameraToObject(this.loadedObjects, 0.9);
+
+      this.app.play();
+
+      // this.loadedObjects.traverse( ( child ) => {
+
+      //   if ( child.material !== undefined && Array.isArray( child.material ) ) {
+
+      //     HTMLControl.errors.classList.remove( 'hide' );
+      //     HTMLControl.controls.exportGLTF.disabled = true;
+
+      //   }
+
+      // } );
     }
+  }, {
+    key: 'reset',
+    value: function reset() {
 
-    createClass(Viewer, [{
-        key: 'addObjectToScene',
-        value: function addObjectToScene(object) {
+      while (this.loadedObjects.children.length > 0) {
 
-            this.reset();
+        var child = this.loadedObjects.children[0];
 
-            if (object === undefined) {
+        this.loadedObjects.remove(child);
+        child = null;
+      }
 
-                console.error('Oops! An unspecified error occurred :(');
-                return;
-            }
+      this.loadedMaterials = [];
 
-            this.animationControls.initAnimation(object);
-
-            this.loadedObjects.add(object);
-
-            // fit camera to all loaded objects
-            this.app.fitCameraToObject(this.loadedObjects, 0.9);
-
-            this.app.play();
-
-            // this.loadedObjects.traverse( ( child ) => {
-
-            //   if ( child.material !== undefined && Array.isArray( child.material ) ) {
-
-            //     HTMLControl.errors.classList.remove( 'hide' );
-            //     HTMLControl.controls.exportGLTF.disabled = true;
-
-            //   }
-
-            // } );
-        }
-    }, {
-        key: 'reset',
-        value: function reset() {
-
-            while (this.loadedObjects.children.length > 0) {
-
-                var child = this.loadedObjects.children[0];
-
-                this.loadedObjects.remove(child);
-                child = null;
-            }
-
-            this.loadedMaterials = [];
-
-            this.animationControls.reset();
-        }
-    }]);
-    return Viewer;
+      this.animationControls.reset();
+    }
+  }]);
+  return Viewer;
 }();
 
 THREE.Cache.enabled = true;

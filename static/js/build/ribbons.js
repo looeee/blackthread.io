@@ -45268,12 +45268,15 @@ function App(canvas) {
 
   var setRendererSize = function setRendererSize() {
 
-    _renderer.setSize(_canvas.clientWidth, _canvas.clientHeight, false);
+    if (_renderer) _renderer.setSize(self.canvas.clientWidth, self.canvas.clientHeight, false);
   };
 
   var setCameraAspect = function setCameraAspect() {
-    _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
-    _camera.updateProjectionMatrix();
+
+    if (_camera) {
+      _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
+      _camera.updateProjectionMatrix();
+    }
   };
 
   // note: gets called last when autoResize is on

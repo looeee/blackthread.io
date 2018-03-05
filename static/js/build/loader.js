@@ -289,11 +289,6 @@ function Time() {
   };
 }
 
-/**
- * @author Lewy Blue / https://github.com/looeee
- *
- */
-
 var _canvas = void 0;
 var _scene = void 0;
 var _camera = void 0;
@@ -322,14 +317,16 @@ function App(canvas) {
 
   var setRendererSize = function setRendererSize() {
 
-    _renderer.setSize(_canvas.clientWidth, _canvas.clientHeight, false);
+    if (_renderer) _renderer.setSize(self.canvas.clientWidth, self.canvas.clientHeight, false);
   };
 
   var setCameraAspect = function setCameraAspect() {
-    _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
-    _camera.updateProjectionMatrix();
-  };
 
+    if (_camera) {
+      _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
+      _camera.updateProjectionMatrix();
+    }
+  };
   // note: gets called last when autoResize is on
   this.onWindowResize = function () {};
 
@@ -2043,7 +2040,6 @@ var OnLoadCallbacks = function () {
   return OnLoadCallbacks;
 }();
 
-// Check support for the File API support
 var checkForFileAPI = function checkForFileAPI() {
 
   if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -2294,9 +2290,6 @@ function exportGLTF(input) {
   }, options);
 }
 
-/* ******************************************************** */
-
-// Set up THREE caching
 THREE.Cache.enabled = true;
 
 var Main = function () {

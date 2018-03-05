@@ -25,26 +25,20 @@ vendorScripts:
   '/three/examples/js/exporters/GLTFExporter.min'
    ]
 ---
-
 <canvas id="loader-canvas"></canvas>
-
 <div id="loading-overlay" class="fill">
-
   <div id="file-upload-form">
     <p>Viewer for fbx, gltf, glb or dae files and associated textures in jpg, png, gif, bmp or dds format using loaders from three.js.</p>
     <input id="file-upload-input" type="file" name="files[]" multiple="" class="hide">
     <input type="submit" value="Upload or Drop Files Here" id="file-upload-button"/>
     <p>Or load the <a id="example-duck" href="#">Example Duck</a></p>
   </div>
-
   <div id="loading-bar" class="hide">
     <span id="bar">
       <span id="progress"></span>
     </span>
   </div>
-
 </div>
-
 <div id="controls">
   <div class="controls-section"></div>
   <div class="controls-section">
@@ -61,7 +55,7 @@ vendorScripts:
           <span id="pause-button" class="fa fa-lg fa-pause-circle" aria-hidden="true"></span>
         </a>
         <input id="animation-slider" type="range" min="0" max="100" value="0" step="0.1" />
-        <a href="#" id="playback-control" title="Save take as JSON">
+        <a href="#" id="export-json" title="Save take as JSON">
           <span id="export-anims" class="fa fa-lg fa-save" aria-hidden="true"></span>
         </a>
     </div>
