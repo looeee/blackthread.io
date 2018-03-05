@@ -26,6 +26,191 @@ var createClass = function () {
   };
 }();
 
+var Masthead = function () {
+    function Masthead() {
+        classCallCheck(this, Masthead);
+
+
+        this.masthead = document.querySelector('.masthead');
+
+        if (this.masthead === null) return;
+
+        this.visibleLinks = this.masthead.querySelector('.visible-links');
+        this.hiddenLinks = this.masthead.querySelector('.hidden-links');
+        this.toggleButton = this.masthead.querySelector('.toggle-links');
+        this.spacer = this.masthead.querySelector('#spacer');
+
+        this.setupResize();
+        this.setupButton();
+
+        this.decreaseSize();
+        this.decreaseSize();
+
+        this.initScroll();
+    }
+
+    createClass(Masthead, [{
+        key: 'initScroll',
+        value: function initScroll() {
+
+            var self = this;
+            document.addEventListener('scroll', function () {
+
+                if (window.scrollY > 50) {
+                    self.masthead.classList.add('shrink');
+                } else {
+                    self.masthead.classList.remove('shrink');
+                }
+            });
+        }
+    }, {
+        key: 'visibleLinksWidth',
+        value: function visibleLinksWidth() {
+
+            var width = 0;
+
+            for (var child in this.visibleLinks.children) {
+
+                if (Object.prototype.hasOwnProperty.call(this.visibleLinks.children, child)) {
+
+                    if (this.visibleLinks.children[child].id !== this.spacer) width += this.visibleLinks.children[child].offsetWidth;
+                }
+            }
+
+            return width;
+        }
+    }, {
+        key: 'increaseSize',
+        value: function increaseSize() {
+
+            this.spacer.style.width = 0;
+
+            if (this.hiddenLinks.children.length === 0) {
+
+                this.hiddenLinks.classList.add('fold');
+                this.setSpacerWidth();
+                return;
+            }
+
+            var width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
+
+            while (this.hiddenLinks.children.length > 0 && width < this.masthead.clientWidth) {
+
+                width += this.hiddenLinks.firstChild.offsetWidth;
+                this.visibleLinks.insertBefore(this.hiddenLinks.firstChild, this.visibleLinks.lastChild);
+            }
+
+            this.showButton();
+            this.setSpacerWidth();
+        }
+    }, {
+        key: 'decreaseSize',
+        value: function decreaseSize() {
+
+            this.spacer.style.width = 0;
+
+            while (this.masthead.clientWidth < this.visibleLinks.scrollWidth) {
+
+                if (this.visibleLinks.children.length === 3) {
+
+                    this.showButton();
+                    this.setSpacerWidth();
+                    return;
+                }
+
+                var secondLastChild = this.visibleLinks.children[this.visibleLinks.children.length - 2];
+                this.hiddenLinks.insertBefore(secondLastChild, this.hiddenLinks.firstChild);
+            }
+
+            this.showButton();
+            this.setSpacerWidth();
+        }
+    }, {
+        key: 'setSpacerWidth',
+        value: function setSpacerWidth() {
+
+            this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
+        }
+    }, {
+        key: 'showButton',
+        value: function showButton() {
+
+            if (this.hiddenLinks.children.length === 0) this.toggleButton.classList.add('hide');else this.toggleButton.classList.remove('hide');
+        }
+    }, {
+        key: 'setupResize',
+        value: function setupResize() {
+
+            var self = this;
+            var lastWidth = window.innerWidth;
+
+            window.addEventListener('resize', function () {
+
+                if (window.innerWidth > lastWidth) self.increaseSize();else if (window.innerWidth < lastWidth) self.decreaseSize();
+
+                lastWidth = window.innerWidth;
+            });
+        }
+    }, {
+        key: 'setupButton',
+        value: function setupButton() {
+
+            var self = this;
+
+            var folded = true;
+
+            this.toggleButton.addEventListener('click', function () {
+
+                if (folded) self.hiddenLinks.classList.remove('fold');else self.hiddenLinks.classList.add('fold');
+
+                folded = !folded;
+            });
+        }
+    }]);
+    return Masthead;
+}();
+
+new Masthead();
+
+var sidenav = function sidenav() {
+
+  var content = document.querySelector('#main');
+  var toggleButton = document.querySelector('#toggle-nav');
+  var nav = document.querySelector('#vert-nav');
+
+  if (content === null || toggleButton === null || nav === null) return;
+
+  var breakpoint = 1280;
+
+  function updateMenu() {
+
+    if (content.offsetWidth < breakpoint) {
+
+      if (!toggleButton.classList.contains('hide')) return;
+      toggleButton.classList.remove('hide');
+      nav.classList.add('fold');
+    } else {
+
+      if (toggleButton.classList.contains('hide')) return;
+      toggleButton.classList.add('hide');
+      nav.classList.remove('fold');
+    }
+  }
+
+  updateMenu();
+
+  toggleButton.addEventListener('click', function (e) {
+
+    e.preventDefault();
+
+    nav.classList.toggle('fold');
+  });
+
+  window.addEventListener('resize', updateMenu);
+};
+
+sidenav();
+
 var originalCanvas = document.querySelector('#original-preview-canvas');
 var resultCanvas = document.querySelector('#result-preview-canvas');
 var previews = document.querySelector('#previews');
@@ -2059,95 +2244,95 @@ var Lighting = function () {
 }();
 
 var Viewer = function () {
-    function Viewer(canvas) {
-        classCallCheck(this, Viewer);
+  function Viewer(canvas) {
+    classCallCheck(this, Viewer);
 
 
-        var self = this;
+    var self = this;
 
-        this.canvas = canvas;
+    this.canvas = canvas;
 
-        this.app = new App(this.canvas);
+    this.app = new App(this.canvas);
 
-        // this.app.renderer.setClearColor( 0xf7f7f7, 1.0 );
+    // this.app.renderer.setClearColor( 0xf7f7f7, 1.0 );
 
-        this.animationControls = new AnimationControls();
+    this.animationControls = new AnimationControls();
 
-        // Put any per frame calculation here
-        this.app.onUpdate = function () {
-            // NB: use self inside this function
+    // Put any per frame calculation here
+    this.app.onUpdate = function () {
+      // NB: use self inside this function
 
-            self.animationControls.update(self.app.delta);
-        };
+      self.animationControls.update(self.app.delta);
+    };
 
-        // put any per resize calculations here (throttled to once per 250ms)
-        this.app.onWindowResize = function () {
+    // put any per resize calculations here (throttled to once per 250ms)
+    this.app.onWindowResize = function () {
 
-            // NB: use self inside this function
+      // NB: use self inside this function
 
-        };
+    };
 
-        this.loadedObjects = new THREE.Group();
-        this.loadedMaterials = [];
-        this.app.scene.add(this.loadedObjects);
+    this.loadedObjects = new THREE.Group();
+    this.loadedMaterials = [];
+    this.app.scene.add(this.loadedObjects);
 
-        this.lighting = new Lighting(this.app);
+    this.lighting = new Lighting(this.app);
 
-        this.background = new Background(this.app);
+    this.background = new Background(this.app);
 
-        this.app.initControls();
+    this.app.initControls();
+  }
+
+  createClass(Viewer, [{
+    key: 'addObjectToScene',
+    value: function addObjectToScene(object) {
+
+      this.reset();
+
+      if (object === undefined) {
+
+        console.error('Oops! An unspecified error occurred :(');
+        return;
+      }
+
+      this.animationControls.initAnimation(object);
+
+      this.loadedObjects.add(object);
+
+      // fit camera to all loaded objects
+      this.app.fitCameraToObject(this.loadedObjects, 0.9);
+
+      this.app.play();
+
+      // this.loadedObjects.traverse( ( child ) => {
+
+      //   if ( child.material !== undefined && Array.isArray( child.material ) ) {
+
+      //     HTMLControl.errors.classList.remove( 'hide' );
+      //     HTMLControl.controls.exportGLTF.disabled = true;
+
+      //   }
+
+      // } );
     }
+  }, {
+    key: 'reset',
+    value: function reset() {
 
-    createClass(Viewer, [{
-        key: 'addObjectToScene',
-        value: function addObjectToScene(object) {
+      while (this.loadedObjects.children.length > 0) {
 
-            this.reset();
+        var child = this.loadedObjects.children[0];
 
-            if (object === undefined) {
+        this.loadedObjects.remove(child);
+        child = null;
+      }
 
-                console.error('Oops! An unspecified error occurred :(');
-                return;
-            }
+      this.loadedMaterials = [];
 
-            this.animationControls.initAnimation(object);
-
-            this.loadedObjects.add(object);
-
-            // fit camera to all loaded objects
-            this.app.fitCameraToObject(this.loadedObjects, 0.9);
-
-            this.app.play();
-
-            // this.loadedObjects.traverse( ( child ) => {
-
-            //   if ( child.material !== undefined && Array.isArray( child.material ) ) {
-
-            //     HTMLControl.errors.classList.remove( 'hide' );
-            //     HTMLControl.controls.exportGLTF.disabled = true;
-
-            //   }
-
-            // } );
-        }
-    }, {
-        key: 'reset',
-        value: function reset() {
-
-            while (this.loadedObjects.children.length > 0) {
-
-                var child = this.loadedObjects.children[0];
-
-                this.loadedObjects.remove(child);
-                child = null;
-            }
-
-            this.loadedMaterials = [];
-
-            this.animationControls.reset();
-        }
-    }]);
-    return Viewer;
+      this.animationControls.reset();
+    }
+  }]);
+  return Viewer;
 }();
 
 THREE.Cache.enabled = true;

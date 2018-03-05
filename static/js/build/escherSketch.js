@@ -2,6 +2,265 @@ this.escherSketch = this.escherSketch || {};
 (function () {
 'use strict';
 
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var toConsumableArray = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+};
+
+var Masthead = function () {
+    function Masthead() {
+        classCallCheck(this, Masthead);
+
+
+        this.masthead = document.querySelector('.masthead');
+
+        if (this.masthead === null) return;
+
+        this.visibleLinks = this.masthead.querySelector('.visible-links');
+        this.hiddenLinks = this.masthead.querySelector('.hidden-links');
+        this.toggleButton = this.masthead.querySelector('.toggle-links');
+        this.spacer = this.masthead.querySelector('#spacer');
+
+        this.setupResize();
+        this.setupButton();
+
+        this.decreaseSize();
+        this.decreaseSize();
+
+        this.initScroll();
+    }
+
+    createClass(Masthead, [{
+        key: 'initScroll',
+        value: function initScroll() {
+
+            var self = this;
+            document.addEventListener('scroll', function () {
+
+                if (window.scrollY > 50) {
+                    self.masthead.classList.add('shrink');
+                } else {
+                    self.masthead.classList.remove('shrink');
+                }
+            });
+        }
+    }, {
+        key: 'visibleLinksWidth',
+        value: function visibleLinksWidth() {
+
+            var width = 0;
+
+            for (var child in this.visibleLinks.children) {
+
+                if (Object.prototype.hasOwnProperty.call(this.visibleLinks.children, child)) {
+
+                    if (this.visibleLinks.children[child].id !== this.spacer) width += this.visibleLinks.children[child].offsetWidth;
+                }
+            }
+
+            return width;
+        }
+    }, {
+        key: 'increaseSize',
+        value: function increaseSize() {
+
+            this.spacer.style.width = 0;
+
+            if (this.hiddenLinks.children.length === 0) {
+
+                this.hiddenLinks.classList.add('fold');
+                this.setSpacerWidth();
+                return;
+            }
+
+            var width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
+
+            while (this.hiddenLinks.children.length > 0 && width < this.masthead.clientWidth) {
+
+                width += this.hiddenLinks.firstChild.offsetWidth;
+                this.visibleLinks.insertBefore(this.hiddenLinks.firstChild, this.visibleLinks.lastChild);
+            }
+
+            this.showButton();
+            this.setSpacerWidth();
+        }
+    }, {
+        key: 'decreaseSize',
+        value: function decreaseSize() {
+
+            this.spacer.style.width = 0;
+
+            while (this.masthead.clientWidth < this.visibleLinks.scrollWidth) {
+
+                if (this.visibleLinks.children.length === 3) {
+
+                    this.showButton();
+                    this.setSpacerWidth();
+                    return;
+                }
+
+                var secondLastChild = this.visibleLinks.children[this.visibleLinks.children.length - 2];
+                this.hiddenLinks.insertBefore(secondLastChild, this.hiddenLinks.firstChild);
+            }
+
+            this.showButton();
+            this.setSpacerWidth();
+        }
+    }, {
+        key: 'setSpacerWidth',
+        value: function setSpacerWidth() {
+
+            this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
+        }
+    }, {
+        key: 'showButton',
+        value: function showButton() {
+
+            if (this.hiddenLinks.children.length === 0) this.toggleButton.classList.add('hide');else this.toggleButton.classList.remove('hide');
+        }
+    }, {
+        key: 'setupResize',
+        value: function setupResize() {
+
+            var self = this;
+            var lastWidth = window.innerWidth;
+
+            window.addEventListener('resize', function () {
+
+                if (window.innerWidth > lastWidth) self.increaseSize();else if (window.innerWidth < lastWidth) self.decreaseSize();
+
+                lastWidth = window.innerWidth;
+            });
+        }
+    }, {
+        key: 'setupButton',
+        value: function setupButton() {
+
+            var self = this;
+
+            var folded = true;
+
+            this.toggleButton.addEventListener('click', function () {
+
+                if (folded) self.hiddenLinks.classList.remove('fold');else self.hiddenLinks.classList.add('fold');
+
+                folded = !folded;
+            });
+        }
+    }]);
+    return Masthead;
+}();
+
+new Masthead();
+
+var sidenav = function sidenav() {
+
+  var content = document.querySelector('#main');
+  var toggleButton = document.querySelector('#toggle-nav');
+  var nav = document.querySelector('#vert-nav');
+
+  if (content === null || toggleButton === null || nav === null) return;
+
+  var breakpoint = 1280;
+
+  function updateMenu() {
+
+    if (content.offsetWidth < breakpoint) {
+
+      if (!toggleButton.classList.contains('hide')) return;
+      toggleButton.classList.remove('hide');
+      nav.classList.add('fold');
+    } else {
+
+      if (toggleButton.classList.contains('hide')) return;
+      toggleButton.classList.add('hide');
+      nav.classList.remove('fold');
+    }
+  }
+
+  updateMenu();
+
+  toggleButton.addEventListener('click', function (e) {
+
+    e.preventDefault();
+
+    nav.classList.toggle('fold');
+  });
+
+  window.addEventListener('resize', updateMenu);
+};
+
+sidenav();
+
 // Polyfills
 
 if ( Number.EPSILON === undefined ) {
@@ -37561,9 +37820,8 @@ var TEXTURE_FILTER = {
 };
 
 /**
- * @author zz85 / http://www.lab4games.net/zz85/blog
- * minimal class for proxing functions to Path. Replaces old "extractSubpaths()"
- **/
+ * @author thespite / http://clicktorelease.com/
+ */
 
 function ShapePath() {
 
@@ -43790,7 +44048,9 @@ function AxesHelper( size ) {
 AxesHelper.prototype = Object.create( LineSegments.prototype );
 AxesHelper.prototype.constructor = AxesHelper;
 
-//
+/**
+ * @author alteredq / http://alteredqualia.com/
+ */
 
 Curve.create = function ( construct, getPoint ) {
 
@@ -43895,6 +44155,8 @@ Object.assign( Spline.prototype, {
 
 } );
 
+//
+
 GridHelper.prototype.setColors = function () {
 
 	console.error( 'THREE.GridHelper: setColors() has been deprecated, pass them in the constructor instead.' );
@@ -43907,8 +44169,6 @@ SkeletonHelper.prototype.update = function () {
 
 };
 
-//
-
 Object.assign( Loader.prototype, {
 
 	extractUrlBase: function ( url ) {
@@ -43919,8 +44179,6 @@ Object.assign( Loader.prototype, {
 	}
 
 } );
-
-//
 
 Object.assign( Box2.prototype, {
 
@@ -45090,6 +45348,8 @@ CubeCamera.prototype.updateCubeMap = function ( renderer, scene ) {
 
 };
 
+//
+
 /**
  * @author Lewy Blue / https://github.com/looeee
  */
@@ -45212,11 +45472,6 @@ function Time() {
   };
 }
 
-/**
- * @author Lewy Blue / https://github.com/looeee
- *
- */
-
 var _canvas = void 0;
 var _scene = void 0;
 var _camera = void 0;
@@ -45245,12 +45500,15 @@ function App(canvas) {
 
   var setRendererSize = function setRendererSize() {
 
-    _renderer.setSize(_canvas.clientWidth, _canvas.clientHeight, false);
+    if (_renderer) _renderer.setSize(self.canvas.clientWidth, self.canvas.clientHeight, false);
   };
 
   var setCameraAspect = function setCameraAspect() {
-    _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
-    _camera.updateProjectionMatrix();
+
+    if (_camera) {
+      _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
+      _camera.updateProjectionMatrix();
+    }
   };
 
   // note: gets called last when autoResize is on
@@ -45582,80 +45840,6 @@ document.querySelector('#q-down').addEventListener('click', function (e) {
   qValue.innerHTML = newValue;
 });
 
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var toConsumableArray = function (arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  } else {
-    return Array.from(arr);
-  }
-};
-
 // * ***********************************************************************
 // *
 // *   MATH FUNCTIONS
@@ -45799,8 +45983,6 @@ var transformPoint = function transformPoint(transform, x, y) {
 
 // export const randomInt = ( min, max ) => Math.floor( Math.random() * ( max - min + 1 ) + min );
 
-// The longest edge with radius > 0 should be used to calculate how finely
-// the polygon gets subdivided
 function findSubdivisionEdge(polygon) {
   // curvature === 0 means this edge goes through origin
   // in which case subdivide based on next longest edge
@@ -46107,14 +46289,6 @@ var basicVert = "#define GLSLIFY 1\nattribute vec3 position;\nattribute vec2 uv;
 
 var basicFrag = "precision mediump float;\n#define GLSLIFY 1\nuniform sampler2D tileTexture;\nvarying vec2 vUv;\nvoid main() {\n\tgl_FragColor = texture2D(tileTexture, vUv);\n}";
 
-// * ***********************************************************************
-// *
-// *  HYPERBOLIC ARC CLASS
-// *  Represents a hyperbolic arc on the Poincare disk, which is a
-// *  Euclidean straight line if it goes through the origin
-// *
-// *************************************************************************
-
 var HyperbolicArc = function () {
   function HyperbolicArc(startPoint, endPoint) {
     classCallCheck(this, HyperbolicArc);
@@ -46203,13 +46377,6 @@ var HyperbolicPolygon = function () {
   return HyperbolicPolygon;
 }();
 
-// TODO Document these classes
-// * ***********************************************************************
-// *
-// *  TRANSFORM CLASS
-// *  Represents a transformation of a point in hyperbolic space
-// *
-// *************************************************************************
 var HyperbolicTransform = function () {
   function HyperbolicTransform(matrix, orientation, position) {
     classCallCheck(this, HyperbolicTransform);
@@ -46486,31 +46653,6 @@ var HyperbolicParameters = function () {
   }]);
   return HyperbolicParameters;
 }();
-
-// * ***********************************************************************
-// *    REGULAR HYPERBOLIC TESSELATION CLASS
-// *    Creates a regular Tesselation of the Poincare Disk using the techniques
-// *    created by Coxeter and Dunham
-// *
-// *    spec = {
-// *      wireframe: true/false
-// *      p: number of sides of p-gon
-// *      q: number of p-gons meeting at each vertex
-// *      textures: array
-// *      edgeAdjacency: [ (multiDim array)
-// *                      [
-// *                        edge_0 orientation (-1 = reflection, 1 = rotation)],
-// *                        edge_0 adjacency (range p - 1)],
-// *                      ],
-// *                    ...
-// *                      [edge_p orientation, edge_p adjacency]
-// *                    ],
-// *      minPolygonSize: stop at polygons below this size,
-// *    }
-// *
-// *
-// *
-// *************************************************************************
 
 var RegularHyperbolicTesselation = function () {
   function RegularHyperbolicTesselation(spec) {

@@ -4,9 +4,9 @@
     {{ partial "head.html" . }}
   </head>
   <body>
-    {{ block "header" . }}{{ partial "site-masthead.html" .}}{{ end }}
-    <main role="main" id="main">{{ block "main" . }}{{ end }}</main>
-    {{ block "footer" . }}{{ partial "site-footer.html" . }}{{ end }}
-    {{ block "scripts" . }}{{ partial "site-scripts.html" . }}{{ end }}
+    {{ block "header" . }}{{ partial "masthead.html" .}}{{ end }}
+    <main id="main">{{ block "main" . }}{{ end }}</main>
+    {{ block "footer" . }}{{ partial "footer.html" . }}{{ end }}
+    {{ block "scripts" . }}{{ partial "scripts.html" . }}{{ end }}
   </body>
 </html>

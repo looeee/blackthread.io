@@ -47,7 +47,6 @@ Leave a comment below if you'd like to see other file types supported.<br><br>
       <input id="option_drawrange" name="visible" type="checkbox" checked="checked"/><span>Export just the attributes within the drawRange, if defined, instead of exporting the whole array.</span><br>
     </div>
     <input type="submit" value="Export as GLTF" id="export" disabled/>
-    <div id="errors" class="hide"></div>
   </div>
   <div id="previews">
     <div id="original-preview">

@@ -1,9 +1,9 @@
 {{/* NOTE: These Hugo Internal Templates can be found starting at https://github.com/spf13/hugo/blob/master/tpl/tplimpl/template_embedded.go#L158 */}}
 
 {{ if in .URL "/tags/" }}
-  <meta name="description" itemprop="description" content="Here you'll find a list of pages tagged with {{ .Page.Title }}. Pages are included from everywhere on the site, including blog posts, tutorials and experiments">
+  <meta name="description" content="Here you'll find a list of pages tagged with {{ .Page.Title }}. Pages are included from everywhere on the site, including blog posts, tutorials and experiments">
 {{ else }}
-  <meta name="description" itemprop="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
 {{ end }}
 
 <meta property="og:site_name" content="Black Thread Design"/>

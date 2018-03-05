@@ -34,16 +34,18 @@ function App( canvas ) {
 
   const setRendererSize = function () {
 
-    _renderer.setSize( _canvas.clientWidth, _canvas.clientHeight, false );
+    if ( _renderer ) _renderer.setSize( self.canvas.clientWidth, self.canvas.clientHeight, false );
 
   };
 
   const setCameraAspect = function () {
-    _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
-    _camera.updateProjectionMatrix();
+
+    if ( _camera ) {
+      _camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
+      _camera.updateProjectionMatrix();
+    }
 
   };
-
   // note: gets called last when autoResize is on
   this.onWindowResize = function () {};
 
