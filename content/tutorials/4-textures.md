@@ -17,8 +17,7 @@ Put very simply, this means taking an image and stretching it over the surface o
 
 Start by loading up the code from the previous chapter.
 
-<p data-height="400" data-theme-id="0" data-slug-hash="QaKqzq" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "QaKqzq" >}}
 
 That... looks like a very curved and knotted surface. Let's switch it out for something a bit plainer. Change the line
 
@@ -86,5 +85,4 @@ This is because the material's colour gets combined (multiplied, technically) wi
 
 Here's our wooden cube, happily spinning away. It looks very flat and shiny at the moment, and there are plenty of settings on the material that we can use to adjust that, but again, its a pretty good result for such as small amount of time.
 
-<p data-height="400" data-theme-id="0" data-slug-hash="YYGEJV" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "YYGEJV" >}}

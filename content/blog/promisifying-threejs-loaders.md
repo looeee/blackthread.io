@@ -191,5 +191,4 @@ Promises are pretty well supported across [all modern browsers](https://caniuse.
 
 Finally, here is avery simple example of using the above approach to convert the [GLTFLoader](https://threejs.org/docs/#examples/loaders/GLTFLoader) into a `GLTFPromiseLoader`:
 
-<p data-height="400" data-theme-id="0" data-slug-hash="baaBee" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "baaBee" >}}

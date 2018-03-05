@@ -83,8 +83,7 @@ So how much of an advantage does this actually give us compared to other ways of
 
 ### A white box.
 
-<p data-height="400" data-theme-id="0" data-slug-hash="aEBKYK" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "aEBKYK" >}}
 
 Now that we have covered all of that, and not even touched a line of code, here is a nice white box for you to play with. Try putting in a few different colours for the material, and see if you can accurately say what they will be before the scene is reloaded.
 

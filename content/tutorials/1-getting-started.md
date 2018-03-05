@@ -13,8 +13,7 @@ Strap in folks, it's time to push some pixels!
 
 Let's get our first three.js scene up and running. When we are finished with chapters 1 and 2, we'll have this glorious beast shining and rotating before our eyes:
 
-<p data-height="400" data-theme-id="0" data-slug-hash="GmJPrm" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "GmJPrm" >}}
 
 ### Follow along on Codepen
 
@@ -260,8 +259,7 @@ This tells the renderer to `render` ( that is, create a still image ) of the por
 
 After adding the previous line, you will now see this:
 
-<p data-height="400" data-theme-id="0" data-slug-hash="qpNvdd" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "qpNvdd" >}}
 
 It's very basic so far. Without lighting illuminate the contours of the object, it's not possible to even know that it's 3D, and without movement or colour it looks a bit dull.
 But still, it's quite impressive that we were able to do this so fast.

@@ -13,8 +13,7 @@ draft: true
 
 Here's where we left off at the end of the last chapter.
 
-<p data-height="400" data-theme-id="0" data-slug-hash="GmJPrm" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "GmJPrm" >}}
 
 It's pretty respectable result for such a small amount of code. However, there is one big problem that will quickly make it look at lot less professional to anyone using your website - that is, the scene does not resize when the browser window changes size.
 
@@ -106,5 +105,4 @@ In these cases, you can call `renderer.setSize( window.innerWidth, window.innerH
 
 Here's our lovely torus knot with the resize function set up:
 
-<p data-height="400" data-theme-id="0" data-slug-hash="QaKqzq" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "QaKqzq" >}}

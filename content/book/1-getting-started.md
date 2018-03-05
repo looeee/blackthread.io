@@ -15,8 +15,7 @@ Strap in folks, it's time to push some pixels!
 
 Let's get our first three.js scene up and running. When we are finished with chapters 1 and 2, we'll have this glorious beast shining and rotating before us:
 
-<p data-height="400" data-theme-id="0" data-slug-hash="GmJPrm" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "GmJPrm" >}}
 
 #### Follow along on Codepen
 
@@ -227,7 +226,6 @@ With even this simple setup we can do all kinds of fancy things like quickly swi
 
 After adding the previous line, we will now see this:
 
-<p data-height="400" data-theme-id="0" data-slug-hash="qpNvdd" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "qpNvdd" >}}
 
 What's that you say? It looks like an especially boring Celtic Knot? Ungrateful clods! OK, fine, on to the next chapter and we'll see what we can do to make things a bit more interesting.

@@ -15,8 +15,7 @@ So far our scene is not interactive - it is animated, but it doesn't take any us
 
 As usual, we'll continue from where we left off in the last chapter:
 
-<p data-height="400" data-theme-id="0" data-slug-hash="YYGEJV" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "YYGEJV" >}}
 
 First of all, remove the lines that make the box rotate - it will be easier to see that the camera is moving without these.
 
@@ -76,5 +75,4 @@ And that's it! You can now control the camera using touch or mouse. Experiment w
 
 One thing to note about the orbit controls is that they steal your `right click` function - the right mouse button is used to pan the camera whenever you hover over the canvas. It's a bit annoying if you want to use right-click to open the browser console, but just remember that you can still use the shortcut `CTRL + SHIFT + I` instead, or on a Mac `CMD + SHIFT + I`.
 
-<p data-height="400" data-theme-id="0" data-slug-hash="eydKyM" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "eydKyM" >}}

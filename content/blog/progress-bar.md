@@ -8,8 +8,7 @@ menuTitle: The Blackthread Blog
 weight: 1
 readTime: true
 ---
-<p data-height="400" data-theme-id="0" data-slug-hash="JMrOey" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "JMrOey" >}}
 
 Setting up a loading overlay to let users know when your page will be ready should be easy, right?
 
@@ -270,5 +269,4 @@ I had to reduce the `updateAmount` from 5 to 0.5 - perhaps Codepen is doing some
 
 If you use this in any projects please share them in the comments below!
 
-<p data-height="400" data-theme-id="0" data-slug-hash="JMrOey" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "JMrOey" >}}

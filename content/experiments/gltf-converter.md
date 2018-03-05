@@ -31,7 +31,7 @@ GLTF is the up and coming superstar of 3D model formats - as of March 2018 you c
 Convert from a variety of formats to GLTF format using the three.js <a href="https://threejs.org/examples/#misc_exporter_gltf">GLTFExporter</a>. Currently this supports FBX, OBJ, GLTF and GLB  (because why not?) and Collada ( DAE ).
 Upload textures in JPG, PNG, GIF, BMP or DDS format.
 
-See the [docs](https://threejs.org/docs/#examples/exporters/GLTFExporter) page for details of the options below.
+Leave a comment below if you'd like to see other file types supported.<br><br>
 
 <div class="border-section">
   <div id="file-upload-form">

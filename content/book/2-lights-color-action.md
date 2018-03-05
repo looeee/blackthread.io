@@ -278,5 +278,4 @@ function animate() {
 
 ...and there you have it, a fine spiny rotaty torus knot in all its glory!
 
-<p data-height="400" data-theme-id="0" data-slug-hash="GmJPrm" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "GmJPrm" >}}

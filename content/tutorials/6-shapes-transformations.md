@@ -16,8 +16,7 @@ We'll also take a look at how to move them around (`translate` them), `scale` th
 
 Here's where we left off last time.
 
-<p data-height="400" data-theme-id="0" data-slug-hash="eydKyM" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "eydKyM" >}}
 
 ### Setting up the scene
 
@@ -344,5 +343,4 @@ Try to repeat that here. Can you make the four blue jewels rotate slowly around 
 
 Here's the final result. This concludes these introductory tutorials. Well done for making it this far!
 
-<p data-height="400" data-theme-id="0" data-slug-hash="VyKGXx" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "VyKGXx" >}}

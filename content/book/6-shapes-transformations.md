@@ -24,8 +24,7 @@ These things are seriously cool. They are a different way to rotate objects, rat
 
 Here's where we left off last time.
 
-<p data-height="400" data-theme-id="0" data-slug-hash="eydKyM" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "eydKyM" >}}
 
 ### Setting up the scene
 
@@ -376,5 +375,4 @@ The final transformation we need to cover is rotation. It turns out that rotatin
 
 For now, here's our lovely new logo, which is _definitely_ not a rip off of the London Underground logo.
 
-<p data-height="400" data-theme-id="0" data-slug-hash="VyKGXx" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "VyKGXx" >}}
