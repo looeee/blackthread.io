@@ -101,6 +101,7 @@ Note that we had to call `camera.updateProjectionMatrix()`. You will need to do 
 
 I'm not sure which sounds cooler, `frustum`, or `projection matrix`...
 
+
 Here's our lovely torus knot with the resize function set up:
 
 {{< codepen "QaKqzq" >}}
