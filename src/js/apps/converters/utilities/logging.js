@@ -2,6 +2,18 @@ import HTMLControl from '../HTMLControl.js';
 
 const originalError = console.warn.bind( console );
 
+function log() {
+
+  const args = Array.prototype.slice.call( arguments );
+  const rep = args.slice( 1, args.length );
+  let i = 0;
+
+  const output = args[0].replace( /%s/g, ( match, idx ) => {
+    const subst = rep.slice( i, ++i );
+    return ( subst );
+  } );
+  return output;
+}
 console.error = ( msg ) => {
 
   HTMLControl.messages.classList.remove( 'hide' );

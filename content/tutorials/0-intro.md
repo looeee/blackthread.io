@@ -42,9 +42,9 @@ If you need some inspiration to get yourself started, or need to take a break fr
 
 ### Up next
 
-Starting in chapter 1, we'll take a look at the basic components of a three.js app and go over the bare minimum code that we need to get three.js to display something on screen. It turns out (excluding comments), that this is only 15 lines of JavaScript. Not too bad!
+Starting in chapter 1, we'll take a look at the basic components of a three.js app and go over the bare minimum code that we need to get three.js to display something on screen. It turns out (excluding comments), that this is only 15 lines of JavaScript. Not bad!
 
-In the following chapters, we'll add animation, camera controls and lights and learn how to deal with the browser window resizing. In no time at all we'll have a fully fledged app ready to be used in your own projects.
+In the following chapters, we'll add animation, camera controls and lights and learn how to deal with the browser window resizing. In no time at all you'll have a fully fledged app ready to be used in your own projects.
 
 We'll round out the section with a look at how to move things around in the scene using translation, rotation and scaling, also known as linear transformations.
 

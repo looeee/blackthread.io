@@ -1,6 +1,7 @@
 ---
 title:  "Lights, Color, Action!"
 date: 2018-03-02T00:00:00-00:00
+modifiedDate: 2018-03-05T00:00:00-00:00
 description: "Picking up where we left of in the last tutorial we'll add lights, color and animation to our scene."
 tags: ['three.js', 'scene', 'renderer', 'webgl', 'animation', 'color', 'lights']
 menu: tutorials
@@ -9,7 +10,6 @@ menuNumber: "2"
 weight: 3
 readTime: true
 ---
-
 We'll pick up here exactly where we left off in the last chapter. Here is the complete code so far:
 
 {{< highlight js >}}
@@ -114,7 +114,7 @@ animate();
 
 {{< /highlight >}}
 
-Code organisation is a `VERY` important thing to stay on top of - it will make any piece of software much easier for both you and other people to understand and maintain, and you should spend a considerable amount of time on any software project making sure that the code is well organised, clear, well named and easy to understand, as well as having just enough comments to guide a reader through your code.
+Code organisation is `VERY` important to stay on top of - it will make any piece of software much easier for both you and other people to understand and maintain. You should spend a considerable amount of time on any software project making sure that the code is well organised and clear. Variables should be named so that their purpose is easy to understand, and there should be just enough comments to guide a reader through your code.
 
 Remember, badly organised code is bad code, even if it currently does what it is supposed to.
 
@@ -122,7 +122,7 @@ Remember, badly organised code is bad code, even if it currently does what it is
 
 You may have noticed that the `animate` function above is badly named - as I said in the previous chapter, `renderer.render( scene, camera )` renders a _still_ image of the `scene` from the point of view of the `camera` - and it seems a little unfair to call a single image an animation.
 
-So, let's turn it into an animation.
+Let's fix that.
 
 To do so, we'll use a method that is built into every modern browser, called [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame). From that page:
 
@@ -132,27 +132,25 @@ The window.requestAnimationFrame() method tells the browser that you wish to per
 
 The important term is `next repaint` and we'll should take a few moments now to understand what it means. The browser will attempt to refresh the page, at most, at the same refresh rate as the screen it is being displayed on. This means that if you are viewing your app on a standard issue 2018 monitor, you will get a maximum repaint rate of 60 repaints per second. You can consider the following terms to mean the same thing, although there are technical differences:
 
-`maximum repaint rate` = `refresh rate of your monitor` = `maximum frame rate` = `Hz`/`Hertz`.
+`maximum repaint rate` = `refresh rate of your monitor` = `maximum frame rate` = `Hz`/`hertz`.
 
-The last one, Hz, is a unit which means `number of times per second`.
+The last one, hertz or Hz for short, is a unit which means `number of times per second`.
 
-So, our standard issue 2017 computer monitor has a refresh rate of 60Hz, that is, the picture is redrawn 60 times per seconds.
+So, our standard issue 2018 computer monitor has a refresh rate of 60Hz, that is, the image on the screen is redrawn 60 times per seconds.
 
-This means that once we set up our animation using `requestAnimationFrame`, our app will _attempt_ to draw a new frame 60 times per second. Depending on the complexity of your app, and the speed of your computer, it may or may not succeed - if the frame is not ready in time, it will simply redraw it at the next available refresh interval instead.
+This means that once we set up our animation using `requestAnimationFrame`, our app will _attempt_ to draw a new frame 60 times per second. Depending on the complexity of your app, and the speed of your computer, it may or may not succeed - if the frame is not ready in time, it will simply redraw it at the next available refresh interval instead, and in the meantime the previous frame will be drawn on the screen again.
 
 Other monitors or TVs may have different refresh rates - a typical TV (even a mid-range modern one) is likely to have a refresh rate of 30Hz, while a super fancy new 3D capable monitor may have a refresh rate of 120Hz or even 240Hz. Newer phones may also have a 120Hz refresh rate.
 
-The upshot of all of this is that when you are creating an application, you should never base animation on frame rate - i.e., you should never say that your character should move 1/100th of step each frame, because on your super fast laptop this may look fine, but on my 3-year-old Android phone your character will be moving in horrible jerky slow motion.
+The upshot of all of this is that when you are creating an application, you should never base animation on frame rate - i.e., you should never say that your character should move 1/100th of a step each frame, because on your laptop this may look fine, but on my 3-year-old Android phone the character will be moving in horrible jerky slow motion, while on my friend's uber battlestation with fancy 3D 240Hz monitor, the animations will be happening at 4 times the desired speed.
 
 Base your animations on how much _time_ has passed instead and everything will be golden.
 
 #### Recursively calling our animate() function
 
-Actually using `requestAnimationFrame` is pretty simple - the trick is to do it recursively.
+Actually using `requestAnimationFrame` is pretty simple - the trick is to do it recursively. If you recall, a recursive function is simply a function that calls itself repeatedly.
 
-A recursive function is simply a function that calls itself repeatedly.
-
-So, we'll call our `animate` function _within_ our animate function, using `requestAnimationFrame` to handle the timing. Update it to look like this:
+So, we'll call our `animate` function _within_ our `animate` function, using `requestAnimationFrame` to handle the timing. Update it to look like this:
 
 {{< highlight js >}}
 
@@ -177,7 +175,7 @@ We'll add some movement soon, but first lets set up some lights and colour.
 
 Now would be a good time to take a look at the [Color](https://threejs.org/docs/#api/math/Color) documentation to get an idea of how colour works in three.js.
 
-Although there are lots of ways to set the color listed in the docs, the standard way is to use a `hexadecimal triple`. You may already be familiar with CSS colours - they look like `#ffffff` (white) or `#000000` (black). Well, that is a hexadecimal triple, and in JavaScript, it's pretty similar, we just need to write them slightly differently.
+Although there are lots of ways to set the color listed in the docs, the standard way is to use a `hexadecimal triple`. You may already be familiar with CSS colours - they look like `#ffffff` (white) or `#000000` (black). Well, that is a hexadecimal triple, and in JavaScript, it's pretty similar. We just need to write them slightly differently.
 
 In JavaScript, a hexadecimal number is denoted with `0x` instead of `#`. The CSS colors above become `0xffffff` (white)  or `0x000000`, or `0x800080` (purple). Let's use the last one now and set our previously white material to a nice purple colour:
 
@@ -201,19 +199,26 @@ So that it looks like:
 
 And... our scene has gone completely black. Great.
 
-No, it's OK - remember in the last chapter I told you that most materials need a light to be seen? Well, `MeshStandardMaterial` needs a light. In fact, not only that but it's a super fancy 'Physically Correct' material, that reacts to light in the same way an object in the real work does, or at least in a fairly good approximation.
+No, it's OK - remember in the last chapter I told you that most materials need a light to be seen? Well, `MeshStandardMaterial` needs a light. In fact, not only that but it's a super fancy 'Physically Correct' material, that reacts to light in the same way an object in the real world does, or at least in a fairly good approximation.
 
 ### Adding lights
 
-So we need a light then? No problem. There are lots of options.
+So we need a light then? No problem. There are lots of options. Here's a list of the basic light types currently available in three.js:
+
+* AmbientLight: [docs](https://threejs.org/docs/#api/lights/AmbientLight)
+* DirectionalLight: [docs](https://threejs.org/docs/#api/lights/DirectionalLight), [example](https://threejs.org/examples/?q=light#webgl_lights_hemisphere)
+* HemisphereLight: [docs](https://threejs.org/docs/#api/lights/HemisphereLight), [example](https://threejs.org/examples/?q=light#webgl_lights_hemisphere) (same as Directional light example)
+* PointLight: [docs](https://threejs.org/docs/#api/lights/PointLight), [example](https://threejs.org/examples/?q=light#webgl_lights_pointlights)
+* RectAreaLight: [docs](https://threejs.org/docs/#api/lights/RectAreaLight), [example](https://threejs.org/examples/?q=light#webgl_lights_rectarealight). Note that this one was added recently and is still somewhat experimental
+* SpotLight: [docs](https://threejs.org/docs/#api/lights/SpotLight), [example](https://threejs.org/examples/?q=light#webgl_lights_spotlight)
+
+We'll add an `AmbientLight` and a `PointLight` to our scene next.
 
 #### Adding global illumination with an AmbientLight
 
-First we'll add an [AmbientLight](https://threejs.org/docs/#Reference/Lights/AmbientLight).
+`AmbientLight` provides [global illumination](https://en.wikipedia.org/wiki/Global_illumination) - that is, it adds non-directional light equally from all directions to all objects in the scene. You will generally always add some ambient light to a 3D scene, since real light bounces infinitely from object to object. There is no way to mimic this in 3D so we fake it by adding some (dim) global illumination.
 
-This provides [global illumination](https://en.wikipedia.org/wiki/Global_illumination) - that is, it adds non-directional light equally from all directions to all objects in the scene. You will generally always add some ambient light to a 3D scene. Real light bounces infinitely from object to object and there is no way to mimic this in 3D so we fake it by adding some global illumination. We'll create an AmbientLight inside our `init` function.
-
-Just like with meshes, lights need to be added to the scene to be taken into account when rendering.
+We'll create an AmbientLight inside our `init` function. Just like with meshes, lights need to be added to the scene to be taken into account when rendering.
 
 {{< highlight js >}}
 ....
@@ -231,11 +236,11 @@ If you refresh the page again, you will see dimly see the mesh again, now purple
 
 Note that this light still doesn't give any appearance of depth - it shines equally from all directions and distances, so it illuminates all surfaces the same way. In practice, that means that a curved surface illuminated with just an ambient light will look flat.
 
-Usually an ambient light is used for artistic control, and you wouldn't set it as brightly as we have here - rather, you might leave the intensity at 1.0, but set the color to a dim gray.
+Usually an ambient light is used for artistic control, and you wouldn't set it as brightly as we have here - rather, you might leave the intensity at 1.0, but set the color to a dim gray, perhaps: `const ambientLight = new THREE.AmbientLight( 0x555555, 1.0 );`
 
 #### Adding omnidirectional illumination with a PointLight
 
-Let's add another light - this time a [PointLight](https://threejs.org/docs/#Reference/Lights/PointLight). This light also shines in every direction, but this time from a specific point in space. You can think if this one like a bare light bulb, that illuminates everything around it. In some applications, this is called an 'Omni' (for omnidirectional) light.
+Next we'll add a `PointLight`. This light also shines in every direction, but this time from a specific point in space. You can think if this one as being like a bare light bulb, that illuminates everything around it. In some applications, this is called an 'Omni' (for omnidirectional) light.
 
 {{< highlight js >}}
 ....
@@ -255,8 +260,6 @@ We've also positioned the light halfway between the mesh and the camera (remembe
 Also now (FINALLY!!) our scene really looks 3D too. Sweet.
 
 Try moving the light around a little to see the effect of the shiny areas (the technical term for these is [specular highlights](https://en.wikipedia.org/wiki/Specular_highlight)).
-
-There are a couple of other light types as well. In particular, you should become familiar with the [DirectionalLight](https://threejs.org/docs/#api/lights/DirectionalLight), [HemisphereLight](https://threejs.org/docs/#api/lights/HemisphereLight) and [SpotLight](https://threejs.org/docs/#api/lights/SpotLight).
 
 ### Adding movement
 
@@ -282,9 +285,10 @@ function animate() {
 ...
 {{< /highlight >}}
 
+Note that I'm going against my own advice here for the sake of simplicity. I'm updating a fixed amount each frame, so there is no way to be sure that the animation you are seeing will be the same on another device. In fact, if you are viewing this on a very new phone or fancy gaming monitor, the animation should be very fast. For now, that's OK though.
+
 ### Final result
 
-...and there you have it, a spiny rotaty, truly glorious purple torus knot!
+...and there you have it, as promised at the start of Chapter 1, we now have a spinny, rotaty, truly glorious purple torus knot!
 
-<p data-height="400" data-theme-id="0" data-slug-hash="GmJPrm" data-default-tab="result" class='codepen'></p>
-<script async="async" src="//codepen.io/assets/embed/ei.js"></script>
+{{< codepen "GmJPrm" >}}

@@ -3,7 +3,7 @@
 #TableOfContents {
 
   border: 1px solid silver;
-  padding: 1em 1em 1em 2em;
+  padding: 1em 0;
   background: black;
   margin-top: 1em;
   box-shadow: 6px 6px 1px 1px grey inset;
@@ -12,6 +12,7 @@
   >ul {
 
     list-style: none;
+    margin: auto;
 
     >li>ul{
 
@@ -21,7 +22,10 @@
 
   }
 
-
+  ul {
+    margin: 0;
+    padding: 0 2em;
+  }
 
   li {
 

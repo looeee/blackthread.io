@@ -1,0 +1,27 @@
+<figure {{ with .Get "class" }}class="{{.}}"{{ end }} itemprop="figure" itemscope itemtype="http://schema.org/ImageObject">
+  {{ if .Get "lightbox" }}<a href="#img1">{{ end }}
+    <img itemprop="thumbnail" {{ with .Get "src" }}src="{{.}}"{{ end }} {{ with .Get "alt" }}alt="{{.}}"{{ end }}/>
+  {{ if .Get "lightbox" }}</a>{{ end }}
+  {{ if .Get "caption" }}
+    <figcaption>
+      <p>{{ with .Get "caption" }}{{.}}{{ end }}
+        {{ if .Get "link" }}
+          <a {{ with .Get "link" }}href="{{ . }}"{{ end }}>
+            {{ with .Get "linkText" }}{{ . }}{{ end }}
+          </a>
+        {{ end }}
+    </p>
+    </figcaption>
+  {{ end }}
+</figure>
+
+{{ if .Get "lightbox" }}
+<a href="#_" class="lightbox" id="img1">
+  <img {{ with .Get "src" }}src="{{.}}"{{ end }}>
+  {{ if .Get "caption" }}
+    <figcaption>
+      <p>{{ with .Get "caption" }}{{.}}{{ end }}</p>
+    </figcaption>
+  {{ end }}
+</a>
+{{ end }}
