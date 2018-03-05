@@ -17,7 +17,7 @@
 
 {{ if .Get "lightbox" }}
 <a href="#_" class="lightbox" id="img1">
-  <img {{ with .Get "src" }}src="{{.}}"{{ end }}>
+  <img {{ with .Get "src" }}src="{{.}}"{{ end }} {{ with .Get "alt" }}alt="{{.}} (fullscreen)"{{ end }}>
   {{ if .Get "caption" }}
     <figcaption>
       <p>{{ with .Get "caption" }}{{.}}{{ end }}</p>

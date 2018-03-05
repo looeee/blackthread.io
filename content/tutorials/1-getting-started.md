@@ -92,7 +92,7 @@ This appends (i.e. adds just before the closing `</body>` tag) the following to 
 
 Go ahead and right click on the preview pane in Codepen and select inspect. You should see this:
 
-{{< figure src="/images/tutorials/Ch 1/console_canvas.png" caption="Fig 1: The canvas element that we just added to the page" alt="console with canvas highlighted" lightbox=true class="figure-medium" link="www.example.com">}}
+{{< figure src="/images/tutorials/Ch 1/console_canvas.png" caption="Fig 1: The canvas element that we just added to the page" alt="console with canvas highlighted" lightbox=true class="figure-medium">}}
 
 If you are following along using a file on your own computer, that's basically all you'll see. On codepen there will be a whole lot of junk and above and below it. That's because codepen is creating your app as an `iframe` - that is, a webpage within a webpage. You can read up about iframes [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe) if you like, but it's not important for this tutorial.
 
