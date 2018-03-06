@@ -6,9 +6,9 @@ type: page
 layout: fullWidth
 ---
 
-Black Thread Design operates the www.blackthreaddesign.com website, which provides the SERVICE.
+Black Thread Design operates the www.blackthreaddesign.com website.
 
-This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service.
+This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use any services found on this site.
 
 ### Information Collection and Use
 
@@ -16,7 +16,7 @@ We will never collect any private data from you. If you upload a file or files t
 
 ### Cookies
 
-Cookies are files with small amount of data that is commonly used an anonymous unique identifier. These are sent to your browser from the website that you visit and are stored on your computer’s hard drive.
+Cookies are files with small amount of data that is commonly used an anonymous unique identifier. These are sent to your browser from the website that you visit and are stored on your computer's hard drive.
 
 Our website uses these “cookies” to collection information and to improve our Service. You have the option to either accept or refuse these cookies, and know when a cookie is being sent to your computer. If you choose to refuse our cookies, you may not be able to use some portions of our Service.
 
@@ -50,4 +50,3 @@ We may update our Privacy Policy from time to time. Thus, we advise you to revie
 ### Contact Us
 
 If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us.
-
