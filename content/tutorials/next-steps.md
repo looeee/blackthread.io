@@ -1,7 +1,7 @@
 ---
 title:  "Next steps"
 date: 2018-01-05T00:00:00-00:00
-description: "You've finished these tutorials, but your journey is only starting. Here we'll cover all the best places on the web to ask for help with three.js, including the official forum, reddit and StackOverflow"
+description: "You may have finished these tutorials, but your journey into 3D is just starting! Here we'll cover all the best places on the web to ask for help with three.js, including the official forum, reddit and StackOverflow"
 tags: ['three.js', 'WebGL', 'forum', 'discourse', 'help', 'stackoverflow', 'reddit', 'subreddit', 'github' ]
 heroImage: /images/tutorials/next-steps-hero.jpg
 heroTitle: Where to next?
