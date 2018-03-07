@@ -7,16 +7,25 @@ function log( ...args ) {
   const rep = args.slice( 1, args.length );
   let i = 0;
 
-  const output = args[0].replace( /%s/g, ( match, idx ) => {
-    const subst = rep.slice( i, ++i );
-    return ( subst );
-  } );
+  if ( typeof args[0] === 'string' ) {
 
-  return output;
+    const output = args[0].replace( /%s/g, ( match, idx ) => {
+      const subst = rep.slice( i, ++i );
+      return ( subst );
+    } );
+
+    return output;
+
+  }
+
+  return args[0];
+
 }
 console.error = ( ...args ) => {
 
   const msg = log( ...args );
+
+  if ( !msg ) return;
 
   HTMLControl.messages.classList.remove( 'hide' );
   HTMLControl.errorsContainer.classList.remove( 'hide' );
@@ -34,6 +43,8 @@ console.warn = ( ...args ) => {
 
   const msg = log( ...args );
 
+  if ( !msg ) return;
+
   HTMLControl.messages.classList.remove( 'hide' );
   HTMLControl.warningsContainer.classList.remove( 'hide' );
   const p = document.createElement( 'p' );
@@ -49,6 +60,8 @@ const originalLog = console.log.bind( console );
 console.log = ( ...args ) => {
 
   const msg = log( ...args );
+
+  if ( !msg ) return;
 
   HTMLControl.messages.classList.remove( 'hide' );
   HTMLControl.logsContainer.classList.remove( 'hide' );
