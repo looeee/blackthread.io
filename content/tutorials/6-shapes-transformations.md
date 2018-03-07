@@ -1,7 +1,7 @@
 ---
 title: "Shapes and Transformations"
 date: 2018-03-02T00:00:00-00:00
-description: "We'll finish up the tutorials by taking a quick look at the built in geometries and how to position them in 3D space within our scene using translation, scaling, and rotation"
+description: "We'll finish up these tutorials by taking a quick look at the built in geometries and how to position them in 3D space within our scene using translation, scaling, and rotation, the so called 'affine' trnasformations"
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
 menu: tutorials
 menuTitle: Three.js tutorials
@@ -10,7 +10,7 @@ weight: 7
 readTime: true
 ---
 
-In this chapter, we'll take a lighting quick look at some of the geometric shapes that are built into three.js. We've already seen two of them, the Torus Knot from chapters 1 and 2, and the Box from Chapter 3.
+In this chapter, we'll take a quick look at some of the geometric shapes that are built into three.js. We've already seen two of them, the Torus Knot from chapters 1 and 2, and the Box from Chapter 3.
 
 We'll also take a look at how to move them around (`translate` them), `scale` them up and down and `rotate` them. Collectively, along with the less common `shear`, these are known as transformations (technically, they are _linear_ or _affine_ transformations).
 

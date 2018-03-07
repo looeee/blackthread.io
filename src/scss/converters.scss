@@ -29,10 +29,19 @@
 #original-preview, #result-preview {
   position: relative;
   flex: 1;
-  min-width: 20em;
+  min-width: 15em;
+}
+#original-preview-text, #result-preview-text {
+  z-index: 3;
+  position: absolute;
+  top: 0.25em;
+  padding: 0;
+  margin: 0;
+  left: 0.25em;
 }
 
 #original-preview-canvas, #result-preview-canvas {
+  position: absolute;
   width: 100%;
   height: 100%;
   margin: 0;

@@ -123,15 +123,17 @@ class ExportGLTF {
 
   }
 
-  setSizeInfo( byteLength ) {
+  updateInfo( byteLength ) {
+
+    const type = HTMLControl.controls.binary.checked ? 'GLB' : 'GLTF';
 
     if ( byteLength < 1000000 ) {
 
-      HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + Math.ceil( byteLength * 0.001 ) + 'kb)';
+      HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + Math.ceil( byteLength * 0.001 ) + 'kb)';
 
     } else {
 
-      HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + ( byteLength * 1e-6 ).toFixed( 3 ) + 'mb)';
+      HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + ( byteLength * 1e-6 ).toFixed( 3 ) + 'mb)';
 
     }
 
@@ -142,12 +144,12 @@ class ExportGLTF {
     if ( this.result instanceof ArrayBuffer ) {
 
       this.output = this.result;
-      this.setSizeInfo( this.result.byteLength );
+      this.updateInfo( this.result.byteLength );
 
     } else {
 
       this.output = JSON.stringify( this.result, null, 2 );
-      this.setSizeInfo( stringByteLength( this.output ) );
+      this.updateInfo( stringByteLength( this.output ) );
 
     }
   }

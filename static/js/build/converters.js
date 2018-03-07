@@ -127,20 +127,39 @@ HTMLControl.logs = logs;
 
 var originalError = console.warn.bind(console);
 
-console.error = function (msg) {
+function log() {
+  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  var rep = args.slice(1, args.length);
+  var i = 0;
+
+  var output = args[0].replace(/%s/g, function (match, idx) {
+    var subst = rep.slice(i, ++i);
+    return subst;
+  });
+
+  return output;
+}
+console.error = function () {
+
+  var msg = log.apply(undefined, arguments);
 
   HTMLControl.messages.classList.remove('hide');
   HTMLControl.errorsContainer.classList.remove('hide');
   var p = document.createElement('p');
   p.innerHTML = msg;
-  HTMLControl.warnings.append(p);
+  HTMLControl.errors.append(p);
 
   originalError(msg);
 };
 
 var originalWarn = console.warn.bind(console);
 
-console.warn = function (msg) {
+console.warn = function () {
+
+  var msg = log.apply(undefined, arguments);
 
   HTMLControl.messages.classList.remove('hide');
   HTMLControl.warningsContainer.classList.remove('hide');
@@ -153,7 +172,9 @@ console.warn = function (msg) {
 
 var originalLog = console.log.bind(console);
 
-console.log = function (msg) {
+console.log = function () {
+
+  var msg = log.apply(undefined, arguments);
 
   HTMLControl.messages.classList.remove('hide');
   HTMLControl.logsContainer.classList.remove('hide');
@@ -716,7 +737,6 @@ function readFileAs(file, as) {
   });
 }
 
-// saving function taken from three.js editor
 var link = document.createElement('a');
 link.style.display = 'none';
 document.body.appendChild(link); // Firefox workaround, see #6594
@@ -831,15 +851,17 @@ var ExportGLTF = function () {
       this.loadPreview();
     }
   }, {
-    key: 'setSizeInfo',
-    value: function setSizeInfo(byteLength) {
+    key: 'updateInfo',
+    value: function updateInfo(byteLength) {
+
+      var type = HTMLControl.controls.binary.checked ? 'GLB' : 'GLTF';
 
       if (byteLength < 1000000) {
 
-        HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + Math.ceil(byteLength * 0.001) + 'kb)';
+        HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + Math.ceil(byteLength * 0.001) + 'kb)';
       } else {
 
-        HTMLControl.controls.exportGLTF.value = 'Export as GLTF (' + (byteLength * 1e-6).toFixed(3) + 'mb)';
+        HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + (byteLength * 1e-6).toFixed(3) + 'mb)';
       }
     }
   }, {
@@ -849,11 +871,11 @@ var ExportGLTF = function () {
       if (this.result instanceof ArrayBuffer) {
 
         this.output = this.result;
-        this.setSizeInfo(this.result.byteLength);
+        this.updateInfo(this.result.byteLength);
       } else {
 
         this.output = JSON.stringify(this.result, null, 2);
-        this.setSizeInfo(stringByteLength(this.output));
+        this.updateInfo(stringByteLength(this.output));
       }
     }
   }, {
@@ -1217,7 +1239,6 @@ var OnLoadCallbacks = function () {
   return OnLoadCallbacks;
 }();
 
-// Check support for the File API support
 var checkForFileAPI = function checkForFileAPI() {
 
   if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -1568,7 +1589,7 @@ function App(canvas) {
 
   var setRendererSize = function setRendererSize() {
 
-    if (_renderer) _renderer.setSize(self.canvas.clientWidth, self.canvas.clientHeight, false);
+    if (_renderer) _renderer.setSize(self.canvas.clientWidth, self.canvas.clientHeight, true);
   };
 
   var setCameraAspect = function setCameraAspect() {

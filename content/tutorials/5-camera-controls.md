@@ -21,11 +21,15 @@ First of all, remove the lines that make the box rotate - it will be easier to s
 
 ### Including the OrbitControls.js script
 
-Moving the camera around the scene in such as way as to allow panning, zooming and rotation is a non-trivial task - especially when it comes to rotation. You'll quickly come to realize, as you work in 3D, that moving around is pretty easy, mathematically speaking, but rotation is really not. We set the box above rotating pretty easily, it's true. But we are not really controlling that, just setting it to a random looking tumble. Gaining true mastery of an object's rotation is a tricky task, and definitely beyond the scope of this tutorial.
+Moving the camera around the scene in such as way as to allow panning, zooming and rotation is a non-trivial task - especially when it comes to rotation.
 
-Fortunately there are plenty of camera control scripts freely available for us to use. Let's take a look at the most common one here, the so called [OrbitalControls](https://threejs.org/docs/#examples/controls/OrbitControls). So called, that is, because they allow the camera to 'orbit' around a point in space (by default it will start to orbit around `(0, 0, 0)` ).
+You'll quickly come to realize, as you work in 3D, that moving around is pretty easy, mathematically speaking, but rotation is really not. We set the box above rotating pretty easily, it's true. But we are not really controlling that, just setting it to a random looking tumble. Gaining true mastery of an object's rotation is a tricky task, and definitely beyond the scope of these tutorials.
 
-The orbit controls file is located at [/examples/js/controls/OrbitControls.js](https://github.com/mrdoob/three.js/blob/dev/examples/js/controls/OrbitControls.js) in the repo, and we can add it in a similar way to the main three.js script.
+Fortunately there are plenty of camera control scripts freely available for us to use. Let's take a look at one of the most commonly uses here: [OrbitalControls](https://threejs.org/docs/#examples/controls/OrbitControls).
+
+The name comes from the fact the these controls allow the camera to 'orbit' around a point in space (by default it will start to orbit around `(0, 0, 0)` ).
+
+The orbit controls file is located at [/examples/js/controls/OrbitControls.js](https://github.com/mrdoob/three.js/blob/dev/examples/js/controls/OrbitControls.js) in the repo, and we can add it in a similar way to how we added the the main three.js script.
 
 Turn your attention to the HTML pane in Codepen. Currently, it looks like this:
 
@@ -57,7 +61,7 @@ needs to use the global THREE variable
 <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 {{< /highlight >}}
 
-By the way: Don't include the scripts from threejs.org this way in a production app. It's not the fastest way to get the files. I'm doing it this way since we are guaranteed to always get the latest version, but again in a production app you probably don't want that since the version might update at any time and your app could break without warning.
+By the way: Don't include the scripts from threejs.org this way in a production app. It's not the fastest way to get the files. I'm doing it this way since we are guaranteed to always get the latest version, but again in a production app you probably don't want that since an update might be released at any time and your app could break without warning.
 
 ### Setting up the controls
 
