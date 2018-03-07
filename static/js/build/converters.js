@@ -737,6 +737,7 @@ function readFileAs(file, as) {
   });
 }
 
+// saving function taken from three.js editor
 var link = document.createElement('a');
 link.style.display = 'none';
 document.body.appendChild(link); // Firefox workaround, see #6594
@@ -1556,11 +1557,6 @@ function Time() {
     this.paused = true;
   };
 }
-
-/**
- * @author Lewy Blue / https://github.com/looeee
- *
- */
 
 function App(canvas) {
 
