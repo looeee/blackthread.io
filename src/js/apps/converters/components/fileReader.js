@@ -31,6 +31,8 @@ let promises = [];
 
 const loadFile = ( details ) => {
 
+  console.log( details )
+
   const file = details[ 0 ];
   const type = details[ 1 ];
   const originalFile = details[ 2 ];

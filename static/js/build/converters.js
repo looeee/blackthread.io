@@ -135,16 +135,23 @@ function log() {
   var rep = args.slice(1, args.length);
   var i = 0;
 
-  var output = args[0].replace(/%s/g, function (match, idx) {
-    var subst = rep.slice(i, ++i);
-    return subst;
-  });
+  if (typeof args[0] === 'string') {
 
-  return output;
+    var output = args[0].replace(/%s/g, function (match, idx) {
+      var subst = rep.slice(i, ++i);
+      return subst;
+    });
+
+    return output;
+  }
+
+  return args[0];
 }
 console.error = function () {
 
   var msg = log.apply(undefined, arguments);
+
+  if (!msg) return;
 
   HTMLControl.messages.classList.remove('hide');
   HTMLControl.errorsContainer.classList.remove('hide');
@@ -161,6 +168,8 @@ console.warn = function () {
 
   var msg = log.apply(undefined, arguments);
 
+  if (!msg) return;
+
   HTMLControl.messages.classList.remove('hide');
   HTMLControl.warningsContainer.classList.remove('hide');
   var p = document.createElement('p');
@@ -175,6 +184,8 @@ var originalLog = console.log.bind(console);
 console.log = function () {
 
   var msg = log.apply(undefined, arguments);
+
+  if (!msg) return;
 
   HTMLControl.messages.classList.remove('hide');
   HTMLControl.logsContainer.classList.remove('hide');
@@ -737,7 +748,6 @@ function readFileAs(file, as) {
   });
 }
 
-// saving function taken from three.js editor
 var link = document.createElement('a');
 link.style.display = 'none';
 document.body.appendChild(link); // Firefox workaround, see #6594
@@ -1267,6 +1277,8 @@ var assets = {};
 var promises = [];
 
 var loadFile = function loadFile(details) {
+
+  console.log(details);
 
   var file = details[0];
   var type = details[1];
