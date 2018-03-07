@@ -39,14 +39,14 @@ Leave a comment below if you'd like to see other file types supported.<br><br>
     <input type="submit" value="Upload or Drop Files Here" id="file-upload-button"/>
     <div id="options">
       <input id="option_animations" name="visible" type="checkbox" checked><span>Include Animations</span><br>
-      <input id="option_binary" name="visible" type="checkbox" checked><span>Binary (.glb)</span><br>
+      <input id="option_binary" name="visible" type="checkbox" checked><span>Binary (.glb) or ASCII (.gltf)</span><br>
       <input id="option_visible" name="visible" type="checkbox" checked/><span>Export only visible objects</span><br>
       <input id="option_embedImages" name="visible" type="checkbox" checked><span>Embed Images</span><br>
       <!-- <input id="option_forceindices" name="visible" type="checkbox"><span>Force indices</span><br> -->
       <input id="option_trs" name="trs" type="checkbox"/><span>Export position, rotation and scale instead of matrix per node</span><br>
       <input id="option_drawrange" name="visible" type="checkbox" checked="checked"/><span>Export just the attributes within the drawRange, if defined, instead of exporting the whole array.</span><br>
     </div>
-    <input type="submit" value="Export as GLTF" id="export" disabled/>
+    <input type="submit" value="Export as GLB" id="export" disabled/>
   </div>
   <div id="previews">
     <div id="original-preview">
@@ -57,6 +57,7 @@ Leave a comment below if you'd like to see other file types supported.<br><br>
           </span>
         </div>
       </div>
+      <p id="original-preview-text">Original</p>
       <canvas id="original-preview-canvas"></canvas>
     </div>
     <div id="result-preview">
@@ -67,6 +68,7 @@ Leave a comment below if you'd like to see other file types supported.<br><br>
           </span>
         </div>
       </div>
+      <p id="result-preview-text">Result</p>
       <canvas id="result-preview-canvas"></canvas>
       <a href="#" id="fullscreen-button" title="Go fullscreen">
         <span class="fa fa-lg fa-arrows-alt" aria-hidden="true"></span>

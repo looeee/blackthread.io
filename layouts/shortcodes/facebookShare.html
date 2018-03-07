@@ -1,0 +1,19 @@
+<!-- {{< facebookShare first="true" url="www.example.com" >}} -->
+
+{{ if isset .Params "first" }}
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.12&appId=103246253626280&autoLogAppEvents=1';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  </script>
+{{ end }}
+
+<div class="fb-share-button" data-href="{{ with .Get "url" }}{{.}}{{ end }}" data-layout="button" data-size="large" data-mobile-iframe="true">
+  <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">
+    Share model on Facebook
+  </a>
+</div>

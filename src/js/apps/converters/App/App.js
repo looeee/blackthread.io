@@ -33,7 +33,7 @@ function App( canvas ) {
 
   const setRendererSize = function () {
 
-    if ( _renderer ) _renderer.setSize( self.canvas.clientWidth, self.canvas.clientHeight, false );
+    if ( _renderer ) _renderer.setSize( self.canvas.clientWidth, self.canvas.clientHeight, true );
 
   };
 

@@ -2,9 +2,8 @@ import HTMLControl from '../HTMLControl.js';
 
 const originalError = console.warn.bind( console );
 
-function log() {
+function log( ...args ) {
 
-  const args = Array.prototype.slice.call( arguments );
   const rep = args.slice( 1, args.length );
   let i = 0;
 
@@ -12,15 +11,18 @@ function log() {
     const subst = rep.slice( i, ++i );
     return ( subst );
   } );
+
   return output;
 }
-console.error = ( msg ) => {
+console.error = ( ...args ) => {
+
+  const msg = log( ...args );
 
   HTMLControl.messages.classList.remove( 'hide' );
   HTMLControl.errorsContainer.classList.remove( 'hide' );
   const p = document.createElement( 'p' );
   p.innerHTML = msg;
-  HTMLControl.warnings.append( p );
+  HTMLControl.errors.append( p );
 
   originalError( msg );
 
@@ -28,7 +30,9 @@ console.error = ( msg ) => {
 
 const originalWarn = console.warn.bind( console );
 
-console.warn = ( msg ) => {
+console.warn = ( ...args ) => {
+
+  const msg = log( ...args );
 
   HTMLControl.messages.classList.remove( 'hide' );
   HTMLControl.warningsContainer.classList.remove( 'hide' );
@@ -42,7 +46,9 @@ console.warn = ( msg ) => {
 
 const originalLog = console.log.bind( console );
 
-console.log = ( msg ) => {
+console.log = ( ...args ) => {
+
+  const msg = log( ...args );
 
   HTMLControl.messages.classList.remove( 'hide' );
   HTMLControl.logsContainer.classList.remove( 'hide' );
