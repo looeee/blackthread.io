@@ -63,6 +63,8 @@ console.log = ( ...args ) => {
 
   if ( !msg ) return;
 
+  if ( msg.indexOf( 'THREE.WebGLRenderer' ) !== -1 ) return;
+
   HTMLControl.messages.classList.remove( 'hide' );
   HTMLControl.logsContainer.classList.remove( 'hide' );
   const p = document.createElement( 'p' );

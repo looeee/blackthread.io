@@ -1062,6 +1062,7 @@
 
 		}
 
+		console.log( normalBuffer )
 		if ( normalBuffer.length > 0 ) {
 
 			geo.addAttribute( 'normal', new THREE.Float32BufferAttribute( normalBuffer, 3 ) );
