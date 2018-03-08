@@ -61,6 +61,8 @@ class ExportGLTF {
       binary: HTMLControl.controls.binary.checked,
       embedImages: HTMLControl.controls.embedImages.checked,
       animations: HTMLControl.controls.animations.checked,
+      forceIndices: true, // facebook compatibility
+      forcePowerOfTwoTextures: true, // facebook compatibility
     };
 
     if ( options.animations && this.animations.length > 0 ) options.animations = this.animations;

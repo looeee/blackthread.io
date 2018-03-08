@@ -125,7 +125,14 @@ Object.assign( THREE.NodeMaterialLoader.prototype, {
 
 				this.names[ object.name ] = object;
 
+			} else {
+
+				// ignore "uniform" shader input ( for optimization )
+				object.readonly = true;
+
 			}
+
+			if ( node.readonly !== undefined ) object.readonly = node.readonly;
 
 			this.nodes[ uuid ] = object;
 
@@ -214,6 +221,7 @@ Object.assign( THREE.NodeMaterialLoader.prototype, {
 
 					break;
 
+				case "Matrix3Node":
 				case "Matrix4Node":
 
 					object.value.fromArray( node.elements );
@@ -269,6 +277,7 @@ Object.assign( THREE.NodeMaterialLoader.prototype, {
 				case "PositionNode":
 				case "NormalNode":
 				case "ReflectNode":
+				case "LightNode":
 
 					object.scope = node.scope;
 
@@ -321,7 +330,7 @@ Object.assign( THREE.NodeMaterialLoader.prototype, {
 				case "UVTransformNode":
 
 					object.uv = this.getNode( node.uv );
-					object.transform.value.fromArray( node.elements );
+					object.transform = this.getNode( node.transform );
 
 					break;
 
@@ -371,6 +380,7 @@ Object.assign( THREE.NodeMaterialLoader.prototype, {
 
 				case "TimerNode":
 
+					object.scope = node.scope;
 					object.scale = node.scale;
 
 					break;
@@ -449,24 +459,18 @@ Object.assign( THREE.NodeMaterialLoader.prototype, {
 					break;
 
 				case "TextureNode":
+				case "CubeTextureNode":
 				case "ScreenNode":
 
 					if ( node.value ) object.value = this.getNode( node.value );
 
 					object.coord = this.getNode( node.coord );
-					object.project = node.project;
 
 					if ( node.bias ) object.bias = this.getNode( node.bias );
+					if ( object.project !== undefined ) object.project = node.project;
 
 					break;
 
-				case "CubeTextureNode":
-
-					object.value = this.getNode( node.value );
-
-					break;
-
-				case "LightNode":
 				case "RoughnessToBlinnExponentNode":
 					break;
 

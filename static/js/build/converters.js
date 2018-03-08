@@ -187,6 +187,8 @@ console.log = function () {
 
   if (!msg) return;
 
+  if (msg.indexOf('THREE.WebGLRenderer') !== -1) return;
+
   HTMLControl.messages.classList.remove('hide');
   HTMLControl.logsContainer.classList.remove('hide');
   var p = document.createElement('p');
@@ -748,6 +750,7 @@ function readFileAs(file, as) {
   });
 }
 
+// saving function taken from three.js editor
 var link = document.createElement('a');
 link.style.display = 'none';
 document.body.appendChild(link); // Firefox workaround, see #6594
@@ -802,7 +805,9 @@ var ExportGLTF = function () {
         truncateDrawRange: HTMLControl.controls.truncateDrawRange.checked,
         binary: HTMLControl.controls.binary.checked,
         embedImages: HTMLControl.controls.embedImages.checked,
-        animations: HTMLControl.controls.animations.checked
+        animations: HTMLControl.controls.animations.checked,
+        forceIndices: true, // facebook compatibility
+        forcePowerOfTwoTextures: true // facebook compatibility
       };
 
       if (options.animations && this.animations.length > 0) options.animations = this.animations;
