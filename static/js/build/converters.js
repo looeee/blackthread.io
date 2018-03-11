@@ -764,15 +764,6 @@ var colladaLoader = null;
 
 var objLoaderInternal = null;
 
-var loadJavascript = function loadJavascript(url, callback) {
-
-  var e = document.createElement('script');
-  e.src = url;
-  e.type = 'text/javascript';
-  e.addEventListener('load', callback);
-  document.getElementsByTagName('head')[0].appendChild(e);
-};
-
 var promisifyLoader = function promisifyLoader(loader) {
   return function (url) {
     var parse = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
@@ -814,10 +805,7 @@ var Loaders = function Loaders() {
 
     get fbxLoader() {
       if (fbxLoader === null) {
-        loadJavascript('/js/vendor/three/examples/js/loaders/FBXLoader.min.js', function () {
-
-          fbxLoader = promisifyLoader(new THREE.FBXLoader(loadingManager));
-        });
+        fbxLoader = promisifyLoader(new THREE.FBXLoader(loadingManager));
       }
       return fbxLoader;
     },

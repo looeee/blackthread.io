@@ -13,14 +13,29 @@ let colladaLoader = null;
 
 let objLoaderInternal = null;
 
-const loadJavascript = ( url, callback ) => {
+// const loadJavascript = ( url, callback ) => {
 
-  const e = document.createElement( 'script' );
-  e.src = url;
-  e.type = 'text/javascript';
-  e.addEventListener( 'load', callback );
-  document.getElementsByTagName( 'head' )[ 0 ].appendChild( e );
+//   const e = document.createElement( 'script' );
+//   e.src = url;
+//   e.type = 'text/javascript';
+//   e.addEventListener( 'load', callback );
+//   document.getElementsByTagName( 'head' )[ 0 ].appendChild( e );
 
+// };
+
+const loadJavascript = ( src, callback ) => {
+  const script = document.createElement( 'script' );
+  let loaded;
+  script.setAttribute( 'src', src );
+  if ( callback ) {
+    script.onreadystatechange = script.onload = () => {
+      if ( !loaded ) {
+        callback();
+      }
+      loaded = true;
+    };
+  }
+  document.getElementsByTagName( 'head' )[0].appendChild( script );
 };
 
 const promisifyLoader = loader =>
@@ -64,11 +79,7 @@ class Loaders {
 
       get fbxLoader() {
         if ( fbxLoader === null ) {
-          loadJavascript( '/js/vendor/three/examples/js/loaders/FBXLoader.min.js', () => {
-
-            fbxLoader = promisifyLoader( new THREE.FBXLoader( originalLoadingManager ) );
-
-          } );
+          fbxLoader = promisifyLoader( new THREE.FBXLoader( originalLoadingManager ) );
         }
         return fbxLoader;
       },

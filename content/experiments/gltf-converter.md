@@ -14,8 +14,7 @@ vendorScripts:
   "/inflate.min",
   "/three/build/three.min",
   '/three/examples/js/loaders/DDSLoader.min',
-  # '/three/examples/js/loaders/FBXLoader.min',
-
+  '/three/examples/js/loaders/FBXLoader.min',
   '/three/examples/js/loaders/GLTFLoader',
   '/three/examples/js/exporters/GLTFExporter',
   '/three/examples/js/loaders/LoaderSupport.min',
