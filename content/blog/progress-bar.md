@@ -12,8 +12,9 @@ readTime: true
 
 Setting up a loading overlay to let users know when your page will be ready should be easy, right?
 
-Well, the answer to that is yes, sometimes. And then again, more often, the answer is no.
-We've all seen loading bars like this in various applications - first they say you'll have to wait one hour, then 50 minutes, then 5 minutes... and they end up taking 8 minutes.
+Well, actually the answer to that, more often than not, is no. It turns out that making an accurate loading bar is quite a complex task and often far more work than its worth.
+
+We've all seen loading bars like this - first they say you'll have to wait one hour, then 50 minutes, then 5 minutes... and then end up taking 8 minutes.
 
 {{< figure src="/images/blog/loading-overlay/windows-loading.png" class="figure-small" caption="Fig 1: no wait, 5 minutes... no, 1 minute!" alt="loading..." >}}
 

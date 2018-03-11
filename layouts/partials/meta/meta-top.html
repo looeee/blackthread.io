@@ -1,0 +1,7 @@
+{{ if not (eq .Params.meta false) }}
+  <div id="meta-top">
+    {{ partial "meta/author.html" . }}
+    {{ partial "meta/date.html" . }}
+    {{ partial "meta/read-time.html" . }}
+  </div>
+{{ end }}

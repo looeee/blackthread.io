@@ -4,7 +4,7 @@
     {{ partial "head.html" . }}
   </head>
   <body>
-    {{ block "header" . }}{{ partial "masthead.html" .}}{{ end }}
+    {{ block "header" . }}{{ partial "nav/masthead.html" .}}{{ end }}
     <main id="main">{{ block "main" . }}{{ end }}</main>
     {{ block "footer" . }}{{ partial "footer.html" . }}{{ end }}
     {{ block "scripts" . }}{{ partial "scripts.html" . }}{{ end }}

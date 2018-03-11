@@ -4,21 +4,21 @@
     <div id="page-content-full-width">
   {{ else }}
     <div id="page-content">
-    {{ partial "side-nav.html" . }}
+    {{ partial "nav/side-nav.html" . }}
   {{ end }}
     <article id="article">
       <header>
         <h2>{{ .Title }}</h2>
       </header>
-      {{ partial "toc.html" . }}
-      {{ partial "read-time.html" . }}
+      {{ partial "nav/toc.html" . }}
+      {{ partial "meta/meta-top.html" . }}
       <section class="content">
         {{ .Content }}
       </section>
-      {{ partial "pagination.html" . }}
+      {{ partial "nav/pagination.html" . }}
       {{ partial "comments/comments.html" . }}
       <aside>
-        {{ partial "meta.html" . }}
+        {{ partial "meta/meta-bottom.html" . }}
       </aside>
     </article>
   </div>

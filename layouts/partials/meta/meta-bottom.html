@@ -1,0 +1,5 @@
+{{ if not (eq .Params.meta false) }}
+  <div id="meta-bottom">
+    {{ partial "meta/tag-list.html" . }}
+  </div>
+{{ end }}

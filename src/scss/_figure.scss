@@ -39,18 +39,12 @@ figure.figure-large {
 
 }
 
-
-/* Figure captions */
-
 figcaption {
-
-  margin-bottom: 0.5em;
+  margin: 0.5em 0;
   color: mix(#fff, $text-color, 25%);
   font-family: $monospace;
   font-size: 0.75em;
   font-style: italic;
-
-
 }
 
 .lightbox {
@@ -67,19 +61,12 @@ figcaption {
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, .8);
-  padding-top: 6em;
+  padding: 1em;
 
   text-decoration: none;
 
-  p { text-align: center; }
+  overflow: hidden;
 
-}
-
-.lightbox img {
-  max-width: 80%;
-  max-height: 90%;
-  text-align: center;
-  margin: auto;
 }
 
 .lightbox:target {
@@ -87,21 +74,20 @@ figcaption {
   display: block;
 }
 
-.lightbox-previous {
-  position: fixed;
-  left: 0.25em;
-  top: 40vh;
+// .lightbox-previous {
+//   position: fixed;
+//   left: 0.25em;
+//   top: 40vh;
+// }
 
-}
+// .lightbox-exit {
+//   position: fixed;
+//   top: 0.5em;
+//   right: 0.5em;
+// }
 
-.lightbox-exit {
-  position: fixed;
-  top: 0.5em;
-  right: 0.5em;
-}
-
-.lightbox-next {
-  position: fixed;
-  right: 0.25em;
-  top: 40vh;
-}
+// .lightbox-next {
+//   position: fixed;
+//   right: 0.25em;
+//   top: 40vh;
+// }
