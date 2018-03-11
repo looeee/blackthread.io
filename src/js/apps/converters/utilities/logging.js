@@ -63,7 +63,7 @@ console.log = ( ...args ) => {
 
   if ( !msg ) return;
 
-  if ( msg.indexOf( 'THREE.WebGLRenderer' ) !== -1 ) return;
+  if ( typeof msg.indexOf === 'function' && msg.indexOf( 'THREE.WebGLRenderer' ) !== -1 ) return;
 
   HTMLControl.messages.classList.remove( 'hide' );
   HTMLControl.logsContainer.classList.remove( 'hide' );

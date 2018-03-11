@@ -13,14 +13,28 @@ let colladaLoader = null;
 
 let objLoaderInternal = null;
 
+const loadJavascript = ( url, callback ) => {
+
+  const e = document.createElement( 'script' );
+  e.src = url;
+  e.type = 'text/javascript';
+  e.addEventListener( 'load', callback );
+  document.getElementsByTagName( 'head' )[ 0 ].appendChild( e );
+
+};
+
 const promisifyLoader = loader =>
-  url => new Promise( ( resolve, reject ) => {
+  ( url, parse = false ) => {
 
-    loader.load( url, resolve, originalLoadingManager.onProgress, reject );
+    return new Promise( ( resolve, reject ) => {
 
-  } );
+      if ( parse === true ) loader.parse( url, '', resolve, reject );
+      else loader.load( url, resolve, originalLoadingManager.onProgress, reject );
 
-export default class Loaders {
+    } );
+
+  };
+class Loaders {
 
   constructor() {
 
@@ -47,9 +61,14 @@ export default class Loaders {
         return jsonLoader;
       },
 
+
       get fbxLoader() {
         if ( fbxLoader === null ) {
-          fbxLoader = promisifyLoader( new THREE.FBXLoader( originalLoadingManager ) );
+          loadJavascript( '/js/vendor/three/examples/js/loaders/FBXLoader.min.js', () => {
+
+            fbxLoader = promisifyLoader( new THREE.FBXLoader( originalLoadingManager ) );
+
+          } );
         }
         return fbxLoader;
       },
@@ -102,3 +121,5 @@ export default class Loaders {
   }
 
 }
+
+export default new Loaders();

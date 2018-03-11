@@ -4,8 +4,8 @@
 #previews {
   display: flex;
   // flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  // justify-content: space-between;
+  // align-items: center;
   flex-wrap: wrap;
 }
 
@@ -29,7 +29,8 @@
 #original-preview, #result-preview {
   position: relative;
   flex: 1;
-  min-width: 15em;
+  flex-basis: 50%;
+  min-width: 13em;
 }
 #original-preview-text, #result-preview-text {
   z-index: 3;
@@ -53,9 +54,10 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 3;
-  text-align:center;
-  border: 1px solid #062f4f;
+  margin: 0;
+  padding: 0;
+  border: 1px solid silver;
+  text-align: center;
   background: rgb( 240,183,161 );
   background: radial-gradient(ellipse at center, rgba(84,84,84,1) 1%,rgba(38,37,33,1) 100%,rgba(191,110,78,1) 100%);
 }

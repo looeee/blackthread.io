@@ -6,13 +6,4 @@
   <time datetime="">
     {{ .Date.Format "January 2, 2006" }}
   </time>
-  {{ if .Params.ModifiedDate }}
-    <strong>
-      <span class="fa fa-fw fa-calendar" aria-hidden="true"></span>
-      Updated:
-    </strong>
-    <time datetime="">
-      {{ .Params.ModifiedDate.Format "January 2, 2006" }}
-    </time>
-  {{ end }}
 </div>

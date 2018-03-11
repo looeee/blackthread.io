@@ -78,7 +78,7 @@ var HTMLControl = function () {
     key: 'setInitialState',
     value: function setInitialState() {
 
-      HTMLControl.controls.exportGLTF.disabled = true;
+      controls.exportGLTF.disabled = true;
       loading.original.overlay.classList.remove('hide');
       loading.result.overlay.classList.remove('hide');
       loading.original.bar.classList.add('hide');
@@ -91,6 +91,7 @@ var HTMLControl = function () {
     value: function setOnLoadStartState() {
 
       controls.exportGLTF.disabled = true;
+      loading.result.overlay.classList.remove('hide');
       loading.original.bar.classList.remove('hide');
       messages.classList.add('hide');
       errorsContainer.classList.add('hide');
@@ -187,7 +188,7 @@ console.log = function () {
 
   if (!msg) return;
 
-  if (msg.indexOf('THREE.WebGLRenderer') !== -1) return;
+  if (typeof msg.indexOf === 'function' && msg.indexOf('THREE.WebGLRenderer') !== -1) return;
 
   HTMLControl.messages.classList.remove('hide');
   HTMLControl.logsContainer.classList.remove('hide');
@@ -750,7 +751,122 @@ function readFileAs(file, as) {
   });
 }
 
-// saving function taken from three.js editor
+THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
+
+var objectLoader = null;
+var bufferGeometryLoader = null;
+var jsonLoader = null;
+var fbxLoader = null;
+var gltfLoader = null;
+var objLoader = null;
+var mtlLoader = null;
+var colladaLoader = null;
+
+var objLoaderInternal = null;
+
+var loadJavascript = function loadJavascript(url, callback) {
+
+  var e = document.createElement('script');
+  e.src = url;
+  e.type = 'text/javascript';
+  e.addEventListener('load', callback);
+  document.getElementsByTagName('head')[0].appendChild(e);
+};
+
+var promisifyLoader = function promisifyLoader(loader) {
+  return function (url) {
+    var parse = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+
+    return new Promise(function (resolve, reject) {
+
+      if (parse === true) loader.parse(url, '', resolve, reject);else loader.load(url, resolve, loadingManager.onProgress, reject);
+    });
+  };
+};
+
+var Loaders = function Loaders() {
+  classCallCheck(this, Loaders);
+
+
+  return {
+
+    get objectLoader() {
+      if (objectLoader === null) {
+        objectLoader = promisifyLoader(new THREE.ObjectLoader(loadingManager));
+      }
+      return objectLoader;
+    },
+
+    get bufferGeometryLoader() {
+      if (bufferGeometryLoader === null) {
+        bufferGeometryLoader = promisifyLoader(new THREE.BufferGeometryLoader(loadingManager));
+      }
+      return bufferGeometryLoader;
+    },
+
+    get jsonLoader() {
+      if (jsonLoader === null) {
+        jsonLoader = promisifyLoader(new THREE.JSONLoader(loadingManager));
+      }
+      return jsonLoader;
+    },
+
+    get fbxLoader() {
+      if (fbxLoader === null) {
+        loadJavascript('/js/vendor/three/examples/js/loaders/FBXLoader.min.js', function () {
+
+          fbxLoader = promisifyLoader(new THREE.FBXLoader(loadingManager));
+        });
+      }
+      return fbxLoader;
+    },
+
+    get gltfLoader() {
+      if (gltfLoader === null) {
+        gltfLoader = promisifyLoader(new THREE.GLTFLoader(loadingManager));
+      }
+      return gltfLoader;
+    },
+
+    get objLoader() {
+
+      if (objLoaderInternal === null) {
+
+        objLoaderInternal = new THREE.OBJLoader(loadingManager);
+
+        objLoader = promisifyLoader(objLoaderInternal);
+
+        objLoader.setMaterials = function (materials) {
+
+          objLoaderInternal.setMaterials(materials);
+        };
+      }
+
+      return objLoader;
+    },
+
+    get mtlLoader() {
+      if (mtlLoader === null) {
+
+        mtlLoader = promisifyLoader(new THREE.MTLLoader(loadingManager));
+      }
+      return mtlLoader;
+    },
+
+    get colladaLoader() {
+      if (colladaLoader === null) {
+
+        colladaLoader = promisifyLoader(new THREE.ColladaLoader(loadingManager));
+      }
+      return colladaLoader;
+    }
+
+  };
+};
+
+var loaders = new Loaders();
+
 var link = document.createElement('a');
 link.style.display = 'none';
 document.body.appendChild(link); // Firefox workaround, see #6594
@@ -789,7 +905,8 @@ var ExportGLTF = function () {
     classCallCheck(this, ExportGLTF);
 
 
-    this.loader = new THREE.GLTFLoader();
+    this.loader = loaders.gltfLoader;
+
     this.exporter = new THREE.GLTFExporter();
     this.initExportButton();
     this.initOptionListeners();
@@ -839,10 +956,12 @@ var ExportGLTF = function () {
     value: function loadPreview() {
 
       main.resultPreview.reset();
-      this.loader.parse(this.output, '', function (gltf) {
+
+      var promise = loaders.gltfLoader(this.output, true);
+
+      promise.then(function (gltf) {
 
         HTMLControl.loading.result.overlay.classList.add('hide');
-
         HTMLControl.controls.exportGLTF.disabled = false;
 
         if (gltf.scenes.length > 1) {
@@ -857,6 +976,11 @@ var ExportGLTF = function () {
           if (gltf.animations) gltf.scene.animations = gltf.animations;
           main.resultPreview.addObjectToScene(gltf.scene);
         }
+      }).catch(function (err) {
+
+        console.log(err);
+        HTMLControl.loading.result.overlay.classList.remove('hide');
+        HTMLControl.controls.exportGLTF.disabled = true;
       });
     }
   }, {
@@ -945,106 +1069,6 @@ var ExportGLTF = function () {
 
 var exportGLTF = new ExportGLTF();
 
-THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
-
-var objectLoader = null;
-var bufferGeometryLoader = null;
-var jsonLoader = null;
-var fbxLoader = null;
-var gltfLoader = null;
-var objLoader = null;
-var mtlLoader = null;
-var colladaLoader = null;
-
-var objLoaderInternal = null;
-
-var promisifyLoader = function promisifyLoader(loader) {
-  return function (url) {
-    return new Promise(function (resolve, reject) {
-
-      loader.load(url, resolve, loadingManager.onProgress, reject);
-    });
-  };
-};
-
-var Loaders = function Loaders() {
-  classCallCheck(this, Loaders);
-
-
-  return {
-
-    get objectLoader() {
-      if (objectLoader === null) {
-        objectLoader = promisifyLoader(new THREE.ObjectLoader(loadingManager));
-      }
-      return objectLoader;
-    },
-
-    get bufferGeometryLoader() {
-      if (bufferGeometryLoader === null) {
-        bufferGeometryLoader = promisifyLoader(new THREE.BufferGeometryLoader(loadingManager));
-      }
-      return bufferGeometryLoader;
-    },
-
-    get jsonLoader() {
-      if (jsonLoader === null) {
-        jsonLoader = promisifyLoader(new THREE.JSONLoader(loadingManager));
-      }
-      return jsonLoader;
-    },
-
-    get fbxLoader() {
-      if (fbxLoader === null) {
-        fbxLoader = promisifyLoader(new THREE.FBXLoader(loadingManager));
-      }
-      return fbxLoader;
-    },
-
-    get gltfLoader() {
-      if (gltfLoader === null) {
-        gltfLoader = promisifyLoader(new THREE.GLTFLoader(loadingManager));
-      }
-      return gltfLoader;
-    },
-
-    get objLoader() {
-
-      if (objLoaderInternal === null) {
-
-        objLoaderInternal = new THREE.OBJLoader(loadingManager);
-
-        objLoader = promisifyLoader(objLoaderInternal);
-
-        objLoader.setMaterials = function (materials) {
-
-          objLoaderInternal.setMaterials(materials);
-        };
-      }
-
-      return objLoader;
-    },
-
-    get mtlLoader() {
-      if (mtlLoader === null) {
-
-        mtlLoader = promisifyLoader(new THREE.MTLLoader(loadingManager));
-      }
-      return mtlLoader;
-    },
-
-    get colladaLoader() {
-      if (colladaLoader === null) {
-
-        colladaLoader = promisifyLoader(new THREE.ColladaLoader(loadingManager));
-      }
-      return colladaLoader;
-    }
-
-  };
-};
-
-var loaders = new Loaders();
 var defaultMat = new THREE.MeshBasicMaterial({ wireframe: true, color: 0x000000 });
 
 var onLoad = function onLoad(object) {

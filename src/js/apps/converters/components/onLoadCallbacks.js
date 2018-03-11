@@ -2,9 +2,9 @@ import readFileAs from '../utilities/promiseFileReader.js';
 
 import main from '../main.js';
 import exportGLTF from './exportGLTF.js';
-import Loaders from './Loaders.js';
+import loaders from './Loaders.js';
 
-const loaders = new Loaders();
+// const loaders = new Loaders();
 const defaultMat = new THREE.MeshBasicMaterial( { wireframe: true, color: 0x000000 } );
 
 const onLoad = ( object ) => {

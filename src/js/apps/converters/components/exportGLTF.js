@@ -1,6 +1,6 @@
 import HTMLControl from '../HTMLControl.js';
 import main from '../main.js';
-import OnLoadCallbacks from './OnLoadCallbacks.js';
+import loaders from './Loaders.js';
 
 // saving function taken from three.js editor
 const link = document.createElement( 'a' );
@@ -45,7 +45,8 @@ class ExportGLTF {
 
   constructor() {
 
-    this.loader = new THREE.GLTFLoader()
+    this.loader = loaders.gltfLoader;
+
     this.exporter = new THREE.GLTFExporter();
     this.initExportButton();
     this.initOptionListeners();
@@ -94,10 +95,12 @@ class ExportGLTF {
   loadPreview() {
 
     main.resultPreview.reset();
-    this.loader.parse( this.output, '', ( gltf ) => {
+
+    const promise = loaders.gltfLoader( this.output, true );
+
+    promise.then( ( gltf ) => {
 
       HTMLControl.loading.result.overlay.classList.add( 'hide' );
-
       HTMLControl.controls.exportGLTF.disabled = false;
 
       if ( gltf.scenes.length > 1 ) {
@@ -116,7 +119,14 @@ class ExportGLTF {
 
       }
 
+    } ).catch( ( err ) => {
+
+      console.log( err );
+      HTMLControl.loading.result.overlay.classList.remove( 'hide' );
+      HTMLControl.controls.exportGLTF.disabled = true;
+
     } );
+
   }
   processResult() {
 

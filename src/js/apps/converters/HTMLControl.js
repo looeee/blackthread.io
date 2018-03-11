@@ -44,7 +44,7 @@ const controls = {
 export default class HTMLControl {
   static setInitialState() {
 
-    HTMLControl.controls.exportGLTF.disabled = true;
+    controls.exportGLTF.disabled = true;
     loading.original.overlay.classList.remove( 'hide' );
     loading.result.overlay.classList.remove( 'hide' );
     loading.original.bar.classList.add( 'hide' );
@@ -57,6 +57,7 @@ export default class HTMLControl {
   static setOnLoadStartState() {
 
     controls.exportGLTF.disabled = true;
+    loading.result.overlay.classList.remove( 'hide' );
     loading.original.bar.classList.remove( 'hide' );
     messages.classList.add( 'hide' );
     errorsContainer.classList.add( 'hide' );
