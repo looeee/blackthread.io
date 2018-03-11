@@ -1,7 +1,6 @@
 .archive {
   width: 100%;
   height: 100%;
-  margin-top: 1em;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
@@ -36,6 +35,8 @@
   width: 100%;
   margin: 0;
   background: rgba(128, 128, 128, 0.15);
+  word-wrap: normal;
+  text-align: center;
 }
 
 .archive-item-excerpt {
@@ -60,7 +61,8 @@
 
   .archive-item {
 
-    flex-basis: 90%;
+    min-width: 90%;
+    padding: 1em 0;
 
   }
 

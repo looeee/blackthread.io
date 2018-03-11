@@ -14,6 +14,13 @@ footer {
 }
 
 .social-icons {
+
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 25%;
+
+  white-space: nowrap;
+
   .fa {
     color: silver;
   }
@@ -31,9 +38,6 @@ footer {
   font-weight: bold;
   text-transform: uppercase;
   display: flex;
+  flex-wrap: wrap;
 
-}
-
-.social-icons:not(:first-of-type) {
-  padding-left: 1em;
 }
