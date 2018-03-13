@@ -244,466 +244,6 @@ HTMLControl.fullscreenButton.addEventListener('click', function (e) {
   goFullscreen(HTMLControl.previews);
 }, false);
 
-(function(self) {
-  if (self.fetch) {
-    return
-  }
-
-  var support = {
-    searchParams: 'URLSearchParams' in self,
-    iterable: 'Symbol' in self && 'iterator' in Symbol,
-    blob: 'FileReader' in self && 'Blob' in self && (function() {
-      try {
-        new Blob();
-        return true
-      } catch(e) {
-        return false
-      }
-    })(),
-    formData: 'FormData' in self,
-    arrayBuffer: 'ArrayBuffer' in self
-  };
-
-  if (support.arrayBuffer) {
-    var viewClasses = [
-      '[object Int8Array]',
-      '[object Uint8Array]',
-      '[object Uint8ClampedArray]',
-      '[object Int16Array]',
-      '[object Uint16Array]',
-      '[object Int32Array]',
-      '[object Uint32Array]',
-      '[object Float32Array]',
-      '[object Float64Array]'
-    ];
-
-    var isDataView = function(obj) {
-      return obj && DataView.prototype.isPrototypeOf(obj)
-    };
-
-    var isArrayBufferView = ArrayBuffer.isView || function(obj) {
-      return obj && viewClasses.indexOf(Object.prototype.toString.call(obj)) > -1
-    };
-  }
-
-  function normalizeName(name) {
-    if (typeof name !== 'string') {
-      name = String(name);
-    }
-    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
-      throw new TypeError('Invalid character in header field name')
-    }
-    return name.toLowerCase()
-  }
-
-  function normalizeValue(value) {
-    if (typeof value !== 'string') {
-      value = String(value);
-    }
-    return value
-  }
-
-  // Build a destructive iterator for the value list
-  function iteratorFor(items) {
-    var iterator = {
-      next: function() {
-        var value = items.shift();
-        return {done: value === undefined, value: value}
-      }
-    };
-
-    if (support.iterable) {
-      iterator[Symbol.iterator] = function() {
-        return iterator
-      };
-    }
-
-    return iterator
-  }
-
-  function Headers(headers) {
-    this.map = {};
-
-    if (headers instanceof Headers) {
-      headers.forEach(function(value, name) {
-        this.append(name, value);
-      }, this);
-    } else if (Array.isArray(headers)) {
-      headers.forEach(function(header) {
-        this.append(header[0], header[1]);
-      }, this);
-    } else if (headers) {
-      Object.getOwnPropertyNames(headers).forEach(function(name) {
-        this.append(name, headers[name]);
-      }, this);
-    }
-  }
-
-  Headers.prototype.append = function(name, value) {
-    name = normalizeName(name);
-    value = normalizeValue(value);
-    var oldValue = this.map[name];
-    this.map[name] = oldValue ? oldValue+','+value : value;
-  };
-
-  Headers.prototype['delete'] = function(name) {
-    delete this.map[normalizeName(name)];
-  };
-
-  Headers.prototype.get = function(name) {
-    name = normalizeName(name);
-    return this.has(name) ? this.map[name] : null
-  };
-
-  Headers.prototype.has = function(name) {
-    return this.map.hasOwnProperty(normalizeName(name))
-  };
-
-  Headers.prototype.set = function(name, value) {
-    this.map[normalizeName(name)] = normalizeValue(value);
-  };
-
-  Headers.prototype.forEach = function(callback, thisArg) {
-    for (var name in this.map) {
-      if (this.map.hasOwnProperty(name)) {
-        callback.call(thisArg, this.map[name], name, this);
-      }
-    }
-  };
-
-  Headers.prototype.keys = function() {
-    var items = [];
-    this.forEach(function(value, name) { items.push(name); });
-    return iteratorFor(items)
-  };
-
-  Headers.prototype.values = function() {
-    var items = [];
-    this.forEach(function(value) { items.push(value); });
-    return iteratorFor(items)
-  };
-
-  Headers.prototype.entries = function() {
-    var items = [];
-    this.forEach(function(value, name) { items.push([name, value]); });
-    return iteratorFor(items)
-  };
-
-  if (support.iterable) {
-    Headers.prototype[Symbol.iterator] = Headers.prototype.entries;
-  }
-
-  function consumed(body) {
-    if (body.bodyUsed) {
-      return Promise.reject(new TypeError('Already read'))
-    }
-    body.bodyUsed = true;
-  }
-
-  function fileReaderReady(reader) {
-    return new Promise(function(resolve, reject) {
-      reader.onload = function() {
-        resolve(reader.result);
-      };
-      reader.onerror = function() {
-        reject(reader.error);
-      };
-    })
-  }
-
-  function readBlobAsArrayBuffer(blob) {
-    var reader = new FileReader();
-    var promise = fileReaderReady(reader);
-    reader.readAsArrayBuffer(blob);
-    return promise
-  }
-
-  function readBlobAsText(blob) {
-    var reader = new FileReader();
-    var promise = fileReaderReady(reader);
-    reader.readAsText(blob);
-    return promise
-  }
-
-  function readArrayBufferAsText(buf) {
-    var view = new Uint8Array(buf);
-    var chars = new Array(view.length);
-
-    for (var i = 0; i < view.length; i++) {
-      chars[i] = String.fromCharCode(view[i]);
-    }
-    return chars.join('')
-  }
-
-  function bufferClone(buf) {
-    if (buf.slice) {
-      return buf.slice(0)
-    } else {
-      var view = new Uint8Array(buf.byteLength);
-      view.set(new Uint8Array(buf));
-      return view.buffer
-    }
-  }
-
-  function Body() {
-    this.bodyUsed = false;
-
-    this._initBody = function(body) {
-      this._bodyInit = body;
-      if (!body) {
-        this._bodyText = '';
-      } else if (typeof body === 'string') {
-        this._bodyText = body;
-      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
-        this._bodyBlob = body;
-      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
-        this._bodyFormData = body;
-      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
-        this._bodyText = body.toString();
-      } else if (support.arrayBuffer && support.blob && isDataView(body)) {
-        this._bodyArrayBuffer = bufferClone(body.buffer);
-        // IE 10-11 can't handle a DataView body.
-        this._bodyInit = new Blob([this._bodyArrayBuffer]);
-      } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
-        this._bodyArrayBuffer = bufferClone(body);
-      } else {
-        throw new Error('unsupported BodyInit type')
-      }
-
-      if (!this.headers.get('content-type')) {
-        if (typeof body === 'string') {
-          this.headers.set('content-type', 'text/plain;charset=UTF-8');
-        } else if (this._bodyBlob && this._bodyBlob.type) {
-          this.headers.set('content-type', this._bodyBlob.type);
-        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
-          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-        }
-      }
-    };
-
-    if (support.blob) {
-      this.blob = function() {
-        var rejected = consumed(this);
-        if (rejected) {
-          return rejected
-        }
-
-        if (this._bodyBlob) {
-          return Promise.resolve(this._bodyBlob)
-        } else if (this._bodyArrayBuffer) {
-          return Promise.resolve(new Blob([this._bodyArrayBuffer]))
-        } else if (this._bodyFormData) {
-          throw new Error('could not read FormData body as blob')
-        } else {
-          return Promise.resolve(new Blob([this._bodyText]))
-        }
-      };
-
-      this.arrayBuffer = function() {
-        if (this._bodyArrayBuffer) {
-          return consumed(this) || Promise.resolve(this._bodyArrayBuffer)
-        } else {
-          return this.blob().then(readBlobAsArrayBuffer)
-        }
-      };
-    }
-
-    this.text = function() {
-      var rejected = consumed(this);
-      if (rejected) {
-        return rejected
-      }
-
-      if (this._bodyBlob) {
-        return readBlobAsText(this._bodyBlob)
-      } else if (this._bodyArrayBuffer) {
-        return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer))
-      } else if (this._bodyFormData) {
-        throw new Error('could not read FormData body as text')
-      } else {
-        return Promise.resolve(this._bodyText)
-      }
-    };
-
-    if (support.formData) {
-      this.formData = function() {
-        return this.text().then(decode)
-      };
-    }
-
-    this.json = function() {
-      return this.text().then(JSON.parse)
-    };
-
-    return this
-  }
-
-  // HTTP methods whose capitalization should be normalized
-  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT'];
-
-  function normalizeMethod(method) {
-    var upcased = method.toUpperCase();
-    return (methods.indexOf(upcased) > -1) ? upcased : method
-  }
-
-  function Request(input, options) {
-    options = options || {};
-    var body = options.body;
-
-    if (input instanceof Request) {
-      if (input.bodyUsed) {
-        throw new TypeError('Already read')
-      }
-      this.url = input.url;
-      this.credentials = input.credentials;
-      if (!options.headers) {
-        this.headers = new Headers(input.headers);
-      }
-      this.method = input.method;
-      this.mode = input.mode;
-      if (!body && input._bodyInit != null) {
-        body = input._bodyInit;
-        input.bodyUsed = true;
-      }
-    } else {
-      this.url = String(input);
-    }
-
-    this.credentials = options.credentials || this.credentials || 'omit';
-    if (options.headers || !this.headers) {
-      this.headers = new Headers(options.headers);
-    }
-    this.method = normalizeMethod(options.method || this.method || 'GET');
-    this.mode = options.mode || this.mode || null;
-    this.referrer = null;
-
-    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
-      throw new TypeError('Body not allowed for GET or HEAD requests')
-    }
-    this._initBody(body);
-  }
-
-  Request.prototype.clone = function() {
-    return new Request(this, { body: this._bodyInit })
-  };
-
-  function decode(body) {
-    var form = new FormData();
-    body.trim().split('&').forEach(function(bytes) {
-      if (bytes) {
-        var split = bytes.split('=');
-        var name = split.shift().replace(/\+/g, ' ');
-        var value = split.join('=').replace(/\+/g, ' ');
-        form.append(decodeURIComponent(name), decodeURIComponent(value));
-      }
-    });
-    return form
-  }
-
-  function parseHeaders(rawHeaders) {
-    var headers = new Headers();
-    rawHeaders.split(/\r?\n/).forEach(function(line) {
-      var parts = line.split(':');
-      var key = parts.shift().trim();
-      if (key) {
-        var value = parts.join(':').trim();
-        headers.append(key, value);
-      }
-    });
-    return headers
-  }
-
-  Body.call(Request.prototype);
-
-  function Response(bodyInit, options) {
-    if (!options) {
-      options = {};
-    }
-
-    this.type = 'default';
-    this.status = 'status' in options ? options.status : 200;
-    this.ok = this.status >= 200 && this.status < 300;
-    this.statusText = 'statusText' in options ? options.statusText : 'OK';
-    this.headers = new Headers(options.headers);
-    this.url = options.url || '';
-    this._initBody(bodyInit);
-  }
-
-  Body.call(Response.prototype);
-
-  Response.prototype.clone = function() {
-    return new Response(this._bodyInit, {
-      status: this.status,
-      statusText: this.statusText,
-      headers: new Headers(this.headers),
-      url: this.url
-    })
-  };
-
-  Response.error = function() {
-    var response = new Response(null, {status: 0, statusText: ''});
-    response.type = 'error';
-    return response
-  };
-
-  var redirectStatuses = [301, 302, 303, 307, 308];
-
-  Response.redirect = function(url, status) {
-    if (redirectStatuses.indexOf(status) === -1) {
-      throw new RangeError('Invalid status code')
-    }
-
-    return new Response(null, {status: status, headers: {location: url}})
-  };
-
-  self.Headers = Headers;
-  self.Request = Request;
-  self.Response = Response;
-
-  self.fetch = function(input, init) {
-    return new Promise(function(resolve, reject) {
-      var request = new Request(input, init);
-      var xhr = new XMLHttpRequest();
-
-      xhr.onload = function() {
-        var options = {
-          status: xhr.status,
-          statusText: xhr.statusText,
-          headers: parseHeaders(xhr.getAllResponseHeaders() || '')
-        };
-        options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL');
-        var body = 'response' in xhr ? xhr.response : xhr.responseText;
-        resolve(new Response(body, options));
-      };
-
-      xhr.onerror = function() {
-        reject(new TypeError('Network request failed'));
-      };
-
-      xhr.ontimeout = function() {
-        reject(new TypeError('Network request failed'));
-      };
-
-      xhr.open(request.method, request.url, true);
-
-      if (request.credentials === 'include') {
-        xhr.withCredentials = true;
-      }
-
-      if ('responseType' in xhr && support.blob) {
-        xhr.responseType = 'blob';
-      }
-
-      request.headers.forEach(function(value, name) {
-        xhr.setRequestHeader(name, value);
-      });
-
-      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit);
-    })
-  };
-  self.fetch.polyfill = true;
-})(typeof self !== 'undefined' ? self : undefined);
-
 var loadingManager = new THREE.LoadingManager();
 
 var percentComplete = 0;
@@ -765,16 +305,35 @@ var promisifyLoader = function promisifyLoader(loader, manager) {
   };
 };
 
-var objectLoader = null;
+// TODO
+// import loadJavascript from '../utilities/loadJavascript.js';
+
+// Removed for now
+// THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+
 var bufferGeometryLoader = null;
-var jsonLoader = null;
+var amfLoader = null;
+var colladaLoader = null;
+// let ctmLoader = null;
+// let dracoLoader = null;
 var fbxLoader = null;
 var gltfLoader = null;
+var jsonLoader = null;
+// let kmzLoader = null;
 var legacyGltfLoader = null;
-var objLoader = null;
+// let mmdLoader = null;
 var mtlLoader = null;
-var colladaLoader = null;
+// let nrrdLoader = null;
+var objectLoader = null;
+var objLoader = null;
+// let pcdLoader = null;
+// let pdbLoader = null;
+// let plyLoader = null;
+// let pwrmLoader = null;
+// let stlLoader = null;
+var threemfLoader = null;
 
+// used for passing materials to objLoader
 var objLoaderInternal = null;
 
 var Loaders = function Loaders() {
@@ -783,11 +342,11 @@ var Loaders = function Loaders() {
 
   return {
 
-    get objectLoader() {
-      if (objectLoader === null) {
-        objectLoader = promisifyLoader(new THREE.ObjectLoader(loadingManager), loadingManager);
+    get amfLoader() {
+      if (amfLoader === null) {
+        amfLoader = promisifyLoader(new THREE.AMFLoader(loadingManager), loadingManager);
       }
-      return objectLoader;
+      return amfLoader;
     },
 
     get bufferGeometryLoader() {
@@ -797,13 +356,31 @@ var Loaders = function Loaders() {
       return bufferGeometryLoader;
     },
 
-    get jsonLoader() {
-      if (jsonLoader === null) {
-        jsonLoader = promisifyLoader(new THREE.JSONLoader(loadingManager), loadingManager);
+    get colladaLoader() {
+      if (colladaLoader === null) {
+
+        colladaLoader = promisifyLoader(new THREE.ColladaLoader(loadingManager), loadingManager);
       }
-      return jsonLoader;
+      return colladaLoader;
     },
 
+    //ctmLoader
+    // get loaderName() {
+    //   if ( loaderName === null ) {
+    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+    //   }
+    //   return loaderName;
+    // },
+
+    //dracoLoader
+    // get loaderName() {
+    //   if ( loaderName === null ) {
+    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+    //   }
+    //   return loaderName;
+    // },
+
+    // TODO: testing lazy load JS
     // get fbxLoader() {
 
     //   loadJavascript( '/js/vendor/three/examples/js/loaders/FBXLoader.min.js' ).then( () => {
@@ -830,11 +407,57 @@ var Loaders = function Loaders() {
       return gltfLoader;
     },
 
+    get jsonLoader() {
+      if (jsonLoader === null) {
+        jsonLoader = promisifyLoader(new THREE.JSONLoader(loadingManager), loadingManager);
+      }
+      return jsonLoader;
+    },
+
+    //kmzLoader
+    // get loaderName() {
+    //   if ( loaderName === null ) {
+    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+    //   }
+    //   return loaderName;
+    // },
+
     get legacyGltfLoader() {
       if (legacyGltfLoader === null) {
         legacyGltfLoader = promisifyLoader(new THREE.LegacyGLTFLoader(loadingManager), loadingManager);
       }
       return legacyGltfLoader;
+    },
+
+    //mmdLoader
+    // get loaderName() {
+    //   if ( loaderName === null ) {
+    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+    //   }
+    //   return loaderName;
+    // },
+
+    get mtlLoader() {
+      if (mtlLoader === null) {
+
+        mtlLoader = promisifyLoader(new THREE.MTLLoader(loadingManager), loadingManager);
+      }
+      return mtlLoader;
+    },
+
+    //nrrdLoader
+    // get loaderName() {
+    //   if ( loaderName === null ) {
+    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+    //   }
+    //   return loaderName;
+    // },
+
+    get objectLoader() {
+      if (objectLoader === null) {
+        objectLoader = promisifyLoader(new THREE.ObjectLoader(loadingManager), loadingManager);
+      }
+      return objectLoader;
     },
 
     get objLoader() {
@@ -854,285 +477,57 @@ var Loaders = function Loaders() {
       return objLoader;
     },
 
-    get mtlLoader() {
-      if (mtlLoader === null) {
+    //pcdLoader
+    // get loaderName() {
+    //   if ( loaderName === null ) {
+    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+    //   }
+    //   return loaderName;
+    // },
 
-        mtlLoader = promisifyLoader(new THREE.MTLLoader(loadingManager), loadingManager);
+    //pdbLoader
+    // get loaderName() {
+    //   if ( loaderName === null ) {
+    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+    //   }
+    //   return loaderName;
+    // },
+
+    //plyLoader
+    // get loaderName() {
+    //   if ( loaderName === null ) {
+    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+    //   }
+    //   return loaderName;
+    // },
+
+    //pwrmLoader
+    // get loaderName() {
+    //   if ( loaderName === null ) {
+    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+    //   }
+    //   return loaderName;
+    // },
+
+    //stlLoader
+    // get loaderName() {
+    //   if ( loaderName === null ) {
+    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+    //   }
+    //   return loaderName;
+    // },
+
+    get threemfLoader() {
+      if (threemfLoader === null) {
+        threemfLoader = promisifyLoader(new THREE.ThreeMFLoader(loadingManager), loadingManager);
       }
-      return mtlLoader;
-    },
-
-    get colladaLoader() {
-      if (colladaLoader === null) {
-
-        colladaLoader = promisifyLoader(new THREE.ColladaLoader(loadingManager), loadingManager);
-      }
-      return colladaLoader;
+      return threemfLoader;
     }
 
   };
 };
 
 var loaders = new Loaders();
-
-var link = document.createElement('a');
-link.style.display = 'none';
-document.body.appendChild(link); // Firefox workaround, see #6594
-
-var save = function save(blob, filename) {
-
-  link.href = URL.createObjectURL(blob);
-  link.download = filename || 'data.json';
-  link.click();
-};
-
-var saveString = function saveString(text, filename) {
-
-  save(new Blob([text], { type: 'text/plain' }), filename);
-};
-
-var saveArrayBuffer = function saveArrayBuffer(buffer, filename) {
-
-  save(new Blob([buffer], { type: 'application/octet-stream' }), filename);
-};
-
-var stringByteLength = function stringByteLength(str) {
-  // returns the byte length of an utf8 string
-  var s = str.length;
-  for (var i = str.length - 1; i >= 0; i--) {
-    var code = str.charCodeAt(i);
-    if (code > 0x7f && code <= 0x7ff) s++;else if (code > 0x7ff && code <= 0xffff) s += 2;
-    if (code >= 0xDC00 && code <= 0xDFFF) i--; // trail surrogate
-  }
-
-  return s;
-};
-
-var ExportGLTF = function () {
-  function ExportGLTF() {
-    classCallCheck(this, ExportGLTF);
-
-
-    this.loader = loaders.gltfLoader;
-
-    this.exporter = new THREE.GLTFExporter();
-    this.initExportButton();
-    this.initOptionListeners();
-  }
-
-  createClass(ExportGLTF, [{
-    key: 'getOptions',
-    value: function getOptions() {
-
-      var options = {
-        trs: HTMLControl.controls.trs.checked,
-        onlyVisible: HTMLControl.controls.onlyVisible.checked,
-        truncateDrawRange: HTMLControl.controls.truncateDrawRange.checked,
-        binary: HTMLControl.controls.binary.checked,
-        embedImages: HTMLControl.controls.embedImages.checked,
-        animations: HTMLControl.controls.animations.checked,
-        forceIndices: true, // facebook compatibility
-        forcePowerOfTwoTextures: true // facebook compatibility
-      };
-
-      if (options.animations && this.animations.length > 0) options.animations = this.animations;
-
-      return options;
-    }
-  }, {
-    key: 'setInput',
-    value: function setInput(input, animations, name) {
-
-      this.input = input;
-      this.animations = animations;
-      this.name = name;
-      this.parse();
-    }
-  }, {
-    key: 'parse',
-    value: function parse() {
-      var _this = this;
-
-      this.exporter.parse(this.input, function (result) {
-
-        _this.result = result;
-        // console.log( typeof result )
-        _this.processResult(result);
-      }, this.getOptions());
-    }
-  }, {
-    key: 'loadPreview',
-    value: function loadPreview() {
-
-      main.resultPreview.reset();
-
-      var promise = loaders.gltfLoader(this.output, true);
-
-      promise.then(function (gltf) {
-
-        HTMLControl.loading.result.overlay.classList.add('hide');
-        HTMLControl.controls.exportGLTF.disabled = false;
-
-        if (gltf.scenes.length > 1) {
-
-          gltf.scenes.forEach(function (scene) {
-
-            if (gltf.animations) scene.animations = gltf.animations;
-            main.resultPreview.addObjectToScene(scene);
-          });
-        } else if (gltf.scene) {
-
-          if (gltf.animations) gltf.scene.animations = gltf.animations;
-          main.resultPreview.addObjectToScene(gltf.scene);
-        }
-      }).catch(function (err) {
-
-        console.log(err);
-        HTMLControl.loading.result.overlay.classList.remove('hide');
-        HTMLControl.controls.exportGLTF.disabled = true;
-      });
-    }
-  }, {
-    key: 'processResult',
-    value: function processResult() {
-
-      this.setOutput();
-      this.loadPreview();
-    }
-  }, {
-    key: 'updateInfo',
-    value: function updateInfo(byteLength) {
-
-      var type = HTMLControl.controls.binary.checked ? 'GLB' : 'GLTF';
-
-      if (byteLength < 1000000) {
-
-        HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + Math.ceil(byteLength * 0.001) + 'kb)';
-      } else {
-
-        HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + (byteLength * 1e-6).toFixed(3) + 'mb)';
-      }
-    }
-  }, {
-    key: 'setOutput',
-    value: function setOutput() {
-
-      if (this.result instanceof ArrayBuffer) {
-
-        this.output = this.result;
-        this.updateInfo(this.result.byteLength);
-      } else {
-
-        this.output = JSON.stringify(this.result, null, 2);
-        this.updateInfo(stringByteLength(this.output));
-      }
-    }
-  }, {
-    key: 'save',
-    value: function save() {
-
-      if (this.output instanceof ArrayBuffer) {
-
-        saveArrayBuffer(this.result, this.name + '.glb');
-      } else {
-
-        saveString(this.output, this.name + '.gltf');
-      }
-    }
-  }, {
-    key: 'initExportButton',
-    value: function initExportButton() {
-      var _this2 = this;
-
-      HTMLControl.controls.exportGLTF.addEventListener('click', function (e) {
-
-        e.preventDefault();
-
-        if (_this2.output) _this2.save(_this2.output);
-      });
-    }
-  }, {
-    key: 'initOptionListeners',
-    value: function initOptionListeners() {
-      var _this3 = this;
-
-      var onOptionChange = function onOptionChange(e) {
-
-        e.preventDefault();
-
-        if (_this3.input === undefined) return;
-
-        _this3.parse();
-      };
-
-      HTMLControl.controls.trs.addEventListener('change', onOptionChange, false);
-      HTMLControl.controls.onlyVisible.addEventListener('change', onOptionChange, false);
-      HTMLControl.controls.truncateDrawRange.addEventListener('change', onOptionChange, false);
-      HTMLControl.controls.binary.addEventListener('change', onOptionChange, false);
-      HTMLControl.controls.embedImages.addEventListener('change', onOptionChange, false);
-      HTMLControl.controls.animations.addEventListener('change', onOptionChange, false);
-    }
-  }]);
-  return ExportGLTF;
-}();
-
-var exportGLTF = new ExportGLTF();
-
-var defaultMat = new THREE.MeshBasicMaterial({ wireframe: true, color: 0x000000 });
-
-var onLoad = function onLoad(object, name) {
-
-  object.traverse(function (child) {
-
-    if (child.material && Array.isArray(child.material)) {
-
-      console.error('Multimaterials are currently not supported.');
-    }
-  });
-
-  var animations = [];
-  if (object.animations) animations = object.animations;
-
-  main.originalPreview.addObjectToScene(object);
-  main.resultPreview.reset();
-  exportGLTF.setInput(object, animations, name);
-};
-
-var load = function load(promise) {
-  var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'scene';
-  var originalFile = arguments[2];
-
-
-  promise.then(function (result) {
-
-    if (result.isGeometry || result.isBufferGeometry) onLoad(new THREE.Mesh(result, defaultMat));else if (result.isObject3D) onLoad(result, name);
-    // glTF
-    else if (result.scenes && result.scenes.length > 1) {
-
-        result.scenes.forEach(function (scene) {
-
-          if (result.animations) scene.animations = result.animations;
-          onLoad(scene, name);
-        });
-      }
-      // glTF or Collada
-      else if (result.scene) {
-
-          if (result.animations) result.scene.animations = result.animations;
-          onLoad(result.scene, name);
-        } else console.error('No scene found in file!');
-  }).catch(function (err) {
-
-    if (_typeof(err.message) && err.message.indexOf('Use LegacyGLTFLoader instead') !== -1) {
-
-      load(loaders.legacyGltfLoader(originalFile));
-    } else {
-      console.error(err);
-    }
-  });
-
-  return promise;
-};
 
 function readFileAs(file, as) {
   if (!(file instanceof Blob)) {
@@ -1161,11 +556,11 @@ var checkForFileAPI = function checkForFileAPI() {
 checkForFileAPI();
 
 var isAsset = function isAsset(type) {
-  return new RegExp('(png|jpg|jpeg|gif|bmp|dds|tga|bin|vert|frag|txt|mtl)$').test(type);
+  return new RegExp('(bin|bmp|frag|gif|jpeg|jpg|mtl|png|svg|vert)$').test(type);
 };
 
 var isModel = function isModel(type) {
-  return new RegExp('(json|js|fbx|gltf|glb|dae|obj)$').test(type);
+  return new RegExp('(3mf|amf|ctm|dae|drc|fbx|gltf|glb|js|json|kmz|mmd|nrrd|objpcd|pdb|ply|pwrm|stl)$').test(type);
 };
 
 var isValid = function isValid(type) {
@@ -1186,7 +581,7 @@ var selectJSONLoader = function selectJSONLoader(file, name, originalFile) {
 
     readFileAs(originalFile, 'DataURL').then(function (data) {
 
-      if (type === 'buffergeometry') load(loaders.bufferGeometryLoader(data), name);else if (type === 'object') load(loaders.objectLoader(data), name);else load(loaders.jsonLoader(data), name);
+      if (type === 'buffergeometry') main.load(loaders.bufferGeometryLoader(data), name);else if (type === 'object') main.load(loaders.objectLoader(data), name);else main.load(loaders.jsonLoader(data), name);
     }).catch(function (err) {
       return console.error(err);
     });
@@ -1205,34 +600,76 @@ var loadFile = function loadFile(details) {
 
   switch (type) {
 
+    case '3mf':
+      // console.log( 'Support for ' + type + ' coming soon!' );
+      main.load(loaders.threemfLoader(file), name);
+      break;
+    case 'amf':
+      // console.log( 'Support for ' + type + ' coming soon!' );
+      main.load(loaders.amfLoader(file), name);
+      break;
+    case 'ctm':
+      console.log('Support for ' + type + ' coming soon!');
+      // main.load( loaders.ctmLoader( file ), name );
+      break;
+    case 'dae':
+      main.load(loaders.colladaLoader(file), name);
+      break;
+    case 'drc':
+      console.log('Support for ' + type + ' coming soon!');
+      // main.load( loaders.dracoLoader( file ), name );
+      break;
     case 'fbx':
-      loadingManager.onStart();
-      load(loaders.fbxLoader(file), name);
+      main.load(loaders.fbxLoader(file), name);
       break;
     case 'gltf':
     case 'glb':
-      loadingManager.onStart();
-      load(loaders.gltfLoader(file), name, file);
-      break;
-    case 'obj':
-      loadingManager.onStart();
-      loaders.mtlLoader(assets[originalFile.name.replace('.obj', '.mtl')]).then(function (materials) {
-
-        loaders.objLoader.setMaterials(materials);
-        return load(loaders.objLoader(file), name);
-      }).catch(function (err) {
-        return console.error(err);
-      });
-
-      break;
-    case 'dae':
-      loadingManager.onStart();
-      load(loaders.colladaLoader(file), name);
+      main.load(loaders.gltfLoader(file), name, file);
       break;
     case 'json':
     case 'js':
-      loadingManager.onStart();
       selectJSONLoader(file, name, originalFile);
+      break;
+    case 'kmz':
+      console.log('Support for ' + type + ' coming soon!');
+      // main.load( loaders.kmzLoader( file ), name );
+      break;
+    case 'mmd':
+      console.log('Support for ' + type + ' coming soon!');
+      // main.load( loaders.mmdLoader( file ), name );
+      break;
+    case 'nrrd':
+      console.log('Support for ' + type + ' coming soon!');
+      // main.load( loaders.nrrdLoader( file ), name );
+      break;
+    case 'obj':
+      loaders.mtlLoader(assets[originalFile.name.replace('.obj', '.mtl')]).then(function (materials) {
+
+        loaders.objLoader.setMaterials(materials);
+        return main.load(loaders.objLoader(file), name);
+      }).catch(function (err) {
+        return console.error(err);
+      });
+      break;
+    case 'pcd':
+      console.log('Support for ' + type + ' coming soon!');
+      // main.load( loaders.pcdLoader( file ), name );
+      break;
+    case 'pdb':
+      console.log('Support for ' + type + ' coming soon!');
+      // main.load( loaders.pdbLoader( file ), name );
+      break;
+    case 'ply':
+      console.log('Support for ' + type + ' coming soon!');
+      // main.load( loaders.plyLoader( file ), name );
+      break;
+    case 'pwrm':
+      console.log('Support for ' + type + ' coming soon!');
+      // main.load( loaders.pwrmLoader( file ), name );
+      break;
+    case 'stl':
+      console.log('Support for ' + type + ' coming soon!');
+      // main.load( loaders.stlLoader( file ), name );
       break;
     default:
       console.error('Unsupported file type ' + type + ' - please load one of the supported model formats.');
@@ -2043,7 +1480,6 @@ var Viewer = function () {
 
       // NB: use self inside this function
 
-      console.log('resized');
     };
 
     this.loadedObjects = new THREE.Group();
@@ -2109,15 +1545,286 @@ var Viewer = function () {
   return Viewer;
 }();
 
+var link = document.createElement('a');
+link.style.display = 'none';
+document.body.appendChild(link); // Firefox workaround, see #6594
+
+var save = function save(blob, filename) {
+
+  link.href = URL.createObjectURL(blob);
+  link.download = filename || 'data.json';
+  link.click();
+};
+
+var saveString = function saveString(text, filename) {
+
+  save(new Blob([text], { type: 'text/plain' }), filename);
+};
+
+var saveArrayBuffer = function saveArrayBuffer(buffer, filename) {
+
+  save(new Blob([buffer], { type: 'application/octet-stream' }), filename);
+};
+
+var stringByteLength = function stringByteLength(str) {
+  // returns the byte length of an utf8 string
+  var s = str.length;
+  for (var i = str.length - 1; i >= 0; i--) {
+    var code = str.charCodeAt(i);
+    if (code > 0x7f && code <= 0x7ff) s++;else if (code > 0x7ff && code <= 0xffff) s += 2;
+    if (code >= 0xDC00 && code <= 0xDFFF) i--; // trail surrogate
+  }
+
+  return s;
+};
+
+var ExportGLTF = function () {
+  function ExportGLTF() {
+    classCallCheck(this, ExportGLTF);
+
+
+    this.loader = loaders.gltfLoader;
+
+    this.exporter = new THREE.GLTFExporter();
+    this.initExportButton();
+    this.initOptionListeners();
+  }
+
+  createClass(ExportGLTF, [{
+    key: 'getOptions',
+    value: function getOptions() {
+
+      var options = {
+        trs: HTMLControl.controls.trs.checked,
+        onlyVisible: HTMLControl.controls.onlyVisible.checked,
+        truncateDrawRange: HTMLControl.controls.truncateDrawRange.checked,
+        binary: HTMLControl.controls.binary.checked,
+        embedImages: HTMLControl.controls.embedImages.checked,
+        animations: HTMLControl.controls.animations.checked,
+        forceIndices: true, // facebook compatibility
+        forcePowerOfTwoTextures: true // facebook compatibility
+      };
+
+      if (options.animations && this.animations.length > 0) options.animations = this.animations;
+
+      return options;
+    }
+  }, {
+    key: 'setInput',
+    value: function setInput(input, animations, name) {
+
+      this.input = input;
+      this.animations = animations;
+      this.name = name;
+      this.parse();
+    }
+  }, {
+    key: 'parse',
+    value: function parse() {
+      var _this = this;
+
+      this.exporter.parse(this.input, function (result) {
+
+        _this.result = result;
+        // console.log( typeof result )
+        _this.processResult(result);
+      }, this.getOptions());
+    }
+  }, {
+    key: 'loadPreview',
+    value: function loadPreview() {
+
+      main.resultPreview.reset();
+
+      var promise = loaders.gltfLoader(this.output, true);
+
+      promise.then(function (gltf) {
+
+        HTMLControl.loading.result.overlay.classList.add('hide');
+        HTMLControl.controls.exportGLTF.disabled = false;
+
+        if (gltf.scenes.length > 1) {
+
+          gltf.scenes.forEach(function (scene) {
+
+            if (gltf.animations) scene.animations = gltf.animations;
+            main.resultPreview.addObjectToScene(scene);
+          });
+        } else if (gltf.scene) {
+
+          if (gltf.animations) gltf.scene.animations = gltf.animations;
+          main.resultPreview.addObjectToScene(gltf.scene);
+        }
+      }).catch(function (err) {
+
+        console.log(err);
+        HTMLControl.loading.result.overlay.classList.remove('hide');
+        HTMLControl.controls.exportGLTF.disabled = true;
+      });
+    }
+  }, {
+    key: 'processResult',
+    value: function processResult() {
+
+      this.setOutput();
+      this.loadPreview();
+    }
+  }, {
+    key: 'updateInfo',
+    value: function updateInfo(byteLength) {
+
+      var type = HTMLControl.controls.binary.checked ? 'GLB' : 'GLTF';
+
+      if (byteLength < 1000000) {
+
+        HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + Math.ceil(byteLength * 0.001) + 'kb)';
+      } else {
+
+        HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + (byteLength * 1e-6).toFixed(3) + 'mb)';
+      }
+    }
+  }, {
+    key: 'setOutput',
+    value: function setOutput() {
+
+      if (this.result instanceof ArrayBuffer) {
+
+        this.output = this.result;
+        this.updateInfo(this.result.byteLength);
+      } else {
+
+        this.output = JSON.stringify(this.result, null, 2);
+        this.updateInfo(stringByteLength(this.output));
+      }
+    }
+  }, {
+    key: 'save',
+    value: function save() {
+
+      if (this.output instanceof ArrayBuffer) {
+
+        saveArrayBuffer(this.result, this.name + '.glb');
+      } else {
+
+        saveString(this.output, this.name + '.gltf');
+      }
+    }
+  }, {
+    key: 'initExportButton',
+    value: function initExportButton() {
+      var _this2 = this;
+
+      HTMLControl.controls.exportGLTF.addEventListener('click', function (e) {
+
+        e.preventDefault();
+
+        if (_this2.output) _this2.save(_this2.output);
+      });
+    }
+  }, {
+    key: 'initOptionListeners',
+    value: function initOptionListeners() {
+      var _this3 = this;
+
+      var onOptionChange = function onOptionChange(e) {
+
+        e.preventDefault();
+
+        if (_this3.input === undefined) return;
+
+        _this3.parse();
+      };
+
+      HTMLControl.controls.trs.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.onlyVisible.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.truncateDrawRange.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.binary.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.embedImages.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.animations.addEventListener('change', onOptionChange, false);
+    }
+  }]);
+  return ExportGLTF;
+}();
+
+var exportGLTF = new ExportGLTF();
+
 THREE.Cache.enabled = true;
 
-var Main = function Main(originalCanvas, resultCanvas) {
-  classCallCheck(this, Main);
+// const loaders = new Loaders();
+var defaultMat = new THREE.MeshBasicMaterial({ wireframe: true, color: 0x000000 });
+
+var Main = function () {
+  function Main(originalCanvas, resultCanvas) {
+    classCallCheck(this, Main);
 
 
-  this.originalPreview = new Viewer(originalCanvas);
-  this.resultPreview = new Viewer(resultCanvas);
-};
+    this.originalPreview = new Viewer(originalCanvas);
+    this.resultPreview = new Viewer(resultCanvas);
+  }
+
+  createClass(Main, [{
+    key: 'load',
+    value: function load(promise) {
+      var _this = this;
+
+      var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'scene';
+      var originalFile = arguments[2];
+
+
+      loadingManager.onStart();
+
+      promise.then(function (result) {
+
+        if (result.isGeometry || result.isBufferGeometry) _this.onLoad(new THREE.Mesh(result, defaultMat));else if (result.isObject3D) _this.onLoad(result, name);
+        // glTF
+        else if (result.scenes && result.scenes.length > 1) {
+
+            result.scenes.forEach(function (scene) {
+
+              if (result.animations) scene.animations = result.animations;
+              _this.onLoad(scene, name);
+            });
+          }
+          // glTF or Collada
+          else if (result.scene) {
+
+              if (result.animations) result.scene.animations = result.animations;
+              _this.onLoad(result.scene, name);
+            } else console.error('No scene found in file!');
+      }).catch(function (err) {
+
+        if (_typeof(err.message) && err.message.indexOf('Use LegacyGLTFLoader instead') !== -1) {
+
+          _this.load(loaders.legacyGltfLoader(originalFile));
+        } else {
+          console.error(err);
+        }
+      });
+
+      return promise;
+    }
+  }, {
+    key: 'onLoad',
+    value: function onLoad(object, name) {
+
+      object.traverse(function (child) {
+
+        if (child.material && Array.isArray(child.material)) {
+
+          console.error('Multimaterials are currently not supported.');
+        }
+      });
+
+      var animations = [];
+      if (object.animations) animations = object.animations;
+
+      this.originalPreview.addObjectToScene(object);
+      this.resultPreview.reset();
+      exportGLTF.setInput(object, animations, name);
+    }
+  }]);
+  return Main;
+}();
 
 var main = new Main(HTMLControl.originalCanvas, HTMLControl.resultCanvas);
 

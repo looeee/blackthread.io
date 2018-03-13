@@ -11,18 +11,31 @@ menuTitle: Blackthread Experiments
 weight: 1
 vendorScripts:
   [
-  "/inflate.min",
-  "/three/build/three.min",
+  '/three/examples/js/libs/jszip.min',
+  '/three/examples/js/libs/inflate.min',
+  '/three/build/three.min',
+  '/three/examples/js/controls/OrbitControls.min',
+  '/three/examples/js/loaders/3MFLoader.min',
+  '/three/examples/js/loaders/AMFLoader',
+  # '/three/examples/js/loaders/CTMLoader' - needs lots of files!
+  '/three/examples/js/loaders/ColladaLoader.min',
+  '/three/examples/js/loaders/DRACOLoader.min',
   # '/three/examples/js/loaders/DDSLoader',
   '/three/examples/js/loaders/FBXLoader.min',
+  '/three/examples/js/exporters/GLTFExporter',
   '/three/examples/js/loaders/GLTFLoader',
+  '/three/examples/js/loaders/KMZLoader.min',
   '/three/examples/js/loaders/deprecated/LegacyGLTFLoader.min',
   '/three/examples/js/loaders/LoaderSupport.min',
-  '/three/examples/js/loaders/OBJLoader.min',
+  '/three/examples/js/loaders/MMDLoader.min',
   '/three/examples/js/loaders/MTLLoader.min',
-  '/three/examples/js/loaders/ColladaLoader.min',
-  '/three/examples/js/controls/OrbitControls.min',
-  '/three/examples/js/exporters/GLTFExporter'
+  '/three/examples/js/loaders/NRRDLoader.min',
+  '/three/examples/js/loaders/OBJLoader.min',
+  '/three/examples/js/loaders/PCDLoader.min',
+  '/three/examples/js/loaders/PDBLoader.min',
+  '/three/examples/js/loaders/PLYLoader.min',
+  '/three/examples/js/loaders/PRWMLoader.min',
+  '/three/examples/js/loaders/STLLoader.min',
    ]
 aliases: [/experiments/gltf-converter/]
 ---
@@ -36,7 +49,7 @@ Convert from a variety of formats to GLTF format (V2) using the three.js <a href
 * FBX
 * OBJ and MTL
 * GLTF and GLB version 2 (because why not? )
-* GLTF and GLB version 1 (materials will export as default grey though since the exporter doesn't yet support shader materials)
+* GLTF and GLB version 1. Upload any .BIN, .FRAG, or .VERT files alongside your model (shader materials will export as grey for now though).
 * Collada ( DAE )
 * Three.js JSON format. Note that older versions of the format, as well as files containing just a geometry or buffer geometry will load as a wireframe.
 

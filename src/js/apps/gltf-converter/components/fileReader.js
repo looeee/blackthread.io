@@ -1,11 +1,8 @@
-import 'whatwg-fetch';
-
 import loadingManager from './loadingManager.js';
-import load from './load.js';
 import loaders from './Loaders.js';
 import HTMLControl from '../HTMLControl.js';
-
 import readFileAs from '../utilities/promiseFileReader.js';
+import main from '../main.js';
 
 // Check support for the File API support
 const checkForFileAPI = () => {
@@ -20,9 +17,9 @@ const checkForFileAPI = () => {
 
 checkForFileAPI();
 
-const isAsset = type => new RegExp( '(png|jpg|jpeg|gif|bmp|dds|tga|bin|vert|frag|txt|mtl)$' ).test( type );
+const isAsset = type => new RegExp( '(bin|bmp|frag|gif|jpeg|jpg|mtl|png|svg|vert)$' ).test( type );
 
-const isModel = type => new RegExp( '(json|js|fbx|gltf|glb|dae|obj)$' ).test( type );
+const isModel = type => new RegExp( '(3mf|amf|ctm|dae|drc|fbx|gltf|glb|js|json|kmz|mmd|nrrd|objpcd|pdb|ply|pwrm|stl)$' ).test( type );
 
 const isValid = type => isAsset( type ) || isModel( type );
 
@@ -40,9 +37,9 @@ const selectJSONLoader = ( file, name, originalFile ) => {
 
     readFileAs( originalFile, 'DataURL' ).then( ( data ) => {
 
-      if ( type === 'buffergeometry' ) load( loaders.bufferGeometryLoader( data ), name );
-      else if ( type === 'object' ) load( loaders.objectLoader( data ), name );
-      else load( loaders.jsonLoader( data ), name );
+      if ( type === 'buffergeometry' ) main.load( loaders.bufferGeometryLoader( data ), name );
+      else if ( type === 'object' ) main.load( loaders.objectLoader( data ), name );
+      else main.load( loaders.jsonLoader( data ), name );
 
     } ).catch( err => console.error( err ) );
 
@@ -63,34 +60,76 @@ const loadFile = ( details ) => {
 
   switch ( type ) {
 
+    case '3mf':
+      // console.log( 'Support for ' + type + ' coming soon!' );
+      main.load( loaders.threemfLoader( file ), name );
+      break;
+    case 'amf':
+      // console.log( 'Support for ' + type + ' coming soon!' );
+      main.load( loaders.amfLoader( file ), name );
+      break;
+    case 'ctm':
+      console.log( 'Support for ' + type + ' coming soon!' );
+      // main.load( loaders.ctmLoader( file ), name );
+      break;
+    case 'dae':
+      main.load( loaders.colladaLoader( file ), name );
+      break;
+    case 'drc':
+      console.log( 'Support for ' + type + ' coming soon!' );
+      // main.load( loaders.dracoLoader( file ), name );
+      break;
     case 'fbx':
-      loadingManager.onStart();
-      load( loaders.fbxLoader( file ), name );
+      main.load( loaders.fbxLoader( file ), name );
       break;
     case 'gltf':
     case 'glb':
-      loadingManager.onStart();
-      load( loaders.gltfLoader( file ), name, file );
+      main.load( loaders.gltfLoader( file ), name, file );
+      break;
+    case 'json':
+    case 'js':
+      selectJSONLoader( file, name, originalFile );
+      break;
+    case 'kmz':
+      console.log( 'Support for ' + type + ' coming soon!' );
+      // main.load( loaders.kmzLoader( file ), name );
+      break;
+    case 'mmd':
+      console.log( 'Support for ' + type + ' coming soon!' );
+      // main.load( loaders.mmdLoader( file ), name );
+      break;
+    case 'nrrd':
+      console.log( 'Support for ' + type + ' coming soon!' );
+      // main.load( loaders.nrrdLoader( file ), name );
       break;
     case 'obj':
-      loadingManager.onStart();
       loaders.mtlLoader( assets[originalFile.name.replace( '.obj', '.mtl' ) ] )
         .then( ( materials ) => {
 
           loaders.objLoader.setMaterials( materials );
-          return load( loaders.objLoader( file ), name );
+          return main.load( loaders.objLoader( file ), name );
 
         } ).catch( err => console.error( err ) );
-
       break;
-    case 'dae':
-      loadingManager.onStart();
-      load( loaders.colladaLoader( file ), name );
+    case 'pcd':
+      console.log( 'Support for ' + type + ' coming soon!' );
+      // main.load( loaders.pcdLoader( file ), name );
       break;
-    case 'json':
-    case 'js':
-      loadingManager.onStart();
-      selectJSONLoader( file, name, originalFile );
+    case 'pdb':
+      console.log( 'Support for ' + type + ' coming soon!' );
+      // main.load( loaders.pdbLoader( file ), name );
+      break;
+    case 'ply':
+      console.log( 'Support for ' + type + ' coming soon!' );
+      // main.load( loaders.plyLoader( file ), name );
+      break;
+    case 'pwrm':
+      console.log( 'Support for ' + type + ' coming soon!' );
+      // main.load( loaders.pwrmLoader( file ), name );
+      break;
+    case 'stl':
+      console.log( 'Support for ' + type + ' coming soon!' );
+      // main.load( loaders.stlLoader( file ), name );
       break;
     default:
       console.error( 'Unsupported file type ' + type + ' - please load one of the supported model formats.' );

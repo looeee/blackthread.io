@@ -31,8 +31,6 @@ export default class Viewer {
 
       // NB: use self inside this function
 
-      console.log( 'resized')
-
     };
 
     this.loadedObjects = new THREE.Group();

@@ -1,4 +1,4 @@
-import 'whatwg-fetch';
+// import 'whatwg-fetch';
 
 import loadingManager from './loadingManager.js';
 import OnLoadCallbacks from './OnLoadCallbacks.js';
