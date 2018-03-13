@@ -72,10 +72,11 @@ class ExportGLTF {
 
   }
 
-  setInput( input, animations ) {
+  setInput( input, animations, name ) {
 
     this.input = input;
     this.animations = animations;
+    this.name = name;
     this.parse();
 
   }
@@ -170,11 +171,11 @@ class ExportGLTF {
 
     if ( this.output instanceof ArrayBuffer ) {
 
-      saveArrayBuffer( this.result, 'scene.glb' );
+      saveArrayBuffer( this.result, this.name + '.glb' );
 
     } else {
 
-      saveString( this.output, 'scene.gltf' );
+      saveString( this.output, this.name + '.gltf' );
 
     }
 

@@ -13,7 +13,7 @@ vendorScripts:
   [
   "/inflate.min",
   "/three/build/three.min",
-  '/three/examples/js/loaders/DDSLoader.min',
+  # '/three/examples/js/loaders/DDSLoader',
   '/three/examples/js/loaders/FBXLoader.min',
   '/three/examples/js/loaders/GLTFLoader',
   '/three/examples/js/loaders/deprecated/LegacyGLTFLoader.min',
@@ -40,7 +40,7 @@ Convert from a variety of formats to GLTF format (V2) using the three.js <a href
 * Collada ( DAE )
 * Three.js JSON format. Note that older versions of the format, as well as files containing just a geometry or buffer geometry will load as a wireframe.
 
-Upload any textures alongside the model in JPG, PNG, GIF, BMP or DDS format (just upload all the files at the same time and the converter will handle the rest ).
+Upload any textures alongside the model in JPG, PNG, GIF, BMP format ( just upload all the files at the same time and the converter will handle the rest ).
 
 Leave a comment below if you'd like to see other file types supported.<br><br>
 

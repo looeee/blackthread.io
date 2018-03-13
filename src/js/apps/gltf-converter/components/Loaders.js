@@ -2,8 +2,7 @@ import promisifyLoader from '../utilities/promisifyLoader.js';
 // import loadJavascript from '../utilities/loadJavascript.js';
 import loadingManager from './loadingManager.js';
 
-
-THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+// THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 
 let objectLoader = null;
 let bufferGeometryLoader = null;

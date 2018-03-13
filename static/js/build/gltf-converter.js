@@ -765,8 +765,6 @@ var promisifyLoader = function promisifyLoader(loader, manager) {
   };
 };
 
-THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
-
 var objectLoader = null;
 var bufferGeometryLoader = null;
 var jsonLoader = null;
@@ -943,10 +941,11 @@ var ExportGLTF = function () {
     }
   }, {
     key: 'setInput',
-    value: function setInput(input, animations) {
+    value: function setInput(input, animations, name) {
 
       this.input = input;
       this.animations = animations;
+      this.name = name;
       this.parse();
     }
   }, {
@@ -1034,10 +1033,10 @@ var ExportGLTF = function () {
 
       if (this.output instanceof ArrayBuffer) {
 
-        saveArrayBuffer(this.result, 'scene.glb');
+        saveArrayBuffer(this.result, this.name + '.glb');
       } else {
 
-        saveString(this.output, 'scene.gltf');
+        saveString(this.output, this.name + '.gltf');
       }
     }
   }, {
@@ -1079,10 +1078,9 @@ var ExportGLTF = function () {
 
 var exportGLTF = new ExportGLTF();
 
-// const loaders = new Loaders();
 var defaultMat = new THREE.MeshBasicMaterial({ wireframe: true, color: 0x000000 });
 
-var onLoad = function onLoad(object) {
+var onLoad = function onLoad(object, name) {
 
   object.traverse(function (child) {
 
@@ -1097,28 +1095,31 @@ var onLoad = function onLoad(object) {
 
   main.originalPreview.addObjectToScene(object);
   main.resultPreview.reset();
-  exportGLTF.setInput(object, animations);
+  exportGLTF.setInput(object, animations, name);
 };
 
-var load = function load(promise, originalFile) {
+var load = function load(promise) {
+  var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'scene';
+  var originalFile = arguments[2];
+
 
   promise.then(function (result) {
 
-    if (result.isGeometry || result.isBufferGeometry) onLoad(new THREE.Mesh(result, defaultMat));else if (result.isObject3D) onLoad(result);
+    if (result.isGeometry || result.isBufferGeometry) onLoad(new THREE.Mesh(result, defaultMat));else if (result.isObject3D) onLoad(result, name);
     // glTF
     else if (result.scenes && result.scenes.length > 1) {
 
         result.scenes.forEach(function (scene) {
 
           if (result.animations) scene.animations = result.animations;
-          onLoad(scene);
+          onLoad(scene, name);
         });
       }
       // glTF or Collada
       else if (result.scene) {
 
           if (result.animations) result.scene.animations = result.animations;
-          onLoad(result.scene);
+          onLoad(result.scene, name);
         } else console.error('No scene found in file!');
   }).catch(function (err) {
 
@@ -1149,6 +1150,7 @@ function readFileAs(file, as) {
   });
 }
 
+// Check support for the File API support
 var checkForFileAPI = function checkForFileAPI() {
 
   if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -1175,7 +1177,7 @@ var models = [];
 var assets = {};
 var promises = [];
 
-var selectJSONLoader = function selectJSONLoader(file, originalFile) {
+var selectJSONLoader = function selectJSONLoader(file, name, originalFile) {
   var json = JSON.parse(file);
 
   if (json.metadata) {
@@ -1185,7 +1187,7 @@ var selectJSONLoader = function selectJSONLoader(file, originalFile) {
 
     readFileAs(originalFile, 'DataURL').then(function (data) {
 
-      if (type === 'buffergeometry') load(loaders.bufferGeometryLoader(data));else if (type === 'object') load(loaders.objectLoader(data));else load(loaders.jsonLoader(data));
+      if (type === 'buffergeometry') load(loaders.bufferGeometryLoader(data), name);else if (type === 'object') load(loaders.objectLoader(data), name);else load(loaders.jsonLoader(data), name);
     }).catch(function (err) {
       return console.error(err);
     });
@@ -1198,26 +1200,27 @@ var selectJSONLoader = function selectJSONLoader(file, originalFile) {
 var loadFile = function loadFile(details) {
 
   var file = details[0];
-  var type = details[1];
-  var originalFile = details[2];
+  var name = details[1];
+  var type = details[2];
+  var originalFile = details[3];
 
   switch (type) {
 
     case 'fbx':
       loadingManager.onStart();
-      load(loaders.fbxLoader(file));
+      load(loaders.fbxLoader(file), name);
       break;
     case 'gltf':
     case 'glb':
       loadingManager.onStart();
-      load(loaders.gltfLoader(file), file);
+      load(loaders.gltfLoader(file), name, file);
       break;
     case 'obj':
       loadingManager.onStart();
       loaders.mtlLoader(assets[originalFile.name.replace('.obj', '.mtl')]).then(function (materials) {
 
         loaders.objLoader.setMaterials(materials);
-        return load(loaders.objLoader(file));
+        return load(loaders.objLoader(file), name);
       }).catch(function (err) {
         return console.error(err);
       });
@@ -1225,12 +1228,12 @@ var loadFile = function loadFile(details) {
       break;
     case 'dae':
       loadingManager.onStart();
-      load(loaders.colladaLoader(file));
+      load(loaders.colladaLoader(file), name);
       break;
     case 'json':
     case 'js':
       loadingManager.onStart();
-      selectJSONLoader(file, originalFile);
+      selectJSONLoader(file, name, originalFile);
       break;
     default:
       console.error('Unsupported file type ' + type + ' - please load one of the supported model formats.');
@@ -1257,6 +1260,7 @@ loadingManager.setURLModifier(function (url) {
 
 var processFile = function processFile(file) {
 
+  var name = file.name.split('/').pop().split('.')[0];
   var type = file.name.split('.').pop().toLowerCase();
 
   if (!isValid(type)) return;
@@ -1264,7 +1268,7 @@ var processFile = function processFile(file) {
   if (type === 'js' || type === 'json') {
 
     var promise = readFileAs(file, 'Text').then(function (data) {
-      models.push([data, type, file]);
+      models.push([data, name, type, file]);
     }).catch(function (err) {
       return console.error(err);
     });
@@ -1276,7 +1280,7 @@ var processFile = function processFile(file) {
 
       if (isModel(type)) {
 
-        if (type === 'obj') models.push([data, type, file]);else models.push([data, type]);
+        if (type === 'obj') models.push([data, name, type, file]);else models.push([data, name, type]);
       } else if (isAsset(type)) {
 
         assets[file.name] = data;

@@ -5,7 +5,7 @@ import exportGLTF from './exportGLTF.js';
 // const loaders = new Loaders();
 const defaultMat = new THREE.MeshBasicMaterial( { wireframe: true, color: 0x000000 } );
 
-const onLoad = ( object ) => {
+const onLoad = ( object, name ) => {
 
   object.traverse( ( child ) => {
 
@@ -22,23 +22,23 @@ const onLoad = ( object ) => {
 
   main.originalPreview.addObjectToScene( object );
   main.resultPreview.reset();
-  exportGLTF.setInput( object, animations );
+  exportGLTF.setInput( object, animations, name );
 
 };
 
-const load = ( promise, originalFile ) => {
+const load = ( promise, name = 'scene', originalFile ) => {
 
   promise.then( ( result ) => {
 
     if ( result.isGeometry || result.isBufferGeometry ) onLoad( new THREE.Mesh( result, defaultMat ) );
-    else if ( result.isObject3D ) onLoad( result );
+    else if ( result.isObject3D ) onLoad( result, name );
     // glTF
     else if ( result.scenes && result.scenes.length > 1 ) {
 
       result.scenes.forEach( ( scene ) => {
 
         if ( result.animations ) scene.animations = result.animations;
-        onLoad( scene );
+        onLoad( scene, name );
 
       } );
 
@@ -47,7 +47,7 @@ const load = ( promise, originalFile ) => {
     else if ( result.scene ) {
 
       if ( result.animations ) result.scene.animations = result.animations;
-      onLoad( result.scene );
+      onLoad( result.scene, name );
 
     } else console.error( 'No scene found in file!' );
 
@@ -55,7 +55,7 @@ const load = ( promise, originalFile ) => {
 
     if ( typeof err.message && err.message.indexOf( 'Use LegacyGLTFLoader instead' ) !== -1 ) {
 
-      load( loaders.legacyGltfLoader( originalFile ) )
+      load( loaders.legacyGltfLoader( originalFile ) );
 
     } else {
       console.error( err );

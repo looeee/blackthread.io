@@ -30,7 +30,7 @@ let models = [];
 let assets = {};
 let promises = [];
 
-const selectJSONLoader = ( file, originalFile ) => {
+const selectJSONLoader = ( file, name, originalFile ) => {
   const json = JSON.parse( file );
 
   if ( json.metadata ) {
@@ -40,9 +40,9 @@ const selectJSONLoader = ( file, originalFile ) => {
 
     readFileAs( originalFile, 'DataURL' ).then( ( data ) => {
 
-      if ( type === 'buffergeometry' ) load( loaders.bufferGeometryLoader( data ) );
-      else if ( type === 'object' ) load( loaders.objectLoader( data ) );
-      else load( loaders.jsonLoader( data ) );
+      if ( type === 'buffergeometry' ) load( loaders.bufferGeometryLoader( data ), name );
+      else if ( type === 'object' ) load( loaders.objectLoader( data ), name );
+      else load( loaders.jsonLoader( data ), name );
 
     } ).catch( err => console.error( err ) );
 
@@ -57,19 +57,20 @@ const selectJSONLoader = ( file, originalFile ) => {
 const loadFile = ( details ) => {
 
   const file = details[ 0 ];
-  const type = details[ 1 ];
-  const originalFile = details[ 2 ];
+  const name = details[ 1 ];
+  const type = details[ 2 ];
+  const originalFile = details[ 3 ];
 
   switch ( type ) {
 
     case 'fbx':
       loadingManager.onStart();
-      load( loaders.fbxLoader( file ) );
+      load( loaders.fbxLoader( file ), name );
       break;
     case 'gltf':
     case 'glb':
       loadingManager.onStart();
-      load( loaders.gltfLoader( file ), file );
+      load( loaders.gltfLoader( file ), name, file );
       break;
     case 'obj':
       loadingManager.onStart();
@@ -77,19 +78,19 @@ const loadFile = ( details ) => {
         .then( ( materials ) => {
 
           loaders.objLoader.setMaterials( materials );
-          return load( loaders.objLoader( file ) );
+          return load( loaders.objLoader( file ), name );
 
         } ).catch( err => console.error( err ) );
 
       break;
     case 'dae':
       loadingManager.onStart();
-      load( loaders.colladaLoader( file ) );
+      load( loaders.colladaLoader( file ), name );
       break;
     case 'json':
     case 'js':
       loadingManager.onStart();
-      selectJSONLoader( file, originalFile );
+      selectJSONLoader( file, name, originalFile );
       break;
     default:
       console.error( 'Unsupported file type ' + type + ' - please load one of the supported model formats.' );
@@ -120,6 +121,7 @@ loadingManager.setURLModifier( ( url ) => {
 
 const processFile = ( file ) => {
 
+  const name = file.name.split( '/' ).pop().split( '.' )[0];
   const type = file.name.split( '.' ).pop().toLowerCase();
 
   if ( !isValid( type ) ) return;
@@ -127,7 +129,7 @@ const processFile = ( file ) => {
   if ( type === 'js' || type === 'json' ) {
 
     const promise = readFileAs( file, 'Text' )
-      .then( ( data ) => { models.push( [ data, type, file ] ); } )
+      .then( ( data ) => { models.push( [ data, name, type, file ] ); } )
       .catch( err => console.error( err ) );
 
     promises.push( promise );
@@ -139,8 +141,8 @@ const processFile = ( file ) => {
 
         if ( isModel( type ) ) {
 
-          if ( type === 'obj' ) models.push( [ data, type, file ] );
-          else models.push( [ data, type ] );
+          if ( type === 'obj' ) models.push( [ data, name, type, file ] );
+          else models.push( [ data, name, type ] );
 
         } else if ( isAsset( type ) ) {
 
