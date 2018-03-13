@@ -109,47 +109,6 @@ p {
   text-align: justify;
 }
 
-u,
-ins {
-  text-decoration: none;
-  border-bottom: 1px solid $text-color;
-  a {
-    color: inherit;
-  }
-}
-
-del a {
-  color: inherit;
-}
-
-/* abbreviations */
-
-abbr[title],
-abbr[data-original-title] {
-  text-decoration: none;
-  cursor: help;
-  border-bottom: 1px dotted $text-color;
-}
-
-/* blockquotes */
-
-blockquote {
-  margin: 2em 1em 2em 0;
-  padding-left: 1em;
-  padding-right: 1em;
-  font-style: italic;
-  border-left: 0.25em solid $text-color;
-
-  cite {
-    font-style: italic;
-
-    &:before {
-      content: "\2014";
-      padding-right: 5px;
-    }
-  }
-}
-
 /* links */
 
 a {
@@ -160,15 +119,6 @@ a {
     outline: 0;
     color: $link-color-hover;
   }
-}
-
-/* horizontal rule */
-
-hr {
-  display: block;
-  margin: 1em 0;
-  border: 0;
-  border-top: 1px solid $border-color;
 }
 
 /* lists */

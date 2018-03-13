@@ -1,7 +1,8 @@
 import 'whatwg-fetch';
 
-import originalLoadingManager from './originalLoadingManager.js';
-import OnLoadCallbacks from './OnLoadCallbacks.js';
+import loadingManager from './loadingManager.js';
+import load from './load.js';
+import loaders from './Loaders.js';
 import HTMLControl from '../HTMLControl.js';
 
 import readFileAs from '../utilities/promiseFileReader.js';
@@ -29,9 +30,33 @@ let models = [];
 let assets = {};
 let promises = [];
 
+const selectJSONLoader = ( file, originalFile ) => {
+  const json = JSON.parse( file );
+
+  if ( json.metadata ) {
+
+    let type = '';
+    if ( json.metadata.type ) type = json.metadata.type.toLowerCase();
+
+    readFileAs( originalFile, 'DataURL' ).then( ( data ) => {
+
+      if ( type === 'buffergeometry' ) load( loaders.bufferGeometryLoader( file ) );
+      else if ( type === 'object' ) load( loaders.objectLoader( file ) );
+      else load( loaders.jsonLoader( file ) );
+
+    } ).catch( err => console.error( err ) );
+
+  } else {
+
+    console.error( 'Error: Invalid JSON file.' );
+
+  }
+
+};
+
 const loadFile = ( details ) => {
 
-  console.log( details )
+  // console.log( details )
 
   const file = details[ 0 ];
   const type = details[ 1 ];
@@ -40,31 +65,33 @@ const loadFile = ( details ) => {
   switch ( type ) {
 
     case 'fbx':
-      originalLoadingManager.onStart();
-      OnLoadCallbacks.onFBXLoad( file );
+      loadingManager.onStart();
+      load( loaders.fbxLoader( file ) );
       break;
     case 'gltf':
     case 'glb':
-      originalLoadingManager.onStart();
-      OnLoadCallbacks.onGLTFLoad( file );
+      loadingManager.onStart();
+      load( loaders.gltfLoader( file ) );
       break;
     case 'obj':
-      originalLoadingManager.onStart();
-      OnLoadCallbacks.onMTLLoad( assets[originalFile.name.replace( '.obj', '.mtl' ) ] )
+      loadingManager.onStart();
+      loaders.mtlLoader( assets[originalFile.name.replace( '.obj', '.mtl' ) ] )
         .then( ( materials ) => {
 
-          OnLoadCallbacks.onOBJLoad( file, materials );
+          loaders.objLoader.setMaterials( materials );
+          return load( loaders.objLoader( file ) );
 
         } ).catch( err => console.error( err ) );
+
       break;
     case 'dae':
-      originalLoadingManager.onStart();
-      OnLoadCallbacks.onDAELoad( file );
+      loadingManager.onStart();
+      load( loaders.colladaLoader( file ) );
       break;
     case 'json':
     case 'js':
-    originalLoadingManager.onStart();
-      OnLoadCallbacks.onJSONLoad( file, originalFile );
+      loadingManager.onStart();
+      selectJSONLoader( file, originalFile );
       break;
     default:
       console.error( 'Unsupported file type ' + type + ' - please load one of the supported model formats.' );
@@ -72,7 +99,7 @@ const loadFile = ( details ) => {
 
 };
 
-originalLoadingManager.setURLModifier( ( url ) => {
+loadingManager.setURLModifier( ( url ) => {
 
   if ( url[ url.length - 3 ] === '.' || url[ url.length - 4 ] === '.' ) {
 

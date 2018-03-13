@@ -1,4 +1,4 @@
-this.converters = this.converters || {};
+this['gltf-converter'] = this['gltf-converter'] || {};
 (function () {
 'use strict';
 
@@ -735,21 +735,19 @@ loadingManager.onError = function (msg) {
   console.error(msg);
 };
 
-function readFileAs(file, as) {
-  if (!(file instanceof Blob)) {
-    throw new TypeError('Must be a File or Blob');
-  }
-  return new Promise(function (resolve, reject) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      resolve(e.target.result);
-    };
-    reader.onerror = function (e) {
-      reject(new Error('Error reading' + file.name + ': ' + e.target.result));
-    };
-    reader['readAs' + as](file);
-  });
-}
+// import loadingManager from '../loadingManager.js';
+
+var promisifyLoader = function promisifyLoader(loader, manager) {
+  return function (url) {
+    var parse = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+
+    return new Promise(function (resolve, reject) {
+
+      if (parse === true) loader.parse(url, '', resolve, reject);else loader.load(url, resolve, manager.onProgress, reject);
+    });
+  };
+};
 
 THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
 
@@ -764,18 +762,6 @@ var colladaLoader = null;
 
 var objLoaderInternal = null;
 
-var promisifyLoader = function promisifyLoader(loader) {
-  return function (url) {
-    var parse = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-
-    return new Promise(function (resolve, reject) {
-
-      if (parse === true) loader.parse(url, '', resolve, reject);else loader.load(url, resolve, loadingManager.onProgress, reject);
-    });
-  };
-};
-
 var Loaders = function Loaders() {
   classCallCheck(this, Loaders);
 
@@ -784,35 +770,47 @@ var Loaders = function Loaders() {
 
     get objectLoader() {
       if (objectLoader === null) {
-        objectLoader = promisifyLoader(new THREE.ObjectLoader(loadingManager));
+        objectLoader = promisifyLoader(new THREE.ObjectLoader(loadingManager), loadingManager);
       }
       return objectLoader;
     },
 
     get bufferGeometryLoader() {
       if (bufferGeometryLoader === null) {
-        bufferGeometryLoader = promisifyLoader(new THREE.BufferGeometryLoader(loadingManager));
+        bufferGeometryLoader = promisifyLoader(new THREE.BufferGeometryLoader(loadingManager), loadingManager);
       }
       return bufferGeometryLoader;
     },
 
     get jsonLoader() {
       if (jsonLoader === null) {
-        jsonLoader = promisifyLoader(new THREE.JSONLoader(loadingManager));
+        jsonLoader = promisifyLoader(new THREE.JSONLoader(loadingManager), loadingManager);
       }
       return jsonLoader;
     },
 
+    // get fbxLoader() {
+
+    //   loadJavascript( '/js/vendor/three/examples/js/loaders/FBXLoader.min.js' ).then( () => {
+
+    //     if ( fbxLoader === null ) fbxLoader = promisifyLoader( new THREE.FBXLoader( loadingManager ), loadingManager );
+
+    //     return fbxLoader;
+
+    //   } ).catch( ( err ) => { console.error( err ); } );
+
+    // },
+
     get fbxLoader() {
       if (fbxLoader === null) {
-        fbxLoader = promisifyLoader(new THREE.FBXLoader(loadingManager));
+        fbxLoader = promisifyLoader(new THREE.FBXLoader(loadingManager), loadingManager);
       }
       return fbxLoader;
     },
 
     get gltfLoader() {
       if (gltfLoader === null) {
-        gltfLoader = promisifyLoader(new THREE.GLTFLoader(loadingManager));
+        gltfLoader = promisifyLoader(new THREE.GLTFLoader(loadingManager), loadingManager);
       }
       return gltfLoader;
     },
@@ -823,7 +821,7 @@ var Loaders = function Loaders() {
 
         objLoaderInternal = new THREE.OBJLoader(loadingManager);
 
-        objLoader = promisifyLoader(objLoaderInternal);
+        objLoader = promisifyLoader(objLoaderInternal, loadingManager);
 
         objLoader.setMaterials = function (materials) {
 
@@ -837,7 +835,7 @@ var Loaders = function Loaders() {
     get mtlLoader() {
       if (mtlLoader === null) {
 
-        mtlLoader = promisifyLoader(new THREE.MTLLoader(loadingManager));
+        mtlLoader = promisifyLoader(new THREE.MTLLoader(loadingManager), loadingManager);
       }
       return mtlLoader;
     },
@@ -845,7 +843,7 @@ var Loaders = function Loaders() {
     get colladaLoader() {
       if (colladaLoader === null) {
 
-        colladaLoader = promisifyLoader(new THREE.ColladaLoader(loadingManager));
+        colladaLoader = promisifyLoader(new THREE.ColladaLoader(loadingManager), loadingManager);
       }
       return colladaLoader;
     }
@@ -1077,196 +1075,51 @@ var onLoad = function onLoad(object) {
   exportGLTF.setInput(object, animations);
 };
 
-var OnLoadCallbacks = function () {
-  function OnLoadCallbacks() {
-    classCallCheck(this, OnLoadCallbacks);
-  }
+var load = function load(promise) {
 
-  createClass(OnLoadCallbacks, null, [{
-    key: 'onJSONLoad',
-    value: function onJSONLoad(file, originalFile) {
-      var _this = this;
+  promise.then(function (result) {
 
-      var json = JSON.parse(file);
+    if (result.isGeometry || result.isBufferGeometry) onLoad(new THREE.Mesh(result, defaultMat));else if (result.isObject3D) onLoad(result);
+    // glTF
+    else if (result.scenes && result.scenes.length > 1) {
 
-      if (json.metadata && json.metadata.type) {
+        result.scenes.forEach(function (scene) {
 
-        var type = json.metadata.type.toLowerCase();
-
-        readFileAs(originalFile, 'DataURL').then(function (data) {
-
-          if (type === 'buffergeometry') _this.onJSONBufferGeometryLoad(data);else if (type === 'geometry') _this.onJSONGeometryLoad(data);else if (type === 'object') _this.onJSONObjectLoad(data);
-        }).catch(function (err) {
-          return console.error(err);
+          if (result.animations) scene.animations = result.animations;
+          onLoad(scene);
         });
-      } else {
-
-        console.error('Error: Invalid JSON file.');
       }
-    }
-  }, {
-    key: 'onJSONBufferGeometryLoad',
-    value: function onJSONBufferGeometryLoad(file) {
+      // glTF or Collada
+      else if (result.scene) {
 
-      console.log('Using THREE.BufferGeometryLoader');
+          if (result.animations) result.scene.animations = result.animations;
+          onLoad(result.scene);
+        } else console.error('No scene found in file!');
+  }).catch(function (err) {
 
-      var promise = loaders.bufferGeometryLoader(file);
-      promise.then(function (geometry) {
+    console.log(err);
+  });
 
-        var object = new THREE.Mesh(geometry, defaultMat);
-        onLoad(object);
-      }).catch(function (err) {
+  return promise;
+};
 
-        console.log(err);
-      });
+function readFileAs(file, as) {
+  if (!(file instanceof Blob)) {
+    throw new TypeError('Must be a File or Blob');
+  }
+  return new Promise(function (resolve, reject) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      resolve(e.target.result);
+    };
+    reader.onerror = function (e) {
+      reject(new Error('Error reading' + file.name + ': ' + e.target.result));
+    };
+    reader['readAs' + as](file);
+  });
+}
 
-      return promise;
-    }
-  }, {
-    key: 'onJSONGeometryLoad',
-    value: function onJSONGeometryLoad(file) {
-
-      console.log('Using THREE.JSONLoader');
-
-      var promise = loaders.jsonLoader(file);
-      promise.then(function (geometry) {
-
-        var object = new THREE.Mesh(geometry, defaultMat);
-        onLoad(object);
-      }).catch(function (err) {
-
-        console.log(err);
-      });
-
-      return promise;
-    }
-  }, {
-    key: 'onJSONObjectLoad',
-    value: function onJSONObjectLoad(file) {
-
-      console.log('Using THREE.ObjectLoader');
-
-      var promise = loaders.objectLoader(file);
-      promise.then(function (object) {
-
-        onLoad(object);
-      }).catch(function (err) {
-
-        console.log(err);
-      });
-
-      return promise;
-    }
-  }, {
-    key: 'onFBXLoad',
-    value: function onFBXLoad(file) {
-
-      console.log('Using THREE.FBXLoader');
-
-      var promise = loaders.fbxLoader(file);
-
-      promise.then(function (object) {
-
-        onLoad(object);
-      }).catch(function (err) {
-
-        console.log(err);
-      });
-
-      return promise;
-    }
-  }, {
-    key: 'onGLTFLoad',
-    value: function onGLTFLoad(file) {
-      var promise = new Promise(function (resolve, reject) {});
-
-      console.log('Using THREE.GLTFLoader');
-
-      promise = loaders.gltfLoader(file);
-
-      promise.then(function (gltf) {
-
-        if (gltf.scenes.length > 1) {
-
-          gltf.scenes.forEach(function (scene) {
-
-            if (gltf.animations) scene.animations = gltf.animations;
-            onLoad(scene);
-          });
-        } else if (gltf.scene) {
-
-          if (gltf.animations) gltf.scene.animations = gltf.animations;
-          onLoad(gltf.scene);
-        } else {
-
-          console.error('No scene found in GLTF file.');
-        }
-      }).catch(function (err) {
-
-        console.log(err);
-      });
-
-      return promise;
-    }
-  }, {
-    key: 'onMTLLoad',
-    value: function onMTLLoad(file) {
-
-      var promise = new Promise(function (resolve, reject) {});
-
-      promise = loaders.mtlLoader(file);
-
-      return promise;
-    }
-  }, {
-    key: 'onOBJLoad',
-    value: function onOBJLoad(file, materials) {
-
-      var promise = new Promise(function (resolve, reject) {});
-
-      loaders.objLoader.setMaterials(materials);
-
-      promise = loaders.objLoader(file);
-
-      promise.then(function (object) {
-
-        onLoad(object);
-      }).catch(function (err) {
-
-        console.log(err);
-      });
-
-      return promise;
-    }
-  }, {
-    key: 'onDAELoad',
-    value: function onDAELoad(file) {
-
-      var promise = new Promise(function (resolve) {});
-
-      // no need for this as ColladaLoader2 reports plenty of information
-      // console.log( 'Using THREE.ColladaLoader2' );
-
-      promise = loaders.colladaLoader(file);
-
-      promise.then(function (object) {
-
-        var scene = object.scene;
-
-        if (object.animations && object.animations.length > 0) scene.animations = object.animations;
-
-        onLoad(scene);
-      }).catch(function (err) {
-
-        console.log(err);
-      });
-
-      return promise;
-    }
-  }]);
-  return OnLoadCallbacks;
-}();
-
+// Check support for the File API support
 var checkForFileAPI = function checkForFileAPI() {
 
   if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -1293,9 +1146,29 @@ var models = [];
 var assets = {};
 var promises = [];
 
+var selectJSONLoader = function selectJSONLoader(file, originalFile) {
+  var json = JSON.parse(file);
+
+  if (json.metadata) {
+
+    var type = '';
+    if (json.metadata.type) type = json.metadata.type.toLowerCase();
+
+    readFileAs(originalFile, 'DataURL').then(function (data) {
+
+      if (type === 'buffergeometry') load(loaders.bufferGeometryLoader(file));else if (type === 'object') load(loaders.objectLoader(file));else load(loaders.jsonLoader(file));
+    }).catch(function (err) {
+      return console.error(err);
+    });
+  } else {
+
+    console.error('Error: Invalid JSON file.');
+  }
+};
+
 var loadFile = function loadFile(details) {
 
-  console.log(details);
+  // console.log( details )
 
   var file = details[0];
   var type = details[1];
@@ -1305,30 +1178,32 @@ var loadFile = function loadFile(details) {
 
     case 'fbx':
       loadingManager.onStart();
-      OnLoadCallbacks.onFBXLoad(file);
+      load(loaders.fbxLoader(file));
       break;
     case 'gltf':
     case 'glb':
       loadingManager.onStart();
-      OnLoadCallbacks.onGLTFLoad(file);
+      load(loaders.gltfLoader(file));
       break;
     case 'obj':
       loadingManager.onStart();
-      OnLoadCallbacks.onMTLLoad(assets[originalFile.name.replace('.obj', '.mtl')]).then(function (materials) {
+      loaders.mtlLoader(assets[originalFile.name.replace('.obj', '.mtl')]).then(function (materials) {
 
-        OnLoadCallbacks.onOBJLoad(file, materials);
+        loaders.objLoader.setMaterials(materials);
+        return load(loaders.objLoader(file));
       }).catch(function (err) {
         return console.error(err);
       });
+
       break;
     case 'dae':
       loadingManager.onStart();
-      OnLoadCallbacks.onDAELoad(file);
+      load(loaders.colladaLoader(file));
       break;
     case 'json':
     case 'js':
       loadingManager.onStart();
-      OnLoadCallbacks.onJSONLoad(file, originalFile);
+      selectJSONLoader(file, originalFile);
       break;
     default:
       console.error('Unsupported file type ' + type + ' - please load one of the supported model formats.');

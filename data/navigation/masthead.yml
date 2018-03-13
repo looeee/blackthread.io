@@ -11,4 +11,7 @@ menu:
     url: /experiments/
   - title: "Loader"
     url: /loader/
+  - title: "glTF Converter"
+    url: /gltf-converter/
+
 

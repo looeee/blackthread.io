@@ -26,6 +26,7 @@
     "es6-promise": "^4.2.4",
     "lodash-es": "^4.17.4",
     "three": "^0.89.0",
+    "threejs-full-es6": "^5.0.2",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {

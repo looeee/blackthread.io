@@ -1,5 +1,5 @@
 {{ if .Params.Title }}
-  <title>{{ .Site.Title }}{{ if ne .Params.Title .Site.Title }} | {{ .Params.Title }}{{  end }}</title>
+  <title>{{ if ne .Params.Title .Site.Title }}{{ .Params.Title }} | {{  end }}{{ .Site.Title }}</title>
 {{ else if in .URL "/tags/" }}
-  <title>{{ .Site.Title }} | Pages tagged "{{ .Page.Title }}"</title>
+  <title> Pages tagged "{{ .Page.Title }} | {{ .Site.Title }}"</title>
 {{ end }}

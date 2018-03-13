@@ -4,9 +4,9 @@ date: 2018-03-08T00:00:00-00:00
 description: "GLTF is the up and coming superstar of 3D model formats - you can even display it on the Facebook news feed. Use this tool to convert from various formats to GLTF using the three.js exporter"
 tags: ['gltf', 'three.js', 'converter', 'exporter', 'fbx', 'obj', 'mtl', 'dae', 'collada', 'dds']
 teaserImage: /images/experiments/gltf-converter/teaser.jpg
-js: converters
-css: converters
-menu: experiments
+js: gltf-converter
+css: gltf-converter
+# menu: experiments
 menuTitle: Blackthread Experiments
 weight: 1
 vendorScripts:
@@ -23,7 +23,9 @@ vendorScripts:
   '/three/examples/js/loaders/ColladaLoader.min',
   '/three/examples/js/controls/OrbitControls.min'
    ]
+aliases: [/experiments/gltf-converter/]
 ---
+
 GLTF is the up and coming superstar of 3D model formats - as of March 2018 you can even display it on the Facebook news feed!
 
 Convert from a variety of formats to GLTF format using the three.js <a href="https://threejs.org/examples/#misc_exporter_gltf">GLTFExporter</a>. Currently this supports FBX, OBJ, GLTF and GLB  (because why not?) and Collada ( DAE ).

@@ -93,50 +93,12 @@ p {
   max-width: 70em;
   text-align: justify; }
 
-u,
-ins {
-  text-decoration: none;
-  border-bottom: 1px solid #f2f2f2; }
-  u a,
-  ins a {
-    color: inherit; }
-
-del a {
-  color: inherit; }
-
-/* abbreviations */
-abbr[title],
-abbr[data-original-title] {
-  text-decoration: none;
-  cursor: help;
-  border-bottom: 1px dotted #f2f2f2; }
-
-/* blockquotes */
-blockquote {
-  margin: 2em 1em 2em 0;
-  padding-left: 1em;
-  padding-right: 1em;
-  font-style: italic;
-  border-left: 0.25em solid #f2f2f2; }
-  blockquote cite {
-    font-style: italic; }
-    blockquote cite:before {
-      content: "\2014";
-      padding-right: 5px; }
-
 /* links */
 a {
   color: #B82601; }
   a:hover, a:active {
     outline: 0;
     color: #8b1d01; }
-
-/* horizontal rule */
-hr {
-  display: block;
-  margin: 1em 0;
-  border: 0;
-  border-top: 1px solid #062f4f; }
 
 /* lists */
 ul {
@@ -314,7 +276,6 @@ img {
   padding: 0.5em;
   background: transparent; }
 
-#splash-body,
 #splash-canvas-container,
 #splash-canvas {
   overflow: hidden;
@@ -324,10 +285,3 @@ img {
   height: 100%;
   width: 100%;
   z-index: 0; }
-
-#splash-body a {
-  text-decoration: none; }
-
-.splash-link {
-  position: absolute;
-  z-index: 1; }

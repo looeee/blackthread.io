@@ -1,5 +1,0 @@
-hugo serve -D --enableGitInfo
-
-HEROKU:
-heroku logs --tail --app blackthread-staging
-heroku logs --tail --app blackthread-production

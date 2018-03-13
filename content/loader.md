@@ -24,6 +24,7 @@ vendorScripts:
   '/three/examples/js/controls/OrbitControls.min',
   '/three/examples/js/exporters/GLTFExporter.min'
    ]
+aliases: [/experiments/loader/]
 ---
 <canvas id="loader-canvas"></canvas>
 <div id="loading-overlay" class="fill">
