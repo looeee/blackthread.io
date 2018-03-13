@@ -1,4 +1,5 @@
 import main from '../main.js';
+import loaders from './Loaders.js'
 import exportGLTF from './exportGLTF.js';
 
 // const loaders = new Loaders();
@@ -25,7 +26,7 @@ const onLoad = ( object ) => {
 
 };
 
-const load = ( promise ) => {
+const load = ( promise, originalFile ) => {
 
   promise.then( ( result ) => {
 
@@ -52,7 +53,13 @@ const load = ( promise ) => {
 
   } ).catch( ( err ) => {
 
-    console.log( err );
+    if ( typeof err.message && err.message.indexOf( 'Use LegacyGLTFLoader instead' ) !== -1 ) {
+
+      load( loaders.legacyGltfLoader( originalFile ) )
+
+    } else {
+      console.error( err );
+    }
 
   } );
 

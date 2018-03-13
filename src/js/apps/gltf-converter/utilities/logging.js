@@ -33,7 +33,7 @@ console.error = ( ...args ) => {
   p.innerHTML = msg;
   HTMLControl.errors.append( p );
 
-  originalError( msg );
+  originalError( ...args );
 
 };
 
@@ -51,7 +51,7 @@ console.warn = ( ...args ) => {
   p.innerHTML = msg;
   HTMLControl.warnings.append( p );
 
-  originalWarn( msg );
+  originalWarn( ...args );
 
 };
 
@@ -71,6 +71,6 @@ console.log = ( ...args ) => {
   p.innerHTML = msg;
   HTMLControl.logs.append( p );
 
-  originalLog( msg );
+  originalLog( ...args );
 
 };

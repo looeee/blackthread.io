@@ -40,9 +40,9 @@ const selectJSONLoader = ( file, originalFile ) => {
 
     readFileAs( originalFile, 'DataURL' ).then( ( data ) => {
 
-      if ( type === 'buffergeometry' ) load( loaders.bufferGeometryLoader( file ) );
-      else if ( type === 'object' ) load( loaders.objectLoader( file ) );
-      else load( loaders.jsonLoader( file ) );
+      if ( type === 'buffergeometry' ) load( loaders.bufferGeometryLoader( data ) );
+      else if ( type === 'object' ) load( loaders.objectLoader( data ) );
+      else load( loaders.jsonLoader( data ) );
 
     } ).catch( err => console.error( err ) );
 
@@ -55,8 +55,6 @@ const selectJSONLoader = ( file, originalFile ) => {
 };
 
 const loadFile = ( details ) => {
-
-  // console.log( details )
 
   const file = details[ 0 ];
   const type = details[ 1 ];
@@ -71,7 +69,7 @@ const loadFile = ( details ) => {
     case 'gltf':
     case 'glb':
       loadingManager.onStart();
-      load( loaders.gltfLoader( file ) );
+      load( loaders.gltfLoader( file ), file );
       break;
     case 'obj':
       loadingManager.onStart();

@@ -16,20 +16,31 @@ vendorScripts:
   '/three/examples/js/loaders/DDSLoader.min',
   '/three/examples/js/loaders/FBXLoader.min',
   '/three/examples/js/loaders/GLTFLoader',
-  '/three/examples/js/exporters/GLTFExporter',
+  '/three/examples/js/loaders/deprecated/LegacyGLTFLoader.min',
   '/three/examples/js/loaders/LoaderSupport.min',
   '/three/examples/js/loaders/OBJLoader.min',
   '/three/examples/js/loaders/MTLLoader.min',
   '/three/examples/js/loaders/ColladaLoader.min',
-  '/three/examples/js/controls/OrbitControls.min'
+  '/three/examples/js/controls/OrbitControls.min',
+  '/three/examples/js/exporters/GLTFExporter'
    ]
 aliases: [/experiments/gltf-converter/]
 ---
 
 GLTF is the up and coming superstar of 3D model formats - as of March 2018 you can even display it on the Facebook news feed!
 
-Convert from a variety of formats to GLTF format using the three.js <a href="https://threejs.org/examples/#misc_exporter_gltf">GLTFExporter</a>. Currently this supports FBX, OBJ, GLTF and GLB  (because why not?) and Collada ( DAE ).
-Upload textures in JPG, PNG, GIF, BMP or DDS format.
+Convert from a variety of formats to GLTF format (V2) using the three.js <a href="https://threejs.org/examples/#misc_exporter_gltf">GLTFExporter</a>.
+
+### Supported formats:
+
+* FBX
+* OBJ and MTL
+* GLTF and GLB version 2 (because why not? )
+* GLTF and GLB version 1 (materials will export as default grey though since the exporter doesn't yet support shader materials)
+* Collada ( DAE )
+* Three.js JSON format. Note that older versions of the format, as well as files containing just a geometry or buffer geometry will load as a wireframe.
+
+Upload any textures alongside the model in JPG, PNG, GIF, BMP or DDS format (just upload all the files at the same time and the converter will handle the rest ).
 
 Leave a comment below if you'd like to see other file types supported.<br><br>
 

@@ -2,6 +2,22 @@ this['gltf-converter'] = this['gltf-converter'] || {};
 (function () {
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+
+
+
+
+
+
+
+
+
+
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -160,7 +176,7 @@ console.error = function () {
   p.innerHTML = msg;
   HTMLControl.errors.append(p);
 
-  originalError(msg);
+  originalError.apply(undefined, arguments);
 };
 
 var originalWarn = console.warn.bind(console);
@@ -177,7 +193,7 @@ console.warn = function () {
   p.innerHTML = msg;
   HTMLControl.warnings.append(p);
 
-  originalWarn(msg);
+  originalWarn.apply(undefined, arguments);
 };
 
 var originalLog = console.log.bind(console);
@@ -196,7 +212,7 @@ console.log = function () {
   p.innerHTML = msg;
   HTMLControl.logs.append(p);
 
-  originalLog(msg);
+  originalLog.apply(undefined, arguments);
 };
 
 var goFullscreen = function goFullscreen(elem) {
@@ -756,6 +772,7 @@ var bufferGeometryLoader = null;
 var jsonLoader = null;
 var fbxLoader = null;
 var gltfLoader = null;
+var legacyGltfLoader = null;
 var objLoader = null;
 var mtlLoader = null;
 var colladaLoader = null;
@@ -813,6 +830,13 @@ var Loaders = function Loaders() {
         gltfLoader = promisifyLoader(new THREE.GLTFLoader(loadingManager), loadingManager);
       }
       return gltfLoader;
+    },
+
+    get legacyGltfLoader() {
+      if (legacyGltfLoader === null) {
+        legacyGltfLoader = promisifyLoader(new THREE.LegacyGLTFLoader(loadingManager), loadingManager);
+      }
+      return legacyGltfLoader;
     },
 
     get objLoader() {
@@ -1055,6 +1079,7 @@ var ExportGLTF = function () {
 
 var exportGLTF = new ExportGLTF();
 
+// const loaders = new Loaders();
 var defaultMat = new THREE.MeshBasicMaterial({ wireframe: true, color: 0x000000 });
 
 var onLoad = function onLoad(object) {
@@ -1075,7 +1100,7 @@ var onLoad = function onLoad(object) {
   exportGLTF.setInput(object, animations);
 };
 
-var load = function load(promise) {
+var load = function load(promise, originalFile) {
 
   promise.then(function (result) {
 
@@ -1097,7 +1122,12 @@ var load = function load(promise) {
         } else console.error('No scene found in file!');
   }).catch(function (err) {
 
-    console.log(err);
+    if (_typeof(err.message) && err.message.indexOf('Use LegacyGLTFLoader instead') !== -1) {
+
+      load(loaders.legacyGltfLoader(originalFile));
+    } else {
+      console.error(err);
+    }
   });
 
   return promise;
@@ -1119,7 +1149,6 @@ function readFileAs(file, as) {
   });
 }
 
-// Check support for the File API support
 var checkForFileAPI = function checkForFileAPI() {
 
   if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -1156,7 +1185,7 @@ var selectJSONLoader = function selectJSONLoader(file, originalFile) {
 
     readFileAs(originalFile, 'DataURL').then(function (data) {
 
-      if (type === 'buffergeometry') load(loaders.bufferGeometryLoader(file));else if (type === 'object') load(loaders.objectLoader(file));else load(loaders.jsonLoader(file));
+      if (type === 'buffergeometry') load(loaders.bufferGeometryLoader(data));else if (type === 'object') load(loaders.objectLoader(data));else load(loaders.jsonLoader(data));
     }).catch(function (err) {
       return console.error(err);
     });
@@ -1167,8 +1196,6 @@ var selectJSONLoader = function selectJSONLoader(file, originalFile) {
 };
 
 var loadFile = function loadFile(details) {
-
-  // console.log( details )
 
   var file = details[0];
   var type = details[1];
@@ -1183,7 +1210,7 @@ var loadFile = function loadFile(details) {
     case 'gltf':
     case 'glb':
       loadingManager.onStart();
-      load(loaders.gltfLoader(file));
+      load(loaders.gltfLoader(file), file);
       break;
     case 'obj':
       loadingManager.onStart();

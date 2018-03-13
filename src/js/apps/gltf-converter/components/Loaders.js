@@ -10,6 +10,7 @@ let bufferGeometryLoader = null;
 let jsonLoader = null;
 let fbxLoader = null;
 let gltfLoader = null;
+let legacyGltfLoader = null;
 let objLoader = null;
 let mtlLoader = null;
 let colladaLoader = null;
@@ -63,12 +64,18 @@ class Loaders {
         return fbxLoader;
       },
 
-
       get gltfLoader() {
         if ( gltfLoader === null ) {
           gltfLoader = promisifyLoader( new THREE.GLTFLoader( loadingManager ), loadingManager );
         }
         return gltfLoader;
+      },
+
+      get legacyGltfLoader() {
+        if ( legacyGltfLoader === null ) {
+          legacyGltfLoader = promisifyLoader( new THREE.LegacyGLTFLoader( loadingManager ), loadingManager );
+        }
+        return legacyGltfLoader;
       },
 
       get objLoader() {
