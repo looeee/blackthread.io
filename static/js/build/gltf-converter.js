@@ -1150,7 +1150,6 @@ function readFileAs(file, as) {
   });
 }
 
-// Check support for the File API support
 var checkForFileAPI = function checkForFileAPI() {
 
   if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -1520,7 +1519,7 @@ function App(canvas) {
 
   var setRendererSize = function setRendererSize() {
 
-    if (_renderer) _renderer.setSize(self.canvas.clientWidth, self.canvas.clientHeight, true);
+    if (_renderer) _renderer.setSize(self.canvas.clientWidth, self.canvas.clientHeight, false);
   };
 
   var setCameraAspect = function setCameraAspect() {
@@ -2044,6 +2043,7 @@ var Viewer = function () {
 
       // NB: use self inside this function
 
+      console.log('resized');
     };
 
     this.loadedObjects = new THREE.Group();
