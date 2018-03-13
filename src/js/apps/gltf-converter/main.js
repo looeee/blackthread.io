@@ -11,8 +11,15 @@ import loadingManager from './components/loadingManager.js';
 
 THREE.Cache.enabled = true;
 
-// const loaders = new Loaders();
-const defaultMat = new THREE.MeshBasicMaterial( { wireframe: true, color: 0x000000 } );
+const defaultMat = new THREE.MeshStandardMaterial( {
+  color: 0xcccccc,
+  // emissive: 0x000000,
+  // metalness: 1,
+  // roughness: 1,
+  // transparent: false,
+  // depthTest: true,
+  side: THREE.FrontSide,
+} );
 
 class Main {
 

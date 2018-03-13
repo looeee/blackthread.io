@@ -305,12 +305,6 @@ var promisifyLoader = function promisifyLoader(loader, manager) {
   };
 };
 
-// TODO
-// import loadJavascript from '../utilities/loadJavascript.js';
-
-// Removed for now
-// THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
-
 var bufferGeometryLoader = null;
 var amfLoader = null;
 var colladaLoader = null;
@@ -326,11 +320,11 @@ var mtlLoader = null;
 // let nrrdLoader = null;
 var objectLoader = null;
 var objLoader = null;
-// let pcdLoader = null;
-// let pdbLoader = null;
-// let plyLoader = null;
-// let pwrmLoader = null;
-// let stlLoader = null;
+var pcdLoader = null;
+var pdbLoader = null;
+var plyLoader = null;
+var pwrmLoader = null;
+var stlLoader = null;
 var threemfLoader = null;
 
 // used for passing materials to objLoader
@@ -364,7 +358,7 @@ var Loaders = function Loaders() {
       return colladaLoader;
     },
 
-    //ctmLoader
+    // ctmLoader
     // get loaderName() {
     //   if ( loaderName === null ) {
     //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
@@ -372,7 +366,7 @@ var Loaders = function Loaders() {
     //   return loaderName;
     // },
 
-    //dracoLoader
+    // dracoLoader
     // get loaderName() {
     //   if ( loaderName === null ) {
     //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
@@ -414,7 +408,7 @@ var Loaders = function Loaders() {
       return jsonLoader;
     },
 
-    //kmzLoader
+    // kmzLoader
     // get loaderName() {
     //   if ( loaderName === null ) {
     //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
@@ -429,7 +423,7 @@ var Loaders = function Loaders() {
       return legacyGltfLoader;
     },
 
-    //mmdLoader
+    // mmdLoader
     // get loaderName() {
     //   if ( loaderName === null ) {
     //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
@@ -445,10 +439,10 @@ var Loaders = function Loaders() {
       return mtlLoader;
     },
 
-    //nrrdLoader
+    // nrrdLoader
     // get loaderName() {
     //   if ( loaderName === null ) {
-    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+    //     loaderName = promisifyLoader( new THREE.NRRDLoader( loadingManager ), loadingManager );
     //   }
     //   return loaderName;
     // },
@@ -477,45 +471,40 @@ var Loaders = function Loaders() {
       return objLoader;
     },
 
-    //pcdLoader
-    // get loaderName() {
-    //   if ( loaderName === null ) {
-    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
-    //   }
-    //   return loaderName;
-    // },
+    get pcdLoader() {
+      if (pcdLoader === null) {
+        pcdLoader = promisifyLoader(new THREE.PCDLoader(loadingManager), loadingManager);
+      }
+      return pcdLoader;
+    },
 
-    //pdbLoader
-    // get loaderName() {
-    //   if ( loaderName === null ) {
-    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
-    //   }
-    //   return loaderName;
-    // },
+    get pdbLoader() {
+      if (pdbLoader === null) {
+        pdbLoader = promisifyLoader(new THREE.PDBLoader(loadingManager), loadingManager);
+      }
+      return pdbLoader;
+    },
 
-    //plyLoader
-    // get loaderName() {
-    //   if ( loaderName === null ) {
-    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
-    //   }
-    //   return loaderName;
-    // },
+    get plyLoader() {
+      if (plyLoader === null) {
+        plyLoader = promisifyLoader(new THREE.PLYLoader(loadingManager), loadingManager);
+      }
+      return plyLoader;
+    },
 
-    //pwrmLoader
-    // get loaderName() {
-    //   if ( loaderName === null ) {
-    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
-    //   }
-    //   return loaderName;
-    // },
+    get pwrmLoader() {
+      if (pwrmLoader === null) {
+        pwrmLoader = promisifyLoader(new THREE.PWRMLoader(loadingManager), loadingManager);
+      }
+      return pwrmLoader;
+    },
 
-    //stlLoader
-    // get loaderName() {
-    //   if ( loaderName === null ) {
-    //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
-    //   }
-    //   return loaderName;
-    // },
+    get stlLoader() {
+      if (stlLoader === null) {
+        stlLoader = promisifyLoader(new THREE.STLLoader(loadingManager), loadingManager);
+      }
+      return stlLoader;
+    },
 
     get threemfLoader() {
       if (threemfLoader === null) {
@@ -560,7 +549,7 @@ var isAsset = function isAsset(type) {
 };
 
 var isModel = function isModel(type) {
-  return new RegExp('(3mf|amf|ctm|dae|drc|fbx|gltf|glb|js|json|kmz|mmd|nrrd|objpcd|pdb|ply|pwrm|stl)$').test(type);
+  return new RegExp('(3mf|amf|ctm|dae|drc|fbx|gltf|glb|js|json|kmz|mmd|nrrd|obj|pcd|pdb|ply|pwrm|stl)$').test(type);
 };
 
 var isValid = function isValid(type) {
@@ -601,11 +590,9 @@ var loadFile = function loadFile(details) {
   switch (type) {
 
     case '3mf':
-      // console.log( 'Support for ' + type + ' coming soon!' );
       main.load(loaders.threemfLoader(file), name);
       break;
     case 'amf':
-      // console.log( 'Support for ' + type + ' coming soon!' );
       main.load(loaders.amfLoader(file), name);
       break;
     case 'ctm':
@@ -635,7 +622,7 @@ var loadFile = function loadFile(details) {
       // main.load( loaders.kmzLoader( file ), name );
       break;
     case 'mmd':
-      console.log('Support for ' + type + ' coming soon!');
+      // console.log( 'Support for ' + type + ' coming soon!' );
       // main.load( loaders.mmdLoader( file ), name );
       break;
     case 'nrrd':
@@ -652,24 +639,22 @@ var loadFile = function loadFile(details) {
       });
       break;
     case 'pcd':
-      console.log('Support for ' + type + ' coming soon!');
-      // main.load( loaders.pcdLoader( file ), name );
+      main.load(loaders.pcdLoader(file), name);
       break;
     case 'pdb':
       console.log('Support for ' + type + ' coming soon!');
       // main.load( loaders.pdbLoader( file ), name );
       break;
     case 'ply':
-      console.log('Support for ' + type + ' coming soon!');
-      // main.load( loaders.plyLoader( file ), name );
+      main.load(loaders.plyLoader(file), name);
       break;
     case 'pwrm':
       console.log('Support for ' + type + ' coming soon!');
       // main.load( loaders.pwrmLoader( file ), name );
       break;
     case 'stl':
-      console.log('Support for ' + type + ' coming soon!');
-      // main.load( loaders.stlLoader( file ), name );
+      // console.log( 'Support for ' + type + ' coming soon!' );
+      main.load(loaders.stlLoader(file), name);
       break;
     default:
       console.error('Unsupported file type ' + type + ' - please load one of the supported model formats.');
@@ -1750,8 +1735,15 @@ var exportGLTF = new ExportGLTF();
 
 THREE.Cache.enabled = true;
 
-// const loaders = new Loaders();
-var defaultMat = new THREE.MeshBasicMaterial({ wireframe: true, color: 0x000000 });
+var defaultMat = new THREE.MeshStandardMaterial({
+  color: 0xcccccc,
+  // emissive: 0x000000,
+  // metalness: 1,
+  // roughness: 1,
+  // transparent: false,
+  // depthTest: true,
+  side: THREE.FrontSide
+});
 
 var Main = function () {
   function Main(originalCanvas, resultCanvas) {

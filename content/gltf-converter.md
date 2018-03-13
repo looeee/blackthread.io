@@ -46,12 +46,17 @@ Convert from a variety of formats to GLTF format (V2) using the three.js <a href
 
 ### Supported formats:
 
+* 3MF
+* AMF
 * FBX
 * OBJ and MTL
 * GLTF and GLB version 2 (because why not? )
 * GLTF and GLB version 1. Upload any .BIN, .FRAG, or .VERT files alongside your model (shader materials will export as grey for now though).
 * Collada ( DAE )
-* Three.js JSON format. Note that older versions of the format, as well as files containing just a geometry or buffer geometry will load as a wireframe.
+* Three.js JSON format.
+* PCD (ASCII and Binary)
+* PLY (ASCII and Binary)
+* STL (ASCII and Binary)
 
 Upload any textures alongside the model in JPG, PNG, GIF, BMP format ( just upload all the files at the same time and the converter will handle the rest ).
 

@@ -22,11 +22,11 @@ let mtlLoader = null;
 // let nrrdLoader = null;
 let objectLoader = null;
 let objLoader = null;
-// let pcdLoader = null;
-// let pdbLoader = null;
-// let plyLoader = null;
-// let pwrmLoader = null;
-// let stlLoader = null;
+let pcdLoader = null;
+let pdbLoader = null;
+let plyLoader = null;
+let pwrmLoader = null;
+let stlLoader = null;
 let threemfLoader = null;
 
 // used for passing materials to objLoader
@@ -62,7 +62,7 @@ class Loaders {
         return colladaLoader;
       },
 
-      //ctmLoader
+      // ctmLoader
       // get loaderName() {
       //   if ( loaderName === null ) {
       //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
@@ -70,7 +70,7 @@ class Loaders {
       //   return loaderName;
       // },
 
-      //dracoLoader
+      // dracoLoader
       // get loaderName() {
       //   if ( loaderName === null ) {
       //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
@@ -112,7 +112,7 @@ class Loaders {
         return jsonLoader;
       },
 
-      //kmzLoader
+      // kmzLoader
       // get loaderName() {
       //   if ( loaderName === null ) {
       //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
@@ -127,7 +127,7 @@ class Loaders {
         return legacyGltfLoader;
       },
 
-      //mmdLoader
+      // mmdLoader
       // get loaderName() {
       //   if ( loaderName === null ) {
       //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
@@ -144,10 +144,10 @@ class Loaders {
         return mtlLoader;
       },
 
-      //nrrdLoader
+      // nrrdLoader
       // get loaderName() {
       //   if ( loaderName === null ) {
-      //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
+      //     loaderName = promisifyLoader( new THREE.NRRDLoader( loadingManager ), loadingManager );
       //   }
       //   return loaderName;
       // },
@@ -177,45 +177,40 @@ class Loaders {
         return objLoader;
       },
 
-      //pcdLoader
-      // get loaderName() {
-      //   if ( loaderName === null ) {
-      //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
-      //   }
-      //   return loaderName;
-      // },
+      get pcdLoader() {
+        if ( pcdLoader === null ) {
+          pcdLoader = promisifyLoader( new THREE.PCDLoader( loadingManager ), loadingManager );
+        }
+        return pcdLoader;
+      },
 
-      //pdbLoader
-      // get loaderName() {
-      //   if ( loaderName === null ) {
-      //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
-      //   }
-      //   return loaderName;
-      // },
+      get pdbLoader() {
+        if ( pdbLoader === null ) {
+          pdbLoader = promisifyLoader( new THREE.PDBLoader( loadingManager ), loadingManager );
+        }
+        return pdbLoader;
+      },
 
-      //plyLoader
-      // get loaderName() {
-      //   if ( loaderName === null ) {
-      //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
-      //   }
-      //   return loaderName;
-      // },
+      get plyLoader() {
+        if ( plyLoader === null ) {
+          plyLoader = promisifyLoader( new THREE.PLYLoader( loadingManager ), loadingManager );
+        }
+        return plyLoader;
+      },
 
-      //pwrmLoader
-      // get loaderName() {
-      //   if ( loaderName === null ) {
-      //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
-      //   }
-      //   return loaderName;
-      // },
+      get pwrmLoader() {
+        if ( pwrmLoader === null ) {
+          pwrmLoader = promisifyLoader( new THREE.PWRMLoader( loadingManager ), loadingManager );
+        }
+        return pwrmLoader;
+      },
 
-      //stlLoader
-      // get loaderName() {
-      //   if ( loaderName === null ) {
-      //     loaderName = promisifyLoader( new THREE.CAPLoader( loadingManager ), loadingManager );
-      //   }
-      //   return loaderName;
-      // },
+      get stlLoader() {
+        if ( stlLoader === null ) {
+          stlLoader = promisifyLoader( new THREE.STLLoader( loadingManager ), loadingManager );
+        }
+        return stlLoader;
+      },
 
       get threemfLoader() {
         if ( threemfLoader === null ) {

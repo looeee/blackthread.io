@@ -19,7 +19,7 @@ checkForFileAPI();
 
 const isAsset = type => new RegExp( '(bin|bmp|frag|gif|jpeg|jpg|mtl|png|svg|vert)$' ).test( type );
 
-const isModel = type => new RegExp( '(3mf|amf|ctm|dae|drc|fbx|gltf|glb|js|json|kmz|mmd|nrrd|objpcd|pdb|ply|pwrm|stl)$' ).test( type );
+const isModel = type => new RegExp( '(3mf|amf|ctm|dae|drc|fbx|gltf|glb|js|json|kmz|mmd|nrrd|obj|pcd|pdb|ply|pwrm|stl)$' ).test( type );
 
 const isValid = type => isAsset( type ) || isModel( type );
 
@@ -61,11 +61,9 @@ const loadFile = ( details ) => {
   switch ( type ) {
 
     case '3mf':
-      // console.log( 'Support for ' + type + ' coming soon!' );
       main.load( loaders.threemfLoader( file ), name );
       break;
     case 'amf':
-      // console.log( 'Support for ' + type + ' coming soon!' );
       main.load( loaders.amfLoader( file ), name );
       break;
     case 'ctm':
@@ -95,7 +93,7 @@ const loadFile = ( details ) => {
       // main.load( loaders.kmzLoader( file ), name );
       break;
     case 'mmd':
-      console.log( 'Support for ' + type + ' coming soon!' );
+      // console.log( 'Support for ' + type + ' coming soon!' );
       // main.load( loaders.mmdLoader( file ), name );
       break;
     case 'nrrd':
@@ -112,24 +110,22 @@ const loadFile = ( details ) => {
         } ).catch( err => console.error( err ) );
       break;
     case 'pcd':
-      console.log( 'Support for ' + type + ' coming soon!' );
-      // main.load( loaders.pcdLoader( file ), name );
+      main.load( loaders.pcdLoader( file ), name );
       break;
     case 'pdb':
       console.log( 'Support for ' + type + ' coming soon!' );
       // main.load( loaders.pdbLoader( file ), name );
       break;
     case 'ply':
-      console.log( 'Support for ' + type + ' coming soon!' );
-      // main.load( loaders.plyLoader( file ), name );
+      main.load( loaders.plyLoader( file ), name );
       break;
     case 'pwrm':
       console.log( 'Support for ' + type + ' coming soon!' );
       // main.load( loaders.pwrmLoader( file ), name );
       break;
     case 'stl':
-      console.log( 'Support for ' + type + ' coming soon!' );
-      // main.load( loaders.stlLoader( file ), name );
+      // console.log( 'Support for ' + type + ' coming soon!' );
+      main.load( loaders.stlLoader( file ), name );
       break;
     default:
       console.error( 'Unsupported file type ' + type + ' - please load one of the supported model formats.' );
