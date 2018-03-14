@@ -1,109 +1,66 @@
-.masthead {
-
-  position: fixed;
-  top: 0;
-  width: 100%;
-
-  background: $background-color;
-  border-bottom: 1px solid $border-color;
-  z-index: 20;
-
-  padding: 1em;
-  font-size: 1.25em;
-  font-weight: bold;
-
-  transition: all 0.4s ease-in-out;
-
-  * { transition: none; }
-
-  a, button {
-
-    display: block;
-    margin: 0 1rem;
-    padding: 0.5rem 0;
-    color: $masthead-link-color;
-    text-decoration: none;
-
-    &:hover {
-      color: $masthead-link-color-hover;
-    }
-
-    &.active {
-      color: $masthead-link-color-hover;
-    }
-  }
-
-  &.shrink {
-    padding: 0;
-    box-shadow: 0px 0px 1px 2px silver;
-  }
-
+#masthead {
+  display: flex;
+  align-items: center;
+  margin: 0 1em;
 }
+
+// #masthead {
+
+//   position: fixed;
+//   top: 0;
+//   width: 100%;
+
+//   display: flex;
+
+//   background: $background-color;
+//   border-bottom: 1px solid $border-color;
+//   z-index: 20;
+
+//   padding: 1em;
+//   font-size: 1.25em;
+//   font-weight: bold;
+
+//   transition: all 0.4s ease-in-out;
+
+//   * { transition: none; }
+
+//   a {
+
+//     display: block;
+//     margin: 0 1rem;
+//     padding: 0.5rem 0;
+//     color: $masthead-link-color;
+//     text-decoration: none;
+
+//     &:hover {
+//       color: $masthead-link-color-hover;
+//     }
+
+//     &.active {
+//       color: $masthead-link-color-hover;
+//     }
+//   }
+
+// }
 
 .toggle-links {
 
-  border: none;
-  background-color: transparent;
   cursor: pointer;
 
 }
 
-.visible-links {
-
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-
-  li {
-
-    display: table-cell;
-    white-space: nowrap;
-    list-style: none;
-    margin-bottom: 0;
-
-    &:last-child {
-
-      padding: 0 1em;
-
-    }
-
-  }
-
-}
-
-.masthead-title {
-
-  font-size: 1.35em;
-
-  a {
-
-    color: $text-color;
-
-  }
-
-}
 
 .hidden-links {
 
-  position: absolute;
-  top: 88%;
-  right: 2.3em;
+  right: 0em;
+  top: 1em;
   border: 1px solid $border-color;
   border-radius: $border-radius;
   background: $background-color;
-  transform-origin: 0% 0%;
+  // transform-origin: 0% 0%;
   padding: 0;
 
   transition: all 0.25s ease-in-out;
-
-  &.fold {
-
-    transform-origin: 0% 0%;
-
-    transform: scaleY(0);
-    transition: all 0.25s ease-in-out;
-
-  }
 
   a {
 
@@ -117,22 +74,6 @@
       color: $masthead-link-color-hover;
 
     }
-
-  }
-
-  // arrow at top of menu
-  &:after {
-
-    content: "";
-    position: absolute;
-    top: -10px;
-    right: 10px;
-    width: 0;
-    border-style: solid;
-    border-width: 0 10px 10px;
-    border-color: #fff transparent;
-    display: block;
-    z-index: 1;
 
   }
 
@@ -154,9 +95,24 @@
 
 }
 
+#masthead-title {
+
+  flex: 1;
+  flex-basis: 25%;
+
+  font-size: 1.35em;
+
+  a {
+
+    color: $text-color;
+
+  }
+
+}
+
 @media (max-width: $breakpoint-700) {
 
-  .masthead-title {
+  #masthead-title {
 
       font-size: 1em;
 
@@ -169,4 +125,59 @@
 
     }
 
+}
+
+.priority-nav {
+
+  flex: 1;
+  flex-basis: 75%;
+
+  text-align: right;
+
+  white-space: nowrap; // prevent flash of unstyled content
+
+  /*
+    * Makes sure the menu's are inline-block so they don't take up
+    * the entire width of its parent. This will break the plugin.
+    */
+  > ul {
+    display: flex;
+    max-width: unset;
+
+    display: inline-block;
+
+    > li {
+      padding: 0 0.5em;
+      display: inline-block;
+    }
+  }
+  &-has-dropdown{
+    .priority-nav{
+      &__dropdown{
+        &-toggle{
+          position: relative;
+        }
+      }
+    }
+  }
+  &__wrapper{
+    position: relative;
+  }
+  &__dropdown{
+    position: absolute;
+    visibility: hidden;
+    &.show{
+      visibility: visible;
+    }
+    &-toggle{
+      visibility: hidden;
+      position: absolute;
+    }
+  }
+  &-is-visible{
+    visibility: visible;
+  }
+  &-is-hidden{
+    visibility: hidden;
+  }
 }

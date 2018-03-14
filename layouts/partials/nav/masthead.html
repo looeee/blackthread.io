@@ -1,6 +1,18 @@
 {{ if ne .Params.noMasthead "true" }}
   {{ $currentPageUrl := .URL }}
-  <nav class="masthead">
+  <div id="masthead">
+    <div id="masthead-title"><a href="/">{{ .Site.Title }}</a></div>
+
+    <nav id="masthead-nav" class="priority-nav">
+      <ul id="masthead-ul">
+        {{ range $.Site.Data.navigation.masthead.menu }}
+          <li><a class="{{ if eq $currentPageUrl .url }}active{{ end }}" href="{{ .url | relURL }}">{{ .title }}</a></li>
+        {{ end }}
+      </ul>
+    </nav>
+  </div>
+
+  <!-- <nav class="masthead">
     <ul class="visible-links">
       <li class="masthead-title"><a href="/">{{ .Site.Title }}</a></li>
       <li id="spacer"></li>
@@ -11,5 +23,5 @@
       </li>
     </ul>
     <ul class="hidden-links fold"></ul>
-  </nav>
+  </nav> -->
 {{ end }}

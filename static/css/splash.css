@@ -164,77 +164,27 @@ img {
   border: 0;
   -ms-interpolation-mode: bicubic; }
 
-.masthead {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: #020000;
-  border-bottom: 1px solid #062f4f;
-  z-index: 20;
-  padding: 1em;
-  font-size: 1.25em;
-  font-weight: bold;
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out; }
-  .masthead * {
-    -webkit-transition: none;
-    transition: none; }
-  .masthead a, .masthead button {
-    display: block;
-    margin: 0 1rem;
-    padding: 0.5rem 0;
-    color: #4d4d4d;
-    text-decoration: none; }
-    .masthead a:hover, .masthead button:hover {
-      color: #ff3400 !important; }
-    .masthead a.active, .masthead button.active {
-      color: #ff3400 !important; }
-  .masthead.shrink {
-    padding: 0;
-    -webkit-box-shadow: 0px 0px 1px 2px silver;
-            box-shadow: 0px 0px 1px 2px silver; }
+#masthead {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 1em; }
 
 .toggle-links {
-  border: none;
-  background-color: transparent;
   cursor: pointer; }
 
-.visible-links {
-  margin: 0;
-  padding: 0;
-  overflow: hidden; }
-  .visible-links li {
-    display: table-cell;
-    white-space: nowrap;
-    list-style: none;
-    margin-bottom: 0; }
-    .visible-links li:last-child {
-      padding: 0 1em; }
-
-.masthead-title {
-  font-size: 1.35em; }
-  .masthead-title a {
-    color: #f2f2f2; }
-
 .hidden-links {
-  position: absolute;
-  top: 88%;
-  right: 2.3em;
+  right: 0em;
+  top: 1em;
   border: 1px solid #062f4f;
   border-radius: 4px;
   background: #020000;
-  -webkit-transform-origin: 0% 0%;
-          transform-origin: 0% 0%;
   padding: 0;
   -webkit-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out; }
-  .hidden-links.fold {
-    -webkit-transform-origin: 0% 0%;
-            transform-origin: 0% 0%;
-    -webkit-transform: scaleY(0);
-            transform: scaleY(0);
-    -webkit-transition: all 0.25s ease-in-out;
-    transition: all 0.25s ease-in-out; }
   .hidden-links a {
     margin: 0;
     padding: 0.5em 1.5em;
@@ -242,17 +192,6 @@ img {
     font-weight: normal; }
     .hidden-links a:hover {
       color: #ff3400 !important; }
-  .hidden-links:after {
-    content: "";
-    position: absolute;
-    top: -10px;
-    right: 10px;
-    width: 0;
-    border-style: solid;
-    border-width: 0 10px 10px;
-    border-color: #fff transparent;
-    display: block;
-    z-index: 1; }
   .hidden-links li {
     display: block;
     font-size: 1em;
@@ -262,12 +201,60 @@ img {
     .hidden-links li:last-child {
       border-bottom: none; }
 
+#masthead-title {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -ms-flex-preferred-size: 25%;
+      flex-basis: 25%;
+  font-size: 1.35em; }
+  #masthead-title a {
+    color: #f2f2f2; }
+
 @media (max-width: 700px) {
-  .masthead-title {
+  #masthead-title {
     font-size: 1em; }
-    .masthead-title a {
+    #masthead-title a {
       margin: 0 0.25em;
       padding: 0; } }
+
+.priority-nav {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -ms-flex-preferred-size: 75%;
+      flex-basis: 75%;
+  text-align: right;
+  white-space: nowrap;
+  /*
+    * Makes sure the menu's are inline-block so they don't take up
+    * the entire width of its parent. This will break the plugin.
+    */ }
+  .priority-nav > ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    max-width: unset;
+    display: inline-block; }
+    .priority-nav > ul > li {
+      padding: 0 0.5em;
+      display: inline-block; }
+  .priority-nav-has-dropdown .priority-nav__dropdown-toggle {
+    position: relative; }
+  .priority-nav__wrapper {
+    position: relative; }
+  .priority-nav__dropdown {
+    position: absolute;
+    visibility: hidden; }
+    .priority-nav__dropdown.show {
+      visibility: visible; }
+    .priority-nav__dropdown-toggle {
+      visibility: hidden;
+      position: absolute; }
+  .priority-nav-is-visible {
+    visibility: visible; }
+  .priority-nav-is-hidden {
+    visibility: hidden; }
 
 .hide {
   display: none !important; }
