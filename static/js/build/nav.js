@@ -47,8 +47,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     navDropdownClassName: 'hidden-links', // class used for the dropdown.
     navDropdownToggleClassName: 'toggle-links', // class used for the dropdown toggle.
     navDropdownLabel: '', // Text that is used for the dropdown toggle.
-    navDropdownBreakpointLabel: '=', // button label for navDropdownToggle when the breakPoint is reached.
-    breakPoint: 500, // amount of pixels when all menu items should be moved to dropdown to simulate a mobile menu
+    navDropdownBreakpointLabel: '', // button label for navDropdownToggle when the breakPoint is reached.
+    breakPoint: 50, // amount of pixels when all menu items should be moved to dropdown to simulate a mobile menu
     throttleDelay: 50, // this will throttle the calculating logic on resize because i'm a responsible dev.
     offsetPixels: 0, // increase to decrease the time it takes to move an item.
     count: true, // prints the amount of items are moved to the attribute data-count to style with css counter.

@@ -188,7 +188,9 @@ img {
     #masthead a.active {
       color: #ff3400 !important; }
   #masthead.shrink {
-    padding: 0 1em; }
+    padding: 0 1em;
+    -webkit-box-shadow: 0 0 1px 2px silver;
+            box-shadow: 0 0 1px 2px silver; }
   #masthead button {
     background: transparent;
     border: none;
@@ -217,15 +219,12 @@ img {
           flex: 1;
   -ms-flex-preferred-size: 25%;
       flex-basis: 25%;
-  font-size: 1.5em;
+  font-size: 2em;
   font-weight: bold; }
 
 @media (max-width: 700px) {
   #masthead-title {
-    font-size: 1em; }
-    #masthead-title a {
-      margin: 0 0.25em;
-      padding: 0; } }
+    font-size: 1.5em; } }
 
 .priority-nav {
   -webkit-box-flex: 1;

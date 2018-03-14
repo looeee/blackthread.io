@@ -29,6 +29,7 @@
 
   &.shrink {
     padding: 0 1em;
+    box-shadow: 0 0 1px 2px silver;
   }
 
   button {
@@ -40,7 +41,6 @@
 }
 
 .hidden-links {
-
 
   right: 0em;
 
@@ -76,7 +76,7 @@
   flex: 1;
   flex-basis: 25%;
 
-  font-size: 1.5em;
+  font-size: 2em;
   font-weight: bold;
 
 }
@@ -85,14 +85,7 @@
 
   #masthead-title {
 
-      font-size: 1em;
-
-      a {
-
-        margin: 0 0.25em;
-        padding: 0;
-
-      }
+      font-size: 1.5em;
 
     }
 
