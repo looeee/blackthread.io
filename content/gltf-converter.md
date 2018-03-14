@@ -38,11 +38,16 @@ vendorScripts:
   '/three/examples/js/loaders/STLLoader.min',
    ]
 aliases: [/experiments/gltf-converter/]
+# type: page
+layout: fullWidthArticle
 ---
 
-GLTF is the up and coming superstar of 3D model formats - as of March 2018 you can even display it on the Facebook news feed!
+## Three.js based glTF Converter
 
-Convert from a variety of formats to GLTF format (V2) using the three.js <a href="https://threejs.org/examples/#misc_exporter_gltf">GLTFExporter</a>.
+glTF is the up and coming superstar of 3D model formats. It's being adopted as the standard format by many 3D applications and game engines, and is especialy prominent as
+the format of choice for web applications. As of March 2018 you can even display it on the Facebook news feed!
+
+This app allows to you allows you to convert to glTF format version using the three.js <a href="https://threejs.org/examples/#misc_exporter_gltf">GLTFExporter</a>.
 
 ### Supported formats:
 
@@ -60,7 +65,14 @@ Convert from a variety of formats to GLTF format (V2) using the three.js <a href
 
 Upload any textures alongside the model in JPG, PNG, GIF, BMP format ( just upload all the files at the same time and the converter will handle the rest ).
 
-Leave a comment below if you'd like to see other file types supported.<br><br>
+
+### Limitations
+
+* Multimaterials are not supported. Any model that uses multimaterials will probably not export at all, although this will be fixed very soon
+* The exporter currently always exports [MeshStandardMaterial](https://threejs.org/docs/#api/materials/MeshStandardMaterial). Other materials will be converted to this material type and may lose information
+* Models are loaded using three.js loaders. Some of these (FBX, Collada, OBJ, glTF) support pretty much everything that you can throw at them. Others are more limited, however if you upload a model and it doesn't even display in the original preview below, you can help improve the loaders by filing a [bug report](https://github.com/mrdoob/three.js/issues) and sharing your model.
+
+All conversion happens on your PC, at no point are any models or textues uploaded to my server or stored in any way.
 
 <div class="border-section">
   <div id="file-upload-form">

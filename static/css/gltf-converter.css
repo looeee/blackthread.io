@@ -1384,7 +1384,7 @@ footer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 40vh;
+  min-height: 40vh;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap; }
 
@@ -1425,7 +1425,7 @@ footer {
   z-index: 2;
   bottom: 1em;
   right: 0.5em;
-  color: black; }
+  color: silver; }
 
 #original-preview, #result-preview {
   position: relative;

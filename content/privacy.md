@@ -2,8 +2,7 @@
 title: Privacy Policy
 date: 2018-02-02T00:00:00-00:00
 description: "Privacy policy for use of this website. Basically, this is a required legal document but all it's going to say is that I never collect any private information from anybody"
-type: page
-layout: fullWidth
+layout: fullWidthArticle
 ---
 
 # Privacy Policy

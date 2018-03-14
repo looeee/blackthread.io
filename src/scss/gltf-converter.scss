@@ -3,10 +3,7 @@
 
 #previews {
   display: flex;
-  // flex-direction: column;
-  // justify-content: space-between;
-  // align-items: center;
-  height: 40vh;
+  min-height: 40vh;
   flex-wrap: wrap;
 }
 
@@ -24,7 +21,7 @@
   z-index: 2;
   bottom: 1em;
   right: 0.5em;
-  color: black;
+  color: silver;
 }
 
 #original-preview, #result-preview {
