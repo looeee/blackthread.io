@@ -194,7 +194,8 @@ img {
   #masthead button {
     background: transparent;
     border: none;
-    color: #f2f2f2; }
+    color: #f2f2f2;
+    padding-bottom: 1em; }
 
 .hidden-links {
   right: 0em;
