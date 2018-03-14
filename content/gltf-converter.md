@@ -7,7 +7,7 @@ teaserImage: /images/experiments/gltf-converter/teaser.jpg
 js: gltf-converter
 css: gltf-converter
 # menu: experiments
-menuTitle: Blackthread Experiments
+# menuTitle: "BlackThread.io: Experiments"
 weight: 1
 vendorScripts:
   [

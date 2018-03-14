@@ -4,7 +4,7 @@ date: 2018-02-02T00:00:00-00:00
 description: "How to convert three.js plugins such as OrbitControls or loaders to ES6 modules"
 tags: ['threejs', 'plugins', 'examples', 'controls', 'loaders', 'ES6', 'modules', 'import']
 menu: blog
-menuTitle: The Blackthread Blog
+menuTitle: "BlackThread.io: Blog"
 weight: 4
 readTime: true
 draft: true

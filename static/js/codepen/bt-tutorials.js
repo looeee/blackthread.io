@@ -16,8 +16,8 @@ try {
   const a = document.createElement( 'a' );
   h3.appendChild( a );
 
-  a.innerHTML = 'www.blackthreaddesign.com';
-  a.href = 'https://www.blackthreaddesign.com/';
+  a.innerHTML = 'BlackThread.io';
+  a.href = 'https://blackthread.io';
 
   a.style.color = 'white';
 

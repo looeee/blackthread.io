@@ -4,7 +4,7 @@ description: "Using the new URL-transform in three.js loaders to use allow uploa
 date: 2018-02-02T00:00:00-00:00
 tags: ['loading', 'loaders', 'URL', 'transform', 'drag and drop', 'r89']
 menu: blog
-menuTitle: The Blackthread Blog
+menuTitle: "BlackThread.io: Blog"
 weight: 3
 readTime: true
 draft: true

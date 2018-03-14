@@ -72,7 +72,7 @@ class Main {
 
     Promise.all( this.loadingPromises ).then( () => {
 
-      this.text = createTextGeometry( this.font, this.textMat );
+      this.text = createTextGeometry( this.font, this.textMat, 'BlackThread.io' );
 
       this.adjustTextPosition();
 

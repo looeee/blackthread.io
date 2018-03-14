@@ -1,1 +1,1 @@
-# Repo for www.blackthreaddesign.com, ported to Hugo
+# Repo for BlackThread.io, ported to Hugo

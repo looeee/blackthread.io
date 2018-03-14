@@ -7,7 +7,7 @@ teaserImage: /images/experiments/escherSketch/teaser.jpg
 js: escherSketch
 css: escherSketch
 menu: experiments
-menuTitle: Blackthread Experiments
+menuTitle: "BlackThread.io: Experiments"
 weight: 2
 ---
 This is a prototype of an automatic hyperbolic art generator and educational tool.

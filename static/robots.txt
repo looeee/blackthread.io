@@ -1,1 +1,1 @@
-Sitemap: http://www.blackthreaddesign.com/sitemap.xml
+Sitemap: https://blackthread.io/sitemap.xml

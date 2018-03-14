@@ -2,14 +2,14 @@
   {{ $currentPageUrl := .URL }}
   <nav class="masthead">
     <ul class="visible-links">
-      <li class="masthead-title"><a href="/">Blackthread Design</a></li>
+      <li class="masthead-title"><a href="/">{{ .Site.Title }}</a></li>
       <li id="spacer"></li>
       {{ range $.Site.Data.navigation.masthead.menu }}
         <li><a class="{{ if eq $currentPageUrl .url }}active{{ end }}" href="{{ .url | relURL }}">{{ .title }}</a></li>
       {{ end }}
-
-      <li><button class="fa fa-bars toggle-links hide"></button>
-      </li></ul>
+      <li id="masthead-button"><button class="fa fa-bars toggle-links hide"></button>
+      </li>
+    </ul>
     <ul class="hidden-links fold"></ul>
   </nav>
 {{ end }}

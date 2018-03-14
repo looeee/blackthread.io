@@ -7,7 +7,7 @@ teaserImage: /images/experiments/ribbons/teaser.jpg
 draft: true
 js: ribbons
 menu: experiments
-menuTitle: Blackthread Experiments
+menuTitle: "BlackThread.io: Experiments"
 weight: 4
 ---
 <p>

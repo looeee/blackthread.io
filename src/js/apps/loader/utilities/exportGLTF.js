@@ -40,7 +40,7 @@ function exportGLTF( input ) {
     // } else {
 
     const output = JSON.stringify( result, null, 2 );
-    saveString( output, 'blackThreadGLTF.gltf' );
+    saveString( output, 'BlackThreadDOTioGLTF.gltf' );
 
     // }
 

@@ -1,7 +1,7 @@
 {
-  "name": "blackthreaddesign",
+  "name": "BlackThread.io",
   "version": "2.0.0",
-  "description": "Blackthreaddesign.com ported to Hugo",
+  "description": "BlackThread.io",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -11,7 +11,6 @@
     "webgl",
     "three.js",
     "javascript",
-    "design",
     "portfolio",
     "blog",
     "tutorials"
@@ -21,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/looeee/blackthread_hugo/issues"
   },
-  "homepage": "https://www.blackthreaddesign.com",
+  "homepage": "https://blackthread.io",
   "dependencies": {
     "es6-promise": "^4.2.4",
     "lodash-es": "^4.17.4",

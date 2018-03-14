@@ -6,7 +6,7 @@ tags: ['css', 'scss', 'animation']
 teaserImage: /images/experiments/circles/teaser.jpg
 css: circles
 menu: experiments
-menuTitle: Blackthread Experiments
+menuTitle: "BlackThread.io: Experiments"
 weight: 3
 ---
 Pretty circles with a pure CSS animation hover effect.

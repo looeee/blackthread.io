@@ -5,7 +5,7 @@ description: "In this post we'll go over a method for turning three.js loaders i
 permalink: /blog/promisifying-threejs-loaders/
 tags: ['loading', 'promises', 'modules', 'ES6', 'GLTFLoader']
 menu: blog
-menuTitle: The Blackthread Blog
+menuTitle: "BlackThread.io: Blog"
 weight: 2
 readTime: true
 ---

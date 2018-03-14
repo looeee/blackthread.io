@@ -25,7 +25,7 @@ const exportAsJSON = ( anim ) => {
   output = output.replace( /[^{]*/i, '' ).replace( /\]$/i, '' );
 
 
-  saveString( output, 'blackThreadAnimations.json' );
+  saveString( output, 'BlackThreadDOTioAnimations.json' );
 
 };
 

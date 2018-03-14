@@ -4,7 +4,7 @@ description: "private page for keeping track of blog post ideas"
 date: 2018-02-02T00:00:00-00:00
 tags: ['ideas', 'scratchpad']
 menu: blog
-menuTitle: The Blackthread Blog
+menuTitle: "BlackThread.io: Blog"
 weight: 10000
 readTime: true
 draft: true

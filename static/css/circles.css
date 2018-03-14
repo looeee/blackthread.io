@@ -97,10 +97,10 @@ p {
 
 /* links */
 a {
-  color: #B82601; }
+  color: #ff3400; }
   a:hover, a:active {
     outline: 0;
-    color: #8b1d01; }
+    color: #B82601; }
 
 /* lists */
 ul {
@@ -345,7 +345,7 @@ input[type="reset"] {
   font-weight: 700; }
 
 [type="submit"]:hover {
-  background: #B82601; }
+  background: #ff3400; }
 
 select,
 input[type="file"] {
@@ -790,9 +790,9 @@ footer {
     color: #4d4d4d;
     text-decoration: none; }
     .masthead a:hover, .masthead button:hover {
-      color: #B82601 !important; }
+      color: #ff3400 !important; }
     .masthead a.active, .masthead button.active {
-      color: #B82601 !important; }
+      color: #ff3400 !important; }
   .masthead.shrink {
     padding: 0;
     -webkit-box-shadow: 0px 0px 1px 2px silver;
@@ -845,7 +845,7 @@ footer {
     font-size: 1em;
     font-weight: normal; }
     .hidden-links a:hover {
-      color: #B82601 !important; }
+      color: #ff3400 !important; }
   .hidden-links:after {
     content: "";
     position: absolute;

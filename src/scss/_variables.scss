@@ -20,7 +20,7 @@ monospace !default;
 
 /* Base colors  */
 
-$info-color: #B82601 !default;
+$info-color: #ff3400 !default;
 $text-color: mix(#fff, gray, 90%) !default;
 $background-color: #020000 !default;
 $border-color: #062f4f  !default;
@@ -32,7 +32,7 @@ $warning-color: #7C010F !default;
 /* links */
 
 $link-color: $info-color !default;
-$link-color-hover: #8b1d01 !default;
+$link-color-hover: #B82601 !default;
 
 $masthead-link-color: #4d4d4d !default;
 $masthead-link-color-hover: $info-color !important;

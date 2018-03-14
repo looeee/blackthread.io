@@ -3,7 +3,7 @@ import { TextBufferGeometry, Mesh } from '../Three.custom.js';
 
 import createBufferAnimation from './createBufferAnimation.js';
 
-export default function createTextGeometry( font, mat, text = 'Black Thread Design' ) {
+export default function createTextGeometry( font, mat, text = 'Testing' ) {
 
   const bufferGeometry = new TextBufferGeometry( text, {
 

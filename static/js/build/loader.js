@@ -570,7 +570,7 @@ var exportAsJSON = function exportAsJSON(anim) {
   // remove first '[' and last ']' from json
   output = output.replace(/[^{]*/i, '').replace(/\]$/i, '');
 
-  saveString(output, 'blackThreadAnimations.json');
+  saveString(output, 'BlackThreadDOTioAnimations.json');
 };
 
 var AnimationControls = function () {
@@ -2290,7 +2290,7 @@ function exportGLTF(input) {
     // } else {
 
     var output = JSON.stringify(result, null, 2);
-    saveString$1(output, 'blackThreadGLTF.gltf');
+    saveString$1(output, 'BlackThreadDOTioGLTF.gltf');
 
     // }
   }, options);
