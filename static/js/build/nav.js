@@ -8,166 +8,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
-// class Masthead {
-
-//   constructor() {
-
-//     this.masthead = document.querySelector( '.masthead' );
-
-//     if ( this.masthead === null ) return;
-
-//     this.visibleLinks = this.masthead.querySelector( '.visible-links' );
-//     this.hiddenLinks = this.masthead.querySelector( '.hidden-links' );
-//     this.toggleButton = this.masthead.querySelector( '.toggle-links' );
-//     this.spacer = this.masthead.querySelector( '#spacer' );
-
-//     this.setupResize();
-//     this.setupButton();
-
-//     this.decreaseSize();
-//     this.decreaseSize();
-
-//     this.initScroll();
-
-//   }
-
-//   initScroll() {
-
-//     const self = this;
-//     document.addEventListener( 'scroll', () => {
-
-//       if ( window.scrollY > 50 ) {
-//         self.masthead.classList.add( 'shrink' );
-//       } else {
-//         self.masthead.classList.remove( 'shrink' );
-//       }
-
-//     } );
-
-//   }
-
-//   visibleLinksWidth() {
-
-//     let width = 0;
-
-//     for ( const child in this.visibleLinks.children ) {
-
-//       if ( Object.prototype.hasOwnProperty.call( this.visibleLinks.children, child ) ) {
-
-//         if ( this.visibleLinks.children[ child ].id !== this.spacer ) width += this.visibleLinks.children[ child ].offsetWidth;
-
-//       }
-
-//     }
-
-//     return width;
-
-//   }
-
-//   increaseSize() {
-
-//     this.spacer.style.width = 0;
-
-//     if ( this.hiddenLinks.children.length === 0 ) {
-
-//       this.hiddenLinks.classList.add( 'fold' );
-//       this.setSpacerWidth();
-//       return;
-
-//     }
-
-//     let width = this.visibleLinksWidth() + this.hiddenLinks.firstChild.offsetWidth;
-
-//     while (
-//       this.hiddenLinks.children.length > 0 &&
-//       width < this.masthead.clientWidth
-//     ) {
-
-//       width += this.hiddenLinks.firstChild.offsetWidth;
-//       this.visibleLinks.insertBefore( this.hiddenLinks.firstChild, this.visibleLinks.lastChild );
-
-
-//     }
-
-//     this.showButton();
-//     this.setSpacerWidth();
-
-//   }
-
-//   decreaseSize() {
-
-//     this.spacer.style.width = 0;
-
-//     while ( this.masthead.clientWidth < this.visibleLinks.scrollWidth ) {
-
-//       if ( this.visibleLinks.children.length === 3 ) {
-
-//         this.showButton();
-//         this.setSpacerWidth();
-//         return;
-
-//       }
-
-//       const secondLastChild = this.visibleLinks.children[ this.visibleLinks.children.length - 2 ];
-//       this.hiddenLinks.insertBefore( secondLastChild, this.hiddenLinks.firstChild );
-
-//     }
-
-//     this.showButton();
-//     this.setSpacerWidth();
-
-//   }
-
-//   setSpacerWidth() {
-
-//     this.spacer.style.width = this.visibleLinks.offsetWidth - this.visibleLinksWidth() + 'px';
-
-//   }
-
-//   showButton() {
-
-//     if ( this.hiddenLinks.children.length === 0 ) this.toggleButton.classList.add( 'hide' );
-//     else this.toggleButton.classList.remove( 'hide' );
-
-//   }
-
-//   setupResize() {
-
-//     const self = this;
-//     let lastWidth = window.innerWidth;
-
-//     window.addEventListener( 'resize', () => {
-
-//       if ( window.innerWidth > lastWidth ) self.increaseSize();
-//       else if ( window.innerWidth < lastWidth ) self.decreaseSize();
-
-//       lastWidth = window.innerWidth;
-//     } );
-
-//   }
-
-//   setupButton() {
-
-//     const self = this;
-
-//     let folded = true;
-
-//     this.toggleButton.addEventListener( 'click', () => {
-
-//       if ( folded ) self.hiddenLinks.classList.remove( 'fold' );
-//       else self.hiddenLinks.classList.add( 'fold' );
-
-//       folded = !folded;
-
-//     } );
-
-
-//   }
-
-// }
-
-// new Masthead();
-
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     define('priorityNav', factory(root));
@@ -206,7 +46,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     mainNav: 'ul', // mainnav selector. (must be inline-block)
     navDropdownClassName: 'hidden-links', // class used for the dropdown.
     navDropdownToggleClassName: 'toggle-links', // class used for the dropdown toggle.
-    navDropdownLabel: '=', // Text that is used for the dropdown toggle.
+    navDropdownLabel: '', // Text that is used for the dropdown toggle.
     navDropdownBreakpointLabel: '=', // button label for navDropdownToggle when the breakPoint is reached.
     breakPoint: 500, // amount of pixels when all menu items should be moved to dropdown to simulate a mobile menu
     throttleDelay: 50, // this will throttle the calculating logic on resize because i'm a responsible dev.
@@ -307,28 +147,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }
 
   /**
-   * Toggle class on element
-   * @param el
-   * @param className
-   */
-  var toggleClass = function toggleClass(el, className) {
-    if (el.classList) {
-      el.classList.toggle(className);
-    } else {
-      var classes = el.className.split(' ');
-      var existingIndex = classes.indexOf(className);
-
-      if (existingIndex >= 0) {
-        classes.splice(existingIndex, 1);
-      } else {
-        classes.push(className);
-      }
-
-      el.className = classes.join(' ');
-    }
-  };
-
-  /**
    * Check if dropdown menu is already on page before creating it
    * @param mainNavWrapper
    */
@@ -374,6 +192,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     navDropdown.classList.add(settings.navDropdownClassName);
     navDropdown.classList.add('priority-nav__dropdown');
 
+    navDropdownToggle.classList.add('fa');
+    navDropdownToggle.classList.add('fa-bars');
     navDropdownToggle.classList.add(settings.navDropdownToggleClassName);
     navDropdownToggle.classList.add('priority-nav__dropdown-toggle');
 
@@ -650,9 +470,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     // Toggle dropdown
     _this.querySelector(navDropdownToggle).addEventListener('click', function () {
-      toggleClass(_this.querySelector(navDropdown), 'show');
-      toggleClass(this, 'is-open');
-      toggleClass(_this, 'is-open');
+      _this.querySelector(navDropdown).classList.toggle('show');
+      this.classList.toggle('is-open');
+      _this.classList.toggle('is-open');
 
       /**
            * Toggle aria hidden for accessibility
@@ -733,19 +553,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
   }
 
-  var checkForSymbols = function checkForSymbols(string) {
-    var firstChar = string.charAt(0);
-    if (firstChar === '.' || firstChar === '#') {
-      return false;
-    }
-    return true;
-  };
-
-  /**
-   * Initialize Plugin
-   * @public
-   * @param {Object} options User settings
-   */
   priorityNav.init = function (options) {
 
     /**
@@ -757,12 +564,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // Feature test.
     if (!supports && typeof Node === 'undefined') {
       console.warn("This browser doesn't support priorityNav");
-      return;
-    }
-
-    // Options check
-    if (!checkForSymbols(settings.navDropdownClassName) || !checkForSymbols(settings.navDropdownToggleClassName)) {
-      console.warn('No symbols allowed in navDropdownClassName & navDropdownToggleClassName. These are not selectors.');
       return;
     }
 
@@ -807,8 +608,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       /**
-           * Check if we need to create the dropdown elements
-           */
+       * Check if we need to create the dropdown elements
+       */
       prepareHtml(_this, settings);
 
       /**
@@ -846,13 +647,32 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     document.documentElement.classList.add(settings.initClass);
   };
 
+  var masthead = document.querySelector('#masthead');
+  document.addEventListener('scroll', function () {
+
+    if (window.scrollY > 50) {
+      masthead.classList.add('shrink');
+    } else {
+      masthead.classList.remove('shrink');
+    }
+  });
   /**
    * Public APIs
    */
   return priorityNav;
 });
 
-var nav = priorityNav.init();
+var masthead = document.querySelector('#masthead');
+document.addEventListener('scroll', function () {
+
+  if (window.scrollY > 50) {
+    masthead.classList.add('shrink');
+  } else {
+    masthead.classList.remove('shrink');
+  }
+});
+
+priorityNav.init();
 
 var sidenav = function sidenav() {
 

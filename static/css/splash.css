@@ -165,38 +165,48 @@ img {
   -ms-interpolation-mode: bicubic; }
 
 #masthead {
+  position: fixed;
+  top: 0;
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: 0 1em; }
-
-.toggle-links {
-  cursor: pointer; }
+  padding: 1em;
+  background: #020000;
+  border-bottom: 1px solid #062f4f;
+  z-index: 20;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out; }
+  #masthead a {
+    text-decoration: none;
+    color: #f2f2f2; }
+    #masthead a:hover {
+      color: #ff3400 !important; }
+    #masthead a.active {
+      color: #ff3400 !important; }
+  #masthead.shrink {
+    padding: 0 1em; }
+  #masthead button {
+    background: transparent;
+    border: none;
+    color: #f2f2f2; }
 
 .hidden-links {
   right: 0em;
-  top: 1em;
+  background: #020000;
   border: 1px solid #062f4f;
   border-radius: 4px;
-  background: #020000;
-  padding: 0;
   -webkit-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out; }
-  .hidden-links a {
-    margin: 0;
-    padding: 0.5em 1.5em;
-    font-size: 1em;
-    font-weight: normal; }
-    .hidden-links a:hover {
-      color: #ff3400 !important; }
+  .hidden-links ul {
+    padding: 0 !important; }
   .hidden-links li {
     display: block;
-    font-size: 1em;
-    font-weight: normal;
-    padding: 0;
+    padding: 0.5em 1em;
+    text-align: center;
     border-bottom: 1px solid #062f4f; }
     .hidden-links li:last-child {
       border-bottom: none; }
@@ -207,9 +217,8 @@ img {
           flex: 1;
   -ms-flex-preferred-size: 25%;
       flex-basis: 25%;
-  font-size: 1.35em; }
-  #masthead-title a {
-    color: #f2f2f2; }
+  font-size: 1.5em;
+  font-weight: bold; }
 
 @media (max-width: 700px) {
   #masthead-title {
@@ -238,7 +247,8 @@ img {
     display: inline-block; }
     .priority-nav > ul > li {
       padding: 0 0.5em;
-      display: inline-block; }
+      display: inline-block;
+      margin: 0; }
   .priority-nav-has-dropdown .priority-nav__dropdown-toggle {
     position: relative; }
   .priority-nav__wrapper {
