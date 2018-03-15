@@ -1,6 +1,6 @@
 ---
 title: "Convert 3D models to GLTF"
-date: 2018-03-08T00:00:00-00:00
+date: 2018-03-08
 description: "GLTF is the up and coming superstar of 3D model formats - you can even display it on the Facebook news feed. Use this tool to convert from various formats to GLTF using the three.js exporter"
 tags: ['gltf', 'three.js', 'converter', 'exporter', 'fbx', 'obj', 'mtl', 'dae', 'collada', 'dds']
 teaserImage: /images/experiments/gltf-converter/teaser.jpg

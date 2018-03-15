@@ -1,6 +1,6 @@
 ---
 title:  "Adapting three.js plugins for use as ES6 modules"
-date: 2018-02-02T00:00:00-00:00
+date: 2018-02-02
 description: "How to convert three.js plugins such as OrbitControls or loaders to ES6 modules"
 tags: ['threejs', 'plugins', 'examples', 'controls', 'loaders', 'ES6', 'modules', 'import']
 menu: blog

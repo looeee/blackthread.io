@@ -1,6 +1,6 @@
 ---
 title: TERMS AND CONDITIONS
-date: 2018-02-02T00:00:00-00:00
+date: 2018-02-02
 description: "Privacy policy for use of this website. Basically, this is a required legal document but all it's going to say is that I never collect any private information from anybody"
 layout: fullWidthArticle
 ---

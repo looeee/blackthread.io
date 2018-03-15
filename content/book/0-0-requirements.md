@@ -1,6 +1,6 @@
 ---
 title:  "Requirements for a three.js scene"
-date: 2018-01-03T00:00:00-00:00
+date: 2018-01-03
 description: "Here we'll cover the basic requirement for running an three.js app and following the rest of these tutorials"
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
 menu: book

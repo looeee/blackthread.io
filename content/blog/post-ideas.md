@@ -1,7 +1,7 @@
 ---
 title:  "Blog post ideas"
 description: "private page for keeping track of blog post ideas"
-date: 2018-02-02T00:00:00-00:00
+date: 2018-02-02
 tags: ['ideas', 'scratchpad']
 menu: blog
 menuTitle: "BlackThread.io: Blog"

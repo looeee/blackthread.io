@@ -1,6 +1,6 @@
 ---
 title: "Introduction"
-date: 2018-01-02T00:00:00-00:00
+date: 2018-01-02
 description: "Welcome to the Black Thread series of tutorials on three.js! Here we'll focus on getting to know all the amazing features that make this beautiful library so great to work with."
 tags: ['three.js', 'getting started', 'introduction', 'tutorials']
 heroImage: /images/tutorials/section1-hero.jpg

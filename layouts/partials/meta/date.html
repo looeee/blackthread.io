@@ -5,5 +5,14 @@
   </strong>
   <time datetime="">
     {{ .Date.Format "January 2, 2006" }}
-  </time>
+  </time><br>
+  {{ if and .Page.Lastmod ( ne .Page.Lastmod .Date )}}
+    <strong>
+      <span class="fa fa-fw fa-calendar" aria-hidden="true"></span>
+      Updated:
+    </strong>
+    <time datetime="">
+      {{ .Page.Lastmod.Format "January 2, 2006" }}
+    </time>
+  {{ end }}
 </div>

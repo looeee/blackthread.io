@@ -1,6 +1,6 @@
 ---
 title:  "CHAPTERS"
-date: 2018-01-02T00:00:00-00:00
+date: 2018-01-02
 description: "Keeping track of chapter ideas"
 tags: ['three.js', 'getting started', 'introduction']
 menu: book

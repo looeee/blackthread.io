@@ -888,6 +888,7 @@ footer {
 
 #meta-top {
   padding-top: 0.5em;
+  padding-right: 1em;
   text-align: right;
   font-style: italic;
   font-size: 0.8em; }
@@ -909,7 +910,7 @@ footer {
   position: absolute;
   background-color: transparent;
   border: none;
-  padding: 0.5em;
+  padding: 0 0.5em;
   color: #f2f2f2;
   text-align: left; }
 
@@ -1344,6 +1345,7 @@ footer {
           flex: 1;
   background-color: #202022;
   overflow-x: hidden;
+  padding-top: 5em;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -1394,7 +1396,8 @@ footer {
   margin: 0;
   padding: 0;
   left: 0;
-  top: 0; }
+  top: 0;
+  min-height: unset; }
 
 #previews:-moz-full-screen {
   width: 100%;
@@ -1402,7 +1405,8 @@ footer {
   margin: 0;
   padding: 0;
   left: 0;
-  top: 0; }
+  top: 0;
+  min-height: unset; }
 
 #previews:-ms-fullscreen {
   width: 100%;
@@ -1410,7 +1414,8 @@ footer {
   margin: 0;
   padding: 0;
   left: 0;
-  top: 0; }
+  top: 0;
+  min-height: unset; }
 
 #previews:fullscreen {
   width: 100%;
@@ -1418,7 +1423,8 @@ footer {
   margin: 0;
   padding: 0;
   left: 0;
-  top: 0; }
+  top: 0;
+  min-height: unset; }
 
 #fullscreen-button {
   position: absolute;

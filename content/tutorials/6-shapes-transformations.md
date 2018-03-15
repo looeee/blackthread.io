@@ -1,6 +1,6 @@
 ---
 title: "Shapes and Transformations"
-date: 2018-03-02T00:00:00-00:00
+date: 2018-03-02
 description: "We'll finish up these tutorials by taking a quick look at the built in geometries and how to position them in 3D space within our scene using translation, scaling, and rotation, the so called 'affine' transformations"
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
 menu: tutorials

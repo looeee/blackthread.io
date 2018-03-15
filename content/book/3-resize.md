@@ -1,6 +1,6 @@
 ---
 title:  "Resizing the canvas"
-date: 2018-01-07T00:00:00-00:00
+date: 2018-01-07
 description: "Here we'll add an event listener  that watches for browser window size changes and smoothly updates your scene to match the new size"
 tags: ['event listener', 'resize', 'browser']
 menu: book

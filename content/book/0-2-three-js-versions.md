@@ -1,6 +1,6 @@
 ---
 title:  "The three.js versioning system"
-date: 2018-01-04T00:00:00-00:00
+date: 2018-01-04
 description: "Understanding and working with different versions of three.js, and dealing with the rapid release cycle"
 tags: ['three.js', 'versions', 'revisions', 'wiki', 'migration guide', 'API', 'releases']
 menu: book

@@ -1,6 +1,6 @@
 ---
 title:  "EscherSketch"
-date: 2017-02-02T00:00:00-00:00
+date: 2017-02-02
 description: "Prototype of a hyperbolic art generator and educational to h that creates a regular edge to edge tiling of the hyperbolic plane. If you are a fan of M.C Escher you will certainly recognise this from his Circle Limit series"
 tags: ['hyperbolic', 'mathematics', 'escher', 'tiling']
 teaserImage: /images/experiments/escherSketch/teaser.jpg

@@ -1,7 +1,7 @@
 ---
 title:  "URL-transform in three.js loaders"
 description: "Using the new URL-transform in three.js loaders to use allow uploaded textures"
-date: 2018-02-02T00:00:00-00:00
+date: 2018-02-02
 tags: ['loading', 'loaders', 'URL', 'transform', 'drag and drop', 'r89']
 menu: blog
 menuTitle: "BlackThread.io: Blog"

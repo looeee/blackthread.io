@@ -46,6 +46,10 @@ const prepareHtml = function ( wrapper, settings ) {
   navDropdown = document.createElement( 'ul' );
   navDropdownToggle = document.createElement( 'button' );
 
+  // toggleWrapper = document.querySelector( '.hidden-links-wrapper' );
+  // navDropdown = document.querySelector( '.hidden-links' );
+  // navDropdownToggle = document.querySelector( '.toggle-links' );
+
   // Set label for dropdown toggle
   navDropdownToggle.innerHTML = settings.navDropdownLabel;
 
@@ -80,9 +84,7 @@ const prepareHtml = function ( wrapper, settings ) {
   wrapper.classList.add( 'priority-nav' );
 };
 
-
 // Get innerwidth without padding
-
 const getElementContentWidth = function ( element ) {
   const styles = window.getComputedStyle( element );
   const padding = parseFloat( styles.paddingLeft ) +

@@ -1,6 +1,6 @@
 ---
 title:  "Introduction to textures"
-date: 2018-01-08T00:00:00-00:00
+date: 2018-01-08
 description: "In this tutorial we'll cover how textures work for creating realistic looking materials, and add one to our scene"
 tags: ['three.js', 'textures', 'loaders', 'security', 'server', 'textureLoader', 'browser']
 menu: book

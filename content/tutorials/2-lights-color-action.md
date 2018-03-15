@@ -1,7 +1,7 @@
 ---
 title:  "Lights, Color, Action!"
-date: 2018-03-02T00:00:00-00:00
-modifiedDate: 2018-03-05T00:00:00-00:00
+date: 2018-03-02
+modifiedDate: 2018-03-05
 description: "Picking up where we left of in the last tutorial we'll add lights, color and animation to our scene."
 tags: ['three.js', 'scene', 'renderer', 'webgl', 'animation', 'color', 'lights']
 menu: tutorials

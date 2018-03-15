@@ -49,6 +49,10 @@ var prepareHtml = function prepareHtml(wrapper, settings) {
   navDropdown = document.createElement('ul');
   navDropdownToggle = document.createElement('button');
 
+  // toggleWrapper = document.querySelector( '.hidden-links-wrapper' );
+  // navDropdown = document.querySelector( '.hidden-links' );
+  // navDropdownToggle = document.querySelector( '.toggle-links' );
+
   // Set label for dropdown toggle
   navDropdownToggle.innerHTML = settings.navDropdownLabel;
 
@@ -83,7 +87,6 @@ var prepareHtml = function prepareHtml(wrapper, settings) {
 };
 
 // Get innerwidth without padding
-
 var getElementContentWidth = function getElementContentWidth(element) {
   var styles = window.getComputedStyle(element);
   var padding = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);

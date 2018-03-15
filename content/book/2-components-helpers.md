@@ -1,6 +1,6 @@
 ---
 title:  "Components and Helpers"
-date: 2018-01-12T00:00:00-00:00
+date: 2018-01-12
 description: "In this section we'll be taking a closer look at some of the components that make up three.js, as well as some of the helper objects."
 tags: ['three.js', 'requirements', 'WebGL', 'Codepen', 'browser console', 'HTML']
 heroImage: /images/tutorials/section2-hero.jpg
