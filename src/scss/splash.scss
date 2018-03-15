@@ -6,8 +6,8 @@
   display: none !important
 }
 
-.masthead {
-  padding: 0.5em;
+#masthead {
+  // padding: 0.5em;
   background: transparent;
 }
 
@@ -21,14 +21,3 @@
   width: 100%;
   z-index: 0;
 }
-
-// #splash-body {
-//   a {
-//     text-decoration: none;
-//   }
-// }
-
-// .splash-link {
-//   position: absolute;
-//   z-index: 1;
-// }

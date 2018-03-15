@@ -269,8 +269,7 @@ img {
 .hide {
   display: none !important; }
 
-.masthead {
-  padding: 0.5em;
+#masthead {
   background: transparent; }
 
 #splash-canvas-container,
