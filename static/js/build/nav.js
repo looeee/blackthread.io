@@ -115,7 +115,6 @@ var viewportSize = function viewportSize() {
 var calculateWidths = function calculateWidths(wrapper) {
   totalWidth = getElementContentWidth(wrapper);
 
-  console.log(window.innerWidth, totalWidth);
   // Check if parent is the navwrapper before calculating its width
   if (wrapper.querySelector(navDropdown).parentNode === wrapper) {
     dropDownWidth = wrapper.querySelector(navDropdown).offsetWidth;
