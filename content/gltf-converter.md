@@ -1,7 +1,7 @@
 ---
 title: "Convert 3D models to GLTF"
 date: 2018-03-08
-description: "GLTF is the up and coming superstar of 3D model formats - you can even display it on the Facebook news feed. Use this tool to convert from various formats to GLTF using the three.js exporter"
+description: "glTF is the up and coming superstar of 3D model formats. It’s being adopted as the standard format by many 3D applications and game engines, and is especially prominent as the format of choice for web applications.  Use this tool to convert from various formats to GLTF using the three.js exporter"
 tags: ['gltf', 'three.js', 'converter', 'exporter', 'fbx', 'obj', 'mtl', 'dae', 'collada', 'dds']
 teaserImage: /images/experiments/gltf-converter/teaser.jpg
 js: gltf-converter
@@ -19,22 +19,22 @@ vendorScripts:
   '/three/examples/js/loaders/AMFLoader',
   # '/three/examples/js/loaders/CTMLoader' - needs lots of files!
   '/three/examples/js/loaders/ColladaLoader.min',
-  '/three/examples/js/loaders/DRACOLoader.min',
+  # '/three/examples/js/loaders/DRACOLoader.min',
   # '/three/examples/js/loaders/DDSLoader',
   '/three/examples/js/loaders/FBXLoader.min',
   '/three/examples/js/exporters/GLTFExporter',
   '/three/examples/js/loaders/GLTFLoader',
-  '/three/examples/js/loaders/KMZLoader.min',
+  # '/three/examples/js/loaders/KMZLoader.min',
   '/three/examples/js/loaders/deprecated/LegacyGLTFLoader.min',
   '/three/examples/js/loaders/LoaderSupport.min',
-  '/three/examples/js/loaders/MMDLoader.min',
+  # '/three/examples/js/loaders/MMDLoader.min',
   '/three/examples/js/loaders/MTLLoader.min',
-  '/three/examples/js/loaders/NRRDLoader.min',
+  # '/three/examples/js/loaders/NRRDLoader.min',
   '/three/examples/js/loaders/OBJLoader.min',
   '/three/examples/js/loaders/PCDLoader.min',
   '/three/examples/js/loaders/PDBLoader.min',
   '/three/examples/js/loaders/PLYLoader.min',
-  '/three/examples/js/loaders/PRWMLoader.min',
+  # '/three/examples/js/loaders/PRWMLoader.min',
   '/three/examples/js/loaders/STLLoader.min',
    ]
 aliases: [/experiments/gltf-converter/]
@@ -44,7 +44,7 @@ layout: fullWidthArticle
 
 ## Three.js based glTF Converter
 
-glTF is the up and coming superstar of 3D model formats. It's being adopted as the standard format by many 3D applications and game engines, and is especialy prominent as
+glTF is the up and coming superstar of 3D model formats. It's being adopted as the standard format by many 3D applications and game engines, and is especially prominent as
 the format of choice for web applications. As of March 2018 you can even display it on the Facebook news feed!
 
 This app allows to you allows you to convert to glTF format version using the three.js <a href="https://threejs.org/examples/#misc_exporter_gltf">GLTFExporter</a>.
