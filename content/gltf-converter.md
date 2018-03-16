@@ -92,7 +92,7 @@ All conversion happens on your PC, at no point are any models or textues uploade
       </label>
       <span>Export only visible objects</span><br>
       <label class="switch">
-        <input id="option_embedImage" name="visible" type="checkbox" checked>
+        <input id="option_embedImages" name="visible" type="checkbox" checked>
         <span class="slider round"></span>
       </label>
       <span>Embed Images</span><br>
