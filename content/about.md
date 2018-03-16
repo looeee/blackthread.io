@@ -4,6 +4,9 @@ date: 2018-02-02
 description: "Hello, and welcome to my website! My name's Lewy, I'm a Irish front end JavaScript expert and recovering circus performer, specializing in WebGL with three.js."
 css: about
 layout: fullWidthArticle
+meta: false
+comments: false
+pagination: false
 ---
 <div id="profile-img" class='flip-container'>
   <div class='front cont'>

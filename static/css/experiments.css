@@ -828,11 +828,11 @@ footer {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  -ms-flex-preferred-size: 75%;
-      flex-basis: 75%;
-  max-width: 75vw;
+  -ms-flex-preferred-size: 60%;
+      flex-basis: 60%;
+  max-width: 60vw;
   text-align: right;
-  padding-right: 1em;
+  padding-right: 2em;
   white-space: nowrap;
   /*
     * Makes sure the menu's are inline-block so they don't take up
