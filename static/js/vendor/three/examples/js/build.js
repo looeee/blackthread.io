@@ -1,6 +1,7 @@
 const path = require( 'path' );
 const rollup = require( 'rollup' );
-const spawn = require( 'cross-spawn' );
+// const spawn = require( 'cross-spawn' );
+const { spawn } = require( 'child_process' );
 const { StringDecoder } = require( 'string_decoder' );
 
 // (function() {
@@ -44,7 +45,7 @@ Object.keys( files ).forEach( ( name ) => {
 		'-n', name,
 		'-g', 'three:THREE',
 		'--silent'
-	] );
+	], {shell: true} );
 
 	// propagate logs
 	const decoder = new StringDecoder( 'utf8' );

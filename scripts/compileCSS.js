@@ -3,7 +3,7 @@ const fs = require( 'fs' );
 const sass = require( 'node-sass' );
 const autoprefixer = require( 'autoprefixer' );
 const postcss = require( 'postcss' );
-const CleanCSS = require( 'clean-css' );
+// const CleanCSS = require( 'clean-css' );
 
 const inputDir = 'src/scss/';
 const outputDir = 'static/css/';
@@ -18,38 +18,38 @@ const writeFile = ( fileName, data ) => {
 
 };
 
-const cleaner = new CleanCSS( {
-  level: 2,
-} );
+// const cleaner = new CleanCSS( {
+//   level: 2,
+// } );
 
-const minifyCSS = ( file, input ) => {
+// const minifyCSS = ( file, input ) => {
 
-  const output = cleaner.minify( input );
+//   const output = cleaner.minify( input );
 
-  if ( output.errors.length ) {
+//   if ( output.errors.length ) {
 
-    console.log( 'Errors: ' );
-    console.log( output.errors );
+//     console.log( 'Errors: ' );
+//     console.log( output.errors );
 
-  }
-  if ( output.warnings.length ) {
+//   }
+//   if ( output.warnings.length ) {
 
-    console.log( 'Warnings: ' );
-    console.log( output.warnings );
+//     console.log( 'Warnings: ' );
+//     console.log( output.warnings );
 
-  }
+//   }
 
-  const oldSize = output.stats.originalSize / 1000;
-  const newSize = output.stats.minifiedSize / 1000;
-  console.log( 'Reduced from ' + oldSize + 'kb to ' + newSize + 'kb.' );
+//   const oldSize = output.stats.originalSize / 1000;
+//   const newSize = output.stats.minifiedSize / 1000;
+//   console.log( 'Reduced from ' + oldSize + 'kb to ' + newSize + 'kb.' );
 
-  writeFile( file, output.styles );
+//   writeFile( file, output.styles );
 
-}
+// };
 
 const prefixCSS = ( css, name ) => {
 
-  var file = name + '.css';
+  const file = name + '.css';
 
   postcss( [ autoprefixer ] ).process( css ).then( ( object ) => {
     object.warnings().forEach( ( warn ) => {
@@ -62,9 +62,9 @@ const prefixCSS = ( css, name ) => {
     writeFile( file, object.css );
     console.log( 'Done.' );
 
-    console.log( 'Compressing file: ' + file );
-    minifyCSS( name + '.min.css', object.css );
-    console.log( 'Done.' );
+    // console.log( 'Compressing file: ' + file );
+    // minifyCSS( name + '.min.css', object.css );
+    // console.log( 'Done.' );
   } );
 
 };

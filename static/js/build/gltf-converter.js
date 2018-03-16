@@ -305,6 +305,12 @@ loadingManager.onError = function (msg) {
   console.error(msg);
 };
 
+// TODO
+// import loadJavascript from '../utilities/loadJavascript.js';
+
+// Removed for now
+// THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+
 var bufferGeometryLoader = null;
 var amfLoader = null;
 var colladaLoader = null;
@@ -740,6 +746,7 @@ function readFileAs(file, as) {
   });
 }
 
+// Check support for the File API support
 var checkForFileAPI = function checkForFileAPI() {
 
   if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -1119,6 +1126,11 @@ function Time() {
     this.paused = true;
   };
 }
+
+/**
+ * @author Lewy Blue / https://github.com/looeee
+ *
+ */
 
 function App(canvas) {
 

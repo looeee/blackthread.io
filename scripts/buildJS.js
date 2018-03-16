@@ -3,7 +3,7 @@ const watch = require( 'rollup-watch' );
 const babel = require( 'rollup-plugin-babel' );
 const glslify = require( 'glslify' );
 const nodeResolve = require( 'rollup-plugin-node-resolve' );
-const UglifyJS = require( 'uglify-js' );
+// const UglifyJS = require( 'uglify-js' );
 
 const fs = require( 'fs' );
 
@@ -75,25 +75,25 @@ const config = ( file ) => {
 // stderr to stderr to keep `rollup main.js > bundle.js` from breaking
 const stderr = console.error.bind( console );
 
-const minify = ( file ) => {
+// const minify = ( file ) => {
 
-  console.log( 'Minifying ' + file );
+//   console.log( 'Minifying ' + file );
 
-  const name = file.substring( 0, file.length - 3 );
-  const outputFile = outputDir + name + '.min.js';
+//   const name = file.substring( 0, file.length - 3 );
+//   const outputFile = outputDir + name + '.min.js';
 
-  const inputCode = fs.readFileSync( outputDir + file, 'utf8' );
+//   const inputCode = fs.readFileSync( outputDir + file, 'utf8' );
 
-  const result = UglifyJS.minify( inputCode );
+//   const result = UglifyJS.minify( inputCode );
 
-  if ( result.error ) console.error( result.error );
-  if ( result.warnings ) console.warm( result.warnings );
+//   if ( result.error ) console.error( result.error );
+//   if ( result.warnings ) console.warm( result.warnings );
 
-  fs.writeFileSync( outputFile, result.code, 'utf8' );
+//   fs.writeFileSync( outputFile, result.code, 'utf8' );
 
-  console.log( 'Finished minifying ' + file );
+//   console.log( 'Finished minifying ' + file );
 
-}
+// }
 
 const eventHandler = ( file ) => {
   return ( event ) => {
@@ -106,7 +106,7 @@ const eventHandler = ( file ) => {
         break;
       case 'BUILD_END':
         stderr( `bundled ${file} in ${event.duration}ms. Watching for changes...` );
-        minify( file );
+        // minify( file );
         break;
       case 'ERROR':
         stderr( `error: ${event.error} with ${file}` );
