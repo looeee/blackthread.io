@@ -787,7 +787,11 @@ footer {
     background: transparent;
     border: none;
     color: #f2f2f2;
-    padding: 0 1em 1em 1em; }
+    padding: 0 1em 0.25em 1em; }
+
+@media (max-width: 420px) {
+  #masthead button {
+    padding: 0.9em; } }
 
 .hidden-links {
   right: 0em;
