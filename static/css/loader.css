@@ -245,8 +245,7 @@ label,
 input,
 button,
 select {
-  vertical-align: baseline;
-  *vertical-align: middle; }
+  vertical-align: middle; }
 
 input,
 button,
@@ -255,18 +254,6 @@ textarea {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   font-family: "Raleway", "Helvetica Neue", "Lucida Grande", Arial, sans-serif; }
-
-label {
-  display: block;
-  margin-bottom: 0.25em;
-  color: #f2f2f2;
-  cursor: pointer; }
-  label small {
-    font-size: 1em; }
-  label input,
-  label textarea,
-  label select {
-    display: block; }
 
 input,
 textarea,

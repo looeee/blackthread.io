@@ -32,13 +32,13 @@ const loading = {
 };
 
 const controls = {
-  trs: document.querySelector( '#option_trs' ),
   onlyVisible: document.querySelector( '#option_visible' ),
-  truncateDrawRange: document.querySelector( '#option_drawrange' ),
   binary: document.querySelector( '#option_binary' ),
   embedImages: document.querySelector( '#option_embedImages' ),
   animations: document.querySelector( '#option_animations' ),
+  forceIndices: document.querySelector( '#option_forceindices' ),
   exportGLTF: document.querySelector( '#export' ),
+  formatLabel: document.querySelector( '#format_label' ),
 };
 
 export default class HTMLControl {

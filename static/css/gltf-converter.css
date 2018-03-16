@@ -245,8 +245,7 @@ label,
 input,
 button,
 select {
-  vertical-align: baseline;
-  *vertical-align: middle; }
+  vertical-align: middle; }
 
 input,
 button,
@@ -255,18 +254,6 @@ textarea {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   font-family: "Raleway", "Helvetica Neue", "Lucida Grande", Arial, sans-serif; }
-
-label {
-  display: block;
-  margin-bottom: 0.25em;
-  color: #f2f2f2;
-  cursor: pointer; }
-  label small {
-    font-size: 1em; }
-  label input,
-  label textarea,
-  label select {
-    display: block; }
 
 input,
 textarea,
@@ -1513,3 +1500,65 @@ footer {
   min-width: 50%;
   margin-top: 0.5em;
   white-space: normal; }
+
+#options {
+  margin: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  text-align: left; }
+
+input[type="submit"]:disabled {
+  cursor: not-allowed;
+  background: #555555; }
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 1em;
+  margin: 0 0.5em 0.15em 0.5em; }
+  .switch input {
+    display: none; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: silver;
+  border: 1px solid rgba(216, 216, 216, 0.5);
+  -webkit-transition: .4s;
+  transition: .4s; }
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 0.6em;
+  width: 0.6em;
+  left: 4px;
+  top: 2px;
+  background-color: white;
+  border: 1px solid rgba(216, 216, 216, 0.5);
+  -webkit-transition: .4s;
+  transition: .4s; }
+
+input:checked + .slider {
+  background-color: #062f4f; }
+
+input:focus + .slider {
+  -webkit-box-shadow: 0 0 1px #2196F3;
+          box-shadow: 0 0 1px #2196F3; }
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(0.75em);
+          transform: translateX(0.75em); }
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 0.5em; }
+
+.slider.round:before {
+  border-radius: 50%; }

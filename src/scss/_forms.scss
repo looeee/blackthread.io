@@ -86,8 +86,7 @@ label,
 input,
 button,
 select, {
-  vertical-align: baseline;
-  *vertical-align: middle;
+  vertical-align: middle;
 }
 
 input,
@@ -96,23 +95,6 @@ select,
 textarea {
   box-sizing: border-box;
   font-family: $sans-serif;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.25em;
-  color: $text-color;
-  cursor: pointer;
-
-  small {
-    font-size: 1em;
-  }
-
-  input,
-  textarea,
-  select {
-    display: block;
-  }
 }
 
 input,

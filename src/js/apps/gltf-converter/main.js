@@ -1,11 +1,10 @@
 import './utilities/logging.js';
 import './components/fullscreen.js';
 import HTMLControl from './HTMLControl.js';
+import exportGLTF from './components/exportGLTF.js';
 import './components/fileReader.js';
 import Viewer from './components/Viewer.js';
-
 import loaders from './components/Loaders.js';
-import exportGLTF from './components/exportGLTF.js';
 import loadingManager from './components/loadingManager.js';
 
 
@@ -13,11 +12,6 @@ THREE.Cache.enabled = true;
 
 const defaultMat = new THREE.MeshStandardMaterial( {
   color: 0xcccccc,
-  // emissive: 0x000000,
-  // metalness: 1,
-  // roughness: 1,
-  // transparent: false,
-  // depthTest: true,
   side: THREE.FrontSide,
 } );
 

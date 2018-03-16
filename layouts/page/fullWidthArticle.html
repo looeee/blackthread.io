@@ -1,7 +1,25 @@
 {{ define "main" }}
-<div id="page-content-full-width">
-  <div id="article">
-    {{ .Content }}
+  {{ partial "hero.html" . }}
+  {{ if .Params.fullWidth }}
+    <div id="page-content-full-width">
+  {{ else }}
+    <div id="page-content">
+    {{ partial "nav/side-nav.html" . }}
+  {{ end }}
+    <article id="article" style="margin: auto">
+      <header>
+        <h2>{{ .Title }}</h2>
+      </header>
+      {{ partial "nav/toc.html" . }}
+      {{ partial "meta/meta-top.html" . }}
+      <section class="content">
+        {{ .Content }}
+      </section>
+      {{ partial "nav/pagination.html" . }}
+      {{ partial "comments/comments.html" . }}
+      <aside>
+        {{ partial "meta/meta-bottom.html" . }}
+      </aside>
+    </article>
   </div>
-</div>
 {{ end }}

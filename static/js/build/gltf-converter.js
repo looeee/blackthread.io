@@ -76,13 +76,13 @@ var loading = {
 };
 
 var controls = {
-  trs: document.querySelector('#option_trs'),
   onlyVisible: document.querySelector('#option_visible'),
-  truncateDrawRange: document.querySelector('#option_drawrange'),
   binary: document.querySelector('#option_binary'),
   embedImages: document.querySelector('#option_embedImages'),
   animations: document.querySelector('#option_animations'),
-  exportGLTF: document.querySelector('#export')
+  forceIndices: document.querySelector('#option_forceindices'),
+  exportGLTF: document.querySelector('#export'),
+  formatLabel: document.querySelector('#format_label')
 };
 
 var HTMLControl = function () {
@@ -244,6 +244,20 @@ HTMLControl.fullscreenButton.addEventListener('click', function (e) {
   goFullscreen(HTMLControl.previews);
 }, false);
 
+// import loadingManager from '../loadingManager.js';
+
+var promisifyLoader = function promisifyLoader(loader, manager) {
+  return function (url) {
+    var parse = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+
+    return new Promise(function (resolve, reject) {
+
+      if (parse === true) loader.parse(url, '', resolve, reject);else loader.load(url, resolve, manager.onProgress, reject);
+    });
+  };
+};
+
 var loadingManager = new THREE.LoadingManager();
 
 var percentComplete = 0;
@@ -289,20 +303,6 @@ loadingManager.onProgress = function () {
 loadingManager.onError = function (msg) {
 
   console.error(msg);
-};
-
-// import loadingManager from '../loadingManager.js';
-
-var promisifyLoader = function promisifyLoader(loader, manager) {
-  return function (url) {
-    var parse = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-
-    return new Promise(function (resolve, reject) {
-
-      if (parse === true) loader.parse(url, '', resolve, reject);else loader.load(url, resolve, manager.onProgress, reject);
-    });
-  };
 };
 
 var bufferGeometryLoader = null;
@@ -517,6 +517,212 @@ var Loaders = function Loaders() {
 };
 
 var loaders = new Loaders();
+
+// saving function taken from three.js editor
+var link = document.createElement('a');
+link.style.display = 'none';
+document.body.appendChild(link); // Firefox workaround, see #6594
+
+var save = function save(blob, filename) {
+
+  link.href = URL.createObjectURL(blob);
+  link.download = filename || 'data.json';
+  link.click();
+};
+
+var saveString = function saveString(text, filename) {
+
+  save(new Blob([text], { type: 'text/plain' }), filename);
+};
+
+var saveArrayBuffer = function saveArrayBuffer(buffer, filename) {
+
+  save(new Blob([buffer], { type: 'application/octet-stream' }), filename);
+};
+
+var stringByteLength = function stringByteLength(str) {
+  // returns the byte length of an utf8 string
+  var s = str.length;
+  for (var i = str.length - 1; i >= 0; i--) {
+    var code = str.charCodeAt(i);
+    if (code > 0x7f && code <= 0x7ff) s++;else if (code > 0x7ff && code <= 0xffff) s += 2;
+    if (code >= 0xDC00 && code <= 0xDFFF) i--; // trail surrogate
+  }
+
+  return s;
+};
+
+var ExportGLTF = function () {
+  function ExportGLTF() {
+    classCallCheck(this, ExportGLTF);
+
+
+    this.loader = loaders.gltfLoader;
+
+    this.sizeInfo = '';
+
+    this.exporter = new THREE.GLTFExporter();
+    this.initExportButton();
+    this.initOptionListeners();
+  }
+
+  createClass(ExportGLTF, [{
+    key: 'getOptions',
+    value: function getOptions() {
+
+      var options = {
+        binary: HTMLControl.controls.binary.checked,
+        animations: HTMLControl.controls.animations.checked,
+        onlyVisible: HTMLControl.controls.onlyVisible.checked,
+        embedImages: HTMLControl.controls.embedImages.checked,
+        forceIndices: HTMLControl.controls.forceIndices.checked,
+        truncateDrawRange: false, // probably can't load models with drawrange defined
+        trs: false,
+        forcePowerOfTwoTextures: true // facebook compatibility
+      };
+
+      if (options.animations && this.animations.length > 0) options.animations = this.animations;
+
+      return options;
+    }
+  }, {
+    key: 'setInput',
+    value: function setInput(input, animations, name) {
+
+      this.input = input;
+      this.animations = animations;
+      this.name = name;
+      this.parse();
+    }
+  }, {
+    key: 'parse',
+    value: function parse() {
+      var _this = this;
+
+      this.exporter.parse(this.input, function (result) {
+
+        _this.result = result;
+        _this.processResult(result);
+      }, this.getOptions());
+    }
+  }, {
+    key: 'loadPreview',
+    value: function loadPreview() {
+
+      main.resultPreview.reset();
+
+      var promise = loaders.gltfLoader(this.output, true);
+
+      promise.then(function (gltf) {
+
+        HTMLControl.loading.result.overlay.classList.add('hide');
+        HTMLControl.controls.exportGLTF.disabled = false;
+
+        if (gltf.scenes.length > 1) {
+
+          gltf.scenes.forEach(function (scene) {
+
+            if (gltf.animations) scene.animations = gltf.animations;
+            main.resultPreview.addObjectToScene(scene);
+          });
+        } else if (gltf.scene) {
+
+          if (gltf.animations) gltf.scene.animations = gltf.animations;
+          main.resultPreview.addObjectToScene(gltf.scene);
+        }
+      }).catch(function (err) {
+
+        console.log(err);
+        HTMLControl.loading.result.overlay.classList.remove('hide');
+        HTMLControl.controls.exportGLTF.disabled = true;
+      });
+    }
+  }, {
+    key: 'processResult',
+    value: function processResult() {
+
+      this.setOutput();
+      this.loadPreview();
+    }
+  }, {
+    key: 'updateInfo',
+    value: function updateInfo(byteLength) {
+
+      var type = HTMLControl.controls.binary.checked ? 'GLB' : 'GLTF';
+
+      if (byteLength) {
+
+        this.sizeInfo = byteLength < 1000000 ? ' (' + Math.ceil(byteLength * 0.001) + 'kb)' : ' (' + (byteLength * 1e-6).toFixed(3) + 'mb)';
+      }
+
+      HTMLControl.controls.formatLabel.innerHTML = type === 'GLB' ? 'Binary (.glb)' : 'ASCII (.gltf)';
+
+      HTMLControl.controls.exportGLTF.value = 'Export as ' + type + this.sizeInfo;
+    }
+  }, {
+    key: 'setOutput',
+    value: function setOutput() {
+
+      if (this.result instanceof ArrayBuffer) {
+
+        this.output = this.result;
+        this.updateInfo(this.result.byteLength);
+      } else {
+
+        this.output = JSON.stringify(this.result, null, 2);
+        this.updateInfo(stringByteLength(this.output));
+      }
+    }
+  }, {
+    key: 'save',
+    value: function save() {
+
+      if (this.output instanceof ArrayBuffer) {
+
+        saveArrayBuffer(this.result, this.name + '.glb');
+      } else {
+
+        saveString(this.output, this.name + '.gltf');
+      }
+    }
+  }, {
+    key: 'initExportButton',
+    value: function initExportButton() {
+      var _this2 = this;
+
+      HTMLControl.controls.exportGLTF.addEventListener('click', function (e) {
+
+        e.preventDefault();
+
+        if (_this2.output) _this2.save(_this2.output);
+      });
+    }
+  }, {
+    key: 'initOptionListeners',
+    value: function initOptionListeners() {
+      var _this3 = this;
+
+      var onOptionChange = function onOptionChange(e) {
+
+        e.preventDefault();
+        _this3.updateInfo();
+
+        if (_this3.input === undefined) return;
+
+        _this3.parse();
+      };
+
+      HTMLControl.controls.binary.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.animations.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.onlyVisible.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.embedImages.addEventListener('change', onOptionChange, false);
+      HTMLControl.controls.forceIndices.addEventListener('change', onOptionChange, false);
+    }
+  }]);
+  return ExportGLTF;
+}();
+
+var exportGLTF = new ExportGLTF();
 
 function readFileAs(file, as) {
   if (!(file instanceof Blob)) {
@@ -1530,218 +1736,10 @@ var Viewer = function () {
   return Viewer;
 }();
 
-var link = document.createElement('a');
-link.style.display = 'none';
-document.body.appendChild(link); // Firefox workaround, see #6594
-
-var save = function save(blob, filename) {
-
-  link.href = URL.createObjectURL(blob);
-  link.download = filename || 'data.json';
-  link.click();
-};
-
-var saveString = function saveString(text, filename) {
-
-  save(new Blob([text], { type: 'text/plain' }), filename);
-};
-
-var saveArrayBuffer = function saveArrayBuffer(buffer, filename) {
-
-  save(new Blob([buffer], { type: 'application/octet-stream' }), filename);
-};
-
-var stringByteLength = function stringByteLength(str) {
-  // returns the byte length of an utf8 string
-  var s = str.length;
-  for (var i = str.length - 1; i >= 0; i--) {
-    var code = str.charCodeAt(i);
-    if (code > 0x7f && code <= 0x7ff) s++;else if (code > 0x7ff && code <= 0xffff) s += 2;
-    if (code >= 0xDC00 && code <= 0xDFFF) i--; // trail surrogate
-  }
-
-  return s;
-};
-
-var ExportGLTF = function () {
-  function ExportGLTF() {
-    classCallCheck(this, ExportGLTF);
-
-
-    this.loader = loaders.gltfLoader;
-
-    this.exporter = new THREE.GLTFExporter();
-    this.initExportButton();
-    this.initOptionListeners();
-  }
-
-  createClass(ExportGLTF, [{
-    key: 'getOptions',
-    value: function getOptions() {
-
-      var options = {
-        trs: HTMLControl.controls.trs.checked,
-        onlyVisible: HTMLControl.controls.onlyVisible.checked,
-        truncateDrawRange: HTMLControl.controls.truncateDrawRange.checked,
-        binary: HTMLControl.controls.binary.checked,
-        embedImages: HTMLControl.controls.embedImages.checked,
-        animations: HTMLControl.controls.animations.checked,
-        forceIndices: true, // facebook compatibility
-        forcePowerOfTwoTextures: true // facebook compatibility
-      };
-
-      if (options.animations && this.animations.length > 0) options.animations = this.animations;
-
-      return options;
-    }
-  }, {
-    key: 'setInput',
-    value: function setInput(input, animations, name) {
-
-      this.input = input;
-      this.animations = animations;
-      this.name = name;
-      this.parse();
-    }
-  }, {
-    key: 'parse',
-    value: function parse() {
-      var _this = this;
-
-      this.exporter.parse(this.input, function (result) {
-
-        _this.result = result;
-        // console.log( typeof result )
-        _this.processResult(result);
-      }, this.getOptions());
-    }
-  }, {
-    key: 'loadPreview',
-    value: function loadPreview() {
-
-      main.resultPreview.reset();
-
-      var promise = loaders.gltfLoader(this.output, true);
-
-      promise.then(function (gltf) {
-
-        HTMLControl.loading.result.overlay.classList.add('hide');
-        HTMLControl.controls.exportGLTF.disabled = false;
-
-        if (gltf.scenes.length > 1) {
-
-          gltf.scenes.forEach(function (scene) {
-
-            if (gltf.animations) scene.animations = gltf.animations;
-            main.resultPreview.addObjectToScene(scene);
-          });
-        } else if (gltf.scene) {
-
-          if (gltf.animations) gltf.scene.animations = gltf.animations;
-          main.resultPreview.addObjectToScene(gltf.scene);
-        }
-      }).catch(function (err) {
-
-        console.log(err);
-        HTMLControl.loading.result.overlay.classList.remove('hide');
-        HTMLControl.controls.exportGLTF.disabled = true;
-      });
-    }
-  }, {
-    key: 'processResult',
-    value: function processResult() {
-
-      this.setOutput();
-      this.loadPreview();
-    }
-  }, {
-    key: 'updateInfo',
-    value: function updateInfo(byteLength) {
-
-      var type = HTMLControl.controls.binary.checked ? 'GLB' : 'GLTF';
-
-      if (byteLength < 1000000) {
-
-        HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + Math.ceil(byteLength * 0.001) + 'kb)';
-      } else {
-
-        HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + (byteLength * 1e-6).toFixed(3) + 'mb)';
-      }
-    }
-  }, {
-    key: 'setOutput',
-    value: function setOutput() {
-
-      if (this.result instanceof ArrayBuffer) {
-
-        this.output = this.result;
-        this.updateInfo(this.result.byteLength);
-      } else {
-
-        this.output = JSON.stringify(this.result, null, 2);
-        this.updateInfo(stringByteLength(this.output));
-      }
-    }
-  }, {
-    key: 'save',
-    value: function save() {
-
-      if (this.output instanceof ArrayBuffer) {
-
-        saveArrayBuffer(this.result, this.name + '.glb');
-      } else {
-
-        saveString(this.output, this.name + '.gltf');
-      }
-    }
-  }, {
-    key: 'initExportButton',
-    value: function initExportButton() {
-      var _this2 = this;
-
-      HTMLControl.controls.exportGLTF.addEventListener('click', function (e) {
-
-        e.preventDefault();
-
-        if (_this2.output) _this2.save(_this2.output);
-      });
-    }
-  }, {
-    key: 'initOptionListeners',
-    value: function initOptionListeners() {
-      var _this3 = this;
-
-      var onOptionChange = function onOptionChange(e) {
-
-        e.preventDefault();
-
-        if (_this3.input === undefined) return;
-
-        _this3.parse();
-      };
-
-      HTMLControl.controls.trs.addEventListener('change', onOptionChange, false);
-      HTMLControl.controls.onlyVisible.addEventListener('change', onOptionChange, false);
-      HTMLControl.controls.truncateDrawRange.addEventListener('change', onOptionChange, false);
-      HTMLControl.controls.binary.addEventListener('change', onOptionChange, false);
-      HTMLControl.controls.embedImages.addEventListener('change', onOptionChange, false);
-      HTMLControl.controls.animations.addEventListener('change', onOptionChange, false);
-    }
-  }]);
-  return ExportGLTF;
-}();
-
-var exportGLTF = new ExportGLTF();
-
 THREE.Cache.enabled = true;
 
 var defaultMat = new THREE.MeshStandardMaterial({
   color: 0xcccccc,
-  // emissive: 0x000000,
-  // metalness: 1,
-  // roughness: 1,
-  // transparent: false,
-  // depthTest: true,
   side: THREE.FrontSide
 });
 

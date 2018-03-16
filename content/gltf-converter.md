@@ -1,8 +1,8 @@
 ---
 title: "Convert 3D models to GLTF"
 date: 2018-03-08
+lastmod: 2018-03-16
 description: "glTF is the up and coming superstar of 3D model formats. It’s being adopted as the standard format by many 3D applications and game engines, and is especially prominent as the format of choice for web applications.  Use this tool to convert from various formats to GLTF using the three.js exporter"
-tags: ['gltf', 'three.js', 'converter', 'exporter', 'fbx', 'obj', 'mtl', 'dae', 'collada', 'dds']
 teaserImage: /images/experiments/gltf-converter/teaser.jpg
 js: gltf-converter
 css: gltf-converter
@@ -37,12 +37,9 @@ vendorScripts:
   # '/three/examples/js/loaders/PRWMLoader.min',
   '/three/examples/js/loaders/STLLoader.min',
    ]
-aliases: [/experiments/gltf-converter/]
-# type: page
 layout: fullWidthArticle
+comments: true
 ---
-
-## Three.js based glTF Converter
 
 glTF is the up and coming superstar of 3D model formats. It's being adopted as the standard format by many 3D applications and game engines, and is especially prominent as
 the format of choice for web applications. As of March 2018 you can even display it on the Facebook news feed!
@@ -79,15 +76,33 @@ All conversion happens on your PC, at no point are any models or textues uploade
     <input id="file-upload-input" type="file" name="files[]" multiple="" class="hide">
     <input type="submit" value="Upload or Drop Files Here" id="file-upload-button"/>
     <div id="options">
-      <input id="option_animations" name="visible" type="checkbox" checked><span>Include Animations</span><br>
-      <input id="option_binary" name="visible" type="checkbox" checked><span>Binary (.glb) or ASCII (.gltf)</span><br>
-      <input id="option_visible" name="visible" type="checkbox" checked/><span>Export only visible objects</span><br>
-      <input id="option_embedImages" name="visible" type="checkbox" checked><span>Embed Images</span><br>
-      <!-- <input id="option_forceindices" name="visible" type="checkbox"><span>Force indices</span><br> -->
-      <input id="option_trs" name="trs" type="checkbox"/><span>Export position, rotation and scale instead of matrix per node</span><br>
-      <input id="option_drawrange" name="visible" type="checkbox" checked="checked"/><span>Export just the attributes within the drawRange, if defined, instead of exporting the whole array.</span><br>
+      <label class="switch">
+        <input id="option_binary" name="visible" type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
+      <span id="format_label">Binary (.glb)</span><br>
+      <label class="switch">
+        <input id="option_animations" name="visible" type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
+      <span>Include Animations</span><br>
+      <label class="switch">
+        <input id="option_visible" name="visible" type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
+      <span>Export only visible objects</span><br>
+      <label class="switch">
+        <input id="option_embedImage" name="visible" type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
+      <span>Embed Images</span><br>
+      <label class="switch">
+        <input id="option_forceindices" name="visible" type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
+      <span>Force indices (required for Facebook compatibility)</span><br>
     </div>
-    <input type="submit" value="Export as GLB" id="export" disabled/>
+    <input type="submit" value="Export as GLB" id="export" disabled="disabled"/>
   </div>
   <div id="previews">
     <div id="original-preview">

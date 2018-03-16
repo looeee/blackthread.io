@@ -47,6 +47,8 @@ class ExportGLTF {
 
     this.loader = loaders.gltfLoader;
 
+    this.sizeInfo = '';
+
     this.exporter = new THREE.GLTFExporter();
     this.initExportButton();
     this.initOptionListeners();
@@ -56,13 +58,13 @@ class ExportGLTF {
   getOptions() {
 
     const options = {
-      trs: HTMLControl.controls.trs.checked,
-      onlyVisible: HTMLControl.controls.onlyVisible.checked,
-      truncateDrawRange: HTMLControl.controls.truncateDrawRange.checked,
       binary: HTMLControl.controls.binary.checked,
-      embedImages: HTMLControl.controls.embedImages.checked,
       animations: HTMLControl.controls.animations.checked,
-      forceIndices: true, // facebook compatibility
+      onlyVisible: HTMLControl.controls.onlyVisible.checked,
+      embedImages: HTMLControl.controls.embedImages.checked,
+      forceIndices: HTMLControl.controls.forceIndices.checked,
+      truncateDrawRange: false, // probably can't load models with drawrange defined
+      trs: false,
       forcePowerOfTwoTextures: true, // facebook compatibility
     };
 
@@ -86,7 +88,6 @@ class ExportGLTF {
     this.exporter.parse( this.input, ( result ) => {
 
       this.result = result;
-      // console.log( typeof result )
       this.processResult( result );
 
     }, this.getOptions() );
@@ -140,15 +141,17 @@ class ExportGLTF {
 
     const type = HTMLControl.controls.binary.checked ? 'GLB' : 'GLTF';
 
-    if ( byteLength < 1000000 ) {
+    if ( byteLength ) {
 
-      HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + Math.ceil( byteLength * 0.001 ) + 'kb)';
-
-    } else {
-
-      HTMLControl.controls.exportGLTF.value = 'Export as ' + type + ' (' + ( byteLength * 1e-6 ).toFixed( 3 ) + 'mb)';
+      this.sizeInfo = ( byteLength < 1000000 )
+        ? ' (' + Math.ceil( byteLength * 0.001 ) + 'kb)'
+        : ' (' + ( byteLength * 1e-6 ).toFixed( 3 ) + 'mb)';
 
     }
+
+    HTMLControl.controls.formatLabel.innerHTML = ( type === 'GLB' ) ? 'Binary (.glb)' : 'ASCII (.gltf)';
+
+    HTMLControl.controls.exportGLTF.value = 'Export as ' + type + this.sizeInfo;
 
   }
 
@@ -197,6 +200,7 @@ class ExportGLTF {
     const onOptionChange = ( e ) => {
 
       e.preventDefault();
+      this.updateInfo();
 
       if ( this.input === undefined ) return;
 
@@ -204,12 +208,11 @@ class ExportGLTF {
 
     };
 
-    HTMLControl.controls.trs.addEventListener( 'change', onOptionChange, false );
-    HTMLControl.controls.onlyVisible.addEventListener( 'change', onOptionChange, false );
-    HTMLControl.controls.truncateDrawRange.addEventListener( 'change', onOptionChange, false );
     HTMLControl.controls.binary.addEventListener( 'change', onOptionChange, false );
-    HTMLControl.controls.embedImages.addEventListener( 'change', onOptionChange, false );
     HTMLControl.controls.animations.addEventListener( 'change', onOptionChange, false );
+    HTMLControl.controls.onlyVisible.addEventListener( 'change', onOptionChange, false );
+    HTMLControl.controls.embedImages.addEventListener( 'change', onOptionChange, false );
+    HTMLControl.controls.forceIndices.addEventListener( 'change', onOptionChange, false );
 
   }
 
