@@ -6,7 +6,7 @@
       <script src='/js/vendor/{{ . }}.js'></script>
   {{ end }}
 {{ end }}
-<script src='/js/build/nav.js'></script>
+<script src='/js/build/nav.{{ if eq (getenv "HUGO_ENV") "production" }}min.{{ end }}js'></script>
 {{ if .Params.js }}
-  <script async src='/js/build/{{ .Params.js }}.js'></script>
+  <script async src='/js/build/{{ .Params.js }}.{{ if eq (getenv "HUGO_ENV") "production" }}min.{{ end }}js'></script>
 {{ end }}
