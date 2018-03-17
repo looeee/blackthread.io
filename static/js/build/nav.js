@@ -44,46 +44,48 @@ var getClosest = function getClosest(elem, selector) {
 // Check if dropdown menu is already on page before creating it
 var prepareHtml = function prepareHtml(wrapper, settings) {
 
-  // Create dropdown menu
-  toggleWrapper = document.createElement('span');
-  navDropdown = document.createElement('ul');
-  navDropdownToggle = document.createElement('button');
+  toggleWrapper = document.querySelector('.hidden-links-wrapper');
+  navDropdown = document.querySelector('.hidden-links');
+  navDropdownToggle = document.querySelector('.toggle-links');
 
-  // toggleWrapper = document.querySelector( '.hidden-links-wrapper' );
-  // navDropdown = document.querySelector( '.hidden-links' );
-  // navDropdownToggle = document.querySelector( '.toggle-links' );
+  // // Create dropdown menu
+  // toggleWrapper = document.createElement( 'span' );
+  // navDropdown = document.createElement( 'ul' );
+  // navDropdownToggle = document.createElement( 'button' );
 
-  // Set label for dropdown toggle
-  navDropdownToggle.innerHTML = settings.navDropdownLabel;
 
-  // Set aria attributes for accessibility
-  navDropdownToggle.setAttribute('aria-controls', 'menu');
-  navDropdownToggle.setAttribute('type', 'button');
-  navDropdown.setAttribute('aria-hidden', 'true');
+  // // Set label for dropdown toggle
+  // navDropdownToggle.innerHTML = settings.navDropdownLabel;
 
-  // Move elements to the right spot
-  if (wrapper.querySelector(mainNav).parentNode !== wrapper) {
-    console.warn('PriorityNav: mainNav is not a direct child of mainNavWrapper, double check please');
-    return;
-  }
+  // // Set aria attributes for accessibility
+  // navDropdownToggle.setAttribute( 'aria-controls', 'menu' );
+  // navDropdownToggle.setAttribute( 'type', 'button' );
+  // navDropdown.setAttribute( 'aria-hidden', 'true' );
 
-  wrapper.insertAfter(toggleWrapper, wrapper.querySelector(mainNav));
 
-  toggleWrapper.appendChild(navDropdownToggle);
-  toggleWrapper.appendChild(navDropdown);
+  // // Move elements to the right spot
+  // if ( wrapper.querySelector( mainNav ).parentNode !== wrapper ) {
+  //   console.warn( 'PriorityNav: mainNav is not a direct child of mainNavWrapper, double check please' );
+  //   return;
+  // }
 
-  navDropdown.classList.add(settings.navDropdownClassName);
-  navDropdown.classList.add('priority-nav__dropdown');
+  // wrapper.insertAfter( toggleWrapper, wrapper.querySelector( mainNav ) );
 
-  navDropdownToggle.classList.add('fa');
-  navDropdownToggle.classList.add('fa-bars');
-  navDropdownToggle.classList.add(settings.navDropdownToggleClassName);
-  navDropdownToggle.classList.add('priority-nav__dropdown-toggle');
+  // toggleWrapper.appendChild( navDropdownToggle );
+  // toggleWrapper.appendChild( navDropdown );
 
-  toggleWrapper.classList.add(settings.navDropdownClassName + '-wrapper');
-  toggleWrapper.classList.add('priority-nav__wrapper');
+  // navDropdown.classList.add( settings.navDropdownClassName );
+  // navDropdown.classList.add( 'priority-nav__dropdown' );
 
-  wrapper.classList.add('priority-nav');
+  // navDropdownToggle.classList.add( 'fa' );
+  // navDropdownToggle.classList.add( 'fa-bars' );
+  // navDropdownToggle.classList.add( settings.navDropdownToggleClassName );
+  // navDropdownToggle.classList.add( 'priority-nav__dropdown-toggle' );
+
+  // toggleWrapper.classList.add( settings.navDropdownClassName + '-wrapper' );
+  // toggleWrapper.classList.add( 'priority-nav__wrapper' );
+
+  // wrapper.classList.add( 'priority-nav' );
 };
 
 // Get innerwidth without padding

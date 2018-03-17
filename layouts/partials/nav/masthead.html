@@ -1,14 +1,15 @@
 {{ if ne .Params.noMasthead "true" }}
   {{ $currentPageUrl := .URL }}
   <div id="masthead">
-    <div id="masthead-title"><a href="/">{{ .Site.Title }}</a></div>
-    <nav id="masthead-nav" class="priority-nav">
-      <ul id="masthead-ul">
-        {{ range $.Site.Data.navigation.masthead.menu }}
-          <li><a class="{{ if eq $currentPageUrl .url }}active{{ end }}" href="{{ .url | relURL }}">{{ .title }}</a></li>
-        {{ end }}
-      </ul>
-
-    </nav>
-  </div>
+      <div id="masthead-title"><a href="/">BlackThread.io</a></div>
+      <nav id="masthead-nav" class="priority-nav">
+        <ul id="masthead-ul">
+          {{ range $.Site.Data.navigation.masthead.menu }}<li><a class="{{ if eq $currentPageUrl .url }}active{{ end }}" href="{{ .url | relURL }}">{{ .title }}</a></li>{{ end }}
+        </ul>
+        <span class="hidden-links-wrapper priority-nav__wrapper" aria-haspopup="false">
+          <button aria-controls="menu" type="button" class="fa fa-bars toggle-links priority-nav__dropdown-toggle"></button>
+          <ul aria-hidden="true" class="hidden-links priority-nav__dropdown"></ul>
+        </span>
+      </nav>
+    </div>
 {{ end }}
