@@ -22,11 +22,34 @@ class Main {
     this.originalPreview = new Viewer( originalCanvas );
     this.resultPreview = new Viewer( resultCanvas );
 
+    this.loadingManagerOnLoadCalled = false;
+    this.setUpExporter = false;
+
+    this.loadedObject = null;
+    this.animations = null;
+    this.name = 'scene';
+
   }
 
   load( promise, name = 'scene', originalFile ) {
 
+    this.loadingManagerOnLoadCalled = false;
+    this.setUpExporter = false;
+    this.loadedObject = null;
+    this.animations = null;
+    this.name = 'scene';
+
     loadingManager.onStart();
+
+    loadingManager.onLoad = () => {
+
+      if ( this.loadingManagerOnLoadCalled === true ) return;
+
+      this.loadingManagerOnLoadCalled = true;
+
+      if ( this.setUpExporter === false ) exportGLTF.setInput( this.loadedObject, this.animations, this.name );
+
+    }
 
     promise.then( ( result ) => {
 
@@ -69,6 +92,8 @@ class Main {
 
   onLoad( object, name ) {
 
+    HTMLControl.setOnLoadEndState();
+
     object.traverse( ( child ) => {
 
       if ( child.material && Array.isArray( child.material ) ) {
@@ -84,7 +109,18 @@ class Main {
 
     this.originalPreview.addObjectToScene( object );
     this.resultPreview.reset();
-    exportGLTF.setInput( object, animations, name );
+
+    this.loadedObject = object;
+    this.animations = animations;
+    this.name = name;
+
+    if ( this.loadingManagerOnLoadCalled === true ) {
+
+      exportGLTF.setInput( this.loadedObject, this.animations, this.name );
+      this.setUpExporter = true;
+
+    }
+
 
   }
 

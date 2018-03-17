@@ -228,9 +228,8 @@ function App( canvas ) {
     // get bounding box of object - this will be used to setup controls and camera
     boundingBox.setFromObject( object );
 
-    const center = boundingBox.getCenter();
-
-    const size = boundingBox.getSize();
+    const center = boundingBox.getCenter( new THREE.Vector3() );
+    const size = boundingBox.getSize( new THREE.Vector3() );
 
     // get the max side of the bounding box
     const maxDim = Math.max( size.x, size.y, size.z );

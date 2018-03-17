@@ -68,7 +68,7 @@ class ExportGLTF {
       forcePowerOfTwoTextures: true, // facebook compatibility
     };
 
-    if ( options.animations && this.animations.length > 0 ) options.animations = this.animations;
+    if ( options.animations && this.animations && this.animations.length > 0 ) options.animations = this.animations;
 
     return options;
 

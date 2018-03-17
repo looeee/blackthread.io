@@ -31,12 +31,14 @@ loadingManager.onStart = () => {
 
 };
 
-loadingManager.onLoad = function ( ) {
+// loadingManager.onLoad = function ( ) {
 
-  HTMLControl.setOnLoadEndState();
-  clearInterval( timerID );
+//   console.log( 'loadingManager.onLoad ' )
 
-};
+//   HTMLControl.setOnLoadEndState();
+//   clearInterval( timerID );
+
+// };
 
 loadingManager.onProgress = () => {
 

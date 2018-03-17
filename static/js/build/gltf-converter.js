@@ -204,7 +204,9 @@ console.log = function () {
 
   if (!msg) return;
 
-  if (typeof msg.indexOf === 'function' && msg.indexOf('THREE.WebGLRenderer') !== -1) return;
+  if (typeof msg.indexOf === 'function') {
+    if (msg.indexOf('THREE.WebGLRenderer') !== -1 || msg.indexOf('[object Object]')) return;
+  }
 
   HTMLControl.messages.classList.remove('hide');
   HTMLControl.logsContainer.classList.remove('hide');
@@ -285,11 +287,14 @@ loadingManager.onStart = function () {
   }, 100);
 };
 
-loadingManager.onLoad = function () {
+// loadingManager.onLoad = function ( ) {
 
-  HTMLControl.setOnLoadEndState();
-  clearInterval(timerID);
-};
+//   console.log( 'loadingManager.onLoad ' )
+
+//   HTMLControl.setOnLoadEndState();
+//   clearInterval( timerID );
+
+// };
 
 loadingManager.onProgress = function () {
 
@@ -304,12 +309,6 @@ loadingManager.onError = function (msg) {
 
   console.error(msg);
 };
-
-// TODO
-// import loadJavascript from '../utilities/loadJavascript.js';
-
-// Removed for now
-// THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 
 var bufferGeometryLoader = null;
 var amfLoader = null;
@@ -587,7 +586,7 @@ var ExportGLTF = function () {
         forcePowerOfTwoTextures: true // facebook compatibility
       };
 
-      if (options.animations && this.animations.length > 0) options.animations = this.animations;
+      if (options.animations && this.animations && this.animations.length > 0) options.animations = this.animations;
 
       return options;
     }
@@ -746,7 +745,6 @@ function readFileAs(file, as) {
   });
 }
 
-// Check support for the File API support
 var checkForFileAPI = function checkForFileAPI() {
 
   if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -1127,11 +1125,6 @@ function Time() {
   };
 }
 
-/**
- * @author Lewy Blue / https://github.com/looeee
- *
- */
-
 function App(canvas) {
 
   var _scene = void 0;
@@ -1327,9 +1320,8 @@ function App(canvas) {
     // get bounding box of object - this will be used to setup controls and camera
     boundingBox.setFromObject(object);
 
-    var center = boundingBox.getCenter();
-
-    var size = boundingBox.getSize();
+    var center = boundingBox.getCenter(new THREE.Vector3());
+    var size = boundingBox.getSize(new THREE.Vector3());
 
     // get the max side of the bounding box
     var maxDim = Math.max(size.x, size.y, size.z);
@@ -1762,6 +1754,13 @@ var Main = function () {
 
     this.originalPreview = new Viewer(originalCanvas);
     this.resultPreview = new Viewer(resultCanvas);
+
+    this.loadingManagerOnLoadCalled = false;
+    this.setUpExporter = false;
+
+    this.loadedObject = null;
+    this.animations = null;
+    this.name = 'scene';
   }
 
   createClass(Main, [{
@@ -1773,7 +1772,22 @@ var Main = function () {
       var originalFile = arguments[2];
 
 
+      this.loadingManagerOnLoadCalled = false;
+      this.setUpExporter = false;
+      this.loadedObject = null;
+      this.animations = null;
+      this.name = 'scene';
+
       loadingManager.onStart();
+
+      loadingManager.onLoad = function () {
+
+        if (_this.loadingManagerOnLoadCalled === true) return;
+
+        _this.loadingManagerOnLoadCalled = true;
+
+        if (_this.setUpExporter === false) exportGLTF.setInput(_this.loadedObject, _this.animations, _this.name);
+      };
 
       promise.then(function (result) {
 
@@ -1809,6 +1823,8 @@ var Main = function () {
     key: 'onLoad',
     value: function onLoad(object, name) {
 
+      HTMLControl.setOnLoadEndState();
+
       object.traverse(function (child) {
 
         if (child.material && Array.isArray(child.material)) {
@@ -1822,7 +1838,16 @@ var Main = function () {
 
       this.originalPreview.addObjectToScene(object);
       this.resultPreview.reset();
-      exportGLTF.setInput(object, animations, name);
+
+      this.loadedObject = object;
+      this.animations = animations;
+      this.name = name;
+
+      if (this.loadingManagerOnLoadCalled === true) {
+
+        exportGLTF.setInput(this.loadedObject, this.animations, this.name);
+        this.setUpExporter = true;
+      }
     }
   }]);
   return Main;

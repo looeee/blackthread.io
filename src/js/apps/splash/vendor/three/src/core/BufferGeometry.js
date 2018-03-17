@@ -277,7 +277,7 @@ Object.assign( BufferGeometry.prototype, EventDispatcher.prototype, {
 
 		this.computeBoundingBox();
 
-		var offset = this.boundingBox.getCenter().negate();
+		var offset = this.boundingBox.getCenter( ).negate();
 
 		this.translate( offset.x, offset.y, offset.z );
 

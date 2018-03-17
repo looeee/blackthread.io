@@ -1164,7 +1164,7 @@ footer {
       list-style: none; }
   #TableOfContents ul {
     margin: 0;
-    padding: 0 2em; }
+    padding: 0 1em; }
   #TableOfContents li a {
     text-decoration: none; }
     #TableOfContents li a:hover {
