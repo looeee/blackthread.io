@@ -19,10 +19,8 @@
   <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 {{ end }}
 {{ partial "head/styles.html" . }}
-
 <link rel="canonical" href="https://blackthread.io{{ .Page.URL }}" />
-
-<link rel="shortcut ic/on" href="/{{ .Site.Params.favicon }}" type="image/x-icon" />
+{{ partial "head/favicon.html" . }}
 {{ if .RSSLink }}
   <link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
   <link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
