@@ -2,9 +2,9 @@
   <div class="hero" style="background-image: url('{{ .Params.heroImage | relURL }}');">
     <div class="hero-bar">
       <div class="hero-blur" style="background-image: url('{{ .Params.heroImage |relURL }}');"></div>
-          <h1 itemprop="headline">{{ .Params.heroTitle }}</h1>
+          <h1>{{ .Params.heroTitle }}</h1>
           {{ if .Params.heroDescription }}
-            <h3 itemprop="description">{{ .Params.heroDescription }}</h3>
+            <h3>{{ .Params.heroDescription }}</h3>
           {{ end }}
     </div>
   </div>

@@ -1,6 +1,6 @@
-<article class="{{ if eq .Params.menuSectionMain true }}archive-header{{ else }}archive-item{{ end }}" itemscope itemtype="http://schema.org/CreativeWork">
-  <h2 class="archive-item-title" itemprop="headline">
+<article class="{{ if eq .Params.menuSectionMain true }}archive-header{{ else }}archive-item{{ end }}">
+  <h2 class="archive-item-title">
     <a href="{{ .URL }}" rel="permalink">{{ if .Params.menuNumber }}{{ .Params.menuNumber }}: {{ end }}{{ .Title }}</a>
   </h2>
-  <p class="archive-item-excerpt" itemprop="description">{{ .Description  }}</p>
+  <p class="archive-item-excerpt">{{ .Description  }}</p>
 </article>

@@ -1,0 +1,60 @@
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+  {{ if in .RelPermalink "/blog/" }}
+    "@type": "BlogPosting",
+  {{ else if in .RelPermalink "/tutorials/" }}
+    "@type": "Article",
+  {{ else if in .RelPermalink "/experiments/" }}
+    "@type": "Article",
+  {{ else if in .RelPermalink "/gltf-converter/" }}
+    "@type": "Article",
+  {{ else if in .RelPermalink "/loader/" }}
+    "@type": "Article",
+  {{ else }}
+    "@type": "WebPage",
+  {{ end }}
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blackthread.io{{ .RelPermalink }}"
+    },
+    "headline": "{{ .Title }}",
+  {{ if .Params.HeroImage }}
+    "image": "https://blackthread.io{{ .Params.heroImage | relURL }}",
+  {{ else }}
+    "image": "https://blackthread.io/images/og.jpg",
+  {{ end }}
+  "author": {
+      "@type": "Person",
+      "name": "{{ .Site.Params.Author }}",
+      "jobTitle": "Author",
+      "url": "https://twitter.com/looeeeb"
+    },
+  "publisher": {
+    "@type": "Organization",
+    "name": "BlackThread.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blackthread.io/images/og.jpg"
+    }
+  },
+  "genre": "Education",
+  {{ if .Params.tags }}
+    "keywords": "{{ range .Params.tags }}{{ . }} {{ end }}",
+  {{ else }}
+    "keywords": "threejs webgl animation javascript education tutorials blog",
+  {{ end }}
+  {{ if gt .WordCount 100  }}
+    "wordcount": "{{ .WordCount }}",
+  {{ end }}
+    "url": "https://blackthread.io/{{ .RelPermalink }}",
+    "datePublished": "{{ .Date }}",
+    "dateCreated": "{{ .Date }}",
+  {{ if .Page.Lastmod }}
+    "dateModified": " {{ .Page.Lastmod }}",
+  {{ else }}
+    "dateModified": " {{ .Date }}",
+  {{ end }}
+    "description": "{{ .Description }}"
+  }
+</script>

@@ -1,9 +1,9 @@
 {{ $featured_image := .Params.teaserImage }}
-<article class="archive-item" itemscope itemtype="http://schema.org/CreativeWork">
-    <div class="archive-item-teaser">
-      <img src="{{ $featured_image | relURL }}" alt="teaser-image">
-    </div>
-  <h2 class="archive-item-title" itemprop="headline">
+<article class="archive-item">
+  <div class="archive-item-teaser">
+    <img src="{{ $featured_image | relURL }}" alt="teaser-image">
+  </div>
+  <h2 class="archive-item-title">
     <a href="{{ .URL }}" rel="permalink">{{.Title }}</a>
   </h2>
 </article>

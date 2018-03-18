@@ -1,6 +1,6 @@
-<figure {{ with .Get "class" }}class="{{.}}"{{ end }} itemprop="figure" itemscope itemtype="http://schema.org/ImageObject">
+<figure {{ with .Get "class" }}class="{{.}}"{{ end }}>
   {{ if .Get "lightbox" }}<a href="#img1">{{ end }}
-    <img itemprop="thumbnail" {{ with .Get "src" }}src="{{.}}"{{ end }} {{ with .Get "alt" }}alt="{{.}}"{{ end }}/>
+    <img {{ with .Get "src" }}src="{{.}}"{{ end }} {{ with .Get "alt" }}alt="{{.}}"{{ end }}/>
   {{ if .Get "lightbox" }}</a>{{ end }}
   {{ if .Get "caption" }}
     <figcaption>
