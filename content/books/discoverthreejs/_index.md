@@ -1,7 +1,7 @@
 ---
-title: "Three.js Tutorials"
+title: "Discover three.js"
 date: 2017-02-02
-description: "Welcome to the Black Thread series of tutorials on three.js! In this tutorial series we'll focus on getting to know three.js in depth, fast"
+description: ""
 noPagination: true
 noTOC: true
 noReadTime: true
