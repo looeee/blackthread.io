@@ -1,0 +1,10 @@
+{{ define "main" }}
+  {{ partial "hero.html" . }}
+  <div id="page-content-full-width">
+    <article id="article">
+      <section class="content">
+        {{ .Content }}
+      </section>
+    </article>
+  </div>
+{{ end }}
