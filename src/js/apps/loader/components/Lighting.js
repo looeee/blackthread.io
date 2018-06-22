@@ -1,5 +1,48 @@
 import HTMLControl from '../HTMLControl.js';
 
+const switchMaterialToBasic = ( object ) => {
+
+  if ( !object.material ) return;
+
+  const oldMat = object.material;
+
+  if ( Array.isArray( oldMat ) ) {
+
+    const newMat = [];
+
+    oldMat.forEach( ( mat ) => {
+
+      newMat.push( new THREE.MeshBasicMaterial( {
+        color: mat.color,
+        // envMap: mat.envMap,
+        map: mat.map,
+        morphTargets: mat.morphTargets,
+        reflectivity: mat.reflectivity,
+        // refractionRatio: mat.refractionRatio,
+        skinning: mat.skinning,
+        specularMap: mat.specularMap,
+      } ) );
+
+    } );
+
+    object.material = newMat;
+
+  } else {
+
+    object.material = new THREE.MeshBasicMaterial( {
+      color: oldMat.color,
+      // envMap: oldMat.envMap,
+      map: oldMat.map,
+      morphTargets: oldMat.morphTargets,
+      reflectivity: oldMat.reflectivity,
+      // refractionRatio: oldMat.refractionRatio,
+      skinning: oldMat.skinning,
+      specularMap: oldMat.specularMap,
+    } );
+
+  }
+
+};
 export default class Lighting {
 
   constructor( app ) {
@@ -7,8 +50,8 @@ export default class Lighting {
     this.app = app;
 
     this.initLights();
-
     this.initSlider();
+    this.initUnlitToggle();
 
     this.initialStrength = 1.2;
 
@@ -42,6 +85,24 @@ export default class Lighting {
       this.reset();
 
     }, false );
+
+  }
+
+  initUnlitToggle() {
+
+    HTMLControl.lighting.unlitToggle.addEventListener( 'click', ( e ) => {
+
+      e.preventDefault();
+      this.app.loadedObjects.traverse( ( child ) => {
+
+        if ( child.isMesh ) {
+          switchMaterialToBasic( child );
+        }
+
+      } );
+
+    }, false );
+
 
   }
 

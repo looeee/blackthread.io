@@ -17,7 +17,7 @@ THREE.LegacyGLTFLoader = ( function () {
 
 		constructor: LegacyGLTFLoader,
 
-		crossOrigin: 'Anonymous',
+		crossOrigin: 'anonymous',
 
 		load: function ( url, onLoad, onProgress, onError ) {
 
@@ -40,6 +40,7 @@ THREE.LegacyGLTFLoader = ( function () {
 		setCrossOrigin: function ( value ) {
 
 			this.crossOrigin = value;
+			return this;
 
 		},
 
@@ -75,8 +76,6 @@ THREE.LegacyGLTFLoader = ( function () {
 
 			}
 
-			console.time( 'LegacyGLTFLoader' );
-
 			var parser = new GLTFParser( json, extensions, {
 
 				path: path || this.path,
@@ -85,8 +84,6 @@ THREE.LegacyGLTFLoader = ( function () {
 			} );
 
 			parser.parse( function ( scene, scenes, cameras, animations ) {
-
-				console.timeEnd( 'LegacyGLTFLoader' );
 
 				var glTF = {
 					"scene": scene,
@@ -644,6 +641,13 @@ THREE.LegacyGLTFLoader = ( function () {
 
 		// Data URI
 		if ( /^data:.*,.*$/i.test( url ) ) {
+
+			return url;
+
+		}
+
+		// Blob URL
+		if ( /^blob:.*$/i.test( url ) ) {
 
 			return url;
 

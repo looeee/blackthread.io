@@ -1,6 +1,7 @@
-import './components/fullscreen.js';
-
+import * as THREE from 'three';
 import App from './App/App.js';
+
+import './components/fullscreen.js';
 
 import AnimationControls from './components/AnimationControls.js';
 import Background from './components/Background.js';
@@ -48,15 +49,15 @@ class Main {
 
     };
 
-    this.loadedObjects = new THREE.Group();
-    this.loadedMaterials = [];
-    this.app.scene.add( this.loadedObjects );
+    this.app.loadedObjects = new THREE.Group();
+    this.app.loadedMaterials = [];
+    this.app.scene.add( this.app.loadedObjects );
 
     this.lighting = new Lighting( this.app );
     this.grid = new Grid( this.app );
     this.background = new Background( this.app );
-    this.environment = new Environment( this.loadedMaterials );
-    this.info = new Info( this.app, this.loadedObjects );
+    this.environment = new Environment( this.app.loadedMaterials );
+    this.info = new Info( this.app, this.app.loadedObjects );
 
     this.app.scene.add( this.grid.helpers );
 
@@ -80,20 +81,20 @@ class Main {
 
     this.animationControls.initAnimation( object );
 
-    this.loadedObjects.add( object );
+    this.app.loadedObjects.add( object );
 
     // fit camera to all loaded objects
-    this.app.fitCameraToObject( this.loadedObjects, 0.9 );
+    this.app.fitCameraToObject( this.app.loadedObjects, 0.9 );
 
     this.app.play();
 
     this.info.update();
 
-    this.loadedObjects.traverse( ( child ) => {
+    this.app.loadedObjects.traverse( ( child ) => {
 
       if ( child.material !== undefined ) {
 
-        this.loadedMaterials.push( child.material );
+        this.app.loadedMaterials.push( child.material );
 
       }
 
@@ -109,7 +110,7 @@ class Main {
 
       e.preventDefault();
 
-      exportGLTF( this.loadedObjects );
+      exportGLTF( this.app.loadedObjects );
 
     } );
   }
@@ -118,16 +119,16 @@ class Main {
 
     HTMLControl.reset.addEventListener( 'click', () => {
 
-      while ( this.loadedObjects.children.length > 0 ) {
+      while ( this.app.loadedObjects.children.length > 0 ) {
 
-        let child = this.loadedObjects.children[ 0 ];
+        let child = this.app.loadedObjects.children[ 0 ];
 
-        this.loadedObjects.remove( child );
+        this.app.loadedObjects.remove( child );
         child = null;
 
       }
 
-      this.loadedMaterials = [];
+      this.app.loadedMaterials = [];
 
       this.animationControls.reset();
       this.lighting.reset();

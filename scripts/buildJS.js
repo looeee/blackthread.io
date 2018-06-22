@@ -1,11 +1,18 @@
 const rollup = require( 'rollup' );
-const watch = require( 'rollup-watch' );
+const watch = require( 'watch' );
 const babel = require( 'rollup-plugin-babel' );
 const glslify = require( 'glslify' );
 const nodeResolve = require( 'rollup-plugin-node-resolve' );
-// const UglifyJS = require( 'uglify-js' );
+const commonjs = require( 'rollup-plugin-commonjs' );
+const UglifyJS = require( 'uglify-js' );
 
 const fs = require( 'fs' );
+
+const writeFile = ( fileName, data ) => {
+
+  fs.writeFileSync( fileName, data, 'utf8' );
+
+};
 
 const glsl = () => {
   return {
@@ -25,11 +32,30 @@ const glsl = () => {
   };
 };
 
+const minify = ( fileName, code ) => {
+
+  console.log( 'Minifying ' + fileName );
+
+  const name = fileName.replace( '.js', '.min.js' );
+
+  const result = UglifyJS.minify( code );
+
+  if ( result.error ) console.error( result.error );
+  if ( result.warnings ) console.warm( result.warnings );
+
+  writeFile( name, result.code );
+
+  console.log( 'Finished minifying ' + fileName );
+
+};
+
 const inputDir = 'src/js/entries/';
+const codeDir = 'src/js/';
 const outputDir = 'static/js/build/';
 
 const defaultPlugins = [
   nodeResolve(),
+  commonjs(),
   glsl(),
   babel( {
     compact: false,
@@ -50,72 +76,83 @@ const defaultPlugins = [
   } ),
 ];
 
-// config to feed the watcher function
-const config = ( file ) => {
+// rollup inputOptions
+const inputOptions = ( file ) => {
 
   const input = inputDir + file;
-  const output = outputDir + file;
 
   return {
     input,
     plugins: defaultPlugins,
+    // cache,
+    perf: true,
+  };
+};
+
+// rollup outputOptions
+const outputOptions = ( file ) => {
+  const output = outputDir + file;
+
+  return {
+    file: output,
+    format: 'iife',
+    name: 'output',
     globals: {
       three: 'THREE'
     },
-    targets: [
-      {
-        format: 'iife',
-        name: file,
-        dest: output,
-      },
-    ],
-  };
-};
+  }
+}
+
+const watchOptions = ( file ) => {
+  return {
+    ...inputOptions( file ),
+    output: outputOptions( file ),
+  }
+}
 
 // stderr to stderr to keep `rollup main.js > bundle.js` from breaking
 const stderr = console.error.bind( console );
 
-// const minify = ( file ) => {
+async function build( inputOpts, outputOpts ) {
 
-//   console.log( 'Minifying ' + file );
+  // create a bundle
+  const bundle = await rollup.rollup( inputOpts );
 
-//   const name = file.substring( 0, file.length - 3 );
-//   const outputFile = outputDir + name + '.min.js';
+  // generate code and a sourcemap
+  const { code, map } = await bundle.generate( outputOpts );
 
-//   const inputCode = fs.readFileSync( outputDir + file, 'utf8' );
+  console.log( 'Writing file: ' + outputOpts.file );
+  writeFile( outputOpts.file, code );
+  minify( outputOpts.file, code );
 
-//   const result = UglifyJS.minify( inputCode );
+  console.log( 'Generated bundle: ', bundle.getTimings()[ '# GENERATE' ] )
 
-//   if ( result.error ) console.error( result.error );
-//   if ( result.warnings ) console.warm( result.warnings );
+}
 
-//   fs.writeFileSync( outputFile, result.code, 'utf8' );
+function watchFile( file ) {
 
-//   console.log( 'Finished minifying ' + file );
+  const inputOpts = inputOptions( file );
+  const outputOpts = outputOptions( file );
 
-// }
+  build( inputOpts, outputOpts );
 
-const eventHandler = ( file ) => {
-  return ( event ) => {
-    switch ( event.code ) {
-      case 'STARTING':
-        stderr( 'checking rollup-watch version...' );
-        break;
-      case 'BUILD_START':
-        stderr( `bundling ${file}...` );
-        break;
-      case 'BUILD_END':
-        stderr( `bundled ${file} in ${event.duration}ms. Watching for changes...` );
-        // minify( file );
-        break;
-      case 'ERROR':
-        stderr( `error: ${event.error} with ${file}` );
-        break;
-      default:
-        stderr( `unknown event: ${event} from ${file}` );
+  watch.watchTree( codeDir, { interval: 1 }, ( f, curr, prev ) => {
+
+    if ( typeof f == "object" && prev === null && curr === null) {
+
+      // Finished walking the tree
+
+    } else if ( prev === null ) {  // f is a new file
+    } else if ( curr.nlink === 0 ) { // f was removed
+    } else {
+
+      console.log( 'Files on disk changed, updating bundle.' );
+      build( inputOpts, outputOpts );
+
     }
-  };
-};
+
+  } );
+}
 
 // pass in a single filename, e.g. 'main' to process only that file
 if ( process.argv[ 2 ] !== undefined ) {
@@ -123,14 +160,13 @@ if ( process.argv[ 2 ] !== undefined ) {
   const name = process.argv[ 2 ] + '.js';
 
   fs.readdir( inputDir, ( err, files ) => {
+
     files.forEach( ( file ) => {
 
       if ( file !== name ) return;
 
-      const entryConfig = config( file );
-      const watcher = watch( rollup, entryConfig );
-      const entryEventHandler = eventHandler( file );
-      watcher.on( 'event', entryEventHandler );
+      watchFile( file );
+
     } );
 
   } );
@@ -138,12 +174,13 @@ if ( process.argv[ 2 ] !== undefined ) {
 } else {
 
   fs.readdir( inputDir, ( err, files ) => {
+
     files.forEach( ( file ) => {
-      const entryConfig = config( file );
-      const watcher = watch( rollup, entryConfig );
-      const entryEventHandler = eventHandler( file );
-      watcher.on( 'event', entryEventHandler );
+
+      watchFile( file );
+
     } );
+
   } );
 
 }

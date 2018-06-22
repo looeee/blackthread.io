@@ -45,6 +45,9 @@ aliases: [/experiments/loader/]
   <div class="controls-section">
     <input id="lighting-slider" type="range" min="0" max="8" step="0.1" value="0"/>
     <span id="light-symbol" class="fa fa-lg fa-lightbulb-o" aria-hidden="true"></span>
+    <a href="#" id="toggle-unlit" title="Toggle Unlit">
+      <span class="fa fa-lg fa-moon-o" aria-hidden="true"></span>
+    </a>
   </div>
   <div class="controls-section">
     <div id="animation-controls" class="hide">

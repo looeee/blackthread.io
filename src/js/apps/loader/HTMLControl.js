@@ -32,6 +32,7 @@ const fileUpload = {
 };
 
 const lighting = {
+  unlitToggle: document.querySelector( '#toggle-unlit' ),
   slider: document.querySelector( '#lighting-slider' ),
   symbol: document.querySelector( '#light-symbol' ),
 };
