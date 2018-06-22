@@ -13,6 +13,7 @@ const switchMaterialToBasic = ( object ) => {
     oldMat.forEach( ( mat ) => {
 
       newMat.push( new THREE.MeshBasicMaterial( {
+        alphaMap: mat.alphaMap,
         color: mat.color,
         // envMap: mat.envMap,
         map: mat.map,
@@ -30,6 +31,7 @@ const switchMaterialToBasic = ( object ) => {
   } else {
 
     object.material = new THREE.MeshBasicMaterial( {
+      alphaMap: oldMat.alphaMap,
       color: oldMat.color,
       // envMap: oldMat.envMap,
       map: oldMat.map,
