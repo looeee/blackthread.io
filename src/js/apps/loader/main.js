@@ -1,6 +1,4 @@
-import * as THREE from 'three';
-import App from './App/App.js';
-
+import App from 'three-app';
 import './components/fullscreen.js';
 
 import AnimationControls from './components/AnimationControls.js';
@@ -28,26 +26,14 @@ class Main {
 
     this.canvas = canvas;
 
-    this.app = new App( this.canvas );
-
-    // this.app.renderer.setClearColor( 0xf7f7f7, 1.0 );
+    this.app = new App( THREE, this.canvas );
 
     this.animationControls = new AnimationControls();
 
-    // Put any per frame calculation here
-    this.app.onUpdate = function () {
-      // NB: use self inside this function
 
+    this.app.registerOnUpdateFunction( () => {
       self.animationControls.update( self.app.delta );
-
-    };
-
-    // put any per resize calculations here (throttled to once per 250ms)
-    this.app.onWindowResize = function () {
-
-      // NB: use self inside this function
-
-    };
+    } );
 
     this.app.loadedObjects = new THREE.Group();
     this.app.loadedMaterials = [];
@@ -61,7 +47,7 @@ class Main {
 
     this.app.scene.add( this.grid.helpers );
 
-    this.app.initControls();
+    this.app.initControls( THREE.OrbitControls );
 
     this.screenshotHandler = new ScreenshotHandler( this.app );
 
@@ -84,7 +70,7 @@ class Main {
     this.app.loadedObjects.add( object );
 
     // fit camera to all loaded objects
-    this.app.fitCameraToObject( this.app.loadedObjects, 0.9 );
+    this.app.fitCameraToObject( this.app.loadedObjects, 3 );
 
     this.app.play();
 
