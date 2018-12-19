@@ -3,6 +3,16 @@
   "clean_urls": true,
   "https_only": true,
   "error_page": "404.html",
+  "redirects": {
+    "/loader/": {
+      "url": "https://discoverthreejs.com/apps/loader/",
+      "status": 301
+    },
+    "/tutorials/": {
+      "url": "https://discoverthreejs.com/book/content/",
+      "status": 301
+    }
+  },
   "headers": {
     "/": {
       "Cache-Control": "no-store, no-cache"
