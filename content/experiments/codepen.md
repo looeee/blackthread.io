@@ -6,6 +6,7 @@ description: "A collection of older experiments, from back in the days when I wa
 teaserImage: /images/experiments/codepen/teaser.jpg
 comments: false
 redirect: 'https://codepen.io/looeee/collections/'
+canonicalURL: 'https://codepen.io/looeee/collections/'
 comments: false
 meta: false
 pagination: false

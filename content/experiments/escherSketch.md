@@ -29,7 +29,7 @@ white fish, the other half a black fish.
 
 {{< figure src="/images/experiments/escherSketch/fish.png" caption="Fig 1: Black fish, white fish" alt="Fish tiles" class="figure-small" >}}
 
-I had originally planned to extend this to include irregular tilings of several colours, which would
+I had originally planned to extend this to include irregular tilings of several colors, which would
 allow the creation of the rest oas a teaching tool where students could create their own tiles.
 
 Unfortunately, creating the tiles so that they match evenly turned out to be more difficult than I expected.

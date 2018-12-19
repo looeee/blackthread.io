@@ -169,15 +169,15 @@ And that, my friends, is that! Cue round of applause, bow, exit our hero stage l
 
 Well, except of course, that our scene doesn't actually _look_ any different. It may be updating at up to 60 frames per second, but nothing is moving so it looks identical to us.
 
-We'll add some movement soon, but first lets set up some lights and colour.
+We'll add some movement soon, but first lets set up some lights and color.
 
-### Setting the material's colour
+### Setting the material's color
 
-Now would be a good time to take a look at the [Color](https://threejs.org/docs/#api/math/Color) documentation to get an idea of how colour works in three.js.
+Now would be a good time to take a look at the [Color](https://threejs.org/docs/#api/math/Color) documentation to get an idea of how color works in three.js.
 
-Although there are lots of ways to set the color listed in the docs, the standard way is to use a `hexadecimal triple`. You may already be familiar with CSS colours - they look like `#ffffff` (white) or `#000000` (black). Well, that is a hexadecimal triple, and in JavaScript, it's pretty similar. We just need to write them slightly differently.
+Although there are lots of ways to set the color listed in the docs, the standard way is to use a `hexadecimal triple`. You may already be familiar with CSS colors - they look like `#ffffff` (white) or `#000000` (black). Well, that is a hexadecimal triple, and in JavaScript, it's pretty similar. We just need to write them slightly differently.
 
-In JavaScript, a hexadecimal number is denoted with `0x` instead of `#`. The CSS colors above become `0xffffff` (white)  or `0x000000`, or `0x800080` (purple). Let's use the last one now and set our previously white material to a nice purple colour:
+In JavaScript, a hexadecimal number is denoted with `0x` instead of `#`. The CSS colors above become `0xffffff` (white)  or `0x000000`, or `0x800080` (purple). Let's use the last one now and set our previously white material to a nice purple color:
 
 Update the section:
 

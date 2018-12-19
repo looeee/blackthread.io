@@ -118,7 +118,7 @@ You may not even know anything about the models at all. This is the case for my 
 
 I did some research and came across one amazing but [hugely complex solution](https://www.npmjs.com/package/loadscreen). While it looks amazing and I would totally consider using this if I had a team of 20 people working on a fancy game, it's complete overkill for a small project. It also suffers from the same problem of requiring you to keep track of the size of all models.
 
-At this point, since I am a firm believer in keeping everything as simple as possible, I decided to build a fake loading bar. It will just keep climbing in a realistic fashion (that is, the speed will go up and down a bit, but it will not be too 'jumpy') until it reaches 100%, then reset and start again. When it restarts you could switch to a deeper colour to suggest progress.
+At this point, since I am a firm believer in keeping everything as simple as possible, I decided to build a fake loading bar. It will just keep climbing in a realistic fashion (that is, the speed will go up and down a bit, but it will not be too 'jumpy') until it reaches 100%, then reset and start again. When it restarts you could switch to a deeper color to suggest progress.
 
 Let's jump straight in and see how we can set this up.
 
@@ -207,7 +207,7 @@ const animateBar = () => {
   percentComplete += updateAmount;
 
   // if the bar fills up, just reset it.
-  // you could also change the colour here
+  // you could also change the color here
   if ( percentComplete >= 100 ) {
     percentComplete = 5;
   }

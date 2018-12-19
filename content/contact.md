@@ -11,6 +11,6 @@ So you want to get in touch with me? Well, I have a couple of options for you :)
 
 Send me a message on the <a href="https://discourse.threejs.org/">forum</a>
 
-Or send me a message on <a href="https://twitter.com/looeeeb">twitter</a>
+Or send me a message on <a href="https://twitter.com/lewy_blue">twitter</a>
 
 Or if you're feeling old fashioned you can even use good old email: looeee@gmail.com

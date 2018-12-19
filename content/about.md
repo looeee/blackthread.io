@@ -48,7 +48,7 @@ pagination: false
     displaying 3D posts in the news feed.
   </p>
   <p>
-    I've also recently discovered the joys of  <a href="https://twitter.com/looeeeb">Twitter</a>. Let's see
+    I've also recently discovered the joys of  <a href="https://twitter.com/lewy_blue">Twitter</a>. Let's see
     how that goes.
   </p>
 </div>

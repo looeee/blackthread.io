@@ -9,7 +9,7 @@ menuNumber: "4"
 weight: 5
 readTime: true
 ---
-So far we have just created a simple coloured material for our mesh. If we want to create something more realistic we'll have to move onto using [texture mapping](https://en.wikipedia.org/wiki/Texture_mapping).
+So far we have just created a simple colored material for our mesh. If we want to create something more realistic we'll have to move onto using [texture mapping](https://en.wikipedia.org/wiki/Texture_mapping).
 
 Put very simply, this means taking an image and stretching it over the surface of a 3D object. Of course, this will be very easy to do if the surface of the 3D object is square, and less easy of the surface is curved and knotted.
 
@@ -79,13 +79,13 @@ Next, we'll assign the texture to the [material.map](https://threejs.org/docs/#a
 ...
 {{< /highlight >}}
 
-Take note that we've also set the material's colour back to white ( we could also remove the colour line completely since white is the default ).
+Take note that we've also set the material's color back to white ( we could also remove the color line completely since white is the default ).
 
-This is because the material's colour gets combined (multiplied, technically) with the material's texture, so if we left it as purple, the wooden side of the box would have a purple tint.
+This is because the material's color gets combined (multiplied, technically) with the material's texture, so if we left it as purple, the wooden side of the box would have a purple tint.
 
 ### Texture formats
 
-The texture we used is in [GIF](https://en.wikipedia.org/wiki/GIF) format, which is better known as the preferred way if showing short clips of cats being cute on reddit. It's kind of unusual to use this format for textures actually, since the file size tends to be quite large and it only supports a palette of 256 colours, compared to the millions of colours of other formats.
+The texture we used is in [GIF](https://en.wikipedia.org/wiki/GIF) format, which is better known as the preferred way if showing short clips of cats being cute on reddit. It's kind of unusual to use this format for textures actually, since the file size tends to be quite large and it only supports a palette of 256 colors, compared to the millions of colors of other formats.
 
 All image formats that your browser can load are supported as texture formats - that is at least: BMP, SVG, and GIF, JPG, PNG.
 

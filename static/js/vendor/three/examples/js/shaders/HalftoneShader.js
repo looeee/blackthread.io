@@ -166,7 +166,7 @@ THREE.HalftoneShader = {
 
 		"float getDotColour( Cell c, vec2 p, int channel, float angle, float aa ) {",
 
-			// get colour for given point
+			// get color for given point
 			"float dist_c_1, dist_c_2, dist_c_3, dist_c_4, res;",
 
 			"if ( channel == 0 ) {",
@@ -255,7 +255,7 @@ THREE.HalftoneShader = {
 
 		"float blendColour( float a, float b, float t ) {",
 
-			// blend colours
+			// blend colors
 			"if ( blendingMode == BLENDING_LINEAR ) {",
 				"return blend( a, b, 1.0 - t );",
 			"} else if ( blendingMode == BLENDING_ADD ) {",
@@ -290,10 +290,10 @@ THREE.HalftoneShader = {
 				"float b = getDotColour( cell_b, p, 2, rotateB, aa );",
 
 				// blend with original
-				"vec4 colour = texture2D( tDiffuse, vUV );",
-				"r = blendColour( r, colour.r, blending );",
-				"g = blendColour( g, colour.g, blending );",
-				"b = blendColour( b, colour.b, blending );",
+				"vec4 color = texture2D( tDiffuse, vUV );",
+				"r = blendColour( r, color.r, blending );",
+				"g = blendColour( g, color.g, blending );",
+				"b = blendColour( b, color.b, blending );",
 
 				"if ( greyscale ) {",
 					"r = g = b = (r + b + g) / 3.0;",

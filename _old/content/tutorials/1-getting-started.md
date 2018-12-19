@@ -209,7 +209,7 @@ Well, that's a bit beyond the scope of these tutorials, so for now we'll just sa
 
 #### Creating a material
 
-To start with, we'll create a [MeshBasicMaterial](https://threejs.org/docs/#Reference/Materials/MeshBasicMaterial) which is the simplest (and fastest) material available in three.js. It completely ignores any lights in the scene and just shades a mesh based on its colour or any texture maps, which is useful here since we have not yet added any lights.
+To start with, we'll create a [MeshBasicMaterial](https://threejs.org/docs/#Reference/Materials/MeshBasicMaterial) which is the simplest (and fastest) material available in three.js. It completely ignores any lights in the scene and just shades a mesh based on its color or any texture maps, which is useful here since we have not yet added any lights.
 
 In fact, if we used most of the other material types right now we wouldn't be able to see anything at all since the scene is in total darkness. Just as in the real world, we (usually) need light to see things in our scene. `MeshBasicMaterial` is an exception.
 
@@ -225,7 +225,7 @@ const geometry = new THREE.TorusKnotBufferGeometry( 5, 1 );
 const material = new THREE.MeshBasicMaterial();
 {{< /highlight >}}
 
-Remember what I said about three.js assigning sensible default values if you don't provide them yourself? Well, in this case, it the material will be white since we have not _passed in_ any colour parameter. We'll see how to change the material's colour in the next chapter.
+Remember what I said about three.js assigning sensible default values if you don't provide them yourself? Well, in this case, it the material will be white since we have not _passed in_ any color parameter. We'll see how to change the material's color in the next chapter.
 
 #### Creating a mesh and adding it to the scene
 
@@ -261,7 +261,7 @@ After adding the previous line, you will now see this:
 
 {{< codepen "qpNvdd" >}}
 
-It's very basic so far. Without lighting illuminate the contours of the object, it's not possible to even know that it's 3D, and without movement or colour it looks a bit dull.
+It's very basic so far. Without lighting illuminate the contours of the object, it's not possible to even know that it's 3D, and without movement or color it looks a bit dull.
 But still, it's quite impressive that we were able to do this so fast.
 
 We'll quickly fix all of these problems in the next chapter, as well as take a look at how best to organise our code to keep track of everything as our app grows.

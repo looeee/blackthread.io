@@ -22,7 +22,7 @@ layout: movedTutorial
 
 Hello! Thanks for checking out my tutorials. I've been working on improving them, and I'm pleased to announce that I'm turning them into a book, called Discover three.js!
 
-A greatly expanded and updated version of this page can now be found as part of the free sample on my new site, [discoverthreejs.com](https://discoverthreejs.com/). Hope to see you there!
+A greatly expanded and updated version of this page can now be found as part of the free chapters on my new site, [discoverthreejs.com](https://discoverthreejs.com/). Hope to see you there!
 
 Lewy :)
 

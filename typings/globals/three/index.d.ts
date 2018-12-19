@@ -804,7 +804,7 @@ declare namespace THREE {
 
     /**
      * @deprecated, use new THREE.BufferAttribute().setDynamic( true ).
-     */ 
+     */
     export class DynamicBufferAttribute extends BufferAttribute {}
 
     /**
@@ -4721,7 +4721,7 @@ declare namespace THREE {
         geometry: Geometry | BufferGeometry;
 
         /**
-         * An instance of Material, defining the object's appearance. Default is a PointsMaterial with randomised colour.
+         * An instance of Material, defining the object's appearance. Default is a PointsMaterial with randomised color.
          */
         material: Material;
 
